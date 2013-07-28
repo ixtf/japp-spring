@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:panel header="#{msg['creditPost.label']}">
+			<h:panelGrid columns="3">
+				<h:outputLabel for="number"
+					value="#{msg['creditPost.label']}#{msg['number.label']}" />
+				<h:inputText id="number"
+					value="#{creditPostController.creditPost.number}" readonly="true" />
+				<p:message for="number" />
+
+				<h:outputLabel for="amount" value="#{msg['amount.label']}" />
+				<h:inputText id="amount"
+					value="#{creditPostController.creditPost.amount}"
+					readonly="#{creditPostController.recieveInfo.recieve}"
+					style="text-align:right" />
+				<p:message for="amount" />
+
+				<h:outputLabel for="waers" value="#{msg['waers.label']}" />
+				<h:inputText id="waers"
+					value="#{creditPostController.creditPost.waers}"
+					readonly="#{creditPostController.recieveInfo.recieve}" />
+				<p:message for="waers" />
+
+				<h:outputLabel for="payType" value="#{msg['payType.label']}" />
+				<p:selectOneMenu id="payType"
+					value="#{creditPostController.creditPost.payType}"
+					disabled="#{creditPostController.recieveInfo.recieve}">
+					<f:selectItems var="_payType"
+						value="#{creditPostController.payTypes}"
+						itemLabel="#{_payType.name}" />
+				</p:selectOneMenu>
+				<p:message for="payType" />
+
+				<h:outputLabel for="vbakVbeln" value="#{msg['vbak.vbeln.label']}"
+					rendered="#{!creditPostController.recieveInfo.recieve}" />
+				<h:inputText id="vbakVbeln"
+					value="#{creditPostController.vbakVbeln}"
+					rendered="#{!creditPostController.recieveInfo.recieve}" />
+				<p:commandButton action="#{creditPostController.addVbak}"
+					rendered="#{!creditPostController.recieveInfo.recieve}"
+					update=":form" icon="ui-icon-plus" />
+				<p:message for="vbakVbeln" />
+			</h:panelGrid>
+			<p:contextMenu for="vbakModels"
+				rendered="#{!creditPostController.recieveInfo.recieve}">
+				<p:menuitem value="Delete"
+					actionListener="#{creditPostController.removeVbak}"
+					update="vbakModels" icon="ui-icon-close" />
+			</p:contextMenu>
+			<p:dataTable id="vbakModels" var="_vbakMode"
+				value="#{creditPostController.vbakModels}"
+				selection="#{creditPostController.selectedVbakModel}"
+				rowKey="#{_vbakMode.vbak}" selectionMode="single">
+				<f:facet name="header">
+					<h:outputText value="#{msg['vbak.label']}" />
+				</f:facet>
+
+				<p:column headerText="#{msg['vbak.vbeln.label']}">
+					<h:outputText value="#{_vbakMode.vbak.vbeln}" />
+				</p:column>
+
+				<p:column headerText="#{msg['vbkd.bstkd.label']}">
+					<h:outputText value="#{_vbakMode.sapVbkdvb.bstkd}" />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton actionListener="#{creditPostController.save}"
+				value="#{msg['operation.submit']}" update=":form"
+				rendered="#{!creditPostController.recieveInfo.recieve}" />
+		</p:panel>
+		<p:panel header="#{msg['creditPostRecieve.label']}"
+			rendered="#{creditPostController.recieveInfo.recieve}">
+			<p:panelGrid columns="2">
+				<h:outputLabel for="status" value="#{msg['status.label']}" />
+				<h:outputText id="status"
+					value="#{creditPostController.recieveInfo.recieve}" />
+
+				<h:outputLabel for="note" value="#{msg['note.label']}" />
+				<h:outputText id="note"
+					value="#{creditPostController.recieveInfo.note}" />
+
+				<h:outputLabel for="modifier" value="#{msg['modifier.label']}" />
+				<h:outputText id="modifier"
+					value="#{creditPostController.recieveInfo.modifier.name}" />
+
+				<h:outputLabel for="modifyTime" value="#{msg['modifyTime.label']}" />
+				<h:outputText id="modifyTime"
+					value="#{creditPostController.recieveInfo.modifyTime}" />
+			</p:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

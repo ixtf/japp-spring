@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:panel header="#{msg['creditPost.label']}">
+			<p:panelGrid columns="2">
+				<h:outputLabel
+					value="#{msg['creditPost.label']}#{msg['number.label']}" />
+				<h:outputText value="#{creditPostController.creditPost.number}" />
+
+				<h:outputLabel value="#{msg['amount.label']}" />
+				<h:outputText value="#{creditPostController.creditPost.amount}" />
+
+				<h:outputLabel value="#{msg['waers.label']}" />
+				<h:outputText value="#{creditPostController.creditPost.waers}" />
+
+				<h:outputLabel value="#{msg['payType.label']}" />
+				<h:outputText value="#{creditPostController.creditPost.payType}" />
+
+				<h:outputLabel value="#{msg['modifier.label']}" />
+				<h:outputText
+					value="#{creditPostController.creditPost.modifier.name}" />
+
+				<h:outputLabel value="#{msg['modifyTime.label']}" />
+				<h:outputText value="#{creditPostController.creditPost.modifyTime}" />
+			</p:panelGrid>
+			<p:dataTable id="vbakModels" var="_vbakMode"
+				value="#{creditPostController.vbakModels}">
+				<f:facet name="header">
+					<h:outputText value="#{msg['vbak.label']}" />
+				</f:facet>
+
+				<p:column headerText="#{msg['vbak.vbeln.label']}">
+					<h:outputText value="#{_vbakMode.vbak.vbeln}" />
+				</p:column>
+
+				<p:column headerText="#{msg['vbkd.bstkd.label']}">
+					<h:outputText value="#{_vbakMode.sapVbkdvb.bstkd}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		<p:panel header="#{msg['creditPostRecieve.label']}">
+			<p:panelGrid columns="2">
+				<h:outputLabel value="#{msg['status.label']}" />
+				<h:outputText
+					value="#{creditPostController.creditPost.recieveInfo.recieve}" />
+
+				<h:outputLabel value="#{msg['note.label']}" />
+				<h:outputText
+					value="#{creditPostController.creditPost.recieveInfo.note}" />
+
+				<h:outputLabel value="#{msg['modifier.label']}" />
+				<h:outputText
+					value="#{creditPostController.creditPost.recieveInfo.modifier.name}" />
+
+				<h:outputLabel value="#{msg['modifyTime.label']}" />
+				<h:outputText
+					value="#{creditPostController.creditPost.recieveInfo.modifyTime}" />
+			</p:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

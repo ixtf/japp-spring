@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   		http://www.springframework.org/schema/beans/spring-beans.xsd
+	   		http://www.springframework.org/schema/context
+	   		http://www.springframework.org/schema/context/spring-context.xsd
+	   		http://www.springframework.org/schema/data/neo4j 
+	   		http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<neo4j:config storeDirectory="${neo4j.storeDirectory}" />
+	<!-- <neo4j:config graphDatabaseService="graphDatabaseService" /> <bean 
+		id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase"> 
+		<constructor-arg index="0" value="http://192.168.0.116:7474/db/data/" /> 
+		</bean> -->
+
+	<neo4j:repositories base-package="com.hengyi" />
+
+	<tx:annotation-driven mode="proxy" />
+
+	<bean id="hrDataSource" p:driverClass="${jdbc.oracle.driverClassName}"
+		p:jdbcUrl="${hr.jdbc.url}" p:user="${hr.jdbc.username}" p:password="${hr.jdbc.password}"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+		p:minPoolSize="10" p:maxPoolSize="100" p:maxStatements="50"
+		p:acquireIncrement="5" p:idleConnectionTestPeriod="60" />
+	<bean id="hrJdbcTemplate" p:dataSource-ref="hrDataSource"
+		class="org.springframework.jdbc.core.JdbcTemplate" />
+
+	<bean id="oa1DataSource" p:driverClass="${jdbc.sqlserver.driverClassName}"
+		p:jdbcUrl="${oa1.jdbc.url}" p:user="${oa1.jdbc.username}" p:password="${oa1.jdbc.password}"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+		p:minPoolSize="10" p:maxPoolSize="100" p:maxStatements="50"
+		p:acquireIncrement="5" p:idleConnectionTestPeriod="60" />
+	<bean id="oa1JdbcTemplate" p:dataSource-ref="oa1DataSource"
+		class="org.springframework.jdbc.core.JdbcTemplate" />
+
+	<bean id="oa2DataSource" p:driverClass="${jdbc.sqlserver.driverClassName}"
+		p:jdbcUrl="${oa2.jdbc.url}" p:user="${oa2.jdbc.username}" p:password="${oa2.jdbc.password}"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+		p:minPoolSize="10" p:maxPoolSize="100" p:maxStatements="50"
+		p:acquireIncrement="5" p:idleConnectionTestPeriod="60" />
+	<bean id="oa2JdbcTemplate" p:dataSource-ref="oa2DataSource"
+		class="org.springframework.jdbc.core.JdbcTemplate" />
+
+	<context:property-placeholder
+		properties-ref="deployProperties" />
+</beans>

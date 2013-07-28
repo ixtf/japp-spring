@@ -1,0 +1,71 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+	   		http://www.springframework.org/schema/context
+	   		http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager"
+		p:cacheManager-ref="shiroEhcacheManager">
+		<property name="realms">
+			<set>
+				<ref bean="shiroIniRealm" />
+				<ref bean="shiroHrRealm" />
+				<ref bean="shiroOa1Realm" />
+				<ref bean="shiroOa2Realm" />
+				<ref bean="shiroMobileRealm" />
+				<ref bean="shiroEmailRealm" />
+			</set>
+		</property>
+	</bean>
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean"
+		p:securityManager-ref="securityManager" p:unauthorizedUrl="/unauthorized"
+		p:successUrl="/" p:loginUrl="/login">
+		<property name="filterChainDefinitions">
+			<value>
+				/login = anon
+				/resources/** = anon
+				/ws/** = anon
+				/** = authc,roles[admin]
+			</value>
+		</property>
+	</bean>
+
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	<bean depends-on="lifecycleBeanPostProcessor"
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+	<bean p:securityManager-ref="securityManager"
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor" />
+	<bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager" />
+
+	<bean id="shiroIniRealm" class="org.apache.shiro.realm.text.IniRealm"
+		p:resourcePath="${shiro.ini.resourcePath}" p:credentialsMatcher-ref="shiroIniCredentialsMatcher"
+		p:name="INI" />
+	<bean id="shiroEmailRealm" class="com.hengyi.japp.common.shiro.LocalRealm"
+		p:credentialsMatcher-ref="shiroLocalCredentialsMatcher" p:name="EMAIL" />
+	<bean id="shiroMobileRealm" class="com.hengyi.japp.common.shiro.LocalRealm"
+		p:credentialsMatcher-ref="shiroLocalCredentialsMatcher" p:name="MOBILE" />
+	<bean id="shiroHrRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm"
+		p:dataSource-ref="hrDataSource" p:authenticationQuery="${hr.authenticationQuery}"
+		p:credentialsMatcher-ref="shiroMd5CredentialsMatcher" p:name="HR" />
+	<bean id="shiroOa1Realm" class="org.apache.shiro.realm.jdbc.JdbcRealm"
+		p:dataSource-ref="oa1DataSource" p:authenticationQuery="${oa1.authenticationQuery}"
+		p:credentialsMatcher-ref="shiroMd5CredentialsMatcher" p:name="OA1" />
+	<bean id="shiroOa2Realm" class="org.apache.shiro.realm.jdbc.JdbcRealm"
+		p:dataSource-ref="oa2DataSource" p:authenticationQuery="${oa2.authenticationQuery}"
+		p:credentialsMatcher-ref="shiroMd5CredentialsMatcher" p:name="OA2" />
+
+	<bean id="shiroMd5CredentialsMatcher" p:hashAlgorithmName="MD5"
+		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" />
+	<bean id="shiroIniCredentialsMatcher" p:hashAlgorithmName="SHA-512"
+		p:storedCredentialsHexEncoded="false" p:hashIterations="5000"
+		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" />
+	<bean id="shiroLocalCredentialsMatcher" p:hashAlgorithmName="SHA-512"
+		p:storedCredentialsHexEncoded="true" p:hashIterations="5000"
+		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" />
+
+	<context:property-placeholder
+		properties-ref="deployProperties" />
+</beans>

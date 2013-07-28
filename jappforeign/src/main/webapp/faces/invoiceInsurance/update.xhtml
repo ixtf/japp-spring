@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:panel header="#{msg['invoice.label']}">
+			<p:panelGrid columns="2">
+				<h:outputLabel value="#{msg['invoice.label']}#{msg['number.label']}" />
+				<h:outputText value="#{invoiceInsuranceController.invoice.number}" />
+
+				<h:outputLabel value="#{msg['delivery.label']}#{msg['date.label']}" />
+				<h:outputText
+					value="#{invoiceInsuranceController.invoice.deliveryDate}" />
+
+				<h:outputLabel value="#{msg['etd.label']}" />
+				<h:outputText value="#{invoiceInsuranceController.invoice.etd}" />
+
+				<h:outputLabel value="#{msg['eta.label']}" />
+				<h:outputText value="#{invoiceInsuranceController.invoice.eta}" />
+
+				<h:outputLabel value="#{msg['note.label']}" />
+				<h:outputText value="#{invoiceInsuranceController.invoice.note}" />
+
+				<h:outputLabel value="#{msg['modifier.label']}" />
+				<h:outputText
+					value="#{invoiceInsuranceController.invoice.modifier.name}" />
+
+				<h:outputLabel value="#{msg['modifyTime.label']}" />
+				<h:outputText
+					value="#{invoiceInsuranceController.invoice.modifyTime}" />
+			</p:panelGrid>
+			<p:dataTable id="likpModels" var="_likpModel"
+				value="#{invoiceInsuranceController.likpModels}">
+				<p:column headerText="#{msg['likp.vbeln.label']}">
+					<h:outputText value="#{_likpModel.likp.vbeln}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		<p:panel header="#{msg['invoiceInsurance.label']}">
+			<h:panelGrid columns="3">
+				<h:outputLabel for="status" value="#{msg['status.label']}" />
+				<p:selectOneRadio id="status"
+					value="#{invoiceInsuranceController.insuranceInfo.insurance}">
+					<f:selectItem itemValue="#{true}"
+						itemLabel="#{msg['invoiceInsurance.insurance.label']}" />
+					<f:selectItem itemValue="#{false}"
+						itemLabel="#{msg['invoiceInsurance.uninsurance.label']}" />
+				</p:selectOneRadio>
+				<p:message for="status" />
+
+				<h:outputLabel for="note" value="#{msg['note.label']}" />
+				<p:inputTextarea id="note"
+					value="#{invoiceInsuranceController.insuranceInfo.note}" />
+				<p:message for="note" />
+			</h:panelGrid>
+		</p:panel>
+		<p:commandButton actionListener="#{invoiceInsuranceController.save}"
+			value="#{msg['operation.submit']}" update=":form" />
+		<p:panel header="#{msg['invoiceRecieve.label']}">
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{msg['status.label']}" />
+				<h:outputText
+					value="#{invoiceInsuranceController.recieveInfo.recieve}" />
+
+				<h:outputLabel value="#{msg['note.label']}" />
+				<h:outputText value="#{invoiceInsuranceController.recieveInfo.note}" />
+
+				<h:outputLabel value="#{msg['modifier.label']}" />
+				<h:outputText
+					value="#{invoiceInsuranceController.recieveInfo.modifier.name}" />
+
+				<h:outputLabel value="#{msg['modifyTime.label']}" />
+				<h:outputText
+					value="#{invoiceInsuranceController.recieveInfo.modifyTime}" />
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

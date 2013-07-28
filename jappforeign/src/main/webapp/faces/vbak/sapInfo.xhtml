@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/faces/vbak/update.xhtml">
+	<p:panel header="SAP#{msg['vbak.label']}">
+		<p:panelGrid columns="3">
+			<h:outputLabel value="#{msg['vbak.netwr.label']}" />
+			<h:outputText value="#{vbakController.vbakModel.sapVbak.netwr}" />
+			<h:outputText value="#{vbakController.vbakModel.sapVbak.waerk}" />
+
+			<h:outputLabel value="#{msg['vbak.kunnr.label']}" />
+			<h:outputText value="#{vbakController.vbakModel.sapVbak.kunnr}" />
+			<h:outputText value="#{vbakController.vbakModel.sapKna1.name1}" />
+
+			<h:outputLabel value="#{msg['vbkd.bstkd.label']}" />
+			<h:outputText value="#{vbakController.vbakModel.sapVbkdvb.bstkd}" />
+			<h:outputText value="#{vbakController.vbakModel.sapVbkdvb.bstkd}" />
+
+			<h:outputLabel value="#{msg['vbkd.zterm.label']}" />
+			<h:outputText value="#{vbakController.vbakModel.sapVbkdvb.zterm}" />
+			<h:outputText value="#{vbakController.vbakModel.sapVbkdvb.inco1}" />
+
+			<h:outputLabel value="#{msg['vbkd.inco1.label']}" />
+			<h:outputText value="#{vbakController.vbakModel.sapVbkdvb.inco1}" />
+			<h:outputText value="#{vbakController.vbakModel.sapVbkdvb.inco2}" />
+		</p:panelGrid>
+
+		<p:dataTable var="_vbap" value="#{vbakController.vbakModel.sapVbaps}">
+			<p:column headerText="#{msg['posnr.label']}">
+				<h:outputText value="#{_vbap.pk.posnr}" />
+			</p:column>
+			<p:column headerText="#{msg['matnr.label']}">
+				<h:outputText value="#{_vbap.matnr}" />
+			</p:column>
+			<p:column headerText="#{msg['vbap.kwmeng.label']}">
+				<h:outputText value="#{_vbap.kwmeng}" />
+			</p:column>
+			<p:column headerText="#{msg['vbap.vrkme.label']}">
+				<h:outputText value="#{_vbap.vrkme}" />
+			</p:column>
+			<p:column headerText="#{msg['vbap.volum.label']}">
+				<h:outputText value="#{_vbap.volum}" />
+			</p:column>
+			<p:column headerText="#{msg['vbap.voleh.label']}">
+				<h:outputText value="#{_vbap.voleh}" />
+			</p:column>
+			<p:column headerText="#{msg['maktx.label']}">
+				<h:outputText value="#{_vbap.arktx}" />
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+</ui:composition>

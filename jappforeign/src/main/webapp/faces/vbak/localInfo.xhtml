@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="menubar.xhtml">
+	<ui:define name="localInfo">
+		<p:panel id="localInfo" header="#{msg['local.vbak.label']}">
+			<p:tabView>
+				<p:tab title="#{msg['creditPost.label']}">
+					<p:dataTable id="creditPostDataTable" var="_creditPost"
+						value="#{vbakController.vbakModel.creditPosts}"
+						rowKey="#{_creditPost.number}" selectionMode="single">
+						<p:column
+							headerText="#{msg['creditPost.label']}#{msg['number.label']}">
+							<h:outputText value="#{_creditPost.number}" />
+						</p:column>
+						<p:column headerText="#{msg['amount.label']}"
+							style="text-align:right">
+							<h:outputText value="#{_creditPost.amount}" />
+						</p:column>
+						<p:column headerText="#{msg['payType.label']}">
+							<h:outputText value="#{_creditPost.payType}" />
+						</p:column>
+						<p:column headerText="#{msg['status.label']}">
+							<h:outputText value="#{_creditPost.status.name}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+				<p:tab title="#{msg['stockPrepare.label']}">
+					<p:dataTable var="_item"
+						value="#{vbakController.vbakModel.stockPrepares}">
+						<p:column
+							headerText="#{msg['stockPrepare.label']}#{msg['number.label']}">
+							<h:outputText value="#{_item.number}" />
+						</p:column>
+						<p:column headerText="#{msg['status.label']}">
+							<h:outputText value="#{_item.status.name}" />
+						</p:column>
+						<p:column headerText="#{msg['note.label']}">
+							<h:outputText value="#{_item.note}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:tabView>
+		</p:panel>
+		<ui:insert name="sapInfo" />
+	</ui:define>
+</ui:composition>

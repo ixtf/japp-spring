@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="errorMessage" showDetail="true" sticky="true"
+				autoupdate="true" severity="error" />
+			<p:growl id="infoMessage" showDetail="true" autoupdate="true"
+				severity="info" />
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText value="#{taskConfigController.task}" />
+			</h1>
+			<p:tabMenu activeIndex="0">
+				<p:menuitem value="#{msg['charger.label']}" />
+				<p:menuitem value="KPIs"
+					url="/tasks/#{taskConfigController.taskNodeId}/config/kpis" />
+				<p:menuitem value="#{msg['person.label']}"
+					url="/tasks/#{taskConfigController.taskNodeId}/config/persons" />
+			</p:tabMenu>
+			<h:panelGrid columns="4" styleClass="form-inline">
+				<p:inputText id="empSn"
+					value="#{taskConfigController.charger.empSn}"
+					title="#{msg['empSn.label']}" />
+				<p:tooltip for="empSn" showEvent="focus" hideEvent="blur"
+					showEffect="slide" hideEffect="slide" />
+				<p:message for="empSn" />
+				<p:commandButton value="#{msg['add.label']}" process="@parent"
+					action="#{taskConfigController.addCharger}" update=":form"
+					icon="ui-icon-plus" />
+			</h:panelGrid>
+			<p:contextMenu for="tableChargers">
+				<p:menuitem value="#{msg['delete.label']}" type="button"
+					onclick="confirmDialogRemoveCharger.show()" icon="ui-icon-close" />
+			</p:contextMenu>
+			<p:confirmDialog id="confirmDialogRemoveCharger"
+				message="#{msg['operation.confirm']}?" severity="alert"
+				widgetVar="confirmDialogRemoveCharger">
+				<p:commandButton value="#{msg['operation.submit']}"
+					process="@this,tableChargers"
+					actionListener="#{taskConfigController.removeCharger}"
+					update="tableChargers"
+					oncomplete="confirmDialogRemoveCharger.hide()" />
+			</p:confirmDialog>
+			<p:dataTable id="tableChargers" var="_charger"
+				value="#{taskConfigController.chargers}"
+				selection="#{taskConfigController.charger}" rowKey="#{_charger}"
+				selectionMode="single">
+				<p:column headerText="#{msg['empSn.label']}">
+					<h:outputText value="#{_charger.empSn}" />
+				</p:column>
+
+				<p:column headerText="#{msg['name.label']}">
+					<h:outputText value="#{_charger.name}" />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton process="@this"
+				action="#{taskConfigController.save}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="btn-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

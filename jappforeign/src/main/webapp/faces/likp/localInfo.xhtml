@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="menubar.xhtml">
+	<ui:define name="localInfo">
+		<p:panel id="localInfo" header="#{msg['local.likp.label']}">
+			<p:tabView>
+				<p:tab title="#{msg['voyage.label']}">
+				</p:tab>
+				<p:tab title="#{msg['.label']}">
+				</p:tab>
+			</p:tabView>
+		</p:panel>
+		<ui:insert name="sapInfo" />
+	</ui:define>
+</ui:composition>

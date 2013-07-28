@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputText value="#{msg['year.label']}" />
+				<p:selectOneMenu value="#{taskChangeController.year}">
+					<f:selectItems value="#{taskChangeController.years}" />
+					<p:ajax process="@this" listener="#{taskChangeController.search}"
+						event="change" update=":form" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<p:dataTable var="_task" value="#{taskChangeController.tasks}">
+				<p:column headerText="#{msg['year.label']}">
+					<h:outputText value="#{_task.year}" />
+				</p:column>
+
+				<p:column headerText="#{msg['name.label']}">
+					<h:outputText value="#{_task.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['status.label']}">
+					<h:outputText value="#{_task.status.name}" />
+				</p:column>
+
+				<p:column style="width:4%">
+					<p:commandButton id="selectButton" update=":form"
+						action="#{taskChangeController.change}" icon="ui-icon-search">
+						<f:setPropertyActionListener value="#{_task}"
+							target="#{taskChangeController.task}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

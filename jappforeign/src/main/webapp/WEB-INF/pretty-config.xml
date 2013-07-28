@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.0 
+	http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.0.xsd">
+	<url-mapping id="home">
+		<pattern value="/" />
+		<view-id value="/faces/home.jsf" />
+	</url-mapping>
+
+	<url-mapping id="vbakManage">
+		<pattern value="/vbakManage" />
+		<view-id value="/faces/vbak/open.jsf" />
+	</url-mapping>
+	<url-mapping id="vbakUpdate">
+		<pattern value="/vbak/#{vbeln:vbakController.vbeln}" />
+		<view-id value="/faces/vbak/update.jsf" />
+		<action>#{vbakController.openVbak}</action>
+	</url-mapping>
+
+	<url-mapping id="creditPostManage">
+		<pattern value="/creditPostManage" />
+		<view-id value="/faces/creditPost/open.jsf" />
+	</url-mapping>
+	<url-mapping id="creditPostUpdate">
+		<pattern value="/creditPost/#{number:creditPostController.number}" />
+		<view-id value="/faces/creditPost/update.jsf" />
+		<action>#{creditPostController.openCreditPost}</action>
+	</url-mapping>
+	<url-mapping id="creditPostRecieveManage">
+		<pattern value="/creditPostRecieveManage" />
+		<view-id value="/faces/creditPostRecieve/open.jsf" />
+	</url-mapping>
+	<url-mapping id="creditPostRecieveUpdate">
+		<pattern
+			value="/creditPostRecieve/#{number:creditPostRecieveController.number}" />
+		<view-id value="/faces/creditPostRecieve/update.jsf" />
+		<action>#{creditPostRecieveController.openCreditPostRecieve}</action>
+	</url-mapping>
+
+	<url-mapping id="stockPrepareManage">
+		<pattern value="/stockPrepareManage" />
+		<view-id value="/faces/stockPrepare/open.jsf" />
+	</url-mapping>
+	<url-mapping id="stockPrepareUpdate">
+		<pattern value="/stockPrepare/#{number:stockPrepareController.number}" />
+		<view-id value="/faces/stockPrepare/update.jsf" />
+		<action>#{stockPrepareController.openStockPrepare}</action>
+	</url-mapping>
+
+	<url-mapping id="stockPrepareInfoManage">
+		<pattern value="/stockPrepareInfoManage" />
+		<view-id value="/faces/stockPrepareInfo/open.jsf" />
+	</url-mapping>
+	<url-mapping id="stockPrepareInfoUpdate">
+		<pattern
+			value="/stockPrepareInfo/#{number:stockPrepareInfoController.number}" />
+		<view-id value="/faces/stockPrepareInfo/update.jsf" />
+		<action>#{stockPrepareInfoController.openStockPrepareInfo}</action>
+	</url-mapping>
+
+	<!-- <url-mapping id="likpManage"> <pattern value="/likpManage" /> <view-id 
+		value="/faces/likp/open.jsf" /> </url-mapping> <url-mapping id="likpUpdate"> 
+		<pattern value="/likp/#{vbeln:likpController.vbeln}" /> <view-id value="/faces/likp/update.jsf" 
+		/> <action>#{likpController.openLikp}</action> </url-mapping> -->
+
+	<url-mapping id="invoiceManage">
+		<pattern value="/invoiceManage" />
+		<view-id value="/faces/invoice/open.jsf" />
+	</url-mapping>
+	<url-mapping id="invoiceUpdate">
+		<pattern value="/invoice/#{number:invoiceController.number}" />
+		<view-id value="/faces/invoice/update.jsf" />
+		<action>#{invoiceController.openInvoice}</action>
+	</url-mapping>
+
+	<url-mapping id="invoiceInsuranceManage">
+		<pattern value="/invoiceInsuranceManage" />
+		<view-id value="/faces/invoiceInsurance/open.jsf" />
+	</url-mapping>
+	<url-mapping id="invoiceInsuranceUpdate">
+		<pattern
+			value="/invoiceInsurance/#{number:invoiceInsuranceController.number}" />
+		<view-id value="/faces/invoiceInsurance/update.jsf" />
+		<action>#{invoiceInsuranceController.openInvoiceInsurance}</action>
+	</url-mapping>
+
+	<url-mapping id="invoiceRecieveManage">
+		<pattern value="/invoiceRecieveManage" />
+		<view-id value="/faces/invoiceRecieve/open.jsf" />
+	</url-mapping>
+	<url-mapping id="invoiceRecieveUpdate">
+		<pattern value="/invoiceRecieve/#{number:invoiceRecieveController.number}" />
+		<view-id value="/faces/invoiceRecieve/update.jsf" />
+		<action>#{invoiceRecieveController.openInvoiceRecieve}</action>
+	</url-mapping>
+</pretty-config>

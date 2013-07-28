@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="update.xhtml">
+	<p:panel header="SAP#{msg['likp.label']}">
+		<h:panelGrid columns="3">
+		</h:panelGrid>
+		<p:dataTable var="_lips" value="#{likpController.likpModel.sapLips}">
+			<p:column headerText="#{msg['posnr.label']}">
+				<h:outputText value="#{_lips.pk.posnr}" />
+			</p:column>
+			<p:column headerText="#{msg['matnr.label']}">
+				<h:outputText value="#{_lips.matnr}" />
+			</p:column>
+			<p:column headerText="#{msg['lips.lfimg.label']}">
+				<h:outputText value="#{_lips.lfimg}" />
+			</p:column>
+			<p:column headerText="#{msg['vbap.vrkme.label']}">
+				<h:outputText value="#{_lips.vrkme}" />
+			</p:column>
+			<p:column headerText="#{msg['maktx.label']}">
+				<h:outputText value="#{_lips.arktx}" />
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+</ui:composition>

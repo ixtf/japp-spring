@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.0 
+	http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.0.xsd">
+	<url-mapping id="logout">
+		<pattern value="/logout" />
+		<view-id value="/faces/home.jsf" />
+		<action>#{authController.logout}</action>
+	</url-mapping>
+
+	<url-mapping id="taskUpdate">
+		<pattern value="/tasks/#{nodeId:taskUpdateController.nodeId}" />
+		<view-id value="/faces/task/update.jsf" />
+	</url-mapping>
+
+	<url-mapping id="taskConfigChargers">
+		<pattern
+			value="/tasks/#{taskNodeId:taskConfigController.taskNodeId}/config/chargers" />
+		<view-id value="/faces/task/configChargers.jsf" />
+	</url-mapping>
+
+	<url-mapping id="taskConfigKpis">
+		<pattern
+			value="/tasks/#{taskNodeId:taskConfigController.taskNodeId}/config/kpis" />
+		<view-id value="/faces/task/configKpis.jsf" />
+	</url-mapping>
+
+	<url-mapping id="taskConfigPersons">
+		<pattern
+			value="/tasks/#{taskNodeId:taskConfigController.taskNodeId}/config/persons" />
+		<view-id value="/faces/task/configPersons.jsf" />
+	</url-mapping>
+
+	<url-mapping id="taskConfigPerson">
+		<pattern
+			value="/tasks/#{taskNodeId:taskConfigController.taskNodeId}/config/person" />
+		<view-id value="/faces/task/configPerson.jsf" />
+	</url-mapping>
+
+	<url-mapping id="evaluation">
+		<pattern
+			value="/evaluation/persons/#{personNodeId:evaluationController.personNodeId}" />
+		<view-id value="/faces/evaluation/index.jsf" />
+	</url-mapping>
+</pretty-config>

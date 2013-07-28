@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="errorMessage" showDetail="true" sticky="true"
+				autoupdate="true" severity="error" />
+			<p:growl id="infoMessage" showDetail="true" autoupdate="true"
+				severity="info" />
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText value="#{taskConfigController.task}" />
+			</h1>
+			<p:tabMenu activeIndex="1">
+				<p:menuitem value="#{msg['charger.label']}"
+					url="/tasks/#{taskConfigController.taskNodeId}/config/chargers" />
+				<p:menuitem value="KPIs" />
+				<p:menuitem value="#{msg['person.label']}"
+					url="/tasks/#{taskConfigController.taskNodeId}/config/persons" />
+			</p:tabMenu>
+			<h:panelGrid columns="10" styleClass="form-inline"
+				rendered="#{taskConfigController.task.init}">
+				<p:inputText id="name" value="#{taskConfigController.kpi.name}"
+					title="#{msg['name.label']}" />
+				<p:tooltip for="name" showEvent="focus" hideEvent="blur"
+					showEffect="slide" hideEffect="slide" />
+				<p:message for="name" />
+
+				<p:inputText id="minScore"
+					value="#{taskConfigController.kpi.minScore}"
+					title="#{msg['minScore.label']}" />
+				<p:tooltip for="minScore" showEvent="focus" hideEvent="blur"
+					showEffect="slide" hideEffect="slide" />
+				<p:message for="minScore" />
+
+				<p:inputText id="maxScore"
+					value="#{taskConfigController.kpi.maxScore}"
+					title="#{msg['maxScore.label']}" />
+				<p:tooltip for="maxScore" showEvent="focus" hideEvent="blur"
+					showEffect="slide" hideEffect="slide" />
+				<p:message for="maxScore" />
+
+				<p:commandButton value="#{msg['add.label']}" process="@parent"
+					action="#{taskConfigController.addTaskKpi}" update=":form"
+					icon="ui-icon-plus" />
+			</h:panelGrid>
+			<p:contextMenu for="tableTaskKpis"
+				rendered="#{taskConfigController.task.init}">
+				<p:menuitem value="#{msg['delete.label']}" type="button"
+					onclick="confirmDialogRemoveTaskKpi.show()" icon="ui-icon-close" />
+			</p:contextMenu>
+			<p:confirmDialog message="#{msg['operation.confirm']}?"
+				severity="alert" widgetVar="confirmDialogRemoveTaskKpi">
+				<p:commandButton value="#{msg['operation.submit']}"
+					process="@this,tableTaskKpis"
+					actionListener="#{taskConfigController.removeTaskKpi}"
+					update="tableTaskKpis"
+					oncomplete="confirmDialogRemoveTaskKpi.hide()" />
+			</p:confirmDialog>
+			<p:dataTable id="tableTaskKpis" var="_kpi"
+				value="#{taskConfigController.taskKpis}"
+				selection="#{taskConfigController.kpi}" rowKey="#{_kpi}"
+				selectionMode="single">
+				<p:column headerText="#{msg['name.label']}">
+					<h:outputText value="#{_kpi.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['minScore.label']}">
+					<h:outputText value="#{_kpi.minScore}" />
+				</p:column>
+
+				<p:column headerText="#{msg['maxScore.label']}">
+					<h:outputText value="#{_kpi.maxScore}" />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton process="@this"
+				action="#{taskConfigController.save}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="btn-primary"
+				rendered="#{taskConfigController.task.init}" />
+		</h:form>
+	</ui:define>
+</ui:composition>

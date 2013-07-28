@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<ui:insert name="menubar">
+			<ui:include src="menubar.xhtml" />
+		</ui:insert>
+		<ui:insert name="localInfo">
+			<ui:include src="localInfo.xhtml" />
+		</ui:insert>
+		<ui:insert name="sapInfo">
+			<ui:include src="sapInfo.xhtml" />
+		</ui:insert>
+	</ui:define>
+</ui:composition>

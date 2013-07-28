@@ -1,0 +1,8 @@
+<decorators defaultdir="/WEB-INF/jspf">
+	<decorator name="admin" page="adminDecorator.jsp">
+		<pattern>/admin/*</pattern>
+	</decorator>
+	<decorator name="public" page="publicDecorator.jsp">
+		<pattern>/</pattern>
+	</decorator>
+</decorators>

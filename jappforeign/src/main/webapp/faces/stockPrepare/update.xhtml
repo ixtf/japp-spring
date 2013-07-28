@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:panel header="#{msg['stockPrepare.label']}">
+			<h:panelGrid columns="3">
+				<h:outputLabel for="number"
+					value="#{msg['stockPrepare.label']}#{msg['number.label']}" />
+				<h:inputText id="number" readonly="true"
+					value="#{stockPrepareController.stockPrepare.number}" />
+				<p:message for="number" />
+
+				<h:outputLabel for="note" value="#{msg['note.label']}" />
+				<p:inputTextarea id="note"
+					value="#{stockPrepareController.stockPrepare.note}" />
+				<p:message for="note" />
+
+				<h:outputLabel for="vbakVbeln" value="#{msg['vbak.vbeln.label']}" />
+				<h:inputText id="vbakVbeln"
+					value="#{stockPrepareController.vbakVbeln}" />
+				<p:commandButton action="#{stockPrepareController.bindVbakVbeln}"
+					update=":form:stockPrepareItemDataTable" icon="ui-icon-plus" />
+			</h:panelGrid>
+			<p:dataTable id="stockPrepareItemDataTable" var="_stockPrepareItem"
+				value="#{stockPrepareController.stockPrepareItems}" editable="true"
+				editMode="cell">
+				<p:column headerText="#{msg['vbak.label']}">
+					<h:outputText value="#{_stockPrepareItem.pk.vbeln}" />
+				</p:column>
+				<p:column headerText="#{msg['posnr.label']}">
+					<h:outputText value="#{_stockPrepareItem.pk.posnr}" />
+				</p:column>
+				<p:column headerText="#{msg['matnr.label']}">
+					<h:outputText value="#{_stockPrepareItem.matnr}" />
+				</p:column>
+				<p:column headerText="#{msg['vbap.kwmeng.label']}"
+					style="text-align:right">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{_stockPrepareItem.kwmeng}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{_stockPrepareItem.kwmeng}"
+								style="text-align:right" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="#{msg['vbap.vrkme.label']}">
+					<h:outputText value="#{_stockPrepareItem.vrkme}" />
+				</p:column>
+				<p:column headerText="#{msg['maktx.label']}">
+					<h:outputText value="#{_stockPrepareItem.arktx}" />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton actionListener="#{stockPrepareController.save}"
+				value="#{msg['operation.submit']}" update=":form" />
+		</p:panel>
+		<p:panel header="#{msg['stockPrepareInfo.label']}"
+			rendered="#{not empty stockPrepareController.stockPrepareInfo}">
+			<p:panelGrid columns="2">
+				<h:outputLabel value="#{msg['note.label']}" />
+				<h:outputText
+					value="#{stockPrepareController.stockPrepareInfo.note}" />
+
+				<h:outputLabel value="#{msg['modifier.label']}" />
+				<h:outputText
+					value="#{stockPrepareController.stockPrepareInfo.modifier.name}" />
+
+				<h:outputLabel value="#{msg['modifyTime.label']}" />
+				<h:outputText
+					value="#{stockPrepareController.stockPrepareInfo.modifyTime}" />
+			</p:panelGrid>
+			<p:dataTable var="_stockPrepareInfoItem"
+				value="#{stockPrepareInfoController.stockPrepareInfoItems}">
+				<p:column headerText="#{msg['vbak.label']}">
+					<h:outputText value="#{_stockPrepareInfoItem.pk.vbeln}" />
+				</p:column>
+				<p:column headerText="#{msg['posnr.label']}">
+					<h:outputText value="#{_stockPrepareInfoItem.pk.posnr}" />
+				</p:column>
+				<p:column headerText="#{msg['matnr.label']}">
+					<h:outputText value="#{_stockPrepareInfoItem.matnr}" />
+				</p:column>
+				<p:column headerText="#{msg['vbap.kwmeng.label']}"
+					style="text-align:right">
+					<h:outputText value="#{_stockPrepareInfoItem.kwmeng}" />
+				</p:column>
+				<p:column headerText="#{msg['vbap.vrkme.label']}">
+					<h:outputText value="#{_stockPrepareInfoItem.vrkme}" />
+				</p:column>
+				<p:column headerText="#{msg['maktx.label']}">
+					<h:outputText value="#{_stockPrepareInfoItem.arktx}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</ui:define>
+</ui:composition>

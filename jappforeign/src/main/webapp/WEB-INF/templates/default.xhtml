@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><h:outputText value="#{msg['project.title']}" /></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<h:outputStylesheet name="css/all.css" />
+	<h:outputStylesheet name="bootstrap/css/bootstrap.min.css" />
+	<h:outputStylesheet name="bootstrap/css/bootstrap-responsive.min.css" />
+	<h:outputScript name="js/PrimeFacesLocales.js" />
+</h:head>
+<h:body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<h:outputLink value="/foreign" class="brand">
+					<h:outputText value="#{msg['home.title']}" />
+				</h:outputLink>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li><h:outputLink value="/foreign/vbakManage">
+								<h:outputText value="#{msg['vbak.manage.title']}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="/foreign/creditPostManage">
+								<h:outputText value="#{msg['creditPost.manage.title']}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="/foreign/creditPostRecieveManage">
+								<h:outputText value="#{msg['creditPostRecieve.manage.title']}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="/foreign/stockPrepareManage">
+								<h:outputText value="#{msg['stockPrepare.manage.title']}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="/foreign/stockPrepareInfoManage">
+								<h:outputText value="#{msg['stockPrepareInfo.manage.title']}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="/foreign/invoiceManage">
+								<h:outputText value="#{msg['invoice.manage.title']}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="/foreign/invoiceInsuranceManage">
+								<h:outputText value="#{msg['invoiceInsurance.manage.title']}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="/foreign/invoiceRecieveManage">
+								<h:outputText value="#{msg['invoiceRecieve.manage.title']}" />
+							</h:outputLink></li>
+					</ul>
+				</div>
+				<!-- <form class="navbar-form pull-right">
+					<p:commandButton value="Login" icon="ui-icon-user" iconPos="right"/>
+				</form> -->
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<h:form id="form">
+			<p:growl id="errorMessage" showDetail="true" sticky="true"
+				autoupdate="true" severity="error" />
+			<p:growl id="infoMessage" showDetail="true" autoupdate="true"
+				severity="info" />
+			<ui:insert name="content" />
+		</h:form>
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>9</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>459</x>
+      <y>396</y>
+      <w>189</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>StockPrepare
+--
+number: String
+status: Status</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>522</x>
+      <y>432</y>
+      <w>215</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>27;27;198;99</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>243</x>
+      <y>252</y>
+      <w>189</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Vbap
+--
+pk: VbapPK
+status: Status</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>261</x>
+      <y>675</y>
+      <w>189</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>StockPrepareItemInfo
+--
+number: String
+kwmeng: BigDecimal</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>306</x>
+      <y>126</y>
+      <w>44</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1...n</panel_attributes>
+    <additional_attributes>27;27;27;126</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>306</x>
+      <y>288</y>
+      <w>44</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1...n</panel_attributes>
+    <additional_attributes>27;27;27;243</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>342</x>
+      <y>432</y>
+      <w>224</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1...n</panel_attributes>
+    <additional_attributes>207;27;27;99</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>261</x>
+      <y>531</y>
+      <w>189</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>StockPrepareItem
+--
+number: String
+kwmeng: BigDecimal
+vrkme: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>630</x>
+      <y>531</y>
+      <w>189</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>StockPrepareInfo
+--
+number: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>405</x>
+      <y>81</y>
+      <w>287</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0...n
+m2=0...n</panel_attributes>
+    <additional_attributes>27;27;270;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>324</x>
+      <y>585</y>
+      <w>44</w>
+      <h>107</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>27;27;27;90</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>675</x>
+      <y>90</y>
+      <w>189</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>CreditPost
+--
+number: String
+status: Status</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>738</x>
+      <y>126</y>
+      <w>44</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>27;27;27;126</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>675</x>
+      <y>252</y>
+      <w>189</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>CreditPostRecieveInfo
+--
+number: String
+recieve: boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>243</x>
+      <y>90</y>
+      <w>189</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Vbak
+--
+vbeln: String
+status: Status</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

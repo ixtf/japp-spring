@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:panel header="#{msg['invoice.label']}">
+			<h:panelGrid columns="3">
+				<h:outputLabel for="number"
+					value="#{msg['invoice.label']}#{msg['number.label']}" />
+				<h:inputText id="number" readonly="true"
+					value="#{invoiceController.invoice.number}" />
+				<p:message for="number" />
+
+				<h:outputLabel for="deliveryDate"
+					value="#{msg['delivery.label']}#{msg['date.label']}" />
+				<p:calendar id="deliveryDate"
+					value="#{invoiceController.invoice.deliveryDate}" locale="zh_CN"
+					pattern="yyyy-MM-dd" navigator="true" effect="slide" />
+				<p:message for="deliveryDate" />
+
+				<h:outputLabel for="etd" value="#{msg['etd.label']}" />
+				<p:calendar id="etd" value="#{invoiceController.invoice.etd}"
+					locale="zh_CN" pattern="yyyy-MM-dd" navigator="true" effect="slide" />
+				<p:message for="etd" />
+
+				<h:outputLabel for="eta" value="#{msg['eta.label']}" />
+				<p:calendar id="eta" value="#{invoiceController.invoice.eta}"
+					locale="zh_CN" pattern="yyyy-MM-dd" navigator="true" effect="slide" />
+				<p:message for="eta" />
+
+				<h:outputLabel for="note" value="#{msg['note.label']}" />
+				<p:inputTextarea id="note" value="#{invoiceController.invoice.note}" />
+				<p:message for="note" />
+
+				<h:outputLabel for="likpVbeln" value="#{msg['likp.vbeln.label']}" />
+				<h:inputText id="likpVbeln" value="#{invoiceController.likpVbeln}" />
+				<p:commandButton action="#{invoiceController.addLikp}"
+					update=":form" icon="ui-icon-plus" />
+			</h:panelGrid>
+			<p:contextMenu for="likpModels">
+				<p:menuitem value="Delete" update="likpModels" icon="ui-icon-close"
+					actionListener="#{invoiceController.removeLikp}" />
+			</p:contextMenu>
+			<p:dataTable id="likpModels" var="_likpModel"
+				value="#{invoiceController.likpModels}"
+				selection="#{invoiceController.selectedLikpModel}"
+				rowKey="#{_likpModel.likp}" selectionMode="single">
+				<p:column headerText="#{msg['likp.vbeln.label']}">
+					<h:outputText value="#{_likpModel.likp.vbeln}" />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton actionListener="#{invoiceController.save}"
+				value="#{msg['operation.submit']}" update=":form" />
+		</p:panel>
+		<p:panel header="#{msg['invoiceInsurance.label']}">
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{msg['status.label']}" />
+				<h:outputText value="#{invoiceController.insuranceInfo.insurance}" />
+
+				<h:outputLabel value="#{msg['note.label']}" />
+				<h:outputText value="#{invoiceController.insuranceInfo.note}" />
+
+				<h:outputLabel value="#{msg['modifier.label']}" />
+				<h:outputText
+					value="#{invoiceController.insuranceInfo.modifier.name}" />
+
+				<h:outputLabel value="#{msg['modifyTime.label']}" />
+				<h:outputText value="#{invoiceController.insuranceInfo.modifyTime}" />
+			</h:panelGrid>
+		</p:panel>
+		<p:panel header="#{msg['invoiceRecieve.label']}">
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{msg['status.label']}" />
+				<h:outputText value="#{invoiceController.recieveInfo.recieve}" />
+
+				<h:outputLabel value="#{msg['note.label']}" />
+				<h:outputText value="#{invoiceController.recieveInfo.note}" />
+
+				<h:outputLabel value="#{msg['modifier.label']}" />
+				<h:outputText value="#{invoiceController.recieveInfo.modifier.name}" />
+
+				<h:outputLabel value="#{msg['modifyTime.label']}" />
+				<h:outputText value="#{invoiceController.recieveInfo.modifyTime}" />
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

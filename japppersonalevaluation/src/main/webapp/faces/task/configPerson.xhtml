@@ -1,0 +1,204 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText value="#{taskConfigController.task}" />
+			</h1>
+			<p:tabMenu activeIndex="3">
+				<p:menuitem value="#{msg['charger.label']}"
+					url="/tasks/#{taskConfigController.taskNodeId}/config/chargers" />
+				<p:menuitem value="KPIs"
+					url="/tasks/#{taskConfigController.taskNodeId}/config/kpis" />
+				<p:menuitem value="#{msg['person.label']}"
+					url="/tasks/#{taskConfigController.taskNodeId}/config/persons" />
+				<p:menuitem value="#{taskConfigController.taskPerson.operator.name}" />
+			</p:tabMenu>
+			<h:panelGrid columns="3" cellpadding="5">
+				<h:outputLabel value="#{msg['statistic.label']} " for="statistic" />
+				<p:selectBooleanCheckbox id="statistic"
+					value="#{taskConfigController.taskPerson.statistic}">
+					<p:ajax update=":form" />
+				</p:selectBooleanCheckbox>
+				<p:message for="statistic" />
+
+				<h:outputLabel value="#{msg['evaluable.label']} " for="evaluable" />
+				<p:selectBooleanCheckbox id="evaluable"
+					value="#{taskConfigController.taskPerson.evaluable}">
+					<p:ajax update=":form" />
+				</p:selectBooleanCheckbox>
+				<p:message for="evaluable" />
+
+				<h:outputLabel value="#{msg['lays.label']} " for="lays" />
+				<p:inputText id="lays"
+					value="#{taskConfigController.taskPerson.lays}">
+					<p:ajax update=":form" />
+				</p:inputText>
+				<p:message for="lays" />
+			</h:panelGrid>
+			<p:tree id="evaluationTree" var="_person"
+				value="#{taskConfigController.evaluationPersonTree}"
+				orientation="horizontal">
+				<p:treeNode>
+					<h:outputText value="#{_person}" />
+				</p:treeNode>
+			</p:tree>
+			<p:panel header="#{msg['submitlimit.label']}">
+				<h:panelGrid columns="12" styleClass="form-inline">
+					<p:inputText id="submitLimitName"
+						value="#{taskConfigController.submitLimit.name}"
+						title="#{msg['name.label']}" />
+					<p:tooltip for="submitLimitName" showEvent="focus" hideEvent="blur"
+						showEffect="slide" hideEffect="slide" />
+					<p:message for="submitLimitName" />
+
+					<p:inputText id="submitLimitCalaculate1"
+						value="#{taskConfigController.submitLimit.calaculate1}"
+						title="#{msg['submitlimit.calaculate.label']}1" />
+					<p:tooltip for="submitLimitCalaculate1" showEvent="focus"
+						hideEvent="blur" showEffect="slide" hideEffect="slide" />
+					<p:message for="submitLimitCalaculate1" />
+
+					<p:selectOneMenu
+						value="#{taskConfigController.submitLimit.compare}">
+						<f:selectItems var="_compare"
+							value="#{taskManageController.compareTypes}"
+							itemLabel="#{_compare.name}" />
+					</p:selectOneMenu>
+
+					<p:inputText id="submitLimitCalaculate2"
+						value="#{taskConfigController.submitLimit.calaculate2}"
+						title="#{msg['submitlimit.calaculate.label']}2" />
+					<p:tooltip for="submitLimitCalaculate2" showEvent="focus"
+						hideEvent="blur" showEffect="slide" hideEffect="slide" />
+					<p:message for="submitLimitCalaculate2" />
+
+					<p:commandButton value="#{msg['add.label']}" process="@parent"
+						update=":form"
+						actionListener="#{taskConfigController.addSubmitLimit}"
+						icon="ui-icon-plus" />
+					<p:commandButton value="#{msg['submitlimit.test.label']}"
+						process="@parent" update="dialogSubmitLimitTest"
+						oncomplete="dialogSubmitLimitTest.show()" />
+				</h:panelGrid>
+				<p:dialog id="dialogSubmitLimitTest"
+					widgetVar="dialogSubmitLimitTest" modal="true">
+					<h:panelGrid columns="11" styleClass="form-inline">
+						<p:inputText value="#{taskConfigController.submitLimit.name}"
+							readonly="true" />
+						<p:inputText
+							value="#{taskConfigController.submitLimit.calaculate1}"
+							readonly="true" />
+						<p:inputText
+							value="#{taskConfigController.submitLimit.compare.name}"
+							readonly="true" />
+						<p:inputText
+							value="#{taskConfigController.submitLimit.calaculate2}"
+							readonly="true" />
+					</h:panelGrid>
+					<p:commandButton value="#{msg['operation.submit']}"
+						actionListener="#{taskConfigController.addSubmitLimit}"
+						process="@parent" update="tableSubmitLimits" />
+				</p:dialog>
+				<p:contextMenu for="tableSubmitLimits">
+					<p:menuitem value="#{msg['delete.label']}" type="button"
+						onclick="confirmDialogRemoveSubmitLimit.show()"
+						icon="ui-icon-close" />
+				</p:contextMenu>
+				<p:confirmDialog message="#{msg['operation.confirm']}?"
+					severity="alert" widgetVar="confirmDialogRemoveSubmitLimit">
+					<p:commandButton value="#{msg['operation.submit']}"
+						process="@this,tableSubmitLimits"
+						actionListener="#{taskConfigController.removeSubmitLimit}"
+						update="tableSubmitLimits"
+						oncomplete="confirmDialogRemoveSubmitLimit.hide()" />
+				</p:confirmDialog>
+				<p:dataTable id="tableSubmitLimits" var="_submitLimit"
+					value="#{taskConfigController.submitLimits}"
+					selection="#{taskConfigController.submitLimit}"
+					rowKey="#{_submitLimit}" selectionMode="single">
+					<p:column headerText="#{msg['name.label']}">
+						<h:outputText value="#{_submitLimit.name}" />
+					</p:column>
+
+					<p:column headerText="#{msg['submitlimit.calaculate.label']}1">
+						<h:outputText value="#{_submitLimit.calaculate1}" />
+					</p:column>
+
+					<p:column headerText="#{msg['submitlimit.compare.label']}">
+						<h:outputText value="#{_submitLimit.compare.name}" />
+					</p:column>
+
+					<p:column headerText="#{msg['submitlimit.calaculate.label']}2">
+						<h:outputText value="#{_submitLimit.calaculate2}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			<p:panel header="KPIs">
+				<h:panelGrid columns="10" styleClass="form-inline">
+					<p:inputText id="personKpiName"
+						value="#{taskConfigController.kpi.name}"
+						title="#{msg['name.label']}" />
+					<p:tooltip for="personKpiName" showEvent="focus" hideEvent="blur"
+						showEffect="slide" hideEffect="slide" />
+					<p:message for="personKpiName" />
+
+					<p:inputText id="personKpiMinScore"
+						value="#{taskConfigController.kpi.minScore}"
+						title="#{msg['minScore.label']}" />
+					<p:tooltip for="personKpiMinScore" showEvent="focus"
+						hideEvent="blur" showEffect="slide" hideEffect="slide" />
+					<p:message for="personKpiMinScore" />
+
+					<p:inputText id="personKpiMaxScore"
+						value="#{taskConfigController.kpi.maxScore}"
+						title="#{msg['maxScore.label']}" />
+					<p:tooltip for="personKpiMaxScore" showEvent="focus"
+						hideEvent="blur" showEffect="slide" hideEffect="slide" />
+					<p:message for="personKpiMaxScore" />
+
+					<p:commandButton value="#{msg['add.label']}" process="@parent"
+						update=":form"
+						actionListener="#{taskConfigController.addPersonKpi}"
+						icon="ui-icon-plus" />
+				</h:panelGrid>
+				<p:contextMenu for="tablePersonKpis">
+					<p:menuitem value="#{msg['delete.label']}" type="button"
+						onclick="confirmDialogRemovePersonKpi.show()" icon="ui-icon-close" />
+				</p:contextMenu>
+				<p:confirmDialog message="#{msg['operation.confirm']}?"
+					severity="alert" widgetVar="confirmDialogRemovePersonKpi">
+					<p:commandButton value="#{msg['operation.submit']}"
+						process="@this,tablePersonKpis"
+						actionListener="#{taskConfigController.removePersonKpi}"
+						update="tablePersonKpis"
+						oncomplete="confirmDialogRemovePersonKpi.hide()" />
+				</p:confirmDialog>
+				<p:dataTable id="tablePersonKpis" var="_kpi"
+					value="#{taskConfigController.personKpis}"
+					selection="#{taskConfigController.kpi}" rowKey="#{_kpi}"
+					selectionMode="single">
+					<p:column headerText="#{msg['name.label']}">
+						<h:outputText value="#{_kpi.name}" />
+					</p:column>
+
+					<p:column headerText="#{msg['minScore.label']}">
+						<h:outputText value="#{_kpi.minScore}" />
+					</p:column>
+
+					<p:column headerText="#{msg['maxScore.label']}">
+						<h:outputText value="#{_kpi.maxScore}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			<p:commandButton process="@this"
+				action="#{taskConfigController.updateTaskPerson}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="btn-primary"
+				rendered="false" />
+		</h:form>
+	</ui:define>
+</ui:composition>

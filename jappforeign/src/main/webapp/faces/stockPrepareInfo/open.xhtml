@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:panel header="#{msg['stockPrepare.label']}#{msg['number.label']}">
+			<h:panelGrid columns="2">
+				<p:inputText id="number"
+					value="#{stockPrepareInfoController.number}" />
+				<p:message for="number" />
+			</h:panelGrid>
+			<p:commandButton action="#{stockPrepareInfoController.open}"
+				update=":form" value="#{msg['open.label']}"
+				icon="ui-icon-folder-open" />
+		</p:panel>
+	</ui:define>
+</ui:composition>

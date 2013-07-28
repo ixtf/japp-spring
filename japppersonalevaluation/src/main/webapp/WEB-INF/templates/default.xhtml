@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><h:outputText value="#{msg['project.title']}" /></title>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+	</f:facet>
+	<f:facet name="last">
+		<h:outputStylesheet library="css" name="bootstrap.css" />
+		<h:outputStylesheet library="css" name="bootstrap-responsive.min.css" />
+		<h:outputStylesheet library="css" name="all.css" />
+		<h:outputScript library="js" name="PrimeFacesLocales.js" />
+		<h:outputScript library="js" name="bootstrap.min.js" />
+		<h:outputScript library="javax.faces" name="jsf.js" />
+	</f:facet>
+	<ui:insert name="head" />
+</h:head>
+<h:body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse"
+					data-target=".navbar-responsive-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<h:outputLink value="/personalevaluation" class="brand">
+					<h:outputText value="#{msg['home.title']}" />
+				</h:outputLink>
+				<div class="nav-collapse collapse navbar-responsive-collapse">
+					<ul class="nav">
+						<li><h:outputLink value="#{request.contextPath}/taskChange">
+								<h:outputText value="#{msg['task.change.title']}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="#{request.contextPath}/tasks">
+								<h:outputText value="#{msg['task.manage.title']}" />
+							</h:outputLink></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"><h:outputText
+									value="#{msg['report.center.title']}" /> <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li class="nav-header">Nav header</li>
+								<li><a href="#">Separated link</a></li>
+								<li><a href="#">One more separated link</a></li>
+							</ul></li>
+					</ul>
+					<div class="btn-group pull-right">
+						<a href="javascript:void(0)"
+							class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+							icon="ui-icon-arrowrefresh-1-w"> <i
+							class="icon-user icon-white"></i> <h:outputText
+								value="#{authController.currentOperator.name}"
+								rendered="#{not empty authController.currentOperator}" /> <span
+							class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><h:outputLink value="javascript:void(0)">
+									<h:outputText
+										value="#{sessionScope['__SESSION_PRINCIPALTYPE__']}" />
+								</h:outputLink></li>
+							<li class="divider"></li>
+							<li><h:outputLink value="#{request.contextPath}/logout"
+									rendered="#{not empty authController.currentOperator}">
+									<h:outputText value="#{msg['logout.title']}" />
+								</h:outputLink></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid ui-widget">
+		<ui:insert name="content" />
+	</div>
+	<ui:insert name="status">
+		<p:ajaxStatus
+			style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
+			<f:facet name="start">
+				<p:graphicImage library="img" value="ajax-loader.gif" />
+			</f:facet>
+
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
+	</ui:insert>
+	<p:growl showDetail="true" sticky="true" widgetVar="pushMessage" />
+	<p:socket onMessage="handleMessage"
+		channel="/#{authController.currentOperator.uuid}"
+		rendered="#{authController.authenticated}" />
+	<script type="text/javascript">
+	function handleMessage(facesmessage){pushMessage.show([facesmessage]);}
+	</script>
+</h:body>
+</html>

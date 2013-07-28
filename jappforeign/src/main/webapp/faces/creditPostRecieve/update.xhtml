@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:panel header="#{msg['creditPost.label']}">
+			<p:panelGrid columns="2">
+				<h:outputLabel
+					value="#{msg['creditPost.label']}#{msg['number.label']}" />
+				<h:outputText
+					value="#{creditPostRecieveController.creditPost.number}" />
+
+				<h:outputLabel value="#{msg['amount.label']}" />
+				<h:outputText
+					value="#{creditPostRecieveController.creditPost.amount}" />
+
+				<h:outputLabel value="#{msg['waers.label']}" />
+				<h:outputText
+					value="#{creditPostRecieveController.creditPost.waers}" />
+
+				<h:outputLabel value="#{msg['payType.label']}" />
+				<h:outputText
+					value="#{creditPostRecieveController.creditPost.payType}" />
+
+				<h:outputLabel value="#{msg['modifier.label']}" />
+				<h:outputText
+					value="#{creditPostRecieveController.creditPost.modifier.name}" />
+
+				<h:outputLabel value="#{msg['modifyTime.label']}" />
+				<h:outputText
+					value="#{creditPostRecieveController.creditPost.modifyTime}" />
+			</p:panelGrid>
+			<p:dataTable id="vbakModels" var="_vbakMode"
+				value="#{creditPostRecieveController.vbakModels}">
+				<f:facet name="header">
+					<h:outputText value="#{msg['vbak.label']}" />
+				</f:facet>
+
+				<p:column headerText="#{msg['vbak.vbeln.label']}">
+					<h:outputText value="#{_vbakMode.vbak.vbeln}" />
+				</p:column>
+
+				<p:column headerText="#{msg['vbkd.bstkd.label']}">
+					<h:outputText value="#{_vbakMode.sapVbkdvb.bstkd}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		<p:panel header="#{msg['creditPostRecieve.label']}">
+			<h:panelGrid columns="3">
+				<h:outputLabel for="status" value="#{msg['status.label']}" />
+				<p:selectOneRadio id="status"
+					value="#{creditPostRecieveController.recieveInfo.recieve}">
+					<f:selectItem itemValue="#{true}"
+						itemLabel="#{msg['creditPostRecieve.recieved.label']}" />
+					<f:selectItem itemValue="#{false}"
+						itemLabel="#{msg['creditPostRecieve.unrecieved.label']}" />
+				</p:selectOneRadio>
+				<p:message for="status" />
+
+				<h:outputLabel for="note" value="#{msg['note.label']}" />
+				<p:inputTextarea id="note"
+					value="#{creditPostRecieveController.recieveInfo.note}" />
+				<p:message for="note" />
+			</h:panelGrid>
+		</p:panel>
+		<p:commandButton actionListener="#{creditPostRecieveController.save}"
+			value="#{msg['operation.submit']}" update=":form" />
+	</ui:define>
+</ui:composition>

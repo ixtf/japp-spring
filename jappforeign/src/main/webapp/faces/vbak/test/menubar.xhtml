@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="update.xhtml">
+	<ui:define name="menubar">
+		<p:menubar rendered="#{not empty vbakController.vbakModel}">
+			<p:menuitem value="#{msg['add.label']}#{msg['creditPost.label']}"
+				icon="ui-icon-transferthick-e-w"
+				onclick="addCreditPostDialog.show()"
+				rendered="#{not empty vbakController.vbakModel}" />
+			<p:menuitem value="#{msg['add.label']}#{msg['stockPrepare.label']}"
+				icon="ui-icon-transferthick-e-w"
+				onclick="addStockPrepareDialog.show()" />
+			<p:menuitem value="#{msg['flash.search.label']}"
+				icon="ui-icon-arrowrefresh-1-e" />
+		</p:menubar>
+		<p:dialog widgetVar="addCreditPostDialog" resizable="false"
+			header="#{msg['creditPost.label']}#{msg['number.label']}">
+			<h:panelGrid columns="2">
+				<p:inputText id="addCreditPostNumber"
+					value="#{vbakController.creditPostNumber}" />
+				<p:message for="addCreditPostNumber" />
+			</h:panelGrid>
+			<p:commandButton action="#{vbakController.addCreditPost}"
+				value="#{msg['operation.submit']}" update=":form"
+				onsuccess="handleLoginRequest(xhr, status, args)"
+				onerror="handleLoginRequest(xhr, status, args)" />
+		</p:dialog>
+		<script type="text/javascript">  
+    function handleLoginRequest(xhr, status, args) {  
+        location.reload();
+    }  
+</script>
+	</ui:define>
+</ui:composition>

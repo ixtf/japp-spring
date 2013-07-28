@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:panelGrid columns="10" styleClass="form-inline">
+		<p:inputText id="taskKpiName" value="#{taskConfigController.kpi.name}"
+			title="#{msg['name.label']}" />
+		<p:tooltip for="taskKpiName" showEvent="focus" hideEvent="blur"
+			showEffect="slide" hideEffect="slide" />
+		<p:message for="taskKpiName" />
+
+		<p:inputText id="taskKpiMinScore"
+			value="#{taskConfigController.kpi.minScore}"
+			title="#{msg['minScore.label']}" />
+		<p:tooltip for="taskKpiMinScore" showEvent="focus" hideEvent="blur"
+			showEffect="slide" hideEffect="slide" />
+		<p:message for="taskKpiMinScore" />
+
+		<p:inputText id="taskKpiMaxScore"
+			value="#{taskConfigController.kpi.maxScore}"
+			title="#{msg['maxScore.label']}" />
+		<p:tooltip for="taskKpiMaxScore" showEvent="focus" hideEvent="blur"
+			showEffect="slide" hideEffect="slide" />
+		<p:message for="taskKpiMaxScore" />
+
+		<p:commandButton value="#{msg['add.label']}"
+			actionListener="#{taskConfigController.addTaskKpi}" process="@parent"
+			update="tableTaskKpis" icon="ui-icon-plus" />
+	</h:panelGrid>
+	<p:contextMenu for="tableTaskKpis">
+		<p:menuitem value="#{msg['delete.label']}" type="button"
+			onclick="confirmDialogRemoveTaskKpi.show()" icon="ui-icon-close" />
+	</p:contextMenu>
+	<p:confirmDialog message="#{msg['operation.confirm']}?"
+		severity="alert" widgetVar="confirmDialogRemoveTaskKpi">
+		<p:commandButton value="#{msg['operation.submit']}"
+			process="@this,tableTaskKpis"
+			actionListener="#{taskConfigController.removeTaskKpi}"
+			update="tableTaskKpis" oncomplete="confirmDialogRemoveTaskKpi.hide()" />
+		<p:commandButton value="#{msg['operation.cancel']}" type="button"
+			onclick="confirmDialogRemoveTaskKpi.hide()" />
+	</p:confirmDialog>
+	<p:dataTable id="tableTaskKpis" var="_kpi"
+		value="#{taskConfigController.taskKpis}"
+		selection="#{taskConfigController.kpi}" rowKey="#{_kpi}"
+		selectionMode="single">
+		<p:column headerText="#{msg['name.label']}">
+			<h:outputText value="#{_kpi.name}" />
+		</p:column>
+
+		<p:column headerText="#{msg['minScore.label']}">
+			<h:outputText value="#{_kpi.minScore}" />
+		</p:column>
+
+		<p:column headerText="#{msg['maxScore.label']}">
+			<h:outputText value="#{_kpi.maxScore}" />
+		</p:column>
+	</p:dataTable>
+</ui:composition>

@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl showDetail="true" sticky="true" autoupdate="true"
+                     severity="error" />
+            <p:growl showDetail="true" sticky="true" autoupdate="true" />
+            <p:menubar>
+                <p:menuitem value="#{msg['open.label']}" icon="ui-icon-folder-open"
+                            onclick="openCreditPostDialog.show()" />
+                <p:menuitem value="#{msg['add.label']}" icon="ui-icon-plusthick"
+                            url="/creditPost/update.jsf"
+                            action="#{creditPostController.create}"
+                            update=":form:creditPostPanel" />
+                <p:menuitem value="#{msg['search.label']}" icon="ui-icon-search"
+                            onclick="searchCreditPostDialog.show()" />
+            </p:menubar>
+            <p:dialog widgetVar="openCreditPostDialog" resizable="false"
+                      header="#{msg['creditPost.label']}#{msg['number.label']}">
+                <h:form>
+                    <p:growl showDetail="true" sticky="true" autoupdate="true" />
+                    <h:panelGrid columns="2">
+                        <p:inputText id="openCreditPostNumber"
+                                     value="#{creditPostController.openCreditPostNumber}"
+                                     required="true" />
+                        <p:message for="openCreditPostNumber" />
+                    </h:panelGrid>
+                    <p:commandButton actionListener="#{creditPostController.open}"
+                                     value="#{msg['operation.submit']}" ajax="false"/>
+                </h:form>
+            </p:dialog>
+            <p:dialog widgetVar="searchCreditPostDialog" resizable="false">
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="searchStartDate"
+                                   value="#{msg['startDate.label']}" />
+                    <p:calendar id="searchStartDate"
+                                value="#{creditPostController.searchStartDate}" locale="zh_CN"
+                                pattern="yyyy-MM-dd" navigator="true" />
+
+                    <h:outputLabel for="searchEndDate" value="#{msg['endDate.label']}" />
+                    <p:calendar id="searchEndDate"
+                                value="#{creditPostController.searchEndDate}" locale="zh_CN"
+                                pattern="yyyy-MM-dd" navigator="true" />
+                </h:panelGrid>
+                <p:commandButton action="#{creditPostController.search}"
+                                 value="#{msg['operation.submit']}" update=":form:creditPostPanel" />
+            </p:dialog>
+            <p:panel id="creditPostPanel">
+                <ui:insert name="creditPostContent" />
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:panelGrid columns="10">
+		<p:contextMenu for="hrOrganizationTree">
+			<p:menuitem value="#{msg['search.label']}"
+				process="@this,hrOrganizationTree" update="hrUsers"
+				icon="ui-icon-search" />
+			<p:menuitem value="#{msg['search.label']}#{msg['all.label']}"
+				process="@this,hrOrganizationTree"
+				actionListener="#{taskConfigController.searchAllHrUsers}"
+				update="hrUsers" icon="ui-icon-search" rendered="false" />
+		</p:contextMenu>
+		<p:tree id="hrOrganizationTree" var="_hrOrganization"
+			value="#{taskConfigController.hrOrganizationTree}"
+			selection="#{taskConfigController.hrOrganizationTreeNode}"
+			selectionMode="single" dynamic="true" cache="true">
+			<p:treeNode expandedIcon="ui-icon-folder-open"
+				collapsedIcon="ui-icon-folder-collapsed">
+				<h:outputText value="#{_hrOrganization.name}" />
+			</p:treeNode>
+		</p:tree>
+		<p:selectManyMenu id="hrUsers" value="#{taskConfigController.empSns}"
+			showCheckbox="true">
+			<f:selectItems var="_hrUser"
+				value="#{taskConfigController.hrOrganizationUsers}"
+				itemLabel="#{_hrUser.name}" itemValue="#{_hrUser.principal}" />
+		</p:selectManyMenu>
+		<h:panelGrid columns="1">
+			<p:commandButton value="#{msg['add.label']}#{msg['all.label']}"
+				process="@this,taskPersonTree"
+				actionListener="#{taskConfigController.addHrOrganizationUsers}"
+				update="taskPersonTree" icon="ui-icon-plus" />
+			<p:commandButton value="#{msg['add.label']}"
+				process="@this,taskPersonTree,hrUsers"
+				actionListener="#{taskConfigController.addTaskPerson}"
+				update="taskPersonTree" icon="ui-icon-plus" />
+		</h:panelGrid>
+		<p:contextMenu for="taskPersonTree">
+			<p:menuitem value="#{msg['config.label']}"
+				process="@this,taskPersonTree"
+				actionListener="#{taskConfigController.configTaskPerson}"
+				update="@parent" onsuccess="dialogConfigTaskPerson.show()"
+				icon="ui-icon-wrench" />
+			<p:menuitem value="#{msg['delete.label']}" type="button"
+				onclick="confirmDialogRemoveTaskPerson.show()" icon="ui-icon-close" />
+		</p:contextMenu>
+		<p:dialog id="dialogConfigTaskPerson"
+			widgetVar="dialogConfigTaskPerson" modal="true"
+			header="#{taskConfigController.taskPerson.operator.name}"
+			rendered="#{taskConfigController.personConfig}">
+			<h:outputText value="#{msg['statistic.label']} " />
+			<p:selectBooleanCheckbox
+				value="#{taskConfigController.taskPerson.statistic}" />
+			<h:outputText value="#{msg['evaluable.label']} " />
+			<p:selectBooleanCheckbox
+				value="#{taskConfigController.taskPerson.evaluable}" />
+		</p:dialog>
+		<p:confirmDialog id="confirmDialogRemoveTaskPerson"
+			message="#{msg['operation.confirm']}?" severity="alert"
+			widgetVar="confirmDialogRemoveTaskPerson">
+			<p:commandButton value="#{msg['operation.submit']}"
+				process="@this,taskPersonTree"
+				actionListener="#{taskConfigController.removeTaskPerson}"
+				update="taskPersonTree"
+				oncomplete="confirmDialogRemoveTaskPerson.hide()" />
+			<p:commandButton value="#{msg['operation.cancel']}" type="button"
+				onclick="confirmDialogRemoveTaskPerson.hide()" />
+		</p:confirmDialog>
+		<p:tree id="taskPersonTree" var="_person"
+			value="#{taskConfigController.taskPersonTree}"
+			selection="#{taskConfigController.taskPersonTreeNode}"
+			selectionMode="single">
+			<p:treeNode id="treeNode">
+				<h:outputText value="#{_person}" />
+			</p:treeNode>
+		</p:tree>
+	</h:panelGrid>
+</ui:composition>

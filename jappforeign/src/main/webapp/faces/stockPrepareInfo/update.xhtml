@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:panel header="#{msg['stockPrepare.label']}">
+			<p:panelGrid columns="2">
+				<h:outputLabel
+					value="#{msg['stockPrepare.label']}#{msg['number.label']}" />
+				<h:outputText
+					value="#{stockPrepareInfoController.stockPrepare.number}" />
+
+				<h:outputLabel value="#{msg['note.label']}" />
+				<h:outputText
+					value="#{stockPrepareInfoController.stockPrepare.note}" />
+
+				<h:outputLabel value="#{msg['modifier.label']}" />
+				<h:outputText
+					value="#{stockPrepareInfoController.stockPrepare.modifier.name}" />
+
+				<h:outputLabel value="#{msg['modifyTime.label']}" />
+				<h:outputText
+					value="#{stockPrepareInfoController.stockPrepare.modifyTime}" />
+			</p:panelGrid>
+			<p:dataTable var="_stockPrepareItem"
+				value="#{stockPrepareInfoController.stockPrepareItems}">
+				<p:column headerText="#{msg['vbak.label']}">
+					<h:outputText value="#{_stockPrepareItem.pk.vbeln}" />
+				</p:column>
+				<p:column headerText="#{msg['posnr.label']}">
+					<h:outputText value="#{_stockPrepareItem.pk.posnr}" />
+				</p:column>
+				<p:column headerText="#{msg['matnr.label']}">
+					<h:outputText value="#{_stockPrepareItem.matnr}" />
+				</p:column>
+				<p:column headerText="#{msg['vbap.kwmeng.label']}">
+					<h:outputText value="#{_stockPrepareItem.kwmeng}" />
+				</p:column>
+				<p:column headerText="#{msg['vbap.vrkme.label']}">
+					<h:outputText value="#{_stockPrepareItem.vrkme}" />
+				</p:column>
+				<p:column headerText="#{msg['maktx.label']}">
+					<h:outputText value="#{_stockPrepareItem.arktx}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		<p:panel header="#{msg['stockPrepareInfo.label']}">
+			<h:panelGrid columns="2">
+				<h:outputLabel for="note" value="#{msg['note.label']}" />
+				<p:inputTextarea id="note"
+					value="#{stockPrepareInfoController.stockPrepareInfo.note}" />
+			</h:panelGrid>
+			<p:dataTable var="_stockPrepareInfoItem"
+				value="#{stockPrepareInfoController.stockPrepareInfoItems}"
+				editable="true" editMode="cell">
+				<p:column headerText="#{msg['vbak.label']}">
+					<h:outputText value="#{_stockPrepareInfoItem.pk.vbeln}" />
+				</p:column>
+				<p:column headerText="#{msg['posnr.label']}">
+					<h:outputText value="#{_stockPrepareInfoItem.pk.posnr}" />
+				</p:column>
+				<p:column headerText="#{msg['matnr.label']}">
+					<h:outputText value="#{_stockPrepareInfoItem.matnr}" />
+				</p:column>
+				<p:column headerText="#{msg['vbap.kwmeng.label']}"
+					style="text-align:right">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{_stockPrepareInfoItem.kwmeng}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{_stockPrepareInfoItem.kwmeng}"
+								style="text-align:right" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="#{msg['vbap.vrkme.label']}">
+					<h:outputText value="#{_stockPrepareInfoItem.vrkme}" />
+				</p:column>
+				<p:column headerText="#{msg['maktx.label']}">
+					<h:outputText value="#{_stockPrepareInfoItem.arktx}" />
+				</p:column>
+			</p:dataTable>
+			<p:commandButton actionListener="#{stockPrepareInfoController.save}"
+				value="#{msg['operation.submit']}" update=":form" />
+		</p:panel>
+	</ui:define>
+</ui:composition>

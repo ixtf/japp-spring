@@ -1,0 +1,16 @@
+<%-- <div id="ajaxLoading" class="ui-widget-overlay ui-widget-shadow"
+	style="display: none">
+	<div class="ui-corner-all ui-widget-content"
+		style="position: absolute; left: 40%; top: 40%; padding: 6px;">
+		<img src="<c:url value="/resources/images/ajax-loader.gif" />" />
+	</div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$("#ajaxLoading").bind("ajaxSend", function() {
+			$(this).show();
+		}).bind("ajaxComplete", function() {
+			$(this).hide();
+		});
+	});
+</script> --%>

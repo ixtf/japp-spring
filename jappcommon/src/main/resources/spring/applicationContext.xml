@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   		http://www.springframework.org/schema/beans/spring-beans.xsd
+	   		http://www.springframework.org/schema/context
+	   		http://www.springframework.org/schema/context/spring-context.xsd
+	   		http://www.springframework.org/schema/task 
+	   		http://www.springframework.org/schema/task/spring-task.xsd">
+
+	<bean id="dozer" class="org.dozer.spring.DozerBeanMapperFactoryBean" />
+
+	<context:component-scan base-package="com.hengyi.japp.common">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<context:annotation-config />
+	<context:spring-configured />
+
+	<import resource="spring-shiro.xml" />
+	<import resource="spring-data.xml" />
+	<import resource="spring-cxf.xml" />
+
+	<task:annotation-driven />
+	<bean id="deployProperties" p:location="classpath:deploy.properties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean" />
+</beans>

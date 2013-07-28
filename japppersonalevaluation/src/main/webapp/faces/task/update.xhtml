@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:panel header="#{msg['task.label']}">
+				<h:panelGrid columns="3">
+					<h:outputLabel for="year" value="#{msg['year.label']}" />
+					<p:selectOneMenu id="year"
+						value="#{taskUpdateController.task.year}">
+						<f:selectItems value="#{taskUpdateController.years}" />
+					</p:selectOneMenu>
+					<p:message for="year" />
+
+					<h:outputLabel for="name" value="#{msg['name.label']}" />
+					<h:inputText id="name" value="#{taskUpdateController.task.name}" />
+					<p:message for="name" />
+
+					<h:outputLabel for="status" value="#{msg['status.label']}" />
+					<h:inputText id="status"
+						value="#{taskUpdateController.task.status}" readonly="true" />
+					<p:message for="status" />
+				</h:panelGrid>
+			</p:panel>
+			<p:commandButton action="#{taskUpdateController.save}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="btn-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>
