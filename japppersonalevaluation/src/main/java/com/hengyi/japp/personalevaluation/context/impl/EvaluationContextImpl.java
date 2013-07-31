@@ -8,6 +8,7 @@ import org.primefaces.model.TreeNode;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
 import com.google.common.collect.Lists;
+import com.hengyi.japp.personalevaluation.Constant;
 import com.hengyi.japp.personalevaluation.context.EvaluationContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigPersonContext;
@@ -16,7 +17,7 @@ import com.hengyi.japp.personalevaluation.domain.node.Person;
 import com.hengyi.japp.personalevaluation.domain.node.Task;
 import com.hengyi.japp.personalevaluation.domain.node.TaskConfig;
 import com.hengyi.japp.personalevaluation.domain.relationship.LevelEvaluation;
-import com.hengyi.japp.personalevaluation.service.CacheService;
+import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
 import com.hengyi.japp.personalevaluation.service.EvaluationService;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.utils.MyUtil;
@@ -37,7 +38,7 @@ public class EvaluationContextImpl implements EvaluationContext {
 	private TreeNode taskPersonTreeNode;
 
 	public EvaluationContextImpl(TaskConfigContext taskConfigContext,
-			Neo4jOperations template, Mapper dozer, CacheService cacheService,
+			Neo4jOperations template, Mapper dozer, CacheServiceFacade cacheService,
 			OperatorService operatorService, EvaluationService evaluationService)
 			throws Exception {
 		this.taskConfigContext = taskConfigContext;
@@ -129,7 +130,10 @@ public class EvaluationContextImpl implements EvaluationContext {
 
 	@Override
 	public void submit() throws Exception {
-		evaluationService.submit();
+		if (canSubmit())
+			evaluationService.submit();
+		else
+			throw new Exception(Constant.ErrorCode.ERROR_NOT_SUBMIT);
 	}
 
 	@Override

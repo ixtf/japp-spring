@@ -3,6 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
@@ -28,14 +29,14 @@
 					showEffect="slide" hideEffect="slide" />
 				<p:message for="name" />
 
-				<p:inputText id="minScore"
+				<pe:inputNumber id="minScore"
 					value="#{taskConfigController.kpi.minScore}"
 					title="#{msg['minScore.label']}" />
 				<p:tooltip for="minScore" showEvent="focus" hideEvent="blur"
 					showEffect="slide" hideEffect="slide" />
 				<p:message for="minScore" />
 
-				<p:inputText id="maxScore"
+				<pe:inputNumber id="maxScore"
 					value="#{taskConfigController.kpi.maxScore}"
 					title="#{msg['maxScore.label']}" />
 				<p:tooltip for="maxScore" showEvent="focus" hideEvent="blur"

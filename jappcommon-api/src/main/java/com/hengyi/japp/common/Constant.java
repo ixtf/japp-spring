@@ -2,11 +2,14 @@ package com.hengyi.japp.common;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.hengyi.japp.common.data.Theme;
+
 public class Constant {
 	public static final String NAME_SPACE = "com.hengyi.japp.common";
 	public static final String ADMIN_UUID = "ffc63a20-6a20-4ada-8ff7-627da3fac55d";
 	public static final String ADMIN_PRINCIPAL = "admin";
 	public static final String ADMIN_NAME = "系统管理员";
+	public static final String SESSION_PRINCIPAL = "__SESSION_PRINCIPAL__";
 	public static final String SESSION_PRINCIPALTYPE = "__SESSION_PRINCIPALTYPE__";
 	public static final String SESSION_USER = "__SESSION_USER__";
 	public static final String SESSION_OPERATOR = "__SESSION_OPERATOR__";
@@ -18,6 +21,8 @@ public class Constant {
 	public static final String UNAUTHORIZED_URL = "/unauthorized";
 	public static final String UNAUTHORIZED_VIEW = "error/unauthorized";
 
+	public static final Theme DEFAULT_THEME = new Theme("bootstrap",
+			"bootstrap");
 	public static final ObjectMapper JSON = new ObjectMapper();
 
 	public static class ErrorCode {

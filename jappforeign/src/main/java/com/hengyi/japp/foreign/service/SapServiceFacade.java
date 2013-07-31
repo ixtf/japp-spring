@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hengyi.japp.common.sap.dto.SapVbkdDTO;
 import com.hengyi.japp.common.sap.dto.VbapPK;
-import com.hengyi.japp.common.sap.service.SapService;
+import com.hengyi.japp.common.service.SapService;
 import com.hengyi.japp.foreign.dto.ForeignSapLikpDTO;
 import com.hengyi.japp.foreign.dto.ForeignSapVbakDTO;
 

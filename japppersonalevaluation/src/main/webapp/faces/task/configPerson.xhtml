@@ -3,6 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
@@ -35,10 +36,11 @@
 
 				<h:outputLabel value="#{msg['lays.label']} " for="lays" />
 				<p:inputText id="lays"
-					value="#{taskConfigController.taskPerson.lays}">
-					<p:ajax update=":form" />
+					value="#{taskConfigController.taskPerson.lays}" required="true">
+					<p:ajax update="messageLays" />
+					<pe:keyFilter regEx="/[\d]/" />
 				</p:inputText>
-				<p:message for="lays" />
+				<p:message id="messageLays" for="lays" />
 			</h:panelGrid>
 			<p:tree id="evaluationTree" var="_person"
 				value="#{taskConfigController.evaluationPersonTree}"
@@ -58,7 +60,9 @@
 
 					<p:inputText id="submitLimitCalaculate1"
 						value="#{taskConfigController.submitLimit.calaculate1}"
-						title="#{msg['submitlimit.calaculate.label']}1" />
+						title="#{msg['submitlimit.calaculate.label']}1">
+						<pe:keyFilter regEx="/[l\+\-\*\/0-9]/i" />
+					</p:inputText>
 					<p:tooltip for="submitLimitCalaculate1" showEvent="focus"
 						hideEvent="blur" showEffect="slide" hideEffect="slide" />
 					<p:message for="submitLimitCalaculate1" />
@@ -72,7 +76,9 @@
 
 					<p:inputText id="submitLimitCalaculate2"
 						value="#{taskConfigController.submitLimit.calaculate2}"
-						title="#{msg['submitlimit.calaculate.label']}2" />
+						title="#{msg['submitlimit.calaculate.label']}2">
+						<pe:keyFilter regEx="/[l\+\-\*\/0-9]/i" />
+					</p:inputText>
 					<p:tooltip for="submitLimitCalaculate2" showEvent="focus"
 						hideEvent="blur" showEffect="slide" hideEffect="slide" />
 					<p:message for="submitLimitCalaculate2" />
@@ -147,14 +153,14 @@
 						showEffect="slide" hideEffect="slide" />
 					<p:message for="personKpiName" />
 
-					<p:inputText id="personKpiMinScore"
+					<pe:inputNumber id="personKpiMinScore"
 						value="#{taskConfigController.kpi.minScore}"
 						title="#{msg['minScore.label']}" />
 					<p:tooltip for="personKpiMinScore" showEvent="focus"
 						hideEvent="blur" showEffect="slide" hideEffect="slide" />
 					<p:message for="personKpiMinScore" />
 
-					<p:inputText id="personKpiMaxScore"
+					<pe:inputNumber id="personKpiMaxScore"
 						value="#{taskConfigController.kpi.maxScore}"
 						title="#{msg['maxScore.label']}" />
 					<p:tooltip for="personKpiMaxScore" showEvent="focus"

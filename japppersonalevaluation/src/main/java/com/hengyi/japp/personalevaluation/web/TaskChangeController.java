@@ -35,6 +35,8 @@ public class TaskChangeController extends AbstractController {
 
 	public void change() {
 		try {
+			operatorService.updateLastTask(cacheService.getCurrentOperator()
+					.getNodeId(), task.getNodeId());
 			cacheService.setSession(Constant.SESSION_TASK, task);
 			redirect("/");
 		} catch (Exception e) {

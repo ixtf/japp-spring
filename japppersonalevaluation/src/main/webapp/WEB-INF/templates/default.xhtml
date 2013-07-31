@@ -5,7 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 	<title><h:outputText value="#{msg['project.title']}" /></title>
 	<f:facet name="first">
@@ -69,7 +70,11 @@
 						<ul class="dropdown-menu">
 							<li><h:outputLink value="javascript:void(0)">
 									<h:outputText
-										value="#{sessionScope['__SESSION_PRINCIPALTYPE__']}" />
+										value="#{cacheService.principalType}(#{cacheService.principal})" />
+								</h:outputLink></li>
+							<li><h:outputLink value="#{request.contextPath}/theme"
+									rendered="#{not empty authController.currentOperator}">
+									<h:outputText value="#{msg['theme.title']}" />
 								</h:outputLink></li>
 							<li class="divider"></li>
 							<li><h:outputLink value="#{request.contextPath}/logout"
@@ -89,7 +94,7 @@
 		<p:ajaxStatus
 			style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
 			<f:facet name="start">
-				<p:graphicImage library="img" value="ajax-loader.gif" />
+				<!-- <p:graphicImage library="img" value="ajax-loader.gif" /> -->
 			</f:facet>
 
 			<f:facet name="complete">

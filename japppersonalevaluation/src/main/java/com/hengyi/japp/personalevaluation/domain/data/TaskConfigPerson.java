@@ -11,8 +11,8 @@ import com.hengyi.japp.personalevaluation.domain.node.Operator;
 import com.hengyi.japp.personalevaluation.domain.node.SubmitLimit;
 
 public class TaskConfigPerson implements Serializable {
-	public static final int LAYS_ALL = 0;
 	protected static final long serialVersionUID = 4675998867550488778L;
+	public static final int LAYS_ALL = 0;
 	protected Long nodeId;
 	protected boolean statistic = true;
 	protected boolean evaluable = true;

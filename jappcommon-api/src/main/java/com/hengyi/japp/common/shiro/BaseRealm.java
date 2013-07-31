@@ -1,5 +1,9 @@
 package com.hengyi.japp.common.shiro;
 
+import static com.hengyi.japp.common.Constant.SESSION_PRINCIPAL;
+import static com.hengyi.japp.common.Constant.SESSION_PRINCIPALTYPE;
+import static com.hengyi.japp.common.Constant.SESSION_USER;
+
 import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
@@ -12,7 +16,6 @@ import org.apache.shiro.cas.CasRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
-import com.hengyi.japp.common.Constant;
 import com.hengyi.japp.common.data.PrincipalType;
 import com.hengyi.japp.common.dto.LoginUserDTO;
 import com.hengyi.japp.common.dto.UserDTO;
@@ -74,7 +77,8 @@ public class BaseRealm extends CasRealm {
 		Session session = subject.getSession();
 		UserDTO user = jappCommonSoapClient.findOneUser(principalType,
 				principal);
-		session.setAttribute(Constant.SESSION_USER, user);
-		session.setAttribute(Constant.SESSION_PRINCIPALTYPE, principalType);
+		session.setAttribute(SESSION_PRINCIPALTYPE, principalType);
+		session.setAttribute(SESSION_PRINCIPAL, principal);
+		session.setAttribute(SESSION_USER, user);
 	}
 }

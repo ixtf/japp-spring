@@ -1,5 +1,7 @@
 package com.hengyi.japp.personalevaluation;
 
+import static com.hengyi.japp.common.Constant.ADMIN_PRINCIPAL;
+
 import javax.servlet.ServletContext;
 
 import org.apache.shiro.SecurityUtils;
@@ -32,8 +34,7 @@ public class UrlConfigurationProvider extends HttpConfigurationProvider {
 		Condition admin = new Condition() {
 			@Override
 			public boolean evaluate(Rewrite event, EvaluationContext context) {
-				return SecurityUtils.getSubject().hasRole(
-						Constant.ADMIN_PRINCIPAL);
+				return SecurityUtils.getSubject().hasRole(ADMIN_PRINCIPAL);
 			}
 		};
 
@@ -61,6 +62,7 @@ public class UrlConfigurationProvider extends HttpConfigurationProvider {
 				.addRule(Join.path("/admin").to("/faces/admin/index.jsf"))
 				.when(admin)
 				.addRule(Join.path(URL.TASK_CHANGE).to(JSF.TASK_CHANGE))
+				.when(loggedIn).addRule(Join.path(URL.THEME).to(JSF.THEME))
 				.when(loggedIn);
 	}
 

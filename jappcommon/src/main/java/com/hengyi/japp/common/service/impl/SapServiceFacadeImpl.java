@@ -1,18 +1,21 @@
 package com.hengyi.japp.common.service.impl;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.hengyi.japp.common.dto.HrOrganizationDTO;
 import com.hengyi.japp.common.sap.annotation.SapHandler;
-import com.hengyi.japp.common.sap.service.impl.SapServiceImpl;
 import com.hengyi.japp.common.service.SapServiceFacade;
+import com.hengyi.japp.common.service.impl.SapServiceImpl;
 import com.sap.conn.jco.server.JCoServerFunctionHandler;
 
 @Service
@@ -20,20 +23,6 @@ public class SapServiceFacadeImpl extends SapServiceImpl implements
 		SapServiceFacade {
 	@Resource
 	private ApplicationContext context;
-
-	// @Override
-	// public <K, V> Map<K, V> findAllDomvalue(String I_DOMNAME, Class<K> K,
-	// Class<V> V) throws Exception {
-	// ImmutableMap.Builder<K, V> builder = ImmutableMap.builder();
-	// JCoTable table = findAllDomvalue(I_DOMNAME);
-	// if (!table.isEmpty()) {
-	// do {
-	// builder.put((K) table.getValue("DOMVALUE_L"),
-	// (V) table.getValue("DDTEXT"));
-	// } while (table.nextRow());
-	// }
-	// return builder.build();
-	// }
 
 	@Override
 	protected Map<String, JCoServerFunctionHandler> getHandlerMap() {
@@ -49,9 +38,10 @@ public class SapServiceFacadeImpl extends SapServiceImpl implements
 		return map;
 	}
 
-	@PostConstruct
-	private void start() throws Exception {
-		registerDestination();
-		registerServer();
+	@Override
+	public Collection<HrOrganizationDTO> findAllOrganization(String empSn) {
+		Set<HrOrganizationDTO> result = Sets.newHashSet();
+		// TODO
+		return result;
 	}
 }

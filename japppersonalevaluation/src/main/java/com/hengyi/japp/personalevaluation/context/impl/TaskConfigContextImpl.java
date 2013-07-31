@@ -15,7 +15,7 @@ import com.hengyi.japp.personalevaluation.context.TaskConfigPersonContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigPersonTreeNode;
 import com.hengyi.japp.personalevaluation.domain.data.TaskConfigPerson;
 import com.hengyi.japp.personalevaluation.domain.node.Operator;
-import com.hengyi.japp.personalevaluation.service.CacheService;
+import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.service.TaskService;
 import com.hengyi.japp.personalevaluation.utils.MyUtil;
@@ -34,7 +34,7 @@ public class TaskConfigContextImpl extends AbstractTaskConfigContext {
 
 	public TaskConfigContextImpl(Long taskNodeId,
 			ContextFactory contextFactory, Neo4jOperations template,
-			Mapper dozer, CacheService cacheService,
+			Mapper dozer, CacheServiceFacade cacheService,
 			OperatorService operatorService, TaskService taskService)
 			throws Exception {
 		super(taskNodeId, contextFactory, template, dozer, cacheService,

@@ -30,6 +30,21 @@ public class OperatorServiceImpl implements OperatorService {
 	}
 
 	@Override
+	public Operator findOne(UserDTO user) throws Exception {
+		Operator operator = findByUuid(user.getUuid());
+		if (operator == null) {
+			operator = new Operator(user.getUuid(), user.getName());
+			save(operator);
+		}
+		return operator;
+	}
+
+	@Override
+	public void save(Operator operator) throws Exception {
+		operatorRepository.save(operator);
+	}
+
+	@Override
 	public Operator findByUuid(String uuid) {
 		return uuid == null ? null : operatorRepository.findByPropertyValue(
 				Operator.class.getSimpleName(), "uuid", uuid);
@@ -47,18 +62,25 @@ public class OperatorServiceImpl implements OperatorService {
 				.findOneUser(PrincipalType.HR, empSn);
 		if (user == null)
 			return null;
-		Operator operator = findByUuid(user.getUuid());
-		if (operator != null) {
-			if (operator.getEmpSn() == null) {
-				operator.setEmpSn(empSn);
-				return operatorRepository.save(operator);
-			}
-			return operator;
+		Operator operator = findOne(user);
+		if (operator != null && operator.getEmpSn() == null) {
+			operator.setEmpSn(empSn);
+			save(operator);
 		}
-		operator = new Operator();
-		operator.setUuid(user.getUuid());
-		operator.setName(user.getName());
-		operator.setEmpSn(empSn);
-		return operatorRepository.save(operator);
+		return operator;
+	}
+
+	@Override
+	public void updateTheme(Long nodeId, String theme) throws Exception {
+		Operator operator = findOne(nodeId);
+		operator.setTheme(theme);
+		save(operator);
+	}
+
+	@Override
+	public void updateLastTask(Long nodeId, Long taskNodeId) throws Exception {
+		Operator operator = findOne(nodeId);
+		operator.setLastTaskNodeId(taskNodeId);
+		save(operator);
 	}
 }

@@ -29,7 +29,7 @@ import com.hengyi.japp.personalevaluation.domain.relationship.LevelEvaluation;
 import com.hengyi.japp.personalevaluation.domain.repository.KpiRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.PersonRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.TaskRepository;
-import com.hengyi.japp.personalevaluation.service.CacheService;
+import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
 import com.hengyi.japp.personalevaluation.service.EvaluationService;
 
 @Named
@@ -39,7 +39,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 	@Resource(name = "jappCommonSoapClient")
 	private com.hengyi.japp.common.ws.SoapService jappCommonSoapClient;
 	@Inject
-	private CacheService cacheService;
+	private CacheServiceFacade cacheService;
 	@Inject
 	private Neo4jOperations template;
 	@Inject

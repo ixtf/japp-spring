@@ -1,5 +1,6 @@
 package com.hengyi.japp.personalevaluation;
 
+
 public final class Constant extends com.hengyi.japp.common.Constant {
 	public static final String SESSION_TASK = "__SESSION_TASK__";
 	public static final int _YEAR = 2013;
@@ -13,6 +14,7 @@ public final class Constant extends com.hengyi.japp.common.Constant {
 		public static final String TASK_NEW = "/task";
 		public static final String TASK_UPDATE = "/tasks/{nodeId}";
 		public static final String TASK_CHANGE = "/taskChange";
+		public static final String THEME = "/theme";
 	}
 
 	public static class JSF {
@@ -22,6 +24,7 @@ public final class Constant extends com.hengyi.japp.common.Constant {
 		public static final String TASKS = "/faces/task/list.jsf";
 		public static final String TASK_UPDATE = "/faces/task/update.jsf";
 		public static final String TASK_CHANGE = "/faces/task/change.jsf";
+		public static final String THEME = "/faces/theme.jsf";
 	}
 
 	public static final class ErrorCode extends

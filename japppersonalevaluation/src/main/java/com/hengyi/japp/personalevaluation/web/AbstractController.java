@@ -28,7 +28,7 @@ import com.hengyi.japp.personalevaluation.domain.node.Operator;
 import com.hengyi.japp.personalevaluation.domain.node.Task;
 import com.hengyi.japp.personalevaluation.domain.repository.TaskConfigRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.TaskRepository;
-import com.hengyi.japp.personalevaluation.service.CacheService;
+import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.service.TaskService;
 
@@ -40,7 +40,7 @@ public abstract class AbstractController implements Serializable {
 	@Inject
 	protected Neo4jOperations template;
 	@Inject
-	protected CacheService cacheService;
+	protected CacheServiceFacade cacheService;
 	@Inject
 	protected Mapper dozer;
 	@Inject

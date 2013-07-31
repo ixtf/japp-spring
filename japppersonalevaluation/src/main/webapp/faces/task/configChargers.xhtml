@@ -3,6 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
@@ -23,7 +24,9 @@
 			<h:panelGrid columns="4" styleClass="form-inline">
 				<p:inputText id="empSn"
 					value="#{taskConfigController.charger.empSn}"
-					title="#{msg['empSn.label']}" />
+					title="#{msg['empSn.label']}">
+					<pe:keyFilter regEx="/[\d\.]/" />
+				</p:inputText>
 				<p:tooltip for="empSn" showEvent="focus" hideEvent="blur"
 					showEffect="slide" hideEffect="slide" />
 				<p:message for="empSn" />

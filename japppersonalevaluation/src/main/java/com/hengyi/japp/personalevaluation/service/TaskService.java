@@ -23,4 +23,6 @@ public interface TaskService {
 	void deleteTask(Long nodeId) throws Exception;
 
 	void checkCharger(Long taskNodeId) throws Exception;
+
+	Task getDefaultTask(Operator operator);
 }

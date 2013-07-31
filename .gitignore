@@ -4,6 +4,9 @@
 # 忽略 target/ 目录下的所有文件
 target/
 
+# 忽略 target/ 目录下的所有文件
+errorlog/
+
 # eclipse 产生文件
 .project
 .settings/

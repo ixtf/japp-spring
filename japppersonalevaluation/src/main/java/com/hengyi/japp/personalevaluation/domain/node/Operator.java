@@ -11,6 +11,8 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.support.index.IndexType;
 
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
+import com.hengyi.japp.personalevaluation.Constant;
+import com.hengyi.japp.personalevaluation.service.TaskService;
 
 @NodeEntity
 public class Operator extends AbstractNeo4j implements Serializable {
@@ -32,6 +34,7 @@ public class Operator extends AbstractNeo4j implements Serializable {
 	@Pattern(regexp = "^[1-9]\\d{7}$")
 	@Indexed(indexType = IndexType.SIMPLE, indexName = EMPSN_SEARCH)
 	private String empSn;
+	private String theme;
 	private Long lastTaskNodeId;
 
 	public String getUuid() {
@@ -58,6 +61,16 @@ public class Operator extends AbstractNeo4j implements Serializable {
 		this.empSn = empSn;
 	}
 
+	public Task getLastTask(TaskService taskService) {
+		if (lastTaskNodeId != null)
+			return taskService.findOne(lastTaskNodeId);
+		return null;
+	}
+
+	public void setLastTask(Task task) {
+		setLastTaskNodeId(task.getNodeId());
+	}
+
 	public Long getLastTaskNodeId() {
 		return lastTaskNodeId;
 	}
@@ -66,9 +79,18 @@ public class Operator extends AbstractNeo4j implements Serializable {
 		this.lastTaskNodeId = lastTaskNodeId;
 	}
 
+	public String getTheme() {
+		if (theme == null)
+			theme = Constant.DEFAULT_THEME.getName();
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+
 	public Operator() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Operator(String uuid, String name) {

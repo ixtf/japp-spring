@@ -3,7 +3,6 @@ package com.hengyi.japp.foreign.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -25,12 +24,11 @@ import com.hengyi.japp.common.sap.dto.SapVbapDTO;
 import com.hengyi.japp.common.sap.dto.SapVbkdDTO;
 import com.hengyi.japp.common.sap.dto.SapVbkdvbDTO;
 import com.hengyi.japp.common.sap.dto.VbapPK;
-import com.hengyi.japp.common.sap.service.impl.SapServiceImpl;
 import com.hengyi.japp.common.sap.util.SapUtil;
+import com.hengyi.japp.common.service.impl.SapServiceImpl;
 import com.hengyi.japp.foreign.Constant;
 import com.hengyi.japp.foreign.dto.ForeignSapLikpDTO;
 import com.hengyi.japp.foreign.dto.ForeignSapVbakDTO;
-import com.hengyi.japp.foreign.service.CacheService;
 import com.hengyi.japp.foreign.service.SapServiceFacade;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoParameterList;
@@ -48,8 +46,6 @@ public class SapServiceFacadeImpl extends SapServiceImpl implements
 
 	@Inject
 	private ApplicationContext context;
-	@Inject
-	private CacheService cacheService;
 
 	@Override
 	public ForeignSapVbakDTO findVbak(String vbeln) throws Exception {
@@ -177,12 +173,6 @@ public class SapServiceFacadeImpl extends SapServiceImpl implements
 			builder.add(table.getString("VBELN"));
 		} while (table.nextRow());
 		return builder.build();
-	}
-
-	@PostConstruct
-	public void init() throws Exception {
-		registerDestination();
-		registerServer();
 	}
 
 	@Override

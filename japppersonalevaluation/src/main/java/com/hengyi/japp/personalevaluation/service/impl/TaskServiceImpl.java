@@ -26,7 +26,7 @@ import com.hengyi.japp.personalevaluation.domain.repository.KpiRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.PersonRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.TaskConfigRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.TaskRepository;
-import com.hengyi.japp.personalevaluation.service.CacheService;
+import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
 import com.hengyi.japp.personalevaluation.service.EvaluationService;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.service.TaskService;
@@ -36,7 +36,7 @@ import com.hengyi.japp.personalevaluation.service.TaskService;
 // @Veto
 public class TaskServiceImpl implements TaskService {
 	@Inject
-	private CacheService cacheService;
+	private CacheServiceFacade cacheService;
 	@Inject
 	private Neo4jOperations template;
 	@Inject
@@ -224,5 +224,16 @@ public class TaskServiceImpl implements TaskService {
 				.newHashSet(taskRepository.findAllByPropertyValue("year", year))
 				: Sets.newHashSet(taskRepository.findAllByOperator(
 						cacheService.getCurrentOperator(), year));
+	}
+
+	@Override
+	public Task getDefaultTask(Operator operator) {
+		Task result = null;
+		for (Task task : taskRepository.findAllByOperator(operator)) {
+			if (TaskStatus.ACTIVE.equals(task.getStatus()))
+				return task;
+			result = task;
+		}
+		return result;
 	}
 }

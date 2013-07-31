@@ -8,7 +8,7 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
 	<jaxws:client id="jappCommonSoapClient" serviceClass="com.hengyi.japp.common.ws.SoapService"
-		address="http://192.168.0.125:8080/common/ws/soap/jappCommon?wsdl" />
+		address="http://192.168.0.124:8080/common/ws/soap/jappCommon?wsdl" />
 
 	<!-- <jaxws:endpoint id="jappPersonalEvaluationSoap" address="/jappPersonalEvaluation" 
 		publish="true" implementor="com.hengyi.japp.personalevaluation.ws.SoapServiceImpl" 

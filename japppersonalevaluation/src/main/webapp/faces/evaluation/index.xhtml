@@ -3,14 +3,18 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/templates/default.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 	<ui:define name="content">
 		<h:form id="form">
 			<p:growl id="errorMessage" showDetail="true" sticky="true"
 				autoupdate="true" severity="error" />
 			<p:growl id="infoMessage" showDetail="true" autoupdate="true"
 				severity="info" />
-			<h1 class="title ui-widget-header ui-corner-all">#{evaluationController.task}-#{evaluationController.personEnd}</h1>
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText
+					value="#{evaluationController.task}-#{evaluationController.personEnd}" />
+			</h1>
 			<p:tabView>
 				<p:tab title="#{msg['evaluation.level.title']}">
 					<p:accordionPanel value="#{evaluationController.levelEvaluations}"
@@ -26,7 +30,8 @@
 										var="_level" itemLabel="#{_level.name}" />
 								</p:selectOneMenu>
 							</h:panelGrid>
-							<p:editor value="#{_levelEvaluation.summary}" />
+							<pe:ckEditor value="#{_levelEvaluation.summary}" height="100%"
+								width="100%" required="true" />
 						</p:tab>
 					</p:accordionPanel>
 				</p:tab>
@@ -52,10 +57,9 @@
 							</f:facet>
 							<p:panelGrid columns="2" styleClass="form-inline"
 								rendered="#{(_kpiEvaluation.person == evaluationController.personStart) and (not evaluationController.personStart.submit)}">
-								<p:inputText value="#{_row.kpiEvaluationMap[colIndex].score}"
-									required="true">
-									<p:ajax update=":form:errorMessage" />
-								</p:inputText>
+								<pe:inputNumber value="#{_row.kpiEvaluationMap[colIndex].score}"
+									minValue="#{_row.kpi.minScore}" maxValue="#{_row.kpi.maxScore}"
+									required="true" />
 							</p:panelGrid>
 							<h:outputText value="#{_row.kpiEvaluationMap[colIndex].score}"
 								rendered="#{not ((_kpiEvaluation.person == evaluationController.personStart) and (not evaluationController.personStart.submit))}" />
@@ -63,8 +67,9 @@
 					</p:dataTable>
 				</p:tab>
 				<p:tab title="#{msg['evaluation.work.title']}">
-					<p:editor value="#{evaluationController.personEnd.work}"
-						disabled="#{not ((evaluationController.personStart == evaluationController.personEnd) and (not evaluationController.personStart.submit))}" />
+					<pe:ckEditor value="#{evaluationController.personEnd.work}"
+						height="100%" width="100%" required="true"
+						readOnly="#{not ((evaluationController.personStart == evaluationController.personEnd) and (not evaluationController.personStart.submit))}" />
 				</p:tab>
 			</p:tabView>
 			<p:commandButton action="#{evaluationController.save}" update=":form"

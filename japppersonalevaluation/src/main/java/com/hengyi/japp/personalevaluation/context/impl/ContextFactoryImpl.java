@@ -22,7 +22,7 @@ import com.hengyi.japp.personalevaluation.context.TaskConfigContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigPersonContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigPersonTreeNode;
 import com.hengyi.japp.personalevaluation.domain.node.Task;
-import com.hengyi.japp.personalevaluation.service.CacheService;
+import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
 import com.hengyi.japp.personalevaluation.service.EvaluationService;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.service.TaskService;
@@ -33,7 +33,7 @@ public class ContextFactoryImpl implements ContextFactory {
 	@Inject
 	private Neo4jOperations template;
 	@Inject
-	private CacheService cacheService;
+	private CacheServiceFacade cacheService;
 	@Inject
 	private Mapper dozer;
 	@Inject
