@@ -68,10 +68,9 @@
 							class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><h:outputLink value="javascript:void(0)">
-									<h:outputText
+							<li><a value="javascript:void(0)"> <h:outputText
 										value="#{cacheService.principalType}(#{cacheService.principal})" />
-								</h:outputLink></li>
+							</a></li>
 							<li><h:outputLink value="#{request.contextPath}/theme"
 									rendered="#{not empty authController.currentOperator}">
 									<h:outputText value="#{msg['theme.title']}" />

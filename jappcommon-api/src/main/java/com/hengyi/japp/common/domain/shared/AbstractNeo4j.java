@@ -20,11 +20,8 @@ public abstract class AbstractNeo4j {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (o == null || getNodeId() == null || getClass() != o.getClass())
 			return false;
-		if (getNodeId() == null)
-			return false;
-
 		AbstractNeo4j other = (AbstractNeo4j) o;
 		return Objects.equal(getNodeId(), other.getNodeId());
 	}

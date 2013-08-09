@@ -3,8 +3,11 @@ package com.hengyi.japp.personalevaluation.context;
 import org.primefaces.model.TreeNode;
 
 import com.google.common.collect.BiMap;
+import com.hengyi.japp.personalevaluation.domain.node.Person;
 
 public interface ContextFactory {
+	TaskConfigContext taskConfigContext() throws Exception;
+
 	TaskConfigContext taskConfigContext(final Long taskNodeId) throws Exception;
 
 	TaskConfigPersonContext taskConfigPersonContext(
@@ -14,6 +17,10 @@ public interface ContextFactory {
 
 	EvaluationContext evaluationContext() throws Exception;
 
-	EvaluationPersonContext evaluationPersonContext(final Long personNodeId)
+	EvaluationContext evaluationContext(Long taskNodeId, Long operatorNodeId)
+			throws Exception;
+
+	EvaluationPersonContext evaluationPersonContext(
+			EvaluationContext evaluationContext, Person personEnd)
 			throws Exception;
 }

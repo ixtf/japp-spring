@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import com.hengyi.japp.personalevaluation.context.EvaluationContext;
 import com.hengyi.japp.personalevaluation.domain.node.Person;
 import com.hengyi.japp.personalevaluation.domain.node.Task;
+import com.hengyi.japp.personalevaluation.domain.relationship.LevelEvaluation;
 
 @Named
 @Scope("request")
@@ -26,7 +27,7 @@ public class HomeController extends AbstractController {
 		return evaluationContext.getToEvaluatePersons();
 	}
 
-	public List<Person> getEvaluatedPersons() {
+	public List<LevelEvaluation> getEvaluatedPersons() {
 		return evaluationContext.getEvaluatedPersons();
 	}
 

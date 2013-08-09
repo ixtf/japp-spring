@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="errorMessage" showDetail="true" sticky="true"
+				autoupdate="true" severity="error" />
+			<p:growl id="infoMessage" showDetail="true" autoupdate="true"
+				severity="info" />
+			<p:panel header="#{msg['login.title']}">
+				<h:panelGrid columns="3">
+					<h:outputLabel for="username"
+						value="#{msg['login.username.label']}" />
+					<h:inputText id="username" value="#{authController.username}" />
+					<p:message for="username" />
+
+					<h:outputLabel for="password"
+						value="#{msg['login.password.label']}" />
+					<p:password id="password" value="#{authController.password}" />
+					<p:message for="password" />
+				</h:panelGrid>
+			</p:panel>
+			<p:commandButton value="#{msg['operation.submit']}" update=":form"
+				action="#{authController.login}" styleClass="btn-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

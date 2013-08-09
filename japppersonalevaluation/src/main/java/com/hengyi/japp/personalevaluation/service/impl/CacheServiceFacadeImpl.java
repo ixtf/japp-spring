@@ -82,6 +82,8 @@ public class CacheServiceFacadeImpl extends CacheServiceImpl implements
 	// @PostConstruct
 	private synchronized TreeNode getHrOrganizationTreeFromHr()
 			throws Exception {
+		if (hrOrganizationTree != null)
+			return hrOrganizationTree;
 		hrOrganizationTree = MyUtil.tree(
 				jappCommonSoapClient.findAllHrOrganization(), "id", "pId");
 		for (TreeNode node : hrOrganizationTree.getChildren())

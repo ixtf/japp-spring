@@ -1,5 +1,7 @@
 package com.hengyi.japp.common.domain.shared;
 
+import java.io.Serializable;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -9,7 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.google.common.base.Objects;
 
 @MappedSuperclass
-public abstract class AbstractUuid {
+public abstract class AbstractUuid implements Serializable {
 	@Id
 	@GeneratedValue(generator = "system-uuid")
 	@GenericGenerator(name = "system-uuid", strategy = "org.hibernate.id.UUIDGenerator")
@@ -27,9 +29,8 @@ public abstract class AbstractUuid {
 	public boolean equals(final Object object) {
 		if (this == object)
 			return true;
-		if (object == null || getClass() != object.getClass())
-			return false;
-		if (getUuid() == null)
+		if (object == null || getUuid() == null
+				|| getClass() != object.getClass())
 			return false;
 		AbstractUuid other = (AbstractUuid) object;
 		return Objects.equal(getUuid(), other.getUuid());

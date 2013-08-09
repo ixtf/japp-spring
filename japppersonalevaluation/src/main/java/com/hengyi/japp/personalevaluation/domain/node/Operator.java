@@ -30,7 +30,6 @@ public class Operator extends AbstractNeo4j implements Serializable {
 	@Indexed(indexType = IndexType.FULLTEXT, indexName = NAME_SEARCH)
 	private String name;
 	@NotBlank
-	@Size(min = 8, max = 8)
 	@Pattern(regexp = "^[1-9]\\d{7}$")
 	@Indexed(indexType = IndexType.SIMPLE, indexName = EMPSN_SEARCH)
 	private String empSn;

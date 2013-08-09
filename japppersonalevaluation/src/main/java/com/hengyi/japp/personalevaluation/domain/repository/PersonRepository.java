@@ -1,6 +1,7 @@
 package com.hengyi.japp.personalevaluation.domain.repository;
 
 import org.springframework.data.neo4j.annotation.Query;
+import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.neo4j.repository.NamedIndexRepository;
 import org.springframework.data.neo4j.repository.RelationshipOperationsRepository;
@@ -18,6 +19,11 @@ public interface PersonRepository extends GraphRepository<Person>,
 			+ Task.TASK_PERSON + "]->person<-[:" + Operator.OPERATOR_PERSON
 			+ "]-operator return person")
 	Person findOne(Task task, Operator operator);
+
+	@Query("start task=node({0}),operator=node({1}) match task-[:"
+			+ Task.TASK_PERSON + "]->person<-[:" + Operator.OPERATOR_PERSON
+			+ "]-operator return person")
+	EndResult<Person> findAll(Task task, Iterable<Operator> operators);
 
 	// @Query("start person=node({0}) match person-[:MANAGE*0..]->sub return sub")
 	// EndResult<Person> findAllSubPerson(Person person);

@@ -11,6 +11,8 @@ import org.apache.shiro.subject.Subject;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.context.annotation.Scope;
 
+import com.hengyi.japp.common.data.PrincipalType;
+
 @Named
 @Scope("request")
 // @Join(path = "/login", to = "/faces/login.jsf")
@@ -36,8 +38,17 @@ public class AuthController extends AbstractController {
 	}
 
 	public void logout() {
+		String url = "login";
+		try {
+			if (PrincipalType.SSO.equals(cacheService.getPrincipalType())) {
+				url = deployProperties.getProperty("casLogoutUrl");
+			}
+		} catch (Exception e) {
+			// TODO
+		}
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
+		redirect(url);
 	}
 
 	public boolean isAuthenticated() {

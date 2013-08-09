@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.validation.constraints.NotNull;
 
 import org.dozer.Mapper;
 import org.primefaces.model.TreeNode;
@@ -14,13 +15,14 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.BiMap;
 import com.google.common.eventbus.EventBus;
-import com.hengyi.japp.personalevaluation.Constant;
 import com.hengyi.japp.personalevaluation.context.ContextFactory;
 import com.hengyi.japp.personalevaluation.context.EvaluationContext;
 import com.hengyi.japp.personalevaluation.context.EvaluationPersonContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigPersonContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigPersonTreeNode;
+import com.hengyi.japp.personalevaluation.domain.node.Operator;
+import com.hengyi.japp.personalevaluation.domain.node.Person;
 import com.hengyi.japp.personalevaluation.domain.node.Task;
 import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
 import com.hengyi.japp.personalevaluation.service.EvaluationService;
@@ -46,21 +48,27 @@ public class ContextFactoryImpl implements ContextFactory {
 	private EventBus eventBus;
 
 	private Cache<Long, TaskConfigContext> taskConfigContextCache = CacheBuilder
-			.newBuilder().expireAfterAccess((long) 0.5, TimeUnit.HOURS).build();
-	private Cache<Long, EvaluationContext> evaluationContextCache = CacheBuilder
-			.newBuilder().expireAfterAccess((long) 0.5, TimeUnit.HOURS).build();
+			.newBuilder().maximumSize(5)
+			.expireAfterAccess(10, TimeUnit.MINUTES).build();
 
 	@Override
-	public TaskConfigContext taskConfigContext(Long taskNodeId)
+	public TaskConfigContext taskConfigContext() throws Exception {
+		Task task = cacheService.getCurrentTask();
+		if (task == null)
+			throw new Exception();
+		return taskConfigContext(task.getNodeId());
+	}
+
+	@Override
+	public TaskConfigContext taskConfigContext(@NotNull Long taskNodeId)
 			throws Exception {
-		taskService.checkCharger(taskNodeId);
 		TaskConfigContext taskConfigContext = taskConfigContextCache
 				.getIfPresent(taskNodeId);
 		return taskConfigContext != null ? taskConfigContext
 				: newTaskConfigContext(taskNodeId);
 	}
 
-	private TaskConfigContext newTaskConfigContext(Long taskNodeId)
+	private TaskConfigContext newTaskConfigContext(@NotNull Long taskNodeId)
 			throws Exception {
 		TaskConfigContext taskConfigContext = new TaskConfigContextImpl(
 				taskNodeId, this, template, dozer, cacheService,
@@ -82,25 +90,30 @@ public class ContextFactoryImpl implements ContextFactory {
 	@Override
 	public EvaluationContext evaluationContext() throws Exception {
 		Task task = cacheService.getCurrentTask();
-		if (task == null || task.isInit())
-			return new EvaluationContextImpl();
-		else
-			return new EvaluationContextImpl(
-					taskConfigContext(task.getNodeId()), template, dozer,
-					cacheService, operatorService, evaluationService);
+		Operator operator = cacheService.getCurrentOperator();
+		if (task == null || operator == null)
+			throw new Exception();
+		return evaluationContext(task.getNodeId(), operator.getNodeId());
 	}
 
 	@Override
-	public EvaluationPersonContext evaluationPersonContext(Long personEndNodeId)
+	public EvaluationContext evaluationContext(@NotNull Long taskNodeId,
+			@NotNull Long operatorNodeId) throws Exception {
+		taskService.checkEvaluation(taskNodeId);
+		TaskConfigContext taskConfigContext = taskConfigContext(taskNodeId);
+		Operator operator = operatorService.findOne(operatorNodeId);
+		return new EvaluationContextImpl(
+				taskConfigContext.taskConfigPersonContext(operator), this,
+				template, dozer, eventBus, cacheService, operatorService,
+				evaluationService);
+	}
+
+	@Override
+	public EvaluationPersonContext evaluationPersonContext(
+			EvaluationContext evaluationContext, Person personEnd)
 			throws Exception {
-		Task task = cacheService.getCurrentTask();
-		if (task == null)
-			throw new Exception(Constant.ErrorCode.ERROR_NO_TASK);
-		else if (task.isInit())
-			throw new Exception(Constant.ErrorCode.ERROR_IS_INIT);
-		else
-			return new EvaluationPersonContextImpl(personEndNodeId, this,
-					template, dozer, cacheService, operatorService,
-					evaluationService);
+		return new EvaluationPersonContextImpl(personEnd, evaluationContext,
+				template, dozer, eventBus, cacheService, operatorService,
+				evaluationService);
 	}
 }

@@ -25,4 +25,6 @@ public interface TaskService {
 	void checkCharger(Long taskNodeId) throws Exception;
 
 	Task getDefaultTask(Operator operator);
+
+	void checkEvaluation(Long taskNodeId) throws Exception;
 }

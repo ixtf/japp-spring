@@ -15,7 +15,7 @@ public interface EvaluationPersonContext {
 
 	TaskConfig getTaskConfig();
 
-	void evaluationPerson(Person endPerson) throws Exception;
+	EvaluationContext getEvaluationContext();
 
 	Person getPersonStart();
 

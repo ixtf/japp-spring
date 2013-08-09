@@ -45,13 +45,13 @@ public class UrlConfigurationProvider extends HttpConfigurationProvider {
 						.and(loggedIn))
 				.perform(Redirect.temporary(context.getContextPath() + "/"))
 				.addRule(Join.path(URL.LOGIN).to(JSF.LOGIN))
-				.addRule()
-				.when(Direction.isInbound().and(Path.matches(URL.LOGOUT)))
-				.perform(
-						Invoke.binding(
-								El.retrievalMethod("#{session.invalidate}"))
-								.and(Redirect.temporary(context
-										.getContextPath() + "/login")))
+				// .addRule()
+				// .when(Direction.isInbound().and(Path.matches(URL.LOGOUT)))
+				// .perform(
+				// Invoke.binding(
+				// El.retrievalMethod("#{session.invalidate}"))
+				// .and(Redirect
+				// .temporary("http://cas.hengyi.com:8080/logout?service=http://192.168.17.117:8080/personalevaluation")))
 				.addRule()
 				.when(Direction.isInbound().and(Path.matches("/")).and(admin))
 				.perform(

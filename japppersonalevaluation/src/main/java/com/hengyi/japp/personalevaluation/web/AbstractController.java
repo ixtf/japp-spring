@@ -3,8 +3,10 @@ package com.hengyi.japp.personalevaluation.web;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
@@ -29,6 +31,7 @@ import com.hengyi.japp.personalevaluation.domain.node.Task;
 import com.hengyi.japp.personalevaluation.domain.repository.TaskConfigRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.TaskRepository;
 import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
+import com.hengyi.japp.personalevaluation.service.EvaluationService;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.service.TaskService;
 
@@ -36,17 +39,19 @@ public abstract class AbstractController implements Serializable {
 	private static final long serialVersionUID = 4439434353140699253L;
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 	@Inject
-	protected ContextFactory contextFactory;
-	@Inject
 	protected Neo4jOperations template;
 	@Inject
-	protected CacheServiceFacade cacheService;
-	@Inject
 	protected Mapper dozer;
+	@Inject
+	protected ContextFactory contextFactory;
+	@Inject
+	protected CacheServiceFacade cacheService;
 	@Inject
 	protected OperatorService operatorService;
 	@Inject
 	protected TaskService taskService;
+	@Inject
+	protected EvaluationService evaluationService;
 	@Inject
 	protected TaskRepository taskRepository;
 	@Inject
@@ -58,6 +63,8 @@ public abstract class AbstractController implements Serializable {
 	}
 
 	protected void addErrorMessage(Exception e) {
+		ResourceBundle msg = ResourceBundle.getBundle("messages", FacesContext
+				.getCurrentInstance().getViewRoot().getLocale());
 		String errorMessage = getRootErrorMessage(e);
 		FacesContext.getCurrentInstance().addMessage(
 				null,
@@ -68,6 +75,10 @@ public abstract class AbstractController implements Serializable {
 	protected void redirect(String url) {
 		String prefix = "/personalevaluation";
 		try {
+			if (url.indexOf("http") >= 0)
+				FacesContext.getCurrentInstance().getExternalContext()
+						.redirect(url);
+
 			if (!url.substring(0, 1).equals("/"))
 				prefix = prefix + "/";
 			FacesContext.getCurrentInstance().getExternalContext()

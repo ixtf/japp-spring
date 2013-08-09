@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="errorMessage" showDetail="true" sticky="true"
+				autoupdate="true" severity="error" />
+			<p:growl id="infoMessage" showDetail="true" autoupdate="true"
+				severity="info" />
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText
+					value="#{evaluationController.task}-#{evaluationController.personEnd}" />
+			</h1>
+			<p:tabView>
+				<p:tab title="#{msg['evaluation.level.title']}">
+					<p:accordionPanel value="#{evaluationController.levelEvaluations}"
+						var="_levelEvaluation"
+						activeIndex="#{evaluationController.levelEvaluationsActiveIndex}">
+						<p:tab
+							title="#{_levelEvaluation.personStart}[#{_levelEvaluation.level.name}]">
+							<h:panelGrid columns="2" styleClass="form-inline"
+								rendered="#{(_levelEvaluation.personStart == evaluationController.personStart) and (not evaluationController.personStart.submit)}">
+								<h:outputLabel for="level" value="#{msg['level.label']}"
+									rendered="false" />
+								<p:selectOneMenu id="level" value="#{_levelEvaluation.level}">
+									<f:selectItems value="#{evaluationController.levels}"
+										var="_level" itemLabel="#{_level.name}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+							<pe:ckEditor value="#{_levelEvaluation.summary}" height="100%"
+								width="100%" required="true" />
+						</p:tab>
+					</p:accordionPanel>
+				</p:tab>
+				<p:tab title="#{msg['evaluation.kpis.title']}">
+					<p:dataTable value="#{evaluationController.kpiEvaluationRows}"
+						var="_row">
+						<p:column headerText="#{msg['name.label']}">
+							<h:outputText value="#{_row.kpi.name}" />
+						</p:column>
+
+						<p:column headerText="#{msg['minScore.label']}">
+							<h:outputText value="#{_row.kpi.minScore}" />
+						</p:column>
+
+						<p:column headerText="#{msg['maxScore.label']}">
+							<h:outputText value="#{_row.kpi.maxScore}" />
+						</p:column>
+
+						<p:columns value="#{evaluationController.columns}"
+							var="_kpiEvaluation" columnIndexVar="colIndex">
+							<f:facet name="header">
+								<h:outputText value="#{_kpiEvaluation.person}" />
+							</f:facet>
+							<p:panelGrid columns="2" styleClass="form-inline"
+								rendered="#{(_kpiEvaluation.person == evaluationController.personStart) and (not evaluationController.personStart.submit)}">
+								<pe:inputNumber value="#{_row.kpiEvaluationMap[colIndex].score}"
+									minValue="#{_row.kpi.minScore}" maxValue="#{_row.kpi.maxScore}"
+									required="true" />
+							</p:panelGrid>
+							<h:outputText value="#{_row.kpiEvaluationMap[colIndex].score}"
+								rendered="#{not ((_kpiEvaluation.person == evaluationController.personStart) and (not evaluationController.personStart.submit))}" />
+						</p:columns>
+					</p:dataTable>
+				</p:tab>
+				<p:tab title="#{msg['evaluation.work.title']}">
+					<pe:ckEditor value="#{evaluationController.personEnd.work}"
+						height="100%" width="100%" required="true"
+						readOnly="#{not ((evaluationController.personStart == evaluationController.personEnd) and (not evaluationController.personStart.submit))}" />
+				</p:tab>
+			</p:tabView>
+			<p:commandButton action="#{evaluationController.save}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="btn-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

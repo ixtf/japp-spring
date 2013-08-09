@@ -23,17 +23,43 @@ public class EvaluationController extends AbstractController {
 	private Long personNodeId;
 	private EvaluationPersonContext evaluationPersonContext;
 	private List<KpiEvaluationRow> kpiEvaluationRows;
+	private int levelEvaluationsActiveIndex;
 
 	public void setPersonNodeId(Long personNodeId) {
 		if (personNodeId.equals(this.personNodeId))
 			return;
 		this.personNodeId = personNodeId;
 		try {
-			evaluationPersonContext = contextFactory
-					.evaluationPersonContext(getPersonNodeId());
+			Person person = evaluationService.findOnePerson(personNodeId);
+			evaluationPersonContext = contextFactory.evaluationContext()
+					.evaluationPerson(person);
+			initKpiEvaluationRows();
+			initLevelEvaluationsActiveIndex();
 		} catch (Exception e) {
 			addErrorMessage(e);
 			this.personNodeId = null;
+			this.kpiEvaluationRows = null;
+		}
+	}
+
+	private void initKpiEvaluationRows() {
+		kpiEvaluationRows = Lists.newArrayList();
+		Multimap<Kpi, KpiEvaluation> map = getKpiEvaluationMap();
+		for (Kpi kpi : map.keySet()) {
+			KpiEvaluationRow row = new KpiEvaluationRow();
+			row.setKpi(kpi);
+			row.setKpiEvaluations(Lists.newArrayList(map.get(kpi)));
+			kpiEvaluationRows.add(row);
+		}
+	}
+
+	private void initLevelEvaluationsActiveIndex() {
+		levelEvaluationsActiveIndex = 0;
+		for (LevelEvaluation levelEvaluation : getLevelEvaluations()) {
+			if (levelEvaluation.getPersonStart().equals(
+					evaluationPersonContext.getPersonStart()))
+				break;
+			levelEvaluationsActiveIndex++;
 		}
 	}
 
@@ -49,25 +75,16 @@ public class EvaluationController extends AbstractController {
 		}
 	}
 
+	public int getLevelEvaluationsActiveIndex() {
+		return levelEvaluationsActiveIndex;
+	}
+
 	public List<LevelEvaluation> getLevelEvaluations() {
 		return evaluationPersonContext.getLevelEvaluations();
 	}
 
 	public List<KpiEvaluationRow> getKpiEvaluationRows() {
-		if (kpiEvaluationRows == null)
-			initKpiEvaluationRows();
 		return kpiEvaluationRows;
-	}
-
-	private void initKpiEvaluationRows() {
-		kpiEvaluationRows = Lists.newArrayList();
-		Multimap<Kpi, KpiEvaluation> map = getKpiEvaluationMap();
-		for (Kpi kpi : map.keys()) {
-			KpiEvaluationRow row = new KpiEvaluationRow();
-			row.setKpi(kpi);
-			row.setKpiEvaluations(Lists.newArrayList(map.get(kpi)));
-			kpiEvaluationRows.add(row);
-		}
 	}
 
 	public Multimap<Kpi, KpiEvaluation> getKpiEvaluationMap() {
@@ -94,5 +111,9 @@ public class EvaluationController extends AbstractController {
 
 	public Long getPersonNodeId() {
 		return personNodeId;
+	}
+
+	public void setLevelEvaluationsActiveIndex(int levelEvaluationsActiveIndex) {
+		this.levelEvaluationsActiveIndex = levelEvaluationsActiveIndex;
 	}
 }

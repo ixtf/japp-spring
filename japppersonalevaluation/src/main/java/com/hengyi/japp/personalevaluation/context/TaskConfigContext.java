@@ -10,6 +10,9 @@ import com.hengyi.japp.personalevaluation.domain.node.Task;
 import com.hengyi.japp.personalevaluation.domain.node.TaskConfig;
 
 public interface TaskConfigContext {
+	TaskConfigPersonContext taskConfigPersonContext(Operator operator)
+			throws Exception;
+
 	Task getTask();
 
 	TaskConfig getTaskConfig();
@@ -30,16 +33,13 @@ public interface TaskConfigContext {
 
 	TreeNode getTaskPersonTreeNode();
 
-	void removeTaskPerson() throws Exception;
-
-	Operator getOperator(TreeNode node);
-
-	void save() throws Exception;
-
 	void setTaskPersonTreeNode(TreeNode taskPersonTreeNode);
 
 	void addTaskPerson(Operator operator) throws Exception;
 
-	TaskConfigPersonContext taskConfigPersonContext(Operator operator)
-			throws Exception;
+	void removeTaskPerson() throws Exception;
+
+	void save() throws Exception;
+
+	Operator getOperator(TreeNode node);
 }

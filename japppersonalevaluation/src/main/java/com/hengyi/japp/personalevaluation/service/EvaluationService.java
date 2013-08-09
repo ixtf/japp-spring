@@ -14,6 +14,8 @@ public interface EvaluationService {
 
 	Person findOnePerson(Task task, Operator operator);
 
+	Iterable<Person> findAllPerson(Task task, Iterable<Operator> operators);
+
 	void evaluate(Person personStart, Person personEnd,
 			LevelEvaluation levelEvaluation,
 			Iterable<KpiEvaluation> kpiEvaluations) throws Exception;

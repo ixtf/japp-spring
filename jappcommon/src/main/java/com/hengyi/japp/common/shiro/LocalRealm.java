@@ -7,7 +7,9 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 import com.hengyi.japp.common.application.Constant;
@@ -38,5 +40,11 @@ public class LocalRealm extends JdbcRealm {
 						.name());
 		info.setCredentialsSalt(ByteSource.Util.bytes(user.getSalt()));
 		return info;
+	}
+
+	@Override
+	protected AuthorizationInfo doGetAuthorizationInfo(
+			PrincipalCollection principals) {
+		return null;
 	}
 }

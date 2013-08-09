@@ -60,6 +60,12 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
+	public Iterable<Person> findAllPerson(Task task,
+			Iterable<Operator> operators) {
+		return personRepository.findAll(task, operators);
+	}
+
+	@Override
 	public void evaluate(Person personStart, Person personEnd,
 			LevelEvaluation levelEvaluation,
 			Iterable<KpiEvaluation> kpiEvaluations) throws Exception {

@@ -12,31 +12,31 @@ import org.springframework.data.neo4j.template.Neo4jOperations;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.hengyi.japp.personalevaluation.context.ContextFactory;
+import com.google.common.eventbus.EventBus;
+import com.hengyi.japp.personalevaluation.context.EvaluationContext;
 import com.hengyi.japp.personalevaluation.context.EvaluationPersonContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigPersonContext;
 import com.hengyi.japp.personalevaluation.domain.node.Kpi;
-import com.hengyi.japp.personalevaluation.domain.node.Operator;
 import com.hengyi.japp.personalevaluation.domain.node.Person;
 import com.hengyi.japp.personalevaluation.domain.node.Task;
 import com.hengyi.japp.personalevaluation.domain.node.TaskConfig;
 import com.hengyi.japp.personalevaluation.domain.relationship.KpiEvaluation;
 import com.hengyi.japp.personalevaluation.domain.relationship.LevelEvaluation;
+import com.hengyi.japp.personalevaluation.event.EvaluationEvent;
 import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
 import com.hengyi.japp.personalevaluation.service.EvaluationService;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.utils.MyUtil;
 
 public class EvaluationPersonContextImpl implements EvaluationPersonContext {
-	private TaskConfigContext taskConfigContext;
-	private TaskConfigPersonContext personConfigContext;
+	private final TaskConfigContext taskConfigContext;
+	private final TaskConfigPersonContext personConfigContext;
+	private final EvaluationContext evaluationContext;
 	private Neo4jOperations template;
+	private EventBus eventBus;
 	private EvaluationService evaluationService;
 
-	private final Task task;
-	private final TaskConfig taskConfig;
-	private Operator operator;
 	private Person personStart;
 	private Person personEnd;
 	// personEnd的评价数据提交顺序
@@ -45,21 +45,20 @@ public class EvaluationPersonContextImpl implements EvaluationPersonContext {
 	private List<LevelEvaluation> levelEvaluations;
 	private Multimap<Kpi, KpiEvaluation> kpiEvaluationMap;
 
-	public EvaluationPersonContextImpl(@NotNull Long personEndNodeId,
-			ContextFactory contextFactory, Neo4jOperations template,
-			Mapper dozer, CacheServiceFacade cacheService,
+	public EvaluationPersonContextImpl(@NotNull Person personEnd,
+			EvaluationContext evaluationContext, Neo4jOperations template,
+			Mapper dozer, EventBus eventBus, CacheServiceFacade cacheService,
 			OperatorService operatorService, EvaluationService evaluationService)
 			throws Exception {
+		this.taskConfigContext = evaluationContext.getTaskConfigContext();
+		this.personConfigContext = evaluationContext
+				.getTaskConfigPersonContext();
+		this.evaluationContext = evaluationContext;
 		this.template = template;
+		this.eventBus = eventBus;
 		this.evaluationService = evaluationService;
-		operator = cacheService.getCurrentOperator();
-		task = cacheService.getCurrentTask();
-		personStart = evaluationService.findOnePerson(task, operator);
-		personEnd = evaluationService.findOnePerson(personEndNodeId);
-		taskConfigContext = contextFactory.taskConfigContext(task.getNodeId());
-		personConfigContext = taskConfigContext
-				.taskConfigPersonContext(operator);
-		taskConfig = taskConfigContext.getTaskConfig();
+		personStart = evaluationContext.getPerson();
+		this.personEnd = personEnd;
 
 		// evaluateList = MyUtil.getEvaluateList(taskConfig, personEnd);
 		initEvaluationList();
@@ -68,7 +67,7 @@ public class EvaluationPersonContextImpl implements EvaluationPersonContext {
 	}
 
 	/**
-	 * 生成评价的流程节点，按评价顺序,有低级到高级
+	 * 生成评价的流程节点，按评价顺序,由低级到高级
 	 */
 	private void initEvaluationList() throws Exception {
 		evaluateList = Lists.newArrayList(personEnd);
@@ -85,7 +84,7 @@ public class EvaluationPersonContextImpl implements EvaluationPersonContext {
 	}
 
 	private void addEvaluateList(TreeNode node) {
-		Person person = evaluationService.findOnePerson(task,
+		Person person = evaluationService.findOnePerson(getTask(),
 				taskConfigContext.getOperator(node));
 		evaluateList.add(person);
 		if (person.equals(personStart))
@@ -95,7 +94,7 @@ public class EvaluationPersonContextImpl implements EvaluationPersonContext {
 
 	private void initLevelEvaluations() throws Exception {
 		Map<Person, LevelEvaluation> map = MyUtil.map(
-				personEnd.getEvaluations(template), "personStart");
+				personEnd.getLevelEvaluations(template), "personStart");
 		for (Person person : evaluateList) {
 			LevelEvaluation levelEvaluation = map.get(person);
 			if (levelEvaluation == null)
@@ -147,17 +146,17 @@ public class EvaluationPersonContextImpl implements EvaluationPersonContext {
 
 	@Override
 	public Task getTask() {
-		return task;
+		return evaluationContext.getTask();
 	}
 
 	@Override
 	public TaskConfig getTaskConfig() {
-		return taskConfig;
+		return evaluationContext.getTaskConfig();
 	}
 
 	@Override
-	public void evaluationPerson(Person person) throws Exception {
-		personEnd = person;
+	public EvaluationContext getEvaluationContext() {
+		return evaluationContext;
 	}
 
 	@Override
@@ -174,6 +173,7 @@ public class EvaluationPersonContextImpl implements EvaluationPersonContext {
 	public void save() throws Exception {
 		evaluationService.evaluate(getPersonStart(), getPersonEnd(),
 				getLevelEvaluation(), getKpiEvaluations());
+		eventBus.post(new EvaluationEvent(getPersonStart(), getPersonEnd()));
 	}
 
 	private LevelEvaluation getLevelEvaluation() throws Exception {

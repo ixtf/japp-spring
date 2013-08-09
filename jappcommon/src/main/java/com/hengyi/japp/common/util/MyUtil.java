@@ -7,7 +7,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 
 import com.hengyi.japp.common.data.PrincipalType;
 
-public final class MyUtil {
+public class MyUtil {
 	public static String newUuid() {
 		return UUID.randomUUID().toString();
 	}

@@ -12,23 +12,13 @@ import org.primefaces.model.TreeNode;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.hengyi.japp.common.CommonUtil;
 import com.hengyi.japp.personalevaluation.context.TaskConfigPersonTreeNode;
 import com.hengyi.japp.personalevaluation.domain.data.TaskConfigPerson;
 import com.hengyi.japp.personalevaluation.domain.node.Person;
 import com.hengyi.japp.personalevaluation.domain.node.TaskConfig;
 
-@SuppressWarnings("unchecked")
-public class MyUtil {
-	public static <K, V> Map<K, V> map(Iterable<V> vs, String id)
-			throws Exception {
-		Map<K, V> result = Maps.newHashMap();
-		for (V v : vs) {
-			K k = (K) PropertyUtils.getSimpleProperty(v, id);
-			result.put(k, v);
-		}
-		return result;
-	}
-
+public class MyUtil extends CommonUtil {
 	public static <T> Map<T, TreeNode> treeNodeMap(Iterable<T> datas) {
 		Map<T, TreeNode> result = Maps.newHashMap();
 		for (T data : datas)

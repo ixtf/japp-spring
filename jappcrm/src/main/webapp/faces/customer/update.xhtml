@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:panel header="#{msg['customer.new']}">
+				<h:panelGrid columns="3">
+					<h:outputLabel for="customer-name" value="#{msg['customer.name']}" />
+					<h:inputText id="customer-name"
+						value="#{customerController.customer.name}" />
+					<p:message for="customer-name" />
+
+					<h:outputLabel for="customer-represent"
+						value="#{msg['customer.represent']}" />
+					<h:inputText id="customer-represent"
+						value="#{customerController.customer.represent}" />
+					<p:message for="customer-represent" />
+
+					<h:outputLabel for="customer-saleRevenue"
+						value="#{msg['customer.saleRevenue']}" />
+					<pe:inputNumber id="customer-saleRevenue"
+						value="#{customerController.customer.saleRevenue}" />
+					<p:message for="customer-saleRevenue" />
+
+					<h:outputLabel for="customer-durationYears"
+						value="#{msg['customer.durationYears']}" />
+					<h:inputText id="customer-durationYears"
+						value="#{customerController.customer.durationYears}">
+						<pe:keyFilter regEx="/\d/" />
+					</h:inputText>
+					<p:message for="customer-durationYears" />
+
+					<h:outputLabel for="customer-policyBusiness"
+						value="#{msg['customer.policyBusiness']}" />
+					<p:selectBooleanButton id="customer-policyBusiness"
+						value="#{customerController.customer.policyBusiness}"
+						onLabel="#{msg.yes}" offLabel="#{msg.no}" onIcon="ui-icon-check"
+						offIcon="ui-icon-close" />
+					<p:message for="customer-policyBusiness" />
+
+					<h:outputLabel for="customer-registerInfo-number"
+						value="#{msg['customer.registerInfo.number']}" />
+					<h:inputText id="customer-registerInfo-number"
+						value="#{customerController.customer.registerInfo.number}" />
+					<p:message for="customer-registerInfo-number" />
+
+					<h:outputLabel for="customer-registerInfo-place"
+						value="#{msg['customer.registerInfo.place']}" />
+					<h:inputText id="customer-registerInfo-place"
+						value="#{customerController.customer.registerInfo.place}" />
+					<p:message for="customer-registerInfo-place" />
+
+					<h:outputLabel for="customer-registerInfo-capital"
+						value="#{msg['customer.registerInfo.capital']}" />
+					<pe:inputNumber id="customer-registerInfo-capital"
+						value="#{customerController.customer.registerInfo.capital}" />
+					<p:message for="customer-registerInfo-capital" />
+
+					<h:outputLabel for="customer-communicateInfo-addressName"
+						value="#{msg['customer.communicateInfo.addressName']}" />
+					<h:inputText id="customer-communicateInfo-addressName"
+						value="#{customerController.customer.communicateInfo.addressName}" />
+					<p:message for="customer-communicateInfo-addressName" />
+
+					<h:outputLabel for="customer-communicateInfo-zipCode"
+						value="#{msg.zipCode}" />
+					<h:inputText id="customer-communicateInfo-zipCode"
+						value="#{customerController.customer.communicateInfo.zipCode}" />
+					<p:message for="customer-communicateInfo-zipCode" />
+
+					<h:outputLabel for="customer-communicateInfo-phone"
+						value="#{msg.phone}" />
+					<h:inputText id="customer-communicateInfo-phone"
+						value="#{customerController.customer.communicateInfo.phone}" />
+					<p:message for="customer-communicateInfo-phone" />
+
+					<h:outputLabel for="customer-communicateInfo-email" value="E-mail" />
+					<h:inputText id="customer-communicateInfo-email"
+						value="#{customerController.customer.communicateInfo.email}" />
+					<p:message for="customer-communicateInfo-email" />
+
+					<h:outputLabel for="customer-communicateInfo-fax"
+						value="#{msg.fax}" />
+					<h:inputText id="customer-communicateInfo-fax"
+						value="#{customerController.customer.communicateInfo.fax}" />
+					<p:message for="customer-communicateInfo-fax" />
+				</h:panelGrid>
+			</p:panel>
+			<p:commandButton action="#{customerController.save}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="btn-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

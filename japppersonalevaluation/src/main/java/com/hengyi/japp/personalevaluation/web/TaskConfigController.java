@@ -42,6 +42,7 @@ public class TaskConfigController extends AbstractController {
 			return;
 		this.taskNodeId = taskNodeId;
 		try {
+			taskService.checkCharger(taskNodeId);
 			taskConfigContext = contextFactory
 					.taskConfigContext(getTaskNodeId());
 		} catch (Exception e) {

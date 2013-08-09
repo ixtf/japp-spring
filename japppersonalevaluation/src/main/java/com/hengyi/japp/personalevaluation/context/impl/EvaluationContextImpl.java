@@ -8,8 +8,13 @@ import org.primefaces.model.TreeNode;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
 import com.google.common.collect.Lists;
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import com.hengyi.japp.personalevaluation.Constant;
+import com.hengyi.japp.personalevaluation.Constant.ErrorCode;
+import com.hengyi.japp.personalevaluation.context.ContextFactory;
 import com.hengyi.japp.personalevaluation.context.EvaluationContext;
+import com.hengyi.japp.personalevaluation.context.EvaluationPersonContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigContext;
 import com.hengyi.japp.personalevaluation.context.TaskConfigPersonContext;
 import com.hengyi.japp.personalevaluation.domain.node.Operator;
@@ -17,51 +22,74 @@ import com.hengyi.japp.personalevaluation.domain.node.Person;
 import com.hengyi.japp.personalevaluation.domain.node.Task;
 import com.hengyi.japp.personalevaluation.domain.node.TaskConfig;
 import com.hengyi.japp.personalevaluation.domain.relationship.LevelEvaluation;
+import com.hengyi.japp.personalevaluation.event.EvaluationEvent;
 import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
 import com.hengyi.japp.personalevaluation.service.EvaluationService;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.utils.MyUtil;
 
 public class EvaluationContextImpl implements EvaluationContext {
-	private TaskConfigContext taskConfigContext;
-	private TaskConfigPersonContext taskConfigPersonContext;
-	private Neo4jOperations template;
-	private EvaluationService evaluationService;
+	private final TaskConfigContext taskConfigContext;
+	private final TaskConfigPersonContext taskConfigPersonContext;
+	private final Task task;
+	private final TaskConfig taskConfig;
+	private final ContextFactory contextFactory;
+	private final Neo4jOperations template;
+	private final EvaluationService evaluationService;
 
-	private Task task;
-	private TaskConfig taskConfig;
 	private Operator operator;
 	private Person person;
+	private List<Person> allEvaluatePersons;
 	private List<Person> toEvaluatePersons;
-	private List<Person> evaluatedPersons;
+	private List<LevelEvaluation> evaluatedPersons;
 	private List<Person> unSubmitPersons;
 	private TreeNode taskPersonTreeNode;
 
-	public EvaluationContextImpl(TaskConfigContext taskConfigContext,
-			Neo4jOperations template, Mapper dozer, CacheServiceFacade cacheService,
+	public EvaluationContextImpl(
+			TaskConfigPersonContext taskConfigPersonContext,
+			ContextFactory contextFactory, Neo4jOperations template,
+			Mapper dozer, EventBus eventBus, CacheServiceFacade cacheService,
 			OperatorService operatorService, EvaluationService evaluationService)
 			throws Exception {
-		this.taskConfigContext = taskConfigContext;
+		this.taskConfigPersonContext = taskConfigPersonContext;
+		this.taskConfigContext = taskConfigPersonContext.getTaskConfigContext();
+		this.contextFactory = contextFactory;
 		this.template = template;
 		this.evaluationService = evaluationService;
-		operator = cacheService.getCurrentOperator();
-		taskConfigPersonContext = taskConfigContext
-				.taskConfigPersonContext(operator);
+		operator = taskConfigPersonContext.getOperator();
 		taskPersonTreeNode = taskConfigPersonContext.getTaskPersonTreeNode();
 		task = taskConfigContext.getTask();
 		taskConfig = taskConfigContext.getTaskConfig();
 		person = evaluationService.findOnePerson(task, operator);
 
+		initToEvaluatePersons();
 		initEvaluatedPersons();
 		initUnSubmitPersons();
-		initToEvaluatePersons();
+		for (LevelEvaluation levelEvaluation : getEvaluatedPersons())
+			getToEvaluatePersons().remove(levelEvaluation.getPersonEnd());
+		getToEvaluatePersons().removeAll(getUnSubmitPersons());
+	}
+
+	private void initToEvaluatePersons() {
+		if (person.isEvaluable())
+			getToEvaluatePersons().add(person);
+		addTo(getToEvaluatePersons(),
+				MyUtil.getAllSubTreeNode(taskPersonTreeNode));
+	}
+
+	private void addTo(List<Person> list, Set<TreeNode> nodes) {
+		for (TreeNode node : nodes) {
+			Person person = evaluationService.findOnePerson(task,
+					taskConfigContext.getOperator(node));
+			if (person.isEvaluable())
+				list.add(person);
+		}
 	}
 
 	private void initEvaluatedPersons() {
-		for (LevelEvaluation levelEvaluation : person
-				.getLevelEvaluations(template)) {
+		for (LevelEvaluation levelEvaluation : person.getEvaluations(template)) {
 			Person person = levelEvaluation.getPersonEnd(template);
-			getEvaluatedPersons().add(person);
+			getEvaluatedPersons().add(levelEvaluation);
 		}
 	}
 
@@ -79,24 +107,6 @@ public class EvaluationContextImpl implements EvaluationContext {
 		}
 	}
 
-	private void initToEvaluatePersons() {
-		if (person.isEvaluable())
-			getToEvaluatePersons().add(person);
-		addTo(getToEvaluatePersons(),
-				MyUtil.getAllSubTreeNode(taskPersonTreeNode));
-		getToEvaluatePersons().removeAll(getEvaluatedPersons());
-		getToEvaluatePersons().removeAll(getUnSubmitPersons());
-	}
-
-	private void addTo(List<Person> list, Set<TreeNode> nodes) {
-		for (TreeNode node : nodes) {
-			Person person = evaluationService.findOnePerson(task,
-					taskConfigContext.getOperator(node));
-			if (person.isEvaluable())
-				list.add(person);
-		}
-	}
-
 	@Override
 	public Task getTask() {
 		return task;
@@ -108,6 +118,16 @@ public class EvaluationContextImpl implements EvaluationContext {
 	}
 
 	@Override
+	public Operator getOperator() {
+		return operator;
+	}
+
+	@Override
+	public Person getPerson() {
+		return person;
+	}
+
+	@Override
 	public List<Person> getToEvaluatePersons() {
 		if (toEvaluatePersons == null)
 			toEvaluatePersons = Lists.newArrayList();
@@ -115,7 +135,7 @@ public class EvaluationContextImpl implements EvaluationContext {
 	}
 
 	@Override
-	public List<Person> getEvaluatedPersons() {
+	public List<LevelEvaluation> getEvaluatedPersons() {
 		if (evaluatedPersons == null)
 			evaluatedPersons = Lists.newArrayList();
 		return evaluatedPersons;
@@ -129,6 +149,18 @@ public class EvaluationContextImpl implements EvaluationContext {
 	}
 
 	@Override
+	public List<Person> getAllEvaluatePersons() {
+		if (allEvaluatePersons == null) {
+			allEvaluatePersons = Lists.newArrayList();
+			allEvaluatePersons.addAll(getToEvaluatePersons());
+			for (LevelEvaluation levelEvaluation : getEvaluatedPersons())
+				allEvaluatePersons.add(levelEvaluation.getPersonEnd());
+			allEvaluatePersons.addAll(getUnSubmitPersons());
+		}
+		return allEvaluatePersons;
+	}
+
+	@Override
 	public void submit() throws Exception {
 		if (canSubmit())
 			evaluationService.submit();
@@ -139,10 +171,25 @@ public class EvaluationContextImpl implements EvaluationContext {
 	@Override
 	public boolean canSubmit() {
 		return getToEvaluatePersons().isEmpty()
-				&& getUnSubmitPersons().isEmpty();
+				&& getUnSubmitPersons().isEmpty()
+				&& (!getEvaluatedPersons().isEmpty());
 	}
 
-	public EvaluationContextImpl() {
-		super();
+	@Override
+	public EvaluationPersonContext evaluationPerson(Person person)
+			throws Exception {
+		if (getAllEvaluatePersons().contains(person))
+			return contextFactory.evaluationPersonContext(this, person);
+		throw new Exception(ErrorCode.SYSTEM);
+	}
+
+	@Override
+	public TaskConfigContext getTaskConfigContext() {
+		return taskConfigContext;
+	}
+
+	@Override
+	public TaskConfigPersonContext getTaskConfigPersonContext() {
+		return taskConfigPersonContext;
 	}
 }

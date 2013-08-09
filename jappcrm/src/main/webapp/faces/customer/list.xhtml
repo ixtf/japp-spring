@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="errorMessage" showDetail="true" sticky="true"
+				autoupdate="true" severity="error" />
+			<p:growl id="infoMessage" showDetail="true" autoupdate="true"
+				severity="info" />
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputText value="#{msg['year.label']}" />
+				<p:selectOneMenu value="#{taskManageController.year}">
+					<f:selectItems value="#{taskManageController.years}" />
+					<p:ajax process="@this" listener="#{taskManageController.search}"
+						event="change" update=":form" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+
+			<p:contextMenu for="tableTasks">
+				<p:menuitem value="#{msg['config.label']}" update=":form"
+					action="#{taskManageController.config}" icon="ui-icon-wrench" />
+				<p:menuitem value="#{msg['task.active.title']}" type="button"
+					onclick="confirmDialogActiveTask.show()" icon="ui-icon-lightbulb" />
+				<p:menuitem value="#{msg['task.finish.title']}" type="button"
+					onclick="confirmDialogFinishTask.show()"
+					icon="ui-icon-circle-check" />
+				<p:menuitem value="#{msg['delete.label']}" type="button"
+					onclick="confirmDialogDeleteTask.show()" icon="ui-icon-close" />
+			</p:contextMenu>
+			<p:confirmDialog message="#{msg['operation.confirm']}?"
+				severity="alert" widgetVar="confirmDialogActiveTask">
+				<p:commandButton value="#{msg['operation.submit']}"
+					process="@this,tableTasks" update=":form"
+					action="#{taskManageController.active}"
+					oncomplete="confirmDialogActiveTask.hide()" />
+			</p:confirmDialog>
+			<p:confirmDialog message="#{msg['operation.confirm']}?"
+				severity="alert" widgetVar="confirmDialogFinishTask">
+				<p:commandButton value="#{msg['operation.submit']}"
+					process="@this,tableTasks" update=":form"
+					action="#{taskManageController.finish}"
+					oncomplete="confirmDialogFinishTask.hide()" />
+			</p:confirmDialog>
+			<p:confirmDialog message="#{msg['operation.confirm']}?"
+				severity="alert" widgetVar="confirmDialogDeleteTask">
+				<p:commandButton value="#{msg['operation.submit']}"
+					process="@this,tableTasks" update=":form"
+					action="#{taskManageController.delete}"
+					oncomplete="confirmDialogDeleteTask.hide()" />
+			</p:confirmDialog>
+			<p:dataTable id="tableTasks" var="_task"
+				value="#{taskManageController.tasks}"
+				selection="#{taskManageController.task}" rowKey="#{_task.nodeId}"
+				selectionMode="single">
+				<p:column headerText="NODEID" rendered="false">
+					<h:outputText value="#{_task.nodeId}" />
+				</p:column>
+
+				<p:column headerText="#{msg['year.label']}">
+					<h:outputText value="#{_task.year}" />
+				</p:column>
+
+				<p:column headerText="#{msg['name.label']}">
+					<h:outputText value="#{_task.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['status.label']}">
+					<h:outputText value="#{_task.status.name}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

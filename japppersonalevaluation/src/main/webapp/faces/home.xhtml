@@ -10,9 +10,12 @@
 				autoupdate="true" severity="error" />
 			<p:growl id="infoMessage" showDetail="true" autoupdate="true"
 				severity="info" />
-			<h1 class="title ui-widget-header ui-corner-all">#{homeController.task}</h1>
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText value="#{homeController.task}" />
+			</h1>
 			<p:tabView>
-				<p:tab title="#{msg['home.toEvaluatePerson.list']}">
+				<p:tab title="#{msg['home.toEvaluatePerson.list']}"
+					rendered="#{not empty homeController.toEvaluatePersons}">
 					<p:dataTable var="_person"
 						value="#{homeController.toEvaluatePersons}">
 						<p:column headerText="#{msg['name.label']}">
@@ -28,25 +31,30 @@
 						</p:column>
 					</p:dataTable>
 				</p:tab>
-				<p:tab title="#{msg['home.evaluatedPerson.list']}">
-					<p:dataTable var="_person"
-						value="#{homeController.evaluatedPersons}"
-						selection="#{homeController.person}" rowKey="#{_person.nodeId}"
-						selectionMode="single">
+				<p:tab title="#{msg['home.evaluatedPerson.list']}"
+					rendered="#{not empty homeController.evaluatedPersons}">
+					<p:dataTable var="_levelEvaluation"
+						value="#{homeController.evaluatedPersons}" sortMode="multiple">
 						<p:column headerText="#{msg['name.label']}">
-							<h:outputText value="#{_person.name}" />
+							<h:outputText value="#{_levelEvaluation.personEnd}" />
+						</p:column>
+						<p:column sortBy="#{_levelEvaluation.level}"
+							headerText="#{msg['evaluation.level.title']}">
+							<h:outputText value="#{_levelEvaluation.level.name}" />
 						</p:column>
 						<p:column style="width:4%">
 							<p:commandButton id="selectButton" update=":form"
 								action="#{homeController.evaluationPerson}"
 								icon="ui-icon-search">
-								<f:setPropertyActionListener value="#{_person}"
+								<f:setPropertyActionListener
+									value="#{_levelEvaluation.personEnd}"
 									target="#{homeController.person}" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
 				</p:tab>
-				<p:tab title="#{msg['home.unSubmitPerson.list']}">
+				<p:tab title="#{msg['home.unSubmitPerson.list']}"
+					rendered="#{not empty homeController.unSubmitPersons}">
 					<p:dataTable var="_person"
 						value="#{homeController.unSubmitPersons}"
 						selection="#{homeController.person}" rowKey="#{_person.nodeId}"

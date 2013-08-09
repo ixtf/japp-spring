@@ -47,13 +47,13 @@
 		p:credentialsMatcher-ref="shiroLocalCredentialsMatcher" p:name="EMAIL" />
 	<bean id="shiroMobileRealm" class="com.hengyi.japp.common.shiro.LocalRealm"
 		p:credentialsMatcher-ref="shiroLocalCredentialsMatcher" p:name="MOBILE" />
-	<bean id="shiroHrRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm"
+	<bean id="shiroHrRealm" class="com.hengyi.japp.common.shiro.JdbcRealm"
 		p:dataSource-ref="hrDataSource" p:authenticationQuery="${hr.authenticationQuery}"
 		p:credentialsMatcher-ref="shiroMd5CredentialsMatcher" p:name="HR" />
-	<bean id="shiroOa1Realm" class="org.apache.shiro.realm.jdbc.JdbcRealm"
+	<bean id="shiroOa1Realm" class="com.hengyi.japp.common.shiro.JdbcRealm"
 		p:dataSource-ref="oa1DataSource" p:authenticationQuery="${oa1.authenticationQuery}"
 		p:credentialsMatcher-ref="shiroMd5CredentialsMatcher" p:name="OA1" />
-	<bean id="shiroOa2Realm" class="org.apache.shiro.realm.jdbc.JdbcRealm"
+	<bean id="shiroOa2Realm" class="com.hengyi.japp.common.shiro.JdbcRealm"
 		p:dataSource-ref="oa2DataSource" p:authenticationQuery="${oa2.authenticationQuery}"
 		p:credentialsMatcher-ref="shiroMd5CredentialsMatcher" p:name="OA2" />
 

@@ -1,22 +1,15 @@
 package com.hengyi.japp.common.service.impl;
 
 import static com.hengyi.japp.common.Constant.DEFAULT_THEME;
-import static com.hengyi.japp.common.Constant.SESSION_PRINCIPAL;
-import static com.hengyi.japp.common.Constant.SESSION_PRINCIPALTYPE;
-import static com.hengyi.japp.common.Constant.SESSION_USER;
 
 import java.util.List;
-
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 
 import com.hengyi.japp.common.data.PrincipalType;
 import com.hengyi.japp.common.data.Theme;
 import com.hengyi.japp.common.dto.UserDTO;
 import com.hengyi.japp.common.service.CacheService;
+import com.hengyi.japp.common.shiro.ShiroUtil;
 
-@SuppressWarnings("unchecked")
 public abstract class CacheServiceImpl implements CacheService {
 	@Override
 	public String getTheme() {
@@ -37,30 +30,26 @@ public abstract class CacheServiceImpl implements CacheService {
 
 	@Override
 	public final PrincipalType getPrincipalType() throws Exception {
-		return getSession(SESSION_PRINCIPALTYPE, PrincipalType.class);
+		return ShiroUtil.getPrincipalType();
 	}
 
 	@Override
 	public final Object getPrincipal() throws Exception {
-		return getSession(SESSION_PRINCIPAL, Object.class);
+		return ShiroUtil.getPrincipal();
 	}
 
 	@Override
 	public final UserDTO getUser() throws Exception {
-		return getSession(SESSION_USER, UserDTO.class);
+		return ShiroUtil.getUser();
 	}
 
 	@Override
-	public final <T> T getSession(Object key, Class<T> value) throws Exception {
-		Subject subject = SecurityUtils.getSubject();
-		Session session = subject.getSession();
-		return (T) session.getAttribute(key);
+	public final <T> T getSession(Object key, Class<T> clazz) throws Exception {
+		return ShiroUtil.getSession(key, clazz);
 	}
 
 	@Override
 	public final void setSession(Object key, Object value) throws Exception {
-		Subject subject = SecurityUtils.getSubject();
-		Session session = subject.getSession();
-		session.setAttribute(key, value);
+		ShiroUtil.setSession(key, value);
 	}
 }

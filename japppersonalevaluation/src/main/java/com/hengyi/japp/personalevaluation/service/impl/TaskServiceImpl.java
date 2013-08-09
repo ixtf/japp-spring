@@ -1,7 +1,9 @@
 package com.hengyi.japp.personalevaluation.service.impl;
 
+import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -70,6 +72,8 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	private void checkConfig(Long nodeId) throws Exception {
+		ResourceBundle msg = ResourceBundle.getBundle("msg", FacesContext
+				.getCurrentInstance().getViewRoot().getLocale());
 		Task task = findOne(nodeId);
 		if (!task.isInit())
 			throw new Exception(ErrorCode.ERROR_TASK_NOT_INIT);
@@ -101,6 +105,8 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	private void checkActive(Long nodeId) throws Exception {
+		ResourceBundle msg = ResourceBundle.getBundle("msg", FacesContext
+				.getCurrentInstance().getViewRoot().getLocale());
 		Task task = findOne(nodeId);
 		if (!task.isInit())
 			throw new Exception(ErrorCode.ERROR_NOT_INIT);
@@ -228,12 +234,16 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public Task getDefaultTask(Operator operator) {
-		Task result = null;
-		for (Task task : taskRepository.findAllByOperator(operator)) {
+		for (Task task : taskRepository.findAllByOperator(operator))
 			if (TaskStatus.ACTIVE.equals(task.getStatus()))
 				return task;
-			result = task;
-		}
-		return result;
+		return null;
+	}
+
+	@Override
+	public void checkEvaluation(Long taskNodeId) throws Exception {
+		Task task = findOne(taskNodeId);
+		if (!task.isActive())
+			throw new Exception(ErrorCode.ERROR_NOT_ACTIVE);
 	}
 }

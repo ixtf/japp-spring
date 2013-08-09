@@ -1,0 +1,16 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<jaxws:client id="jappCommonSoapClient" serviceClass="com.hengyi.japp.common.ws.SoapService"
+		address="http://192.168.0.124:8080/common/ws/soap/jappCommon?wsdl" />
+
+	<!-- <jaxws:endpoint id="jappPersonalEvaluationSoap" address="/jappPersonalEvaluation" 
+		publish="true" implementor="com.hengyi.japp.personalevaluation.ws.SoapServiceImpl" 
+		/> -->
+</beans>
