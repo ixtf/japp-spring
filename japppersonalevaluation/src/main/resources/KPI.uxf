@@ -1,42 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="12.0">
-  <zoom_level>10</zoom_level>
+<diagram program="umlet" version="11.5.1">
+  <zoom_level>9</zoom_level>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>590</x>
-      <y>410</y>
-      <w>196</w>
-      <h>240</h>
+      <x>225</x>
+      <y>414</y>
+      <w>171</w>
+      <h>215</h>
     </coordinates>
     <panel_attributes>lt=-
 m2=1
 LEVEL_EVALUATION
 bg=magenta
 fg=magenta</panel_attributes>
-    <additional_attributes>40;220;170;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>150</x>
-      <y>120</y>
-      <w>230</w>
-      <h>180</h>
-    </coordinates>
-    <panel_attributes>lt=-
-m2=0...n
-LOGIN
-fg=magenta</panel_attributes>
-    <additional_attributes>210;30;30;160</additional_attributes>
+    <additional_attributes>36;198;153;27</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>760</x>
-      <y>420</y>
-      <w>230</w>
-      <h>80</h>
+      <x>378</x>
+      <y>423</y>
+      <w>207</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>_Node: Person
 --
@@ -46,10 +32,10 @@ work: String</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>380</x>
-      <y>610</y>
-      <w>250</w>
-      <h>70</h>
+      <x>36</x>
+      <y>594</y>
+      <w>225</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>_Relationship: LevelEvaluation
 --
@@ -59,55 +45,27 @@ fg=magenta</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>290</x>
-      <y>100</y>
-      <w>200</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>_Relationship: AuthPrincipal
---
-principal: String
-fg=magenta</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>0</x>
-      <y>100</y>
-      <w>170</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>_enum: PrincipalType
---
-SSO,LDAP,HR.OA,...
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>600</x>
-      <y>470</y>
-      <w>280</w>
-      <h>180</h>
+      <x>234</x>
+      <y>468</y>
+      <w>251</w>
+      <h>161</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0...n
 LEVEL_EVALUATION
 bg=magenta
 fg=magenta</panel_attributes>
-    <additional_attributes>260;30;30;160</additional_attributes>
+    <additional_attributes>234;27;27;144</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1220</x>
-      <y>30</y>
-      <w>150</w>
-      <h>50</h>
+      <x>639</x>
+      <y>45</y>
+      <w>135</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>_enum: Level
 --
@@ -119,10 +77,10 @@ L1,L2.L3,L4,L5
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1130</x>
-      <y>420</y>
-      <w>170</w>
-      <h>50</h>
+      <x>711</x>
+      <y>423</y>
+      <w>153</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>_enum: PersonStatus
 --
@@ -132,39 +90,25 @@ INIT, SAVE, SUBMIT</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>960</x>
-      <y>460</y>
-      <w>310</w>
-      <h>120</h>
+      <x>558</x>
+      <y>459</y>
+      <w>278</w>
+      <h>107</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m2=1
 KPI_EVALUATION
 bg=magenta
 fg=magenta</panel_attributes>
-    <additional_attributes>290;100;30;30</additional_attributes>
+    <additional_attributes>261;90;27;27</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>10</x>
-      <y>420</y>
-      <w>170</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>_Node: Role
---
-name: String
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>900</x>
-      <y>0</y>
-      <w>170</w>
-      <h>50</h>
+      <x>405</x>
+      <y>45</y>
+      <w>153</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>_enum: TaskStatus
 --
@@ -174,51 +118,23 @@ INIT, ACTIVE, FINISH</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>610</x>
-      <y>310</y>
-      <w>220</w>
-      <h>150</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;
-m1=1
-m2=1..n
-MANAGE</panel_attributes>
-    <additional_attributes>150;130;50;70;70;30;200;110</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>330</x>
-      <y>120</y>
-      <w>110</w>
-      <h>320</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=1
-LOGIN
-fg=magenta</panel_attributes>
-    <additional_attributes>90;300;30;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>960</x>
-      <y>410</y>
-      <w>190</w>
-      <h>50</h>
+      <x>558</x>
+      <y>414</y>
+      <w>170</w>
+      <h>44</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
 m2=1
 fg=blue</panel_attributes>
-    <additional_attributes>30;30;170;30</additional_attributes>
+    <additional_attributes>27;27;153;27</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1180</x>
-      <y>200</y>
-      <w>220</w>
-      <h>70</h>
+      <x>756</x>
+      <y>225</y>
+      <w>198</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>_Relationship: FinalEvalustion
 --
@@ -230,24 +146,24 @@ fg=magenta</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>390</x>
-      <y>190</y>
-      <w>390</w>
-      <h>250</h>
+      <x>45</x>
+      <y>216</y>
+      <w>350</w>
+      <h>224</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0...n
 m2=0..n
 CHARGE</panel_attributes>
-    <additional_attributes>30;230;370;30</additional_attributes>
+    <additional_attributes>27;207;333;27</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1250</x>
-      <y>540</y>
-      <w>200</w>
-      <h>50</h>
+      <x>819</x>
+      <y>531</y>
+      <w>180</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>_Relationship: KpiEvaluation
 --
@@ -258,64 +174,38 @@ fg=magenta</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1030</x>
-      <y>530</y>
-      <w>240</w>
-      <h>140</h>
+      <x>621</x>
+      <y>522</y>
+      <w>215</w>
+      <h>125</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1
 KPI_EVALUATION
 fg=magenta</panel_attributes>
-    <additional_attributes>30;120;220;30</additional_attributes>
+    <additional_attributes>27;108;198;27</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>150</x>
-      <y>390</y>
-      <w>210</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=0...n
-m2=1
-MEMBER_OF</panel_attributes>
-    <additional_attributes>30;50;190;50</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>50</x>
-      <y>120</y>
-      <w>50</w>
-      <h>160</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m2=1</panel_attributes>
-    <additional_attributes>30;140;30;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>890</x>
-      <y>470</y>
-      <w>142</w>
-      <h>180</h>
+      <x>495</x>
+      <y>468</y>
+      <w>128</w>
+      <h>161</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1
 m2=1...n
 KPI_PERSON</panel_attributes>
-    <additional_attributes>80;30;80;160</additional_attributes>
+    <additional_attributes>72;27;72;144</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>760</x>
-      <y>200</y>
-      <w>170</w>
-      <h>60</h>
+      <x>378</x>
+      <y>225</y>
+      <w>153</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>_Node: Task
 --
@@ -326,24 +216,24 @@ name: String</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>480</x>
-      <y>390</y>
-      <w>300</w>
-      <h>70</h>
+      <x>126</x>
+      <y>396</y>
+      <w>269</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0...n
 m2=1
 AS</panel_attributes>
-    <additional_attributes>280;50;30;50</additional_attributes>
+    <additional_attributes>252;45;27;45</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>700</x>
-      <y>0</y>
-      <w>170</w>
-      <h>60</h>
+      <x>198</x>
+      <y>36</y>
+      <w>153</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>_Node: TaskConfig
 --
@@ -354,25 +244,25 @@ name: String</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>900</x>
-      <y>170</y>
-      <w>300</w>
-      <h>70</h>
+      <x>504</x>
+      <y>198</y>
+      <w>269</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=-
 m2=1
 FINAL_EVALUATION
 bg=magenta
 fg=magenta</panel_attributes>
-    <additional_attributes>280;50;30;50</additional_attributes>
+    <additional_attributes>252;45;27;45</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>890</x>
-      <y>630</y>
-      <w>170</w>
-      <h>80</h>
+      <x>495</x>
+      <y>612</y>
+      <w>153</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>_Node: Kpi
 --
@@ -385,55 +275,42 @@ maxScore: double
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>860</x>
-      <y>190</y>
-      <w>340</w>
-      <h>250</h>
+      <x>468</x>
+      <y>216</y>
+      <w>305</w>
+      <h>224</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1...n
 FINAL_EVALUATION
 bg=magenta
 fg=magenta</panel_attributes>
-    <additional_attributes>30;230;320;30</additional_attributes>
+    <additional_attributes>27;207;288;27</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>900</x>
-      <y>20</y>
-      <w>100</w>
-      <h>220</h>
+      <x>450</x>
+      <y>63</y>
+      <w>44</w>
+      <h>179</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
 m2=1
 fg=blue</panel_attributes>
-    <additional_attributes>30;200;80;30</additional_attributes>
+    <additional_attributes>27;162;27;27</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>10</x>
-      <y>260</y>
-      <w>170</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>_Node: AuthType
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>340</x>
-      <y>420</y>
-      <w>170</w>
-      <h>70</h>
+      <x>0</x>
+      <y>423</y>
+      <w>153</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>_Node: Operator
 --
-username: String
+uuid: String
 name: String
 </panel_attributes>
     <additional_attributes/>
@@ -441,15 +318,15 @@ name: String
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>760</x>
-      <y>230</y>
-      <w>158</w>
-      <h>210</h>
+      <x>378</x>
+      <y>252</y>
+      <w>140</w>
+      <h>188</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=1
 m2=1..n
 TASK_PERSON</panel_attributes>
-    <additional_attributes>80;30;80;190</additional_attributes>
+    <additional_attributes>72;27;72;171</additional_attributes>
   </element>
 </diagram>
