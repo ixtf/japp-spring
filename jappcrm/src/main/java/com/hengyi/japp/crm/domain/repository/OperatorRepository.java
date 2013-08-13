@@ -1,8 +1,12 @@
 package com.hengyi.japp.crm.domain.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.neo4j.repository.GraphRepository;
+import org.springframework.data.neo4j.repository.NamedIndexRepository;
+import org.springframework.data.neo4j.repository.RelationshipOperationsRepository;
 
-import com.hengyi.japp.crm.domain.Operator;
+import com.hengyi.japp.crm.domain.node.Operator;
 
-public interface OperatorRepository extends JpaRepository<Operator, String> {
+public interface OperatorRepository extends GraphRepository<Operator>,
+		NamedIndexRepository<Operator>,
+		RelationshipOperationsRepository<Operator> {
 }

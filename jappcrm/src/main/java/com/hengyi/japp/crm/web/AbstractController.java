@@ -17,8 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
-import com.hengyi.japp.crm.domain.Customer;
-import com.hengyi.japp.crm.domain.Operator;
+import com.hengyi.japp.crm.domain.node.Operator;
+import com.hengyi.japp.crm.domain.node.customer.Customer;
 import com.hengyi.japp.crm.service.CacheServiceFacade;
 import com.hengyi.japp.crm.service.CustomerService;
 import com.hengyi.japp.crm.service.OperatorService;

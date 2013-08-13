@@ -15,6 +15,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.google.common.collect.Sets;
+import com.hengyi.japp.crm.domain.node.Operator;
 
 @Entity
 @Table(name = "t_role")

@@ -3,7 +3,6 @@ package com.hengyi.japp.personalevaluation.domain.node;
 import java.io.Serializable;
 
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.neo4j.annotation.Indexed;

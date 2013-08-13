@@ -12,6 +12,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.hengyi.japp.crm.domain.node.Operator;
+
 @Embeddable
 @MappedSuperclass
 public class Modifiable implements Serializable {

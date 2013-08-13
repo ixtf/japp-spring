@@ -6,7 +6,7 @@ import javax.inject.Named;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hengyi.japp.common.dto.UserDTO;
-import com.hengyi.japp.crm.domain.Operator;
+import com.hengyi.japp.crm.domain.node.Operator;
 import com.hengyi.japp.crm.domain.repository.OperatorRepository;
 import com.hengyi.japp.crm.service.OperatorService;
 
@@ -18,8 +18,14 @@ public class OperatorServiceImpl implements OperatorService {
 	private OperatorRepository operatorRepository;
 
 	@Override
+	public Operator findOne(Long nodeId) {
+		return nodeId == null ? null : operatorRepository.findOne(nodeId);
+	}
+
+	@Override
 	public Operator findOne(String uuid) {
-		return uuid == null ? null : operatorRepository.findOne(uuid);
+		return uuid == null ? null : operatorRepository.findByPropertyValue(
+				Operator.class.getSimpleName(), "uuid", uuid);
 	}
 
 	@Override

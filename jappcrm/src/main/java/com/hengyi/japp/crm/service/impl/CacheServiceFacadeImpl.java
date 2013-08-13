@@ -12,7 +12,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
 import com.hengyi.japp.common.service.impl.CacheServiceImpl;
-import com.hengyi.japp.crm.domain.Operator;
+import com.hengyi.japp.crm.domain.node.Operator;
 import com.hengyi.japp.crm.service.CacheServiceFacade;
 import com.hengyi.japp.crm.service.OperatorService;
 

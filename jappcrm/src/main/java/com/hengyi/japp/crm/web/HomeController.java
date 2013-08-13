@@ -5,7 +5,7 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.domain.Customer;
+import com.hengyi.japp.crm.domain.node.customer.Customer;
 
 @Named
 @Scope("request")
