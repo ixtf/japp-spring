@@ -19,17 +19,6 @@
 		<view-id value="/faces/crmType/update.jsf" />
 	</url-mapping>
 
-	<!-- <url-mapping id="indicatorNew">
-		<pattern value="/#{indicatorController.type}/indicator" />
-		<view-id value="/faces/indicator/update.jsf" />
-	</url-mapping>
-
-	<url-mapping id="indicatorUpdate">
-		<pattern
-			value="/#{indicatorController.type}/indicator/#{indicatorController.nodeId}" />
-		<view-id value="/faces/indicator/update.jsf" />
-	</url-mapping> -->
-
 	<url-mapping id="indicatorValueUpdate">
 		<pattern value="/indicatorValues/#{indicatorValueController.nodeId}" />
 		<view-id value="/faces/indicatorValue/update.jsf" />
@@ -38,11 +27,6 @@
 	<url-mapping id="customerUpdate">
 		<pattern value="/customers/#{customerController.nodeId}" />
 		<view-id value="/faces/customer/update.jsf" />
-	</url-mapping>
-
-	<url-mapping id="customerIndicatorUpdate">
-		<pattern value="/customer/indicators/#{customerIndicatorController.nodeId}" />
-		<view-id value="/faces/customer/indicator/update.jsf" />
 	</url-mapping>
 
 	<url-mapping id="customerBasicInfoReport">
@@ -64,7 +48,7 @@
 	</url-mapping>
 
 	<url-mapping id="storageUpdate">
-		<pattern value="/storages/#{uuid:storageController.uuid}" />
+		<pattern value="/storages/#{storageController.uuid}" />
 		<view-id value="/faces/storage/update.jsf" />
 	</url-mapping>
 
@@ -78,5 +62,20 @@
 		<pattern
 			value="/storages/#{storageReportController.nodeId}/fiCreditRiskReport" />
 		<view-id value="/faces/storage/fiCreditRiskReport.jsf" />
+	</url-mapping>
+
+	<!-- <url-mapping id="indicatorNew"> <pattern value="/#{indicatorController.type}/indicator" 
+		/> <view-id value="/faces/indicator/update.jsf" /> </url-mapping> <url-mapping 
+		id="indicatorUpdate"> <pattern value="/#{indicatorController.type}/indicator/#{indicatorController.nodeId}" 
+		/> <view-id value="/faces/indicator/update.jsf" /> </url-mapping> -->
+
+	<url-mapping id="customerIndicatorUpdate">
+		<pattern value="/customer/indicators/#{customerIndicatorController.nodeId}" />
+		<view-id value="/faces/customer/indicator/update.jsf" />
+	</url-mapping>
+
+	<url-mapping id="storageIndicatorUpdate">
+		<pattern value="/storage/indicators/#{storageIndicatorController.nodeId}" />
+		<view-id value="/faces/storage/indicator/update.jsf" />
 	</url-mapping>
 </pretty-config>

@@ -10,20 +10,20 @@
 			<p:growl id="message" showDetail="true" sticky="true" />
 			<h1 class="title ui-widget-header ui-corner-all">
 				<h:outputText value="#{msg['new']}"
-					rendered="#{empty customerIndicatorController.indicator.nodeId}" />
+					rendered="#{empty storageIndicatorController.indicator.nodeId}" />
 				<h:outputText value="#{msg['edit']}"
-					rendered="#{not empty customerIndicatorController.indicator.nodeId}" />
-				<h:outputText value="-#{msg['customer']}#{msg['indicator']}" />
+					rendered="#{not empty storageIndicatorController.indicator.nodeId}" />
+				<h:outputText value="-#{msg['storage']}#{msg['indicator']}" />
 			</h1>
 			<h:panelGrid columns="3" cellpadding="5">
 				<h:outputLabel for="name" value="#{msg['name']}" />
 				<h:inputText id="name"
-					value="#{customerIndicatorController.indicator.name}" />
+					value="#{storageIndicatorController.indicator.name}" />
 				<p:message for="name" />
 
 				<h:outputLabel for="percent" value="#{msg['indicatorPercent']}" />
 				<pe:inputNumber id="percent"
-					value="#{customerIndicatorController.indicator.percent}"
+					value="#{storageIndicatorController.indicator.percent}"
 					maxValue="1" />
 				<p:message for="percent" />
 
@@ -31,7 +31,7 @@
 			<p:selectOneMenu id="bug" rendered="false" />
 			<p:dataTable id="tableIndicatorValueScores"
 				var="_indicatorValueScore"
-				value="#{customerIndicatorController.indicatorValueScores}"
+				value="#{storageIndicatorController.indicatorValueScores}"
 				editable="true" editMode="cell">
 				<p:ajax event="cellEdit" update=":form:message" />
 				<f:facet name="header">
@@ -41,10 +41,10 @@
 				<p:column style="width:4%">
 					<p:commandButton process="@this"
 						update=":form:tableIndicatorValueScores,:form:message"
-						action="#{customerIndicatorController.removeIndicatorValueScore}"
+						action="#{storageIndicatorController.removeIndicatorValueScore}"
 						icon="ui-icon-minus">
 						<f:setPropertyActionListener value="#{_indicatorValueScore}"
-							target="#{customerIndicatorController.selectedIndicatorValueScore}" />
+							target="#{storageIndicatorController.selectedIndicatorValueScore}" />
 					</p:commandButton>
 				</p:column>
 
@@ -84,10 +84,10 @@
 					<p:column style="width:4%">
 						<p:commandButton process="@this"
 							update=":form:tableIndicatorValueScores"
-							action="#{customerIndicatorController.addIndicatorValueScore}"
+							action="#{storageIndicatorController.addIndicatorValueScore}"
 							icon="ui-icon-plus">
 							<f:setPropertyActionListener value="#{_indicatorValue}"
-								target="#{customerIndicatorController.selectedIndicatorValueScore.end}" />
+								target="#{storageIndicatorController.selectedIndicatorValueScore.end}" />
 						</p:commandButton>
 					</p:column>
 
@@ -96,7 +96,7 @@
 					</p:column>
 				</p:dataTable>
 			</p:panel>
-			<p:commandButton action="#{customerIndicatorController.save}"
+			<p:commandButton action="#{storageIndicatorController.save}"
 				update=":form" value="#{msg['operation.submit']}"
 				styleClass="ui-priority-primary" />
 		</h:form>

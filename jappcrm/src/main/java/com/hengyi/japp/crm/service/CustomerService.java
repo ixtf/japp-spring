@@ -10,7 +10,7 @@ import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.customer.Customer;
 import com.hengyi.japp.crm.domain.customer.CustomerIndicator;
 
-public interface CustomerService extends IndicatorService<CustomerIndicator> {
+public interface CustomerService {
 	Customer findOne(Long nodeId);
 
 	void save(Customer customer, CrmType crmType, Communicatee communicatee,
@@ -23,4 +23,6 @@ public interface CustomerService extends IndicatorService<CustomerIndicator> {
 	long count();
 
 	List<Customer> findAllByQuery(String nameSearch);
+
+	List<CustomerIndicator> findAllIndicator();
 }

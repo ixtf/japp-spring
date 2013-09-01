@@ -1,12 +1,14 @@
 package com.hengyi.japp.crm.web;
 
+import java.io.Serializable;
+
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
 @Named
 @Scope("request")
-public class ThemeController extends AbstractController {
+public class ThemeController extends AbstractController implements Serializable{
 	private static final long serialVersionUID = 6248447393153537183L;
 	private String theme;
 

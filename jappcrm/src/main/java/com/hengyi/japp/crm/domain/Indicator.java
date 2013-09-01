@@ -53,12 +53,20 @@ public abstract class Indicator extends AbstractNeo4j implements Serializable {
 		return template.fetch(getIndicatorValueScores());
 	}
 
+	public Iterable<IndicatorValue> getIndicatorValues(Neo4jOperations template) {
+		Set<IndicatorValue> result = Sets.newHashSet();
+		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores())
+			result.add(indicatorValueScore.getEnd(template));
+		return result;
+	}
+
 	public void setPercent(double percent) {
 		this.percent = percent;
 	}
 
 	public void setIndicatorValueScores(
 			Iterable<IndicatorValueScore> indicatorValueScores) {
-		this.indicatorValueScores = Sets.newHashSet(indicatorValueScores);
+		this.indicatorValueScores = indicatorValueScores == null ? null : Sets
+				.newHashSet(indicatorValueScores);
 	}
 }

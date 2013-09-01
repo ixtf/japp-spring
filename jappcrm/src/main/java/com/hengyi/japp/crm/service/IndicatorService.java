@@ -5,17 +5,16 @@ import java.util.List;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 
-public interface IndicatorService<T extends Indicator> {
-	T findOneIndicator(Long nodeId);
+public interface IndicatorService {
+	Indicator findOne(Long nodeId);
 
-	T findOneIndicator(String name);
-
-	void save(T indicator, Iterable<IndicatorValueScore> indicatorValueScores)
+	void save(Indicator indicator,
+			Iterable<IndicatorValueScore> indicatorValueScores)
 			throws Exception;
 
-	void delete(T indicator) throws Exception;
+	void delete(Indicator indicator) throws Exception;
 
-	List<T> findAllIndicator();
+	List<Indicator> findAll();
 
 	// T findSaleIncomeIndicator();
 	//

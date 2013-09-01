@@ -46,10 +46,12 @@ public final class Constant extends com.hengyi.japp.common.Constant {
 		public static final String INDICATORVALUES = "/faces/indicatorValue/list.jsf";
 		public static final String CUSTOMER_NEW = "/faces/customer/update.jsf";
 		public static final String CUSTOMERS = "/faces/customer/list.jsf";
-		public static final String CUSTOMER_INDICATOR_NEW = "/faces/customer/indicator/update.jsf";
-		public static final String CUSTOMER_INDICATORS = "/faces/customer/indicator/list.jsf";
 		public static final String STORAGE_NEW = "/faces/storage/indicator/update.jsf";
 		public static final String STORAGES = "/faces/storage/indicator/list.jsf";
+		public static final String CUSTOMER_INDICATOR_NEW = "/faces/customer/indicator/update.jsf";
+		public static final String CUSTOMER_INDICATORS = "/faces/customer/indicator/list.jsf";
+		public static final String STORAGE_INDICATOR_NEW = "/faces/storage/indicator/update.jsf";
+		public static final String STORAGE_INDICATORS = "/faces/storage/indicator/list.jsf";
 	}
 
 	public static final class ErrorCode extends

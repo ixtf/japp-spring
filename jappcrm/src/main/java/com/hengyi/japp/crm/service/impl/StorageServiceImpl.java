@@ -2,7 +2,6 @@ package com.hengyi.japp.crm.service.impl;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -10,7 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.hengyi.japp.crm.domain.customer.CustomerIndicator;
+import com.hengyi.japp.crm.domain.repository.StorageIndicatorRepository;
 import com.hengyi.japp.crm.domain.repository.StorageRepository;
 import com.hengyi.japp.crm.domain.storage.Storage;
 import com.hengyi.japp.crm.domain.storage.StorageIndicator;
@@ -21,6 +20,8 @@ import com.hengyi.japp.crm.service.StorageService;
 public class StorageServiceImpl implements StorageService {
 	@Inject
 	private StorageRepository storageRepository;
+	@Inject
+	private StorageIndicatorRepository storageIndicatorRepository;
 
 	@Override
 	public Storage findOne(Long nodeId) {
@@ -53,9 +54,8 @@ public class StorageServiceImpl implements StorageService {
 				nameSearch));
 	}
 
-	@PostConstruct
-	public void intIndicators() {
-		StorageIndicator indicator = new StorageIndicator();
-
+	@Override
+	public List<StorageIndicator> findAllIndicator() {
+		return Lists.newArrayList(storageIndicatorRepository.findAll());
 	}
 }

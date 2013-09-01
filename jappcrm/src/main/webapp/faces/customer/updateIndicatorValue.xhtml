@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:tabView id="tabView" var="_indicator"
+		value="#{customerController.indicators}" orientation="left">
+		<p:tab title="#{_indicator.name}">
+			<p:selectManyCheckbox
+				value="#{customerController.selectedIndicatorValues}"
+				layout="pageDirection" converter="indicatorValue">
+				<p:ajax event="select" process="@this" update=":form:message"
+					listener="#{customerController.test1}" />
+				<p:ajax event="select" process="@this" update=":form:message"
+					listener="#{customerController.test1}" />
+				<f:selectItems var="_indicatorValue"
+					value="#{customerController.indicatorMap[_indicator]}">
+				</f:selectItems>
+			</p:selectManyCheckbox>
+		</p:tab>
+	</p:tabView>
+</ui:composition>

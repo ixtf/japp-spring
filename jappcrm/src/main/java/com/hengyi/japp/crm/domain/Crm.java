@@ -98,8 +98,9 @@ public abstract class Crm extends AbstractNeo4j implements Serializable {
 		return template.fetch(getIndicatorValues());
 	}
 
-	public void setIndicatorValues(Set<IndicatorValue> indicatorValues) {
-		this.indicatorValues = indicatorValues;
+	public void setIndicatorValues(Iterable<IndicatorValue> indicatorValues) {
+		this.indicatorValues = indicatorValues == null ? null : Sets
+				.newHashSet(indicatorValues);
 	}
 
 	public BigDecimal getSaleIncome() {

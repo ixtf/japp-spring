@@ -9,6 +9,7 @@
 		<f:facet name="header">
 			<h:outputText value="#{msg['chiefCommunicatee']}" />
 		</f:facet>
+
 		<p:column headerText="#{msg['name']}">
 			<h:outputText value="#{_communicatee.name}" />
 		</p:column>
@@ -27,7 +28,7 @@
 	</p:dataTable>
 
 	<p:dataTable id="tableCommunicatees" var="_communicatee"
-		value="#{customerController.communicatees}" stickyHeader="true">
+		value="#{customerController.communicatees}">
 		<f:facet name="header">
 			<h:outputText value="#{msg['communicatee']}" />
 		</f:facet>
@@ -72,7 +73,8 @@
 
 		<p:dataTable id="tableSelectedCommunicatees" var="_communicatee"
 			value="#{communicateesController.lazyCommunicateeModel}" lazy="true"
-			rows="#{customersController.pageSize}" paginator="true" stickyHeader="true">
+			rows="#{customersController.pageSize}" paginator="true"
+			stickyHeader="true">
 			<p:column style="width:4%">
 				<p:commandButton process="@this"
 					update=":form:tabView:tableCommunicatees,:form:tabView:tableChiefCommunicatee"

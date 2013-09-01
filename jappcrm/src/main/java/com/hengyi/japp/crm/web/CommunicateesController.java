@@ -1,5 +1,6 @@
 package com.hengyi.japp.crm.web;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Named;
@@ -12,7 +13,7 @@ import com.hengyi.japp.crm.web.data.LazyCommunicateeModel;
 
 @Named
 @Scope("view")
-public class CommunicateesController extends AbstractController {
+public class CommunicateesController extends AbstractController implements Serializable{
 	private static final long serialVersionUID = -6359781138513690580L;
 	private LazyCommunicateeModel lazyCommunicateeModel;
 	private Communicatee communicatee;

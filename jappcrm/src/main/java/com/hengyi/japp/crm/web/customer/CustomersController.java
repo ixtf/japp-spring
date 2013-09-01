@@ -1,5 +1,6 @@
 package com.hengyi.japp.crm.web.customer;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Named;
@@ -13,7 +14,8 @@ import com.hengyi.japp.crm.web.data.LazyCustomerModel;
 
 @Named
 @Scope("view")
-public class CustomersController extends AbstractController {
+public class CustomersController extends AbstractController implements
+		Serializable {
 	private static final long serialVersionUID = 3708518912737819900L;
 	private LazyCustomerModel lazyCustomerModel;
 	private Customer customer;

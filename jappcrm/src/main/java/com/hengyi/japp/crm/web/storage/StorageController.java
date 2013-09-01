@@ -1,46 +1,33 @@
 package com.hengyi.japp.crm.web.storage;
 
+import java.io.Serializable;
+import java.util.Set;
+
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.Constant.URL;
+import com.google.common.collect.Sets;
+import com.hengyi.japp.crm.domain.Crm;
+import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.storage.Storage;
-import com.hengyi.japp.crm.web.AbstractController;
+import com.hengyi.japp.crm.web.CrmController;
 
 @Named
 @Scope("view")
-public class StorageController extends AbstractController {
-	private static final long serialVersionUID = 3708518912737819900L;
-	private Long nodeId;
-	private Storage storage;
+public class StorageController extends CrmController implements Serializable {
+	private static final long serialVersionUID = -4189240961754260470L;
 
-	public Storage getStorage() {
-		if (storage == null)
-			storage = new Storage();
-		return storage;
+	@Override
+	protected Crm newCrm() {
+		return new Storage();
 	}
 
-	public Long getNodeId() {
-		return nodeId;
-	}
-
-	public void setNodeId(Long nodeId) {
-		this.nodeId = nodeId;
-		if (storage == null)
-			storage = storageService.findOne(nodeId);
-	}
-
-	public void setStorage(Storage storage) {
-		this.storage = storage;
-	}
-
-	public void save() {
-		try {
-			storageService.save(getStorage());
-			redirect(URL.CUSTOMERS);
-		} catch (Exception e) {
-			addErrorMessage(e);
-		}
+	@Override
+	protected Iterable<Indicator> getAssociatedIndicators() {
+		Set<Indicator> result = Sets.newHashSet();
+		for (Indicator indicator : storageService.findAllIndicator())
+			result.add(indicator);
+		return result;
 	}
 }

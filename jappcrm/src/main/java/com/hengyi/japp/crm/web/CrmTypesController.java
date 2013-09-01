@@ -1,11 +1,11 @@
 package com.hengyi.japp.crm.web;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
-import org.primefaces.event.CellEditEvent;
 import org.springframework.context.annotation.Scope;
 
 import com.google.common.collect.Lists;
@@ -14,7 +14,7 @@ import com.hengyi.japp.crm.domain.CrmType;
 
 @Named
 @Scope("request")
-public class CrmTypesController extends AbstractController {
+public class CrmTypesController extends AbstractController implements Serializable{
 	private static final long serialVersionUID = -6359781138513690580L;
 	private List<CrmType> crmTypes;
 	private CrmType crmType;
@@ -40,14 +40,6 @@ public class CrmTypesController extends AbstractController {
 			crmTypeRepository.delete(crmType);
 			crmTypes.remove(crmType);
 			addInfoMessage("删除成功！");
-		} catch (Exception e) {
-			addErrorMessage(e);
-		}
-	}
-
-	public void onCellEdit(CellEditEvent event) {
-		try {
-			crmTypeRepository.save((CrmType) event.getSource());
 		} catch (Exception e) {
 			addErrorMessage(e);
 		}

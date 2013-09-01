@@ -1,5 +1,6 @@
 package com.hengyi.japp.crm.web;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +13,7 @@ import com.hengyi.japp.crm.domain.IndicatorValue;
 
 @Named
 @Scope("request")
-public class IndicatorValuesController extends AbstractController {
+public class IndicatorValuesController extends AbstractController implements Serializable{
 	private static final long serialVersionUID = -6359781138513690580L;
 	private List<IndicatorValue> indicatorValues;
 	private IndicatorValue indicatorValue;

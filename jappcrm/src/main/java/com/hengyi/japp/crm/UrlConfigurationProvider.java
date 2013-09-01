@@ -59,15 +59,15 @@ public class UrlConfigurationProvider extends HttpConfigurationProvider {
 				.addRule(Join.path(URL.COMMUNICATEES).to(JSF.COMMUNICATEES))
 				.addRule(Join.path(URL.CRMTYPE_NEW).to(JSF.CRMTYPE_NEW))
 				.addRule(Join.path(URL.CRMTYPES).to(JSF.CRMTYPES))
+				.addRule(
+						Join.path(URL.INDICATORVALUE_NEW).to(
+								JSF.INDICATORVALUE_NEW))
 				.addRule(Join.path(URL.INDICATORVALUES).to(JSF.INDICATORVALUES))
 				.addRule(Join.path(URL.CUSTOMER_NEW).to(JSF.CUSTOMER_NEW))
 				.addRule(Join.path(URL.CUSTOMERS).to(JSF.CUSTOMERS))
 				.addRule(Join.path(URL.STORAGE_NEW).to(JSF.STORAGE_NEW))
 				.addRule(Join.path(URL.STORAGES).to(JSF.STORAGES))
 				// .addRule(Join.path(URL.INDICATORS).to(JSF.INDICATORS))
-				.addRule(
-						Join.path(URL.INDICATORVALUE_NEW).to(
-								JSF.INDICATORVALUE_NEW))
 				.addRule(
 						Join.path(URL.CUSTOMER_INDICATOR_NEW).to(
 								JSF.CUSTOMER_INDICATOR_NEW))
@@ -79,7 +79,19 @@ public class UrlConfigurationProvider extends HttpConfigurationProvider {
 								JSF.CUSTOMER_INDICATOR_NEW))
 				.addRule(
 						Join.path(URL.CUSTOMER_INDICATORS).to(
-								JSF.CUSTOMER_INDICATORS));
+								JSF.CUSTOMER_INDICATORS))
+				.addRule(
+						Join.path(URL.STORAGE_INDICATOR_NEW).to(
+								JSF.STORAGE_INDICATOR_NEW))
+				.addRule(
+						Join.path(URL.STORAGE_INDICATORS).to(
+								JSF.STORAGE_INDICATORS))
+				.addRule(
+						Join.path(URL.STORAGE_INDICATOR_NEW).to(
+								JSF.STORAGE_INDICATOR_NEW))
+				.addRule(
+						Join.path(URL.STORAGE_INDICATORS).to(
+								JSF.STORAGE_INDICATORS));
 	}
 
 	@Override

@@ -10,19 +10,19 @@
 			<p:growl id="message" showDetail="true" sticky="true" />
 			<h1 class="title ui-widget-header ui-corner-all">
 				<h:outputText value="#{msg['new']}"
-					rendered="#{empty customerController.customer.nodeId}" />
+					rendered="#{empty customerController.crm.nodeId}" />
 				<h:outputText value="#{msg['edit']}"
-					rendered="#{not empty customerController.customer.nodeId}" />
+					rendered="#{not empty customerController.crm.nodeId}" />
 				<h:outputText value="-#{msg['customer']}" />
 			</h1>
 			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
 				<h:outputLabel for="name" value="#{msg['name']}" />
-				<h:inputText id="name" value="#{customerController.customer.name}" />
+				<h:inputText id="name" value="#{customerController.crm.name}" />
 				<p:message for="name" />
 
 				<!-- <h:outputLabel for="country" value="#{msg['country']}" />
 				<p:selectOneMenu id="country"
-					value="#{customerController.customer.country}">
+					value="#{customerController.crm.country}">
 					<f:selectItems var="_country"
 						value="#{customerController.countries}"
 						itemLabel="#{_country.name}" />
@@ -31,44 +31,46 @@
 
 				<h:outputLabel for="registerNumber" value="#{msg['registerNumber']}" />
 				<h:inputText id="registerNumber"
-					value="#{customerController.customer.registerNumber}" />
+					value="#{customerController.crm.registerNumber}" />
 				<p:message for="registerNumber" />
 
 				<h:outputLabel for="registerPlace" value="#{msg['registerPlace']}" />
 				<h:inputText id="registerPlace"
-					value="#{customerController.customer.registerPlace}" />
+					value="#{customerController.crm.registerPlace}" />
 				<p:message for="registerPlace" />
 
 				<h:outputLabel for="registerDate" value="#{msg['registerDate']}" />
 				<p:calendar id="registerDate"
-					value="#{customerController.customer.registerDate}" locale="zh_CN"
+					value="#{customerController.crm.registerDate}" locale="zh_CN"
 					navigator="true" pattern="yyyy-MM-dd" />
 				<p:message for="registerDate" />
 
 				<h:outputLabel for="registerCapital"
 					value="#{custInd['registerCapital']}" />
 				<pe:inputNumber id="registerCapital"
-					value="#{customerController.customer.registerCapital}" maxValue="99999999999999999999"/>
+					value="#{customerController.crm.registerCapital}"
+					maxValue="99999999999999999999" />
 				<p:message for="registerCapital" />
 
 				<h:outputLabel for="represent" value="#{msg['represent']}" />
 				<h:inputText id="represent"
-					value="#{customerController.customer.represent}" />
+					value="#{customerController.crm.represent}" />
 				<p:message for="represent" />
 
 				<h:outputLabel for="addressName" value="#{msg['address']}" />
 				<h:inputText id="addressName"
-					value="#{customerController.customer.addressName}" />
+					value="#{customerController.crm.addressName}" />
 				<p:message for="addressName" />
 
 				<h:outputLabel for="zipCode" value="#{msg['zipCode']}" />
-				<p:inputMask id="zipCode"
-					value="#{customerController.customer.zipCode}" mask="999999" />
+				<p:inputMask id="zipCode" value="#{customerController.crm.zipCode}"
+					mask="999999" />
 				<p:message for="zipCode" />
 
 				<h:outputLabel for="saleIncome" value="#{custInd['saleIncome']}" />
 				<pe:inputNumber id="saleIncome"
-					value="#{customerController.customer.saleIncome}" maxValue="99999999999999999999"/>
+					value="#{customerController.crm.saleIncome}"
+					maxValue="99999999999999999999" />
 				<p:message for="saleIncome" />
 
 				<h:outputLabel for="crmType" value="#{msg['crmType']}" />
@@ -81,15 +83,18 @@
 
 				<h:outputLabel for="mainBusiness" value="#{msg['mainBusiness']}" />
 				<h:inputText id="mainBusiness"
-					value="#{customerController.customer.mainBusiness}" />
+					value="#{customerController.crm.mainBusiness}" />
 				<p:message for="mainBusiness" />
 
 				<h:outputLabel for="coBusiness" value="#{msg['coBusiness']}" />
 				<h:inputText id="coBusiness"
-					value="#{customerController.customer.coBusiness}" />
+					value="#{customerController.crm.coBusiness}" />
 				<p:message for="coBusiness" />
 			</h:panelGrid>
 			<p:tabView id="tabView">
+				<p:tab title="#{msg['indicator']}">
+					<ui:include src="updateIndicatorValue.xhtml" />
+				</p:tab>
 				<p:tab title="#{msg['associate']}#{msg['customer']}">
 					<ui:include src="updateAssociate.xhtml" />
 				</p:tab>

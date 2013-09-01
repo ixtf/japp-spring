@@ -1,5 +1,6 @@
 package com.hengyi.japp.crm.web;
 
+import java.io.Serializable;
 import java.util.Properties;
 
 import javax.annotation.Resource;
@@ -17,7 +18,7 @@ import com.hengyi.japp.crm.Constant.URL;
 @Named
 @Scope("request")
 // @Join(path = "/login", to = "/faces/login.jsf")
-public class AuthController extends AbstractController {
+public class AuthController extends AbstractController implements Serializable{
 	private static final long serialVersionUID = 3708518912737819900L;
 	@Resource(name = "deployProperties")
 	private Properties deployProperties;

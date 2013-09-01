@@ -1,5 +1,7 @@
 package com.hengyi.japp.crm.web;
 
+import java.io.Serializable;
+
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
@@ -9,7 +11,7 @@ import com.hengyi.japp.crm.domain.CrmType;
 
 @Named
 @Scope("request")
-public class CrmTypeController extends AbstractController {
+public class CrmTypeController extends AbstractController implements Serializable{
 	private static final long serialVersionUID = -6359781138513690580L;
 	private Long nodeId;
 	private CrmType crmType;

@@ -8,11 +8,11 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
-			<p:dataTable id="tableCustomerIndicators" var="_indicator"
-				value="#{customerIndicatorsController.indicators}">
+			<p:dataTable id="tableStorageIndicators" var="_indicator"
+				value="#{storageIndicatorsController.indicators}">
 				<p:column style="width:4%">
 					<h:outputLink
-						value="#{request.contextPath}/customer/indicators/#{_indicator.nodeId}">
+						value="#{request.contextPath}/storage/indicators/#{_indicator.nodeId}">
 						<h:outputText value="#{msg['edit']}" />
 					</h:outputLink>
 				</p:column>

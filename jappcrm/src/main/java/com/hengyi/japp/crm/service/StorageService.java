@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.PageRequest;
 
 import com.hengyi.japp.crm.domain.storage.Storage;
+import com.hengyi.japp.crm.domain.storage.StorageIndicator;
 
 public interface StorageService {
 	Storage findOne(Long nodeId);
@@ -18,4 +19,6 @@ public interface StorageService {
 	long count();
 
 	List<Storage> findAllByQuery(String nameSearch);
+
+	List<StorageIndicator> findAllIndicator();
 }
