@@ -9,6 +9,16 @@
 	   		http://www.springframework.org/schema/task 
 	   		http://www.springframework.org/schema/task/spring-task.xsd">
 
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="view">
+					<bean class="com.hengyi.japp.common.web.spring.ViewScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
 	<bean id="dozer" class="org.dozer.spring.DozerBeanMapperFactoryBean" />
 	<bean id="eventBus" class="com.google.common.eventbus.EventBus" />
 

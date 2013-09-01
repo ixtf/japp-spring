@@ -6,25 +6,20 @@
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
-			<p:growl id="errorMessage" showDetail="true" sticky="true"
-				autoupdate="true" severity="error" />
-			<p:growl id="infoMessage" showDetail="true" autoupdate="true"
-				severity="info" />
+			<p:growl id="message" showDetail="true" sticky="true" />
 			<p:panel header="#{msg['login.title']}">
 				<h:panelGrid columns="3">
-					<h:outputLabel for="username"
-						value="#{msg['login.username.label']}" />
+					<h:outputLabel for="username" value="#{msg['login.username']}" />
 					<h:inputText id="username" value="#{authController.username}" />
 					<p:message for="username" />
 
-					<h:outputLabel for="password"
-						value="#{msg['login.password.label']}" />
+					<h:outputLabel for="password" value="#{msg['login.password']}" />
 					<p:password id="password" value="#{authController.password}" />
 					<p:message for="password" />
 				</h:panelGrid>
 			</p:panel>
 			<p:commandButton value="#{msg['operation.submit']}" update=":form"
-				action="#{authController.login}" styleClass="btn-primary" />
+				action="#{authController.login}" styleClass="ui-priority-primary" />
 		</h:form>
 	</ui:define>
 </ui:composition>

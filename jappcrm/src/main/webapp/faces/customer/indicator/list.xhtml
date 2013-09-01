@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:panel header="F.C. Barcelona" toggleable="true">
+			<h:outputText
+				value="FC Barcelona is one of only three clubs never to have been relegated from La Liga and is the most successful club in Spanish football along with Real Madrid,  
+        having won twenty La Liga titles, a record twenty-five Spanish Cups, eight Spanish Super Cups, four Eva Duarte Cups and two League Cups.  
+        They are also one of the most successful clubs  in European football having won fourteen official major trophies in total,  
+        including ten UEFA competitions. They have won three UEFA Champions League titles, a record four UEFA Cup Winners' Cups,  
+        a record three InterCities Fairs Cups (the forerunner to the UEFA Europa League), three UEFA Super Cups and one FIFA Club World Cup.  
+        The club is also the only European side to have played continental football in every season since its inception in 1955." />
+		</p:panel>
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+			<p:contextMenu for="tableCustomerIndicators">
+				<p:menuitem value="#{msg['edit']}" process=":form"
+					url="/customer/indicators/#{customerIndicatorsController.indicator.nodeId}"
+					icon="ui-icon-pencil" />
+				<p:menuitem value="#{msg['edit']}"
+					action="#{customerIndicatorsController.edit}" icon="ui-icon-pencil" />
+				<p:menuitem value="#{msg['delete']}" disabled="true"
+					action="#{customerIndicatorsController.edit}" icon="ui-icon-close" />
+			</p:contextMenu>
+			<p:dataTable id="tableCustomerIndicators" var="_indicator"
+				value="#{customerIndicatorsController.indicators}"
+				selection="#{customerIndicatorsController.indicator}"
+				rowKey="#{_indicator.nodeId}" selectionMode="single">
+				<p:column headerText="NODEID" rendered="true">
+					<h:outputText value="#{_indicator.nodeId}" />
+				</p:column>
+
+				<p:column headerText="#{msg['name']}">
+					<h:outputText value="#{_indicator.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['indicatorPercent']}">
+					<h:outputText value="#{_indicator.percent}">
+						<f:convertNumber type="percent" />
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

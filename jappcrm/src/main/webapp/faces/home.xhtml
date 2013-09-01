@@ -6,7 +6,7 @@
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
-			<h:outputText value="#{cacheService.theme}" />
+			<h:outputText value="#{header['user-agent']}" />
 		</h:form>
 	</ui:define>
 </ui:composition>

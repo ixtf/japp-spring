@@ -1,7 +1,7 @@
 package com.hengyi.japp.crm.service;
 
 import com.hengyi.japp.common.dto.UserDTO;
-import com.hengyi.japp.crm.domain.node.Operator;
+import com.hengyi.japp.crm.domain.Operator;
 
 public interface OperatorService {
 	Operator findOne(Long nodeId) throws Exception;

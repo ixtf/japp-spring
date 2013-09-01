@@ -11,7 +11,7 @@
 		<param-value>#{cacheService.theme}</param-value>
 	</context-param>
 	<context-param>
-		<param-name>facelets.SKIP_COMMENTS</param-name>
+		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
 		<param-value>true</param-value>
 	</context-param>
 	<!-- Reads request input using UTF-8 encoding -->

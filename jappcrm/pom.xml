@@ -137,6 +137,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>personalevaluation</finalName>
+		<finalName>crm</finalName>
 	</build>
 </project>

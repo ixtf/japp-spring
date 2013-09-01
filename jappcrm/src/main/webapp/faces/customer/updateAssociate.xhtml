@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:dataTable id="tableCustomers" var="_associate"
+		value="#{customerController.associateModels}">
+		<p:column style="width:4%">
+			<p:commandButton process="@this"
+				update=":form:tabView:tableCustomers"
+				action="#{customerController.removeAssociateModel}"
+				icon="ui-icon-minus">
+				<f:setPropertyActionListener value="#{_associate}"
+					target="#{customerController.associateModel}" />
+			</p:commandButton>
+		</p:column>
+
+		<p:column headerText="#{msg['name']}">
+			<h:outputText value="#{_associate.associateCrm.name}" />
+		</p:column>
+
+		<p:column headerText="#{msg['note']}">
+			<h:outputText value="#{_associate.note}" />
+		</p:column>
+	</p:dataTable>
+
+	<p:panel header="#{msg['selectCustomer']}" toggleable="true">
+		<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+			<h:outputLabel for="selectCustomer-nameSearch" value="#{msg['name']}" />
+			<h:inputText id="selectCustomer-nameSearch"
+				value="#{customersController.nameSearch}" />
+			<p:commandButton value="#{msg['search']}" process="@this,@parent"
+				update="tableSelectedCustomers"
+				action="#{customersController.search}" icon="ui-icon-search" />
+		</h:panelGrid>
+
+		<p:dataTable id="tableSelectedCustomers" var="_customer"
+			value="#{customersController.lazyCustomerModel}" lazy="true"
+			rows="#{customersController.pageSize}" paginator="true"
+			stickyHeader="true">
+			<p:column style="width:4%">
+				<p:commandButton process="@this"
+					update=":form:tabView:panelGridAssociateNote"
+					oncomplete="dialogAssociateNode.show()" icon="ui-icon-plus">
+					<f:setPropertyActionListener value="#{_customer}"
+						target="#{customerController.associateModel.associateCrm}" />
+				</p:commandButton>
+			</p:column>
+
+			<p:column headerText="#{msg['name']}">
+				<h:outputText value="#{_customer.name}" />
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+	<p:dialog header="#{msg['associate']}#{msg['note']}"
+		widgetVar="dialogAssociateNode" modal="true">
+		<h:panelGrid id="panelGridAssociateNote" columns="2" cellpadding="5"
+			styleClass="form-inline">
+			<h:outputLabel value="#{msg['name']}" />
+			<h:outputText
+				value="#{customerController.associateModel.associateCrm.name}" />
+
+			<h:outputLabel for="associate-note" value="#{msg['note']}" />
+			<p:inputTextarea id="associate-note"
+				value="#{customerController.associateModel.note}" rows="3" cols="33" />
+		</h:panelGrid>
+		<p:commandButton process="@this,@parent"
+			update=":form:tabView:tableCustomers"
+			action="#{customerController.addAssociateModel}"
+			oncomplete="dialogAssociateNode.hide()" />
+	</p:dialog>
+</ui:composition>

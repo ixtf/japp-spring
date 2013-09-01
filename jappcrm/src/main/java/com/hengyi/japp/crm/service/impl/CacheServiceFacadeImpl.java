@@ -4,6 +4,8 @@ import static com.hengyi.japp.common.Constant.ADMIN_NAME;
 import static com.hengyi.japp.common.Constant.ADMIN_PRINCIPAL;
 import static com.hengyi.japp.common.Constant.SESSION_OPERATOR;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -12,7 +14,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
 import com.hengyi.japp.common.service.impl.CacheServiceImpl;
-import com.hengyi.japp.crm.domain.node.Operator;
+import com.hengyi.japp.crm.domain.Operator;
 import com.hengyi.japp.crm.service.CacheServiceFacade;
 import com.hengyi.japp.crm.service.OperatorService;
 

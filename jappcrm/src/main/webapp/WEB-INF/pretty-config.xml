@@ -9,38 +9,74 @@
 		<action>#{authController.logout}</action>
 	</url-mapping>
 
+	<url-mapping id="communicateeUpdate">
+		<pattern value="/communicatees/#{communicateeController.nodeId}" />
+		<view-id value="/faces/communicatee/update.jsf" />
+	</url-mapping>
+
+	<url-mapping id="crmTypeUpdate">
+		<pattern value="/crmTypes/#{crmTypeController.nodeId}" />
+		<view-id value="/faces/crmType/update.jsf" />
+	</url-mapping>
+
+	<!-- <url-mapping id="indicatorNew">
+		<pattern value="/#{indicatorController.type}/indicator" />
+		<view-id value="/faces/indicator/update.jsf" />
+	</url-mapping>
+
+	<url-mapping id="indicatorUpdate">
+		<pattern
+			value="/#{indicatorController.type}/indicator/#{indicatorController.nodeId}" />
+		<view-id value="/faces/indicator/update.jsf" />
+	</url-mapping> -->
+
+	<url-mapping id="indicatorValueUpdate">
+		<pattern value="/indicatorValues/#{indicatorValueController.nodeId}" />
+		<view-id value="/faces/indicatorValue/update.jsf" />
+	</url-mapping>
+
 	<url-mapping id="customerUpdate">
-		<pattern value="/customers/#{uuid:customerController.uuid}" />
+		<pattern value="/customers/#{customerController.nodeId}" />
 		<view-id value="/faces/customer/update.jsf" />
 	</url-mapping>
 
-	<url-mapping id="taskConfigChargers">
-		<pattern
-			value="/tasks/#{taskNodeId:taskConfigController.taskNodeId}/config/chargers" />
-		<view-id value="/faces/task/configChargers.jsf" />
+	<url-mapping id="customerIndicatorUpdate">
+		<pattern value="/customer/indicators/#{customerIndicatorController.nodeId}" />
+		<view-id value="/faces/customer/indicator/update.jsf" />
 	</url-mapping>
 
-	<url-mapping id="taskConfigKpis">
+	<url-mapping id="customerBasicInfoReport">
 		<pattern
-			value="/tasks/#{taskNodeId:taskConfigController.taskNodeId}/config/kpis" />
-		<view-id value="/faces/task/configKpis.jsf" />
+			value="/customers/#{customerReportController.nodeId}/basicInfoReport" />
+		<view-id value="/faces/customer/basicInfoReport.jsf" />
 	</url-mapping>
 
-	<url-mapping id="taskConfigPersons">
+	<url-mapping id="customerCreditRiskReport">
 		<pattern
-			value="/tasks/#{taskNodeId:taskConfigController.taskNodeId}/config/persons" />
-		<view-id value="/faces/task/configPersons.jsf" />
+			value="/customers/#{customerReportController.nodeId}/creditRiskReport" />
+		<view-id value="/faces/customer/creditRiskReport.jsf" />
 	</url-mapping>
 
-	<url-mapping id="taskConfigPerson">
+	<url-mapping id="customerFiCreditRiskReport">
 		<pattern
-			value="/tasks/#{taskNodeId:taskConfigController.taskNodeId}/config/person" />
-		<view-id value="/faces/task/configPerson.jsf" />
+			value="/customers/#{customerReportController.nodeId}/fiCreditRiskReport" />
+		<view-id value="/faces/customer/fiCreditRiskReport.jsf" />
 	</url-mapping>
 
-	<url-mapping id="evaluation">
+	<url-mapping id="storageUpdate">
+		<pattern value="/storages/#{uuid:storageController.uuid}" />
+		<view-id value="/faces/storage/update.jsf" />
+	</url-mapping>
+
+	<url-mapping id="storageCreditRatingReport">
 		<pattern
-			value="/evaluation/persons/#{personNodeId:evaluationController.personNodeId}" />
-		<view-id value="/faces/evaluation/index.jsf" />
+			value="/storages/#{storageReportController.nodeId}/creditRatingReport" />
+		<view-id value="/faces/storage/creditRatingReport.jsf" />
+	</url-mapping>
+
+	<url-mapping id="storageFiCreditRiskReport">
+		<pattern
+			value="/storages/#{storageReportController.nodeId}/fiCreditRiskReport" />
+		<view-id value="/faces/storage/fiCreditRiskReport.jsf" />
 	</url-mapping>
 </pretty-config>

@@ -5,7 +5,9 @@ import javax.annotation.Resource;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.cas.CasRealm;
+import org.apache.shiro.subject.PrincipalCollection;
 
 import com.hengyi.japp.common.data.PrincipalType;
 
@@ -29,4 +31,9 @@ public class BaseSsoRealm extends CasRealm {
 		}
 	}
 
+	@Override
+	protected AuthorizationInfo doGetAuthorizationInfo(
+			PrincipalCollection principals) {
+		return null;
+	}
 }

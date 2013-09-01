@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputLabel for="nameSearch" value="#{msg['name']}" />
+				<h:inputText id="nameSearch"
+					value="#{communicateesController.nameSearch}" />
+				<p:commandButton value="#{msg['search']}" update=":form"
+					action="#{communicateesController.search}" icon="ui-icon-search" />
+			</h:panelGrid>
+
+			<p:contextMenu for="tableCommunicatees">
+				<p:menuitem value="#{msg['edit']}"
+					action="#{communicateesController.edit}" icon="ui-icon-pencil" />
+				<p:menuitem value="#{msg['delete']}" type="button"
+					onclick="confirmDialogDeleteCommunicatee.show()"
+					icon="ui-icon-close" />
+			</p:contextMenu>
+			<p:confirmDialog message="#{msg['operation.confirm']}?"
+				severity="alert" widgetVar="confirmDialogDeleteCommunicatee">
+				<p:commandButton value="#{msg['operation.submit']}" update=":form"
+					action="#{communicateesController.delete}"
+					oncomplete="confirmDialogDeleteCommunicatee.hide()" />
+			</p:confirmDialog>
+			<p:dataTable id="tableCommunicatees" var="_communicatee"
+				value="#{communicateesController.lazyCommunicateeModel}"
+				selection="#{communicateesController.communicatee}"
+				rowKey="#{_communicatee.nodeId}" selectionMode="single"
+				rows="#{communicateesController.pageSize}" paginator="true"
+				lazy="true" stickyHeader="true">
+				<p:column headerText="#{msg['name']}">
+					<h:outputText value="#{_communicatee.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['phone']}">
+					<h:outputText value="#{_communicatee.phone}" />
+				</p:column>
+
+				<p:column headerText="Email">
+					<h:outputText value="#{_communicatee.email}" />
+				</p:column>
+
+				<p:column headerText="#{msg['fax']}">
+					<h:outputText value="#{_communicatee.fax}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

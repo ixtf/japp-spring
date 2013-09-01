@@ -39,21 +39,62 @@
 				</h:outputLink>
 				<div class="nav-collapse collapse navbar-responsive-collapse">
 					<ul class="nav">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"><h:outputText value="#{msg['new']}" />
+								<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><h:outputLink value="#{request.contextPath}/customer">
+										<h:outputText value="#{msg['customer']}" />
+									</h:outputLink></li>
+								<li><h:outputLink value="#{request.contextPath}/storage">
+										<h:outputText value="#{msg['storage']}" />
+									</h:outputLink></li>
+								<li class="divider"></li>
+								<!-- <li class="nav-header">Nav header</li> -->
+								<li><h:outputLink value="#{request.contextPath}/crmType">
+										<h:outputText value="#{msg['crmType']}" />
+									</h:outputLink></li>
+								<li><h:outputLink
+										value="#{request.contextPath}/communicatee">
+										<h:outputText value="#{msg['communicatee']}" />
+									</h:outputLink></li>
+								<li class="divider"></li>
+								<li><h:outputLink
+										value="#{request.contextPath}/indicatorValue">
+										<h:outputText value="#{msg['indicatorValue']}" />
+									</h:outputLink></li>
+							</ul></li>
 						<li><h:outputLink value="#{request.contextPath}/customers">
-								<h:outputText value="#{msg['customer.manage.title']}" />
+								<h:outputText value="#{msg['customer']}#{msg['manage']}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="#{request.contextPath}/storages">
+								<h:outputText value="#{msg['storage']}#{msg['manage']}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="#{request.contextPath}/crmTypes">
+								<h:outputText value="#{msg['crmType']}#{msg['manage']}" />
+							</h:outputLink></li>
+						<li><h:outputLink
+								value="#{request.contextPath}/communicatees">
+								<h:outputText value="#{msg['communicatee']}#{msg['manage']}" />
 							</h:outputLink></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"><h:outputText
-									value="#{msg['report.center.title']}" /> <b class="caret"></b></a>
+									value="#{msg['indicator']}#{msg['manage']}" /> <b
+								class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Action</a></li>
-								<li><a href="#">Another action</a></li>
-								<li><a href="#">Something else here</a></li>
-								<li class="divider"></li>
-								<li class="nav-header">Nav header</li>
-								<li><a href="#">Separated link</a></li>
-								<li><a href="#">One more separated link</a></li>
+								<li><h:outputLink
+										value="#{request.contextPath}/customer/indicators">
+										<h:outputText value="#{msg['customer']}#{msg['indicator']}" />
+									</h:outputLink></li>
+								<li><h:outputLink
+										value="#{request.contextPath}/storage/indicators">
+										<h:outputText value="#{msg['storage']}#{msg['indicator']}" />
+									</h:outputLink></li>
 							</ul></li>
+						<li><h:outputLink
+								value="#{request.contextPath}/indicatorValues">
+								<h:outputText value="#{msg['indicatorValue']}#{msg['manage']}" />
+							</h:outputLink></li>
 					</ul>
 					<div class="btn-group pull-right">
 						<a href="javascript:void(0)"
@@ -65,7 +106,7 @@
 							class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a value="javascript:void(0)"> <h:outputText
+							<li><a href="javascript:void(0)"> <h:outputText
 										value="#{cacheService.principalType}(#{cacheService.principal})" />
 							</a></li>
 							<li><h:outputLink value="#{request.contextPath}/theme"
@@ -77,6 +118,11 @@
 									rendered="#{not empty authController.currentOperator}">
 									<h:outputText value="#{msg['logout.title']}" />
 								</h:outputLink></li>
+							<!-- <li><p:commandLink process="@this"
+									action="#{authController.logout}"
+									rendered="#{not empty authController.currentOperator}">
+									<h:outputText value="#{msg['logout.title']}" />
+								</p:commandLink></li> -->
 						</ul>
 					</div>
 				</div>
@@ -99,11 +145,11 @@
 		</p:ajaxStatus>
 	</ui:insert>
 	<p:growl showDetail="true" sticky="true" widgetVar="pushMessage" />
-	<p:socket onMessage="handleMessage"
+	<!-- <p:socket onMessage="handleMessage"
 		channel="/#{authController.currentOperator.uuid}"
-		rendered="#{authController.authenticated}" />
+		transport="long-polling" rendered="#{authController.authenticated}" />
 	<script type="text/javascript">
 	function handleMessage(facesmessage){pushMessage.show([facesmessage]);}
-	</script>
+	</script> -->
 </h:body>
 </html>

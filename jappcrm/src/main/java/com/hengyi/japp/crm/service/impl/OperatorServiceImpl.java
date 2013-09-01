@@ -6,7 +6,7 @@ import javax.inject.Named;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hengyi.japp.common.dto.UserDTO;
-import com.hengyi.japp.crm.domain.node.Operator;
+import com.hengyi.japp.crm.domain.Operator;
 import com.hengyi.japp.crm.domain.repository.OperatorRepository;
 import com.hengyi.japp.crm.service.OperatorService;
 

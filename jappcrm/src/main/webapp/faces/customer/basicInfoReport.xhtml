@@ -1,0 +1,202 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:commandButton value="#{msg['print']}" type="button"
+			icon="ui-icon-print">
+			<p:printer target="basicInfoReport" />
+		</p:commandButton>
+		<p:panelGrid id="basicInfoReport"
+			style="margin-left:auto;margin-right:auto;width:210mm;">
+			<f:facet name="header">
+				<p:row>
+					<p:column colspan="2">
+						<h:outputText value="#{msg['customer']}#{msg['basicInfoReport']}"
+							style="font-size:1.6em" />
+					</p:column>
+				</p:row>
+			</f:facet>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['name']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.name}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['registerNumber']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.registerNumber}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{cusInd['durationYears']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.durationYears}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['registerPlace']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.registerPlace}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['address']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.addressName}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['zipCode']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.zipCode}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['represent']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.represent}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{cusInd['registerCapital']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.registerCapital}">
+						<f:convertNumber type="currency" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['chiefCommunicatee']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.communicatee.name}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['phone']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.communicatee.phone}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="E-mail" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.communicatee.email}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['fax']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.communicatee.fax}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{cusInd['crmProperty']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.communicatee.crmType}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{cusInd['saleIncome']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.saleIncome}">
+						<f:convertNumber type="currency" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['associate']}#{msg['customer']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.communicatee}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['mainBusiness']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.mainBusiness}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText value="#{msg['coBusiness']}" />
+				</p:column>
+				<p:column>
+					<h:outputText
+						value="#{customerReportController.basicInfoReport.coBusiness}" />
+				</p:column>
+			</p:row>
+			<f:facet name="footer">
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msg['businessMan']}" />
+					</p:column>
+					<p:column />
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msg['businessManager']}" />
+					</p:column>
+					<p:column />
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msg['reportInputDate']}" />
+					</p:column>
+					<p:column />
+				</p:row>
+			</f:facet>
+		</p:panelGrid>
+	</ui:define>
+</ui:composition>

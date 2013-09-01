@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<title><h:outputText value="#{msg['project.title']}" /></title>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+	</f:facet>
+	<f:facet name="last">
+		<h:outputStylesheet library="css" name="bootstrap.css" />
+		<h:outputStylesheet library="css" name="bootstrap-responsive.min.css" />
+		<h:outputStylesheet library="css" name="all.css" />
+		<h:outputScript library="js" name="PrimeFacesLocales.js" />
+		<h:outputScript library="js" name="bootstrap.min.js" />
+		<h:outputScript library="javax.faces" name="jsf.js" />
+	</f:facet>
+	<ui:insert name="head" />
+</h:head>
+<h:body>
+		<p:panel header="F.C. Barcelona" toggleable="true">
+			<h:outputText
+				value="FC Barcelona is one of only three clubs never to have been relegated from La Liga and is the most successful club in Spanish football along with Real Madrid,  
+        having won twenty La Liga titles, a record twenty-five Spanish Cups, eight Spanish Super Cups, four Eva Duarte Cups and two League Cups.  
+        They are also one of the most successful clubs  in European football having won fourteen official major trophies in total,  
+        including ten UEFA competitions. They have won three UEFA Champions League titles, a record four UEFA Cup Winners' Cups,  
+        a record three InterCities Fairs Cups (the forerunner to the UEFA Europa League), three UEFA Super Cups and one FIFA Club World Cup.  
+        The club is also the only European side to have played continental football in every season since its inception in 1955." />
+		</p:panel>
+</h:body>
+</html>

@@ -41,27 +41,45 @@ public class UrlConfigurationProvider extends HttpConfigurationProvider {
 				.addRule()
 				.when(Direction.isInbound().and(Path.matches(URL.LOGIN))
 						.and(loggedIn))
-				.perform(Redirect.temporary(context.getContextPath() + "/"))
-				.addRule(Join.path(URL.LOGIN).to(JSF.LOGIN))
-				// .addRule()
-				// .when(Direction.isInbound().and(Path.matches(URL.LOGOUT)))
-				// .perform(
-				// Invoke.binding(
-				// El.retrievalMethod("#{session.invalidate}"))
-				// .and(Redirect
-				// .temporary("http://cas.hengyi.com:8080/logout?service=http://192.168.17.117:8080/personalevaluation")))
-				.addRule()
-				.when(Direction.isInbound().and(Path.matches("/")).and(admin))
 				.perform(
-						Redirect.temporary(context.getContextPath() + "/admin"))
+						Redirect.temporary(context.getContextPath() + URL.HOME))
+				.addRule(Join.path(URL.LOGIN).to(JSF.LOGIN))
+				.addRule()
+				.when(Direction.isInbound().and(Path.matches(URL.HOME))
+						.and(admin))
+				.perform(
+						Redirect.temporary(context.getContextPath() + URL.ADMIN))
+				.addRule(Join.path(URL.ADMIN).to(JSF.ADMIN))
+				.addRule(Join.path(URL.THEME).to(JSF.THEME))
+				.when(loggedIn)
 				.addRule(Join.path(URL.HOME).to(JSF.HOME))
+				.addRule(
+						Join.path(URL.COMMUNICATEE_NEW)
+								.to(JSF.COMMUNICATEE_NEW))
+				.addRule(Join.path(URL.COMMUNICATEES).to(JSF.COMMUNICATEES))
+				.addRule(Join.path(URL.CRMTYPE_NEW).to(JSF.CRMTYPE_NEW))
+				.addRule(Join.path(URL.CRMTYPES).to(JSF.CRMTYPES))
+				.addRule(Join.path(URL.INDICATORVALUES).to(JSF.INDICATORVALUES))
+				.addRule(Join.path(URL.CUSTOMER_NEW).to(JSF.CUSTOMER_NEW))
 				.addRule(Join.path(URL.CUSTOMERS).to(JSF.CUSTOMERS))
-				.addRule(Join.path(URL.CUSTOMER_NEW).to(JSF.CUSTOMER_UPDATE))
-				.addRule(Join.path("/admin").to("/faces/admin/index.jsf"))
-				.when(admin)
-				.addRule(Join.path(URL.TASK_CHANGE).to(JSF.TASK_CHANGE))
-				.when(loggedIn).addRule(Join.path(URL.THEME).to(JSF.THEME))
-				.when(loggedIn);
+				.addRule(Join.path(URL.STORAGE_NEW).to(JSF.STORAGE_NEW))
+				.addRule(Join.path(URL.STORAGES).to(JSF.STORAGES))
+				// .addRule(Join.path(URL.INDICATORS).to(JSF.INDICATORS))
+				.addRule(
+						Join.path(URL.INDICATORVALUE_NEW).to(
+								JSF.INDICATORVALUE_NEW))
+				.addRule(
+						Join.path(URL.CUSTOMER_INDICATOR_NEW).to(
+								JSF.CUSTOMER_INDICATOR_NEW))
+				.addRule(
+						Join.path(URL.CUSTOMER_INDICATORS).to(
+								JSF.CUSTOMER_INDICATORS))
+				.addRule(
+						Join.path(URL.CUSTOMER_INDICATOR_NEW).to(
+								JSF.CUSTOMER_INDICATOR_NEW))
+				.addRule(
+						Join.path(URL.CUSTOMER_INDICATORS).to(
+								JSF.CUSTOMER_INDICATORS));
 	}
 
 	@Override

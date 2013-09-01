@@ -26,8 +26,8 @@
 		<version.jboss.spec.javaee.6.0>3.0.2.Final</version.jboss.spec.javaee.6.0>
 		<version.jboss.maven.plugin>7.3.Final</version.jboss.maven.plugin>
 
-		<springframework.version>3.2.2.RELEASE</springframework.version>
-		<spring.neo4j.version>2.2.0.RELEASE</spring.neo4j.version>
+		<springframework.version>3.2.4.RELEASE</springframework.version>
+		<spring.neo4j.version>2.2.2.RELEASE</spring.neo4j.version>
 		<slf4j.version>1.7.1</slf4j.version>
 		<junit.version>4.10</junit.version>
 		<mockito.version>1.9.0</mockito.version>
@@ -363,6 +363,11 @@
 			<artifactId>sapjco3</artifactId>
 			<version>3.0.9</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
 		</dependency>
 
 		<!-- shiro -->

@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.common.data.PrincipalType;
+import com.hengyi.japp.crm.Constant.URL;
 
 @Named
 @Scope("request")
@@ -31,23 +32,21 @@ public class AuthController extends AbstractController {
 			UsernamePasswordToken token = new UsernamePasswordToken(username,
 					password);
 			subject.login(token);
-			addInfoMessage("登入成功！");
+			redirect(URL.HOME);
 		} catch (Exception e) {
 			addErrorMessage(e);
 		}
 	}
 
 	public void logout() {
-		String url = "login";
+		String url = URL.LOGIN;
 		try {
-			if (PrincipalType.SSO.equals(cacheService.getPrincipalType())) {
+			if (PrincipalType.SSO.equals(cacheService.getPrincipalType()))
 				url = deployProperties.getProperty("casLogoutUrl");
-			}
 		} catch (Exception e) {
 			// TODO
 		}
-		Subject subject = SecurityUtils.getSubject();
-		subject.logout();
+		SecurityUtils.getSubject().logout();
 		redirect(url);
 	}
 

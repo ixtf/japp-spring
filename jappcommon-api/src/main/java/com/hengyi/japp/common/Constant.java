@@ -20,6 +20,7 @@ public class Constant {
 	public static final String LOGOUT_SSO_URL = "/logout";
 	public static final String UNAUTHORIZED_URL = "/unauthorized";
 	public static final String UNAUTHORIZED_VIEW = "error/unauthorized";
+	public static final int PAGE_SIZE = 10;
 
 	public static final Theme DEFAULT_THEME = new Theme("bootstrap",
 			"bootstrap");

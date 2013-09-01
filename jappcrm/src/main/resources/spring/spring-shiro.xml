@@ -11,8 +11,8 @@
 		<property name="realms">
 			<set>
 				<ref bean="shiroIniRealm" />
-				<ref bean="shiroSsoRealm" />
 				<ref bean="shiroRealm" />
+				<ref bean="shiroSsoRealm" />
 			</set>
 		</property>
 	</bean>
@@ -34,6 +34,7 @@
 				/javax.faces.resource/** = anon
 				/resources/** = anon
 				/ws/** = anon
+				/admin/** = roles[admin]
 				/** = authc
 			</value>
 		</property>
