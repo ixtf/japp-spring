@@ -1,18 +1,21 @@
 package com.hengyi.japp.crm.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Min;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.Indexed.Level;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 
@@ -28,6 +31,7 @@ public abstract class Indicator extends AbstractNeo4j implements Serializable {
 	@Min(0)
 	protected double percent;
 	@RelatedToVia(type = IndicatorValueScore.RELATIONSHIP, elementClass = IndicatorValueScore.class)
+	@Fetch
 	protected Set<IndicatorValueScore> indicatorValueScores;
 
 	public String getName() {
@@ -51,6 +55,15 @@ public abstract class Indicator extends AbstractNeo4j implements Serializable {
 	public Iterable<IndicatorValueScore> getIndicatorValueScores(
 			Neo4jOperations template) {
 		return template.fetch(getIndicatorValueScores());
+	}
+
+	public List<IndicatorValueScore> getIndicatorValueScoresAsList() {
+		return Lists.newArrayList(getIndicatorValueScores());
+	}
+
+	public List<IndicatorValueScore> getIndicatorValueScoresAsList(
+			Neo4jOperations template) {
+		return Lists.newArrayList(getIndicatorValueScores(template));
 	}
 
 	public Iterable<IndicatorValue> getIndicatorValues(Neo4jOperations template) {

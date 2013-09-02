@@ -4,8 +4,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-	<p:tabView id="tabView" var="_indicator"
-		value="#{customerController.indicators}" orientation="left">
+	<p:tabView var="_indicator" value="#{customerController.indicators}"
+		dynamic="true" orientation="left">
 		<p:tab title="#{_indicator.name}">
 			<p:selectManyCheckbox
 				value="#{customerController.selectedIndicatorValues}"

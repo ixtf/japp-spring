@@ -38,14 +38,15 @@
 					<h:outputText value="#{msg['indicatorValue']}" />
 				</f:facet>
 
-				<p:column style="width:4%">
-					<p:commandButton process="@this"
+				<p:column headerText="#{msg['operation']}" style="width:4%">
+					<p:commandLink process="@this"
 						update=":form:tableIndicatorValueScores,:form:message"
 						action="#{customerIndicatorController.removeIndicatorValueScore}"
 						icon="ui-icon-minus">
+						<h:outputText value="#{msg['delete']}" />
 						<f:setPropertyActionListener value="#{_indicatorValueScore}"
 							target="#{customerIndicatorController.selectedIndicatorValueScore}" />
-					</p:commandButton>
+					</p:commandLink>
 				</p:column>
 
 				<p:column headerText="#{msg['name']}"
@@ -81,14 +82,15 @@
 				<p:dataTable id="tableSelectedIndicatorValues" var="_indicatorValue"
 					value="#{indicatorValuesController.indicatorValues}" rows="5"
 					paginator="true">
-					<p:column style="width:4%">
-						<p:commandButton process="@this"
+					<p:column headerText="#{msg['operation']}" style="width:4%">
+						<p:commandLink process="@this"
 							update=":form:tableIndicatorValueScores"
 							action="#{customerIndicatorController.addIndicatorValueScore}"
 							icon="ui-icon-plus">
+							<h:outputText value="#{msg['add']}" />
 							<f:setPropertyActionListener value="#{_indicatorValue}"
 								target="#{customerIndicatorController.selectedIndicatorValueScore.end}" />
-						</p:commandButton>
+						</p:commandLink>
 					</p:column>
 
 					<p:column headerText="#{msg['name']}">

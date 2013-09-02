@@ -145,11 +145,11 @@
 		</p:ajaxStatus>
 	</ui:insert>
 	<p:growl showDetail="true" sticky="true" widgetVar="pushMessage" />
-	<!-- <p:socket onMessage="handleMessage"
+	<p:socket onMessage="handleMessage"
 		channel="/#{authController.currentOperator.uuid}"
 		transport="long-polling" rendered="#{authController.authenticated}" />
 	<script type="text/javascript">
 	function handleMessage(facesmessage){pushMessage.show([facesmessage]);}
-	</script> -->
+	</script>
 </h:body>
 </html>

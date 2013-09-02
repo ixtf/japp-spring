@@ -4,24 +4,33 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-	<p:dataTable id="tableCustomers" var="_associate"
-		value="#{customerController.associateModels}">
-		<p:column style="width:4%">
-			<p:commandButton process="@this"
-				update=":form:tabView:tableCustomers"
-				action="#{customerController.removeAssociateModel}"
-				icon="ui-icon-minus">
+	<p:dataTable id="tableAssociates" var="_associate"
+		value="#{customerController.associates}" editable="true"
+		editMode="cell">
+		<p:ajax event="cellEdit" update=":form:message" />
+
+		<p:column headerText="#{msg['operation']}" style="width:4%">
+			<p:commandLink process="@this" update=":form:tabView:tableAssociates"
+				action="#{customerController.removeAssociate}" icon="ui-icon-minus">
+				<h:outputText value="#{msg['delete']}" />
 				<f:setPropertyActionListener value="#{_associate}"
-					target="#{customerController.associateModel}" />
-			</p:commandButton>
+					target="#{customerController.selectedAssociate}" />
+			</p:commandLink>
 		</p:column>
 
 		<p:column headerText="#{msg['name']}">
-			<h:outputText value="#{_associate.associateCrm.name}" />
+			<h:outputText value="#{_associate.end}" />
 		</p:column>
 
 		<p:column headerText="#{msg['note']}">
-			<h:outputText value="#{_associate.note}" />
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{_associate.note}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText value="#{_associate.note}" label="#{msg['note']}" />
+				</f:facet>
+			</p:cellEditor>
 		</p:column>
 	</p:dataTable>
 
@@ -39,13 +48,14 @@
 			value="#{customersController.lazyCustomerModel}" lazy="true"
 			rows="#{customersController.pageSize}" paginator="true"
 			stickyHeader="true">
-			<p:column style="width:4%">
-				<p:commandButton process="@this"
-					update=":form:tabView:panelGridAssociateNote"
-					oncomplete="dialogAssociateNode.show()" icon="ui-icon-plus">
+			<p:column headerText="#{msg['operation']}" style="width:4%">
+				<p:commandLink process="@this"
+					update=":form:tabView:tableAssociates"
+					action="#{customerController.addAssociate}" icon="ui-icon-plus">
+					<h:outputText value="#{msg['add']}" />
 					<f:setPropertyActionListener value="#{_customer}"
-						target="#{customerController.associateModel.associateCrm}" />
-				</p:commandButton>
+						target="#{customerController.selectedAssociate.end}" />
+				</p:commandLink>
 			</p:column>
 
 			<p:column headerText="#{msg['name']}">
@@ -53,21 +63,4 @@
 			</p:column>
 		</p:dataTable>
 	</p:panel>
-	<p:dialog header="#{msg['associate']}#{msg['note']}"
-		widgetVar="dialogAssociateNode" modal="true">
-		<h:panelGrid id="panelGridAssociateNote" columns="2" cellpadding="5"
-			styleClass="form-inline">
-			<h:outputLabel value="#{msg['name']}" />
-			<h:outputText
-				value="#{customerController.associateModel.associateCrm.name}" />
-
-			<h:outputLabel for="associate-note" value="#{msg['note']}" />
-			<p:inputTextarea id="associate-note"
-				value="#{customerController.associateModel.note}" rows="3" cols="33" />
-		</h:panelGrid>
-		<p:commandButton process="@this,@parent"
-			update=":form:tabView:tableCustomers"
-			action="#{customerController.addAssociateModel}"
-			oncomplete="dialogAssociateNode.hide()" />
-	</p:dialog>
 </ui:composition>

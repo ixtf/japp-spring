@@ -91,9 +91,9 @@
 					value="#{customerController.crm.coBusiness}" />
 				<p:message for="coBusiness" />
 			</h:panelGrid>
-			<p:tabView id="tabView">
-				<p:tab title="#{msg['indicator']}">
-					<ui:include src="updateIndicatorValue.xhtml" />
+			<p:tabView id="tabView" dynamic="true">
+				<p:tab title="#{msg['customer']}#{msg['indicator']}">
+					<ui:include src="updateIndicator.xhtml" />
 				</p:tab>
 				<p:tab title="#{msg['associate']}#{msg['customer']}">
 					<ui:include src="updateAssociate.xhtml" />

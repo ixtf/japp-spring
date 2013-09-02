@@ -33,14 +33,15 @@
 			<h:outputText value="#{msg['communicatee']}" />
 		</f:facet>
 
-		<p:column style="width:4%">
-			<p:commandButton process="@this"
+		<p:column headerText="#{msg['operation']}" style="width:4%">
+			<p:commandLink process="@this"
 				update=":form:tabView:tableCommunicatees"
 				action="#{customerController.removeCommunicatee}"
 				icon="ui-icon-minus">
+				<h:outputText value="#{msg['delete']}" />
 				<f:setPropertyActionListener value="#{_communicatee}"
 					target="#{customerController.selectedCommunicatee}" />
-			</p:commandButton>
+			</p:commandLink>
 		</p:column>
 
 		<p:column headerText="#{msg['name']}">
@@ -75,22 +76,24 @@
 			value="#{communicateesController.lazyCommunicateeModel}" lazy="true"
 			rows="#{customersController.pageSize}" paginator="true"
 			stickyHeader="true">
-			<p:column style="width:4%">
-				<p:commandButton process="@this"
+			<p:column headerText="#{msg['operation']}" style="width:4%">
+				<p:commandLink process="@this"
 					update=":form:tabView:tableCommunicatees,:form:tabView:tableChiefCommunicatee"
 					action="#{customerController.addCommunicatee}" icon="ui-icon-plus">
+					<h:outputText value="#{msg['add']}#{msg['communicatee']}" />
 					<f:setPropertyActionListener value="#{_communicatee}"
 						target="#{customerController.selectedCommunicatee}" />
-				</p:commandButton>
+				</p:commandLink>
 			</p:column>
-			<p:column style="width:4%">
-				<p:commandButton process="@this"
+			<p:column headerText="#{msg['operation']}" style="width:4%">
+				<p:commandLink process="@this"
 					update=":form:tabView:tableCommunicatees,:form:tabView:tableChiefCommunicatee"
 					action="#{customerController.chiefCommunicatee}"
 					icon="ui-icon-star">
+					<h:outputText value="#{msg['chiefCommunicatee']}" />
 					<f:setPropertyActionListener value="#{_communicatee}"
 						target="#{customerController.selectedCommunicatee}" />
-				</p:commandButton>
+				</p:commandLink>
 			</p:column>
 
 			<p:column headerText="#{msg['name']}">
