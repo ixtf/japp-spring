@@ -18,4 +18,6 @@ public interface CrmService {
 			Iterable<Communicatee> communicatees, Iterable<Associate> associates);
 
 	void delete(Crm crm) throws Exception;
+
+	Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(Crm crm);
 }

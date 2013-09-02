@@ -4,20 +4,53 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-	<p:tabView var="_indicator" value="#{customerController.indicators}"
-		dynamic="true" orientation="left">
+	<p:tabView id="tabViewIndicator" var="_indicator"
+		value="#{customerController.indicators}" dynamic="true">
 		<p:tab title="#{_indicator.name}">
-			<p:selectManyCheckbox
-				value="#{customerController.selectedIndicatorValues}"
-				layout="pageDirection" converter="indicatorValue">
-				<p:ajax event="select" process="@this" update=":form:message"
-					listener="#{customerController.test1}" />
-				<p:ajax event="select" process="@this" update=":form:message"
-					listener="#{customerController.test1}" />
-				<f:selectItems var="_indicatorValue"
-					value="#{customerController.indicatorMap[_indicator]}">
-				</f:selectItems>
-			</p:selectManyCheckbox>
+			<p:dataTable id="tableIndicatorValue" var="_indicatorValueScore"
+				value="#{customerController.indicatorMap[_indicator]}">
+				<p:column headerText="#{msg['operation']}" style="width:4%">
+					<p:commandLink process="@this"
+						update=":form:tabView:tabViewIndicator:tableIndicatorValue"
+						action="#{customerController.removeIndicatorValueScore}"
+						icon="ui-icon-minus">
+						<h:outputText value="#{msg['delete']}" />
+						<f:setPropertyActionListener value="#{_indicatorValueScore}"
+							target="#{customerController.selectedIndicatorValueScore}" />
+					</p:commandLink>
+				</p:column>
+
+				<p:column headerText="#{msg['name']}">
+					<h:outputText value="#{_indicatorValueScore.end}" />
+				</p:column>
+
+				<p:column headerText="#{msg['indicatorScore']}">
+					<h:outputText value="#{_indicatorValueScore.score}" />
+				</p:column>
+			</p:dataTable>
+			<p:panel header="#{msg['selectIndicatorValue']}">
+				<p:dataTable var="_indicatorValueScore"
+					value="#{_indicator.indicatorValueScoresAsList}">
+					<p:column headerText="#{msg['operation']}" style="width:4%">
+						<p:commandLink process="@this"
+							update=":form:tabView:tabViewIndicator:tableIndicatorValue"
+							action="#{customerController.addIndicatorValueScore}"
+							icon="ui-icon-plus">
+							<h:outputText value="#{msg['add']}" />
+							<f:setPropertyActionListener value="#{_indicatorValueScore}"
+								target="#{customerController.selectedIndicatorValueScore}" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="#{msg['name']}">
+						<h:outputText value="#{_indicatorValueScore.end}" />
+					</p:column>
+
+					<p:column headerText="#{msg['indicatorScore']}">
+						<h:outputText value="#{_indicatorValueScore.score}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
 		</p:tab>
 	</p:tabView>
 </ui:composition>

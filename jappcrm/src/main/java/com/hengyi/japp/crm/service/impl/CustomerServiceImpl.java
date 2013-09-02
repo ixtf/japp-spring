@@ -14,6 +14,8 @@ import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.customer.Customer;
+import com.hengyi.japp.crm.domain.customer.CustomerBasicInfoReport;
+import com.hengyi.japp.crm.domain.customer.CustomerCreditRiskReport;
 import com.hengyi.japp.crm.domain.customer.CustomerIndicator;
 import com.hengyi.japp.crm.domain.repository.CustomerIndicatorRepository;
 import com.hengyi.japp.crm.domain.repository.CustomerRepository;
@@ -71,5 +73,17 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<CustomerIndicator> findAllIndicator() {
 		return Lists.newArrayList(customerIndicatorRepository.findAll());
+	}
+
+	@Override
+	public CustomerBasicInfoReport basicInfoReport(Long nodeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CustomerCreditRiskReport creditRiskReport(Long nodeId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

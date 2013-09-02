@@ -7,7 +7,7 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<p:growl id="message" />
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="2" cellpadding="5" styleClass="form-inline">
 				<p:themeSwitcher value="#{themeController.theme}" var="t"
 					style="width:165px" effect="fade">
 					<f:selectItems value="#{cacheService.themes}" var="theme"
@@ -21,7 +21,7 @@
 				</p:themeSwitcher>
 				<p:commandButton value="#{msg['operation.submit']}" update="message"
 					actionListener="#{themeController.changeTheme}"
-					styleClass="btn-primary" />
+					styleClass="ui-priority-primary" />
 			</h:panelGrid>
 			<p:separator />
 			<p:dialog header="Dialog" widgetVar="dlg" minHeight="40" modal="true">

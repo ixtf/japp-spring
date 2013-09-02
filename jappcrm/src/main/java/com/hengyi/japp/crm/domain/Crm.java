@@ -27,6 +27,7 @@ import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 @NodeEntity
 public abstract class Crm extends AbstractNeo4j implements Serializable {
 	private static final long serialVersionUID = -2000360302877825388L;
+	public static final String CRM_TYPE = "CRM_TYPE";
 	public static final String CRM_COMMUNICATEE = "CHIEF_COMMUNICATEE";
 	public static final String CRM_COMMUNICATEES = "COMMUNICATEE";
 	public static final String CRM_INDICATORVALUE = "INDICATOR_VALUE";
@@ -58,7 +59,6 @@ public abstract class Crm extends AbstractNeo4j implements Serializable {
 	@NotNull
 	@Min(0)
 	protected BigDecimal saleIncome;
-	public static final String CRM_TYPE = "CRM_TYPE";
 	@RelatedTo(type = CRM_TYPE)
 	@Fetch
 	protected CrmType crmType;
@@ -66,6 +66,8 @@ public abstract class Crm extends AbstractNeo4j implements Serializable {
 	protected Set<Associate> associates;
 	@RelatedTo(type = CRM_INDICATORVALUE, elementClass = IndicatorValue.class)
 	protected Set<IndicatorValue> indicatorValues;
+	@RelatedToVia(type = IndicatorScore.RELATIONSHIP, elementClass = IndicatorScore.class)
+	protected Set<IndicatorScore> indicatorScores;
 
 	public int getDurationYears() {
 		Date startDate = getRegisterDate();
@@ -101,6 +103,21 @@ public abstract class Crm extends AbstractNeo4j implements Serializable {
 	public void setIndicatorValues(Iterable<IndicatorValue> indicatorValues) {
 		this.indicatorValues = indicatorValues == null ? null : Sets
 				.newHashSet(indicatorValues);
+	}
+
+	public Iterable<IndicatorScore> getIndicatorScores() {
+		if (indicatorScores == null)
+			indicatorScores = Sets.newHashSet();
+		return indicatorScores;
+	}
+
+	public Iterable<IndicatorScore> getIndicatorScores(Neo4jOperations template) {
+		return template.fetch(getIndicatorScores());
+	}
+
+	public void setIndicatorScores(Iterable<IndicatorScore> indicatorScores) {
+		this.indicatorScores = indicatorScores == null ? null : Sets
+				.newHashSet(indicatorScores);
 	}
 
 	public BigDecimal getSaleIncome() {

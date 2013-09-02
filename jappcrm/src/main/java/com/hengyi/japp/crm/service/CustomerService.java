@@ -8,6 +8,8 @@ import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.customer.Customer;
+import com.hengyi.japp.crm.domain.customer.CustomerBasicInfoReport;
+import com.hengyi.japp.crm.domain.customer.CustomerCreditRiskReport;
 import com.hengyi.japp.crm.domain.customer.CustomerIndicator;
 
 public interface CustomerService {
@@ -25,4 +27,8 @@ public interface CustomerService {
 	List<Customer> findAllByQuery(String nameSearch);
 
 	List<CustomerIndicator> findAllIndicator();
+
+	CustomerBasicInfoReport basicInfoReport(Long nodeId);
+
+	CustomerCreditRiskReport creditRiskReport(Long nodeId);
 }

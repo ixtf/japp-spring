@@ -11,7 +11,8 @@ import com.hengyi.japp.crm.domain.IndicatorValue;
 
 @Named
 @Scope("view")
-public class IndicatorValueController extends AbstractController implements Serializable{
+public class IndicatorValueController extends AbstractController implements
+		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
 	private Long nodeId;
 	private IndicatorValue indicatorValue;
@@ -19,7 +20,6 @@ public class IndicatorValueController extends AbstractController implements Seri
 	public void save() {
 		try {
 			indicatorValueService.save(indicatorValue);
-			push("test");
 			redirect(URL.INDICATORVALUES);
 		} catch (Exception e) {
 			addErrorMessage(e);

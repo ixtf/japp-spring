@@ -50,12 +50,16 @@ public class Operator extends AbstractNeo4j implements Serializable {
 
 	public Operator() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Operator(String uuid, String name) {
 		super();
 		this.uuid = uuid;
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return getName();
 	}
 }

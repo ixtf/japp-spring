@@ -3,11 +3,13 @@ package com.hengyi.japp.crm.web;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Communicatee;
@@ -23,30 +25,24 @@ public abstract class CrmController extends AbstractController {
 	private CrmType crmType;
 	@NotNull
 	@Size(min = 1)
-	// Crm关联的指标值，用于保存
+	// Crm关联的指标值，已经被选中，用于保存
 	private Map<Indicator, List<IndicatorValueScore>> indicatorMap;
 	@NotNull
 	// 主要联系人，用于保存
 	private Communicatee communicatee;
 	// 添加的联系人，用于保存
 	private List<Communicatee> communicatees;
-	// 当前Crm关联的Crm，用于保存
-	private List<Associate> associates;
 	/*
 	 * 前台在所有联系人中选中的联系人
 	 * 
 	 * 选中的联系人可以加为主要联系人，或者添加联系人
 	 */
 	private Communicatee selectedCommunicatee;
+	// 当前Crm关联的Crm，已经关联的，用于保存
+	private List<Associate> associates;
 	private Associate selectedAssociate;
-	/*
-	 * 可以输入的所有指标
-	 */
+	// 可以输入的所有指标
 	private List<Indicator> indicators;
-	/*
-	 * 当前前台操作的指标
-	 */
-	private Indicator selectedIndicator;
 	/*
 	 * 前台选中的指标值，可以是已选的，也可以是未选的
 	 */
@@ -68,14 +64,13 @@ public abstract class CrmController extends AbstractController {
 
 	public void addIndicatorValueScore() {
 		List<IndicatorValueScore> list = getIndicatorMap().get(
-				getSelectedIndicator());
-		if (selectedIndicatorValueScore != null
-				&& list.contains(selectedIndicatorValueScore))
+				selectedIndicatorValueScore.getStart());
+		if (!list.contains(selectedIndicatorValueScore))
 			list.add(selectedIndicatorValueScore);
 	}
 
 	public void removeIndicatorValueScore() {
-		getIndicatorMap().get(getSelectedIndicator()).remove(
+		getIndicatorMap().get(selectedIndicatorValueScore.getStart()).remove(
 				selectedIndicatorValueScore);
 	}
 
@@ -122,33 +117,23 @@ public abstract class CrmController extends AbstractController {
 	}
 
 	public List<Indicator> getIndicators() {
-		if (indicators != null)
-			return indicators;
-		ImmutableList.Builder<Indicator> builder = ImmutableList.builder();
-		for (Indicator indicator : getAssociatedIndicators())
-			if (!indicator.getIndicatorValueScoresAsList(template).isEmpty())
-				builder.add(indicator);
-		indicators = builder.build();
 		return indicators;
 	}
 
 	public Map<Indicator, List<IndicatorValueScore>> getIndicatorMap() {
-		// TODO
 		if (indicatorMap != null)
 			return indicatorMap;
+		ImmutableMap.Builder<Indicator, List<IndicatorValueScore>> builder = ImmutableMap
+				.builder();
+		Map<Indicator, List<IndicatorValueScore>> map = crmService
+				.getIndicatorMap(getCrm());
 		for (Indicator indicator : getIndicators()) {
-
+			List<IndicatorValueScore> list = map.get(indicator);
+			if (list == null)
+				list = Lists.newArrayList();
+			builder.put(indicator, list);
 		}
-		// ImmutableMap.Builder<Indicator, List<IndicatorValue>> builder =
-		// ImmutableMap
-		// .builder();
-		// for (Indicator indicator : getAssociatedIndicators()) {
-		// List<IndicatorValue> indicatorValues = ImmutableList
-		// .copyOf(indicator.getIndicatorValues(template));
-		// if (!indicatorValues.isEmpty())
-		// builder.put(indicator, indicatorValues);
-		// }
-		// indicatorMap = builder.build();
+		indicatorMap = builder.build();
 		return indicatorMap;
 	}
 
@@ -221,11 +206,12 @@ public abstract class CrmController extends AbstractController {
 		this.selectedIndicatorValueScore = selectedIndicatorValueScore;
 	}
 
-	public Indicator getSelectedIndicator() {
-		return selectedIndicator;
-	}
-
-	public void setSelectedIndicator(Indicator selectedIndicator) {
-		this.selectedIndicator = selectedIndicator;
+	@PostConstruct
+	protected void init() {
+		ImmutableList.Builder<Indicator> builder = ImmutableList.builder();
+		for (Indicator indicator : getAssociatedIndicators())
+			if (!indicator.getIndicatorValueScoresAsList(template).isEmpty())
+				builder.add(indicator);
+		indicators = builder.build();
 	}
 }

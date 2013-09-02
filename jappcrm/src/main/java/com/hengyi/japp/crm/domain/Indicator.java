@@ -82,4 +82,9 @@ public abstract class Indicator extends AbstractNeo4j implements Serializable {
 		this.indicatorValueScores = indicatorValueScores == null ? null : Sets
 				.newHashSet(indicatorValueScores);
 	}
+
+	@Override
+	public String toString() {
+		return this.getName();
+	}
 }

@@ -1,6 +1,6 @@
 package com.hengyi.japp.crm.event;
 
-public class CustomerUpdateEvent {
+public class IndicatorUpdateEvent {
 	private Long nodeId;
 
 	public Long getNodeId() {
@@ -11,7 +11,7 @@ public class CustomerUpdateEvent {
 		this.nodeId = nodeId;
 	}
 
-	public CustomerUpdateEvent(Long nodeId) {
+	public IndicatorUpdateEvent(Long nodeId) {
 		super();
 		this.nodeId = nodeId;
 	}
