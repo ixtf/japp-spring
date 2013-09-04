@@ -13,7 +13,8 @@
 				<p:menuitem value="#{msg['edit']}"
 					action="#{crmTypesController.edit}" icon="ui-icon-pencil" />
 				<p:menuitem value="#{msg['delete']}" type="button"
-					onclick="confirmDialogDeleteCrmType.show()" icon="ui-icon-close" />
+					onclick="confirmDialogDeleteCrmType.show()" icon="ui-icon-close"
+					disabled="true" />
 			</p:contextMenu>
 			<p:confirmDialog message="#{msg['operation.confirm']}?"
 				severity="alert" widgetVar="confirmDialogDeleteCrmType">
@@ -25,6 +26,10 @@
 				value="#{crmTypesController.crmTypes}"
 				selection="#{crmTypesController.crmType}"
 				rowKey="#{_crmType.nodeId}" selectionMode="single">
+				<f:facet name="header">
+					<h:outputText value="#{msg['crmType']}" />
+				</f:facet>
+
 				<p:column headerText="#{msg['name']}">
 					<h:outputText value="#{_crmType.name}" />
 				</p:column>

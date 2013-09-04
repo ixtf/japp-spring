@@ -10,6 +10,10 @@
 			<p:growl id="messages" showDetail="true" />
 			<p:dataTable id="tableCustomerIndicators" var="_indicator"
 				value="#{customerIndicatorsController.indicators}">
+				<f:facet name="header">
+					<h:outputText value="#{msg['customer']}#{msg['indicator']}" />
+				</f:facet>
+
 				<p:column style="width:4%">
 					<h:outputLink
 						value="#{request.contextPath}/customer/indicators/#{_indicator.nodeId}">

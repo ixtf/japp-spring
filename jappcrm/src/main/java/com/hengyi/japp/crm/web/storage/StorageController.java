@@ -24,6 +24,11 @@ public class StorageController extends CrmController implements Serializable {
 	}
 
 	@Override
+	protected Crm findOne(Long nodeId) {
+		return storageService.findOne(nodeId);
+	}
+
+	@Override
 	protected Iterable<Indicator> getAssociatedIndicators() {
 		Set<Indicator> result = Sets.newHashSet();
 		for (Indicator indicator : storageService.findAllIndicator())

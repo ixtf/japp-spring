@@ -7,63 +7,91 @@
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
 			<h1 class="title ui-widget-header ui-corner-all">
 				<h:outputText value="#{msg['new']}"
-					rendered="#{empty customerController.customer.nodeId}" />
+					rendered="#{empty storageController.crm.nodeId}" />
 				<h:outputText value="#{msg['edit']}"
-					rendered="#{not empty customerController.customer.nodeId}" />
-				<h:outputText value="-#{msg['customer']}" />
+					rendered="#{not empty storageController.crm.nodeId}" />
+				<h:outputText value="-#{msg['storage']}" />
 			</h1>
-			<h:panelGrid columns="3">
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
 				<h:outputLabel for="name" value="#{msg['name']}" />
-				<h:inputText id="name" value="#{customerController.customer.name}" />
+				<h:inputText id="name" value="#{storageController.crm.name}" />
 				<p:message for="name" />
+
+				<!-- <h:outputLabel for="country" value="#{msg['country']}" />
+				<p:selectOneMenu id="country"
+					value="#{storageController.crm.country}">
+					<f:selectItems var="_country"
+						value="#{storageController.countries}"
+						itemLabel="#{_country.name}" />
+				</p:selectOneMenu>
+				<p:message for="country" /> -->
 
 				<h:outputLabel for="registerNumber" value="#{msg['registerNumber']}" />
 				<h:inputText id="registerNumber"
-					value="#{customerController.customer.registerNumber}" />
+					value="#{storageController.crm.registerNumber}" />
 				<p:message for="registerNumber" />
 
 				<h:outputLabel for="registerPlace" value="#{msg['registerPlace']}" />
 				<h:inputText id="registerPlace"
-					value="#{customerController.customer.registerPlace}" />
+					value="#{storageController.crm.registerPlace}" />
 				<p:message for="registerPlace" />
 
 				<h:outputLabel for="registerDate" value="#{msg['registerDate']}" />
 				<p:calendar id="registerDate"
-					value="#{customerController.customer.registerDate}" locale="zh_CN"
-					navigator="true" />
+					value="#{storageController.crm.registerDate}" locale="zh_CN"
+					navigator="true" pattern="yyyy-MM-dd" />
 				<p:message for="registerDate" />
 
 				<h:outputLabel for="registerCapital"
-					value="#{msg['registerCapital']}" />
+					value="#{custInd['registerCapital']}" />
 				<pe:inputNumber id="registerCapital"
-					value="#{customerController.customer.registerCapital}" />
+					value="#{storageController.crm.registerCapital}"
+					maxValue="99999999999999999999" />
 				<p:message for="registerCapital" />
 
 				<h:outputLabel for="represent" value="#{msg['represent']}" />
 				<h:inputText id="represent"
-					value="#{customerController.customer.represent}" />
+					value="#{storageController.crm.represent}" />
 				<p:message for="represent" />
 
 				<h:outputLabel for="addressName" value="#{msg['address']}" />
 				<h:inputText id="addressName"
-					value="#{customerController.customer.addressName}" />
+					value="#{storageController.crm.addressName}" />
 				<p:message for="addressName" />
 
 				<h:outputLabel for="zipCode" value="#{msg['zipCode']}" />
-				<h:inputText id="zipCode"
-					value="#{customerController.customer.zipCode}">
-					<pe:keyFilter regEx="/\d/" />
-				</h:inputText>
+				<p:inputMask id="zipCode" value="#{storageController.crm.zipCode}"
+					mask="999999" />
 				<p:message for="zipCode" />
 
-				<h:outputLabel for="saleIncome" value="#{msg['saleIncome']}" />
+				<h:outputLabel for="saleIncome" value="#{custInd['saleIncome']}" />
 				<pe:inputNumber id="saleIncome"
-					value="#{customerController.customer.saleIncome}" />
+					value="#{storageController.crm.saleIncome}"
+					maxValue="99999999999999999999" />
 				<p:message for="saleIncome" />
+
+				<h:outputLabel for="crmType" value="#{msg['crmType']}" />
+				<p:selectOneMenu id="crmType" value="#{storageController.crmType}"
+					converter="crmType">
+					<f:selectItems var="_crmType" value="#{storageController.crmTypes}" />
+				</p:selectOneMenu>
+				<p:message for="crmType" />
 			</h:panelGrid>
-			<p:commandButton action="#{customerController.save}" update=":form"
+			<p:tabView id="tabView" dynamic="true">
+				<p:tab title="#{msg['storage']}#{msg['indicator']}">
+					<ui:include src="updateFragment/updateIndicator.xhtml" />
+				</p:tab>
+				<p:tab title="#{msg['associate']}#{msg['storage']}">
+					<ui:include src="updateFragment/updateAssociate.xhtml" />
+				</p:tab>
+				<p:tab title="#{msg['communicatee']}">
+					<ui:include src="updateFragment/updateCommunicatee.xhtml" />
+				</p:tab>
+			</p:tabView>
+			<p:commandButton action="#{storageController.save}" update=":form"
 				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
 		</h:form>
 	</ui:define>

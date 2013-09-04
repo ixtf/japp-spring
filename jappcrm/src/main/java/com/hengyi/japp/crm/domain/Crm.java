@@ -3,6 +3,7 @@ package com.hengyi.japp.crm.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Min;
@@ -21,12 +22,16 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 
 @NodeEntity
-public abstract class Crm extends AbstractNeo4j implements Serializable {
+public abstract class Crm extends Modifiable implements Serializable {
 	private static final long serialVersionUID = -2000360302877825388L;
+	public static final String FIELD_SALEINCOME = "saleIncome";
+	public static final String FIELD_REGISTERCAPITAL = "registerCapital";
+	public static final String FIELD_DURATIONYEARS = "durationYears";
+
 	public static final String CRM_TYPE = "CRM_TYPE";
 	public static final String CRM_COMMUNICATEE = "CHIEF_COMMUNICATEE";
 	public static final String CRM_COMMUNICATEES = "COMMUNICATEE";
@@ -63,23 +68,39 @@ public abstract class Crm extends AbstractNeo4j implements Serializable {
 	@Fetch
 	protected CrmType crmType;
 	@RelatedToVia(type = Associate.RELATIONSHIP, elementClass = Associate.class, direction = Direction.BOTH)
+	@Fetch
 	protected Set<Associate> associates;
 	@RelatedTo(type = CRM_INDICATORVALUE, elementClass = IndicatorValue.class)
 	protected Set<IndicatorValue> indicatorValues;
 	@RelatedToVia(type = IndicatorScore.RELATIONSHIP, elementClass = IndicatorScore.class)
 	protected Set<IndicatorScore> indicatorScores;
 
+	public void indicatorScore(Indicator indicator, Neo4jOperations template) {
+		IndicatorScore indicatorScore = template.createRelationshipBetween(
+				this, indicator, IndicatorScore.class,
+				IndicatorScore.RELATIONSHIP, false);
+		indicatorScore.setScore(indicator.calculateScore(this, template));
+		template.save(indicatorScore);
+	}
+
 	public int getDurationYears() {
-		Date startDate = getRegisterDate();
-		if (startDate == null)
-			return 0;
-		return DateTime.now().getYear() - new DateTime(startDate).getYear();
+		return DateTime.now().getYear()
+				- new DateTime(getRegisterDate()).getYear();
 	}
 
 	public Iterable<Associate> getAssociates() {
 		if (associates == null)
 			associates = Sets.newHashSet();
+		for (Associate associate : associates) {
+			Crm end = associate.getAssociate(this);
+			associate.setEnd(end);
+			associate.setStart(this);
+		}
 		return associates;
+	}
+
+	public List<Associate> getAssociatesAsList() {
+		return Lists.newArrayList(getAssociates());
 	}
 
 	public Iterable<Associate> getAssociates(Neo4jOperations template) {

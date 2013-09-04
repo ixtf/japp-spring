@@ -43,8 +43,21 @@
 				rowKey="#{_customer.nodeId}" selectionMode="single"
 				rows="#{customersController.pageSize}" paginator="true"
 				stickyHeader="true" lazy="true">
+				<f:facet name="header">
+					<h:outputText value="#{msg['customer']}" />
+				</f:facet>
+
 				<p:column headerText="#{msg['name']}">
 					<h:outputText value="#{_customer.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['associate']}#{msg['customer']}">
+					<p:dataList var="_associate" value="#{_customer.associatesAsList}">
+						<h:outputLink
+							value="#{request.contextPath}/customers/#{_associate.end.nodeId}">
+							<h:outputText value="#{_associate.end}" />
+						</h:outputLink>
+					</p:dataList>
 				</p:column>
 			</p:dataTable>
 		</h:form>

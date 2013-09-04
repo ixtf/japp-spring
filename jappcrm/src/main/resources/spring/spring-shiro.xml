@@ -34,6 +34,7 @@
 				/javax.faces.resource/** = anon
 				/resources/** = anon
 				/ws/** = anon
+				/faces/** = roles[admin]
 				/admin/** = roles[admin]
 				/** = authc
 			</value>

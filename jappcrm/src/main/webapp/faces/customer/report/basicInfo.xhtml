@@ -155,8 +155,10 @@
 					<h:outputText value="#{msg['associate']}#{msg['customer']}" />
 				</p:column>
 				<p:column>
-					<h:outputText
-						value="#{customerReportController.basicInfoReport.communicatee}" />
+					<p:dataList var="_associate"
+						value="#{customerReportController.customer.associatesAsList}">
+						<h:outputText value="#{_associate.end}" />
+					</p:dataList>
 				</p:column>
 			</p:row>
 			<p:row>

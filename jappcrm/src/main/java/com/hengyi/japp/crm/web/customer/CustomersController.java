@@ -28,7 +28,7 @@ public class CustomersController extends AbstractController implements
 
 	public void delete() {
 		try {
-			customerService.delete(getCustomer());
+			crmService.delete(getCustomer());
 			if (searchResult != null)
 				searchResult.remove(getCustomer());
 			addInfoMessage("删除成功！");
@@ -48,17 +48,17 @@ public class CustomersController extends AbstractController implements
 
 	public void basicInfoReport() {
 		redirect(URL.CUSTOMERS + "/" + getCustomer().getNodeId()
-				+ "/basicInfoReport");
+				+ "/report/basicInfo");
 	}
 
 	public void creditRiskReport() {
 		redirect(URL.CUSTOMERS + "/" + getCustomer().getNodeId()
-				+ "/creditRiskReport");
+				+ "/report/creditRisk");
 	}
 
 	public void fiCreditRiskReport() {
 		redirect(URL.CUSTOMERS + "/" + getCustomer().getNodeId()
-				+ "/fiCreditRiskReport");
+				+ "/report/fiCreditRisk");
 	}
 
 	public LazyCustomerModel getLazyCustomerModel() {

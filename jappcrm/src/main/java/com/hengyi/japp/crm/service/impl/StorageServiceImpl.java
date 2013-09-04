@@ -6,18 +6,28 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.google.common.eventbus.EventBus;
+import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.repository.StorageIndicatorRepository;
 import com.hengyi.japp.crm.domain.repository.StorageRepository;
 import com.hengyi.japp.crm.domain.storage.Storage;
 import com.hengyi.japp.crm.domain.storage.StorageIndicator;
+import com.hengyi.japp.crm.service.CacheServiceFacade;
 import com.hengyi.japp.crm.service.StorageService;
 
 @Named
 @Transactional
 public class StorageServiceImpl implements StorageService {
+	@Inject
+	private Neo4jOperations template;
+//	@Inject
+//	private EventBus eventBus;
+	@Inject
+	private CacheServiceFacade cacheServiceFacade;
 	@Inject
 	private StorageRepository storageRepository;
 	@Inject
@@ -26,16 +36,6 @@ public class StorageServiceImpl implements StorageService {
 	@Override
 	public Storage findOne(Long nodeId) {
 		return storageRepository.findOne(nodeId);
-	}
-
-	@Override
-	public void save(Storage storage) throws Exception {
-		storageRepository.save(storage);
-	}
-
-	@Override
-	public void delete(Storage storage) throws Exception {
-		storageRepository.delete(storage);
 	}
 
 	@Override
@@ -55,7 +55,10 @@ public class StorageServiceImpl implements StorageService {
 	}
 
 	@Override
-	public List<StorageIndicator> findAllIndicator() {
-		return Lists.newArrayList(storageIndicatorRepository.findAll());
+	public List<Indicator> findAllIndicator() {
+		List<Indicator> result = Lists.newArrayList();
+		for (StorageIndicator indicator : storageIndicatorRepository.findAll())
+			result.add(indicator);
+		return result;
 	}
 }

@@ -1,12 +1,10 @@
 package com.hengyi.japp.crm.web.customer;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 import javax.inject.Named;
 
-import org.primefaces.component.selectmanymenu.SelectManyMenu;
 import org.springframework.context.annotation.Scope;
 
 import com.google.common.collect.Sets;
@@ -19,10 +17,15 @@ import com.hengyi.japp.crm.web.CrmController;
 @Scope("view")
 public class CustomerController extends CrmController implements Serializable {
 	private static final long serialVersionUID = 3708518912737819900L;
-	
+
 	@Override
 	protected Crm newCrm() {
 		return new Customer();
+	}
+
+	@Override
+	protected Crm findOne(Long nodeId) {
+		return customerService.findOne(nodeId);
 	}
 
 	@Override
@@ -31,14 +34,5 @@ public class CustomerController extends CrmController implements Serializable {
 		for (Indicator indicator : customerService.findAllIndicator())
 			result.add(indicator);
 		return result;
-	}
-	
-
-	List<SelectManyMenu> test ;
-	public List<SelectManyMenu> getTest(){
-		if(test==null){
-			
-		}
-		return test;
 	}
 }

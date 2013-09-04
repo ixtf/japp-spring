@@ -19,6 +19,15 @@ public class CrmType extends AbstractNeo4j implements Serializable {
 	@Indexed(unique = true)
 	private String name;
 
+	public CrmType() {
+		super();
+	}
+
+	public CrmType(String name) {
+		super();
+		this.name = name;
+	}
+
 	public String getName() {
 		return name;
 	}

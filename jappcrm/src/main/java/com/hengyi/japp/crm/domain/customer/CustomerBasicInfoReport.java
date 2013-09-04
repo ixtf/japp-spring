@@ -2,6 +2,7 @@ package com.hengyi.japp.crm.domain.customer;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
@@ -28,6 +29,8 @@ public interface CustomerBasicInfoReport {
 	BigDecimal getRegisterCapital();
 
 	Communicatee getCommunicatee();
+
+	List<Customer> getAssociatedCustomers();
 
 	BigDecimal getSaleIncome();
 

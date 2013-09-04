@@ -10,22 +10,25 @@ import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.hengyi.japp.crm.domain.Associate;
-import com.hengyi.japp.crm.domain.Communicatee;
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.customer.Customer;
 import com.hengyi.japp.crm.domain.customer.CustomerBasicInfoReport;
 import com.hengyi.japp.crm.domain.customer.CustomerCreditRiskReport;
 import com.hengyi.japp.crm.domain.customer.CustomerIndicator;
 import com.hengyi.japp.crm.domain.repository.CustomerIndicatorRepository;
 import com.hengyi.japp.crm.domain.repository.CustomerRepository;
+import com.hengyi.japp.crm.service.CacheServiceFacade;
 import com.hengyi.japp.crm.service.CustomerService;
 
 @Named
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
 	@Inject
-	protected Neo4jOperations template;
+	private Neo4jOperations template;
+	// @Inject
+	// private EventBus eventBus;
+	@Inject
+	private CacheServiceFacade cacheServiceFacade;
 	@Inject
 	private CustomerRepository customerRepository;
 	@Inject
@@ -34,24 +37,6 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer findOne(Long nodeId) {
 		return customerRepository.findOne(nodeId);
-	}
-
-	@Override
-	public void save(Customer customer, CrmType crmType,
-			Communicatee communicatee, Iterable<Communicatee> communicatees,
-			Iterable<Associate> associates) {
-		customer.setCrmType(crmType);
-		customer.setCommunicatee(communicatee);
-		customer.setCommunicatees(communicatees);
-		customer.setAssociates(associates);
-		customerRepository.save(customer);
-		for (Associate associate : associates)
-			template.save(associate);
-	}
-
-	@Override
-	public void delete(Customer customer) throws Exception {
-		customerRepository.delete(customer);
 	}
 
 	@Override
@@ -71,19 +56,23 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<CustomerIndicator> findAllIndicator() {
-		return Lists.newArrayList(customerIndicatorRepository.findAll());
+	public List<Indicator> findAllIndicator() {
+		List<Indicator> result = Lists.newArrayList();
+		for (CustomerIndicator indicator : customerIndicatorRepository
+				.findAll())
+			result.add(indicator);
+		return result;
 	}
 
 	@Override
 	public CustomerBasicInfoReport basicInfoReport(Long nodeId) {
-		// TODO Auto-generated method stub
+		// TODO 修改报表的实现，不用entity去implement
 		return null;
 	}
 
 	@Override
 	public CustomerCreditRiskReport creditRiskReport(Long nodeId) {
-		// TODO Auto-generated method stub
+		// TODO 修改报表的实现，不用entity去implement
 		return null;
 	}
 }

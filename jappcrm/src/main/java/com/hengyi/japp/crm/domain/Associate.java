@@ -2,6 +2,7 @@ package com.hengyi.japp.crm.domain;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.neo4j.annotation.EndNode;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 import org.springframework.data.neo4j.template.Neo4jOperations;
@@ -13,8 +14,10 @@ import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 public class Associate extends AbstractNeo4j {
 	public static final String RELATIONSHIP = "ASSOCIATE";
 	@StartNode
+	@Fetch
 	private Crm start;
 	@EndNode
+	@Fetch
 	private Crm end;
 	private String note;
 

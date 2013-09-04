@@ -50,11 +50,14 @@ public abstract class CrmController extends AbstractController {
 
 	protected abstract Crm newCrm();
 
+	protected abstract Crm findOne(Long nodeId);
+
 	protected abstract Iterable<Indicator> getAssociatedIndicators();
 
 	public void save() {
 		try {
-			crmService.save(getCrm(), getIndicatorMap(), getCrmType(),
+			getCrm().setOperator(cacheService.getCurrentOperator());
+			crmService.save(crm, getIndicatorMap(), getCrmType(),
 					getCommunicatee(), getCommunicatees(), getAssociates());
 			addInfoMessage("保存成功！");
 		} catch (Exception e) {
@@ -80,7 +83,7 @@ public abstract class CrmController extends AbstractController {
 		if (nodeId == null)
 			crm = newCrm();
 		else
-			crm = crmService.findOne(nodeId);
+			crm = findOne(nodeId);
 		return crm;
 	}
 
@@ -126,7 +129,7 @@ public abstract class CrmController extends AbstractController {
 		ImmutableMap.Builder<Indicator, List<IndicatorValueScore>> builder = ImmutableMap
 				.builder();
 		Map<Indicator, List<IndicatorValueScore>> map = crmService
-				.getIndicatorMap(getCrm());
+				.getIndicatorMap(getCrm(), getIndicators());
 		for (Indicator indicator : getIndicators()) {
 			List<IndicatorValueScore> list = map.get(indicator);
 			if (list == null)

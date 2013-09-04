@@ -19,5 +19,6 @@ public interface CrmService {
 
 	void delete(Crm crm) throws Exception;
 
-	Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(Crm crm);
+	Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(Crm crm,
+			Iterable<Indicator> indicators);
 }

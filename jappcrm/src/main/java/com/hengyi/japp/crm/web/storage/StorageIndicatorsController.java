@@ -16,10 +16,10 @@ import com.hengyi.japp.crm.web.AbstractController;
 public class StorageIndicatorsController extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
-	private List<StorageIndicator> indicators;
-	private StorageIndicator indicator;
+	private List<Indicator> indicators;
+	private Indicator indicator;
 
-	public List<StorageIndicator> getIndicators() {
+	public List<Indicator> getIndicators() {
 		if (indicators == null)
 			indicators = storageService.findAllIndicator();
 		return indicators;

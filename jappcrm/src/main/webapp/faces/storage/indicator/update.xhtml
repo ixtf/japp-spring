@@ -18,6 +18,7 @@
 			<h:panelGrid columns="3" cellpadding="5">
 				<h:outputLabel for="name" value="#{msg['name']}" />
 				<h:inputText id="name"
+					readonly="#{not storageIndicatorController.hasIndicatorValues}"
 					value="#{storageIndicatorController.indicator.name}" />
 				<p:message for="name" />
 
@@ -26,10 +27,10 @@
 					value="#{storageIndicatorController.indicator.percent}"
 					maxValue="1" />
 				<p:message for="percent" />
-
 			</h:panelGrid>
 			<p:selectOneMenu id="bug" rendered="false" />
 			<p:dataTable id="tableIndicatorValueScores"
+				rendered="#{storageIndicatorController.hasIndicatorValues}"
 				var="_indicatorValueScore"
 				value="#{storageIndicatorController.indicatorValueScores}"
 				editable="true" editMode="cell">
@@ -38,14 +39,15 @@
 					<h:outputText value="#{msg['indicatorValue']}" />
 				</f:facet>
 
-				<p:column style="width:4%">
-					<p:commandButton process="@this"
+				<p:column headerText="#{msg['operation']}" style="width:4%">
+					<p:commandLink process="@this"
 						update=":form:tableIndicatorValueScores,:form:message"
 						action="#{storageIndicatorController.removeIndicatorValueScore}"
 						icon="ui-icon-minus">
+						<h:outputText value="#{msg['delete']}" />
 						<f:setPropertyActionListener value="#{_indicatorValueScore}"
 							target="#{storageIndicatorController.selectedIndicatorValueScore}" />
-					</p:commandButton>
+					</p:commandLink>
 				</p:column>
 
 				<p:column headerText="#{msg['name']}"
@@ -67,7 +69,8 @@
 				</p:column>
 			</p:dataTable>
 
-			<p:panel header="#{msg['selectIndicatorValue']}" toggleable="true">
+			<p:panel rendered="#{storageIndicatorController.hasIndicatorValues}"
+				header="#{msg['selectIndicatorValue']}" toggleable="true">
 				<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
 					<h:outputLabel for="indicatorValue-nameSearch"
 						value="#{msg['name']}" />
@@ -81,14 +84,15 @@
 				<p:dataTable id="tableSelectedIndicatorValues" var="_indicatorValue"
 					value="#{indicatorValuesController.indicatorValues}" rows="5"
 					paginator="true">
-					<p:column style="width:4%">
-						<p:commandButton process="@this"
+					<p:column headerText="#{msg['operation']}" style="width:4%">
+						<p:commandLink process="@this"
 							update=":form:tableIndicatorValueScores"
 							action="#{storageIndicatorController.addIndicatorValueScore}"
 							icon="ui-icon-plus">
+							<h:outputText value="#{msg['add']}" />
 							<f:setPropertyActionListener value="#{_indicatorValue}"
 								target="#{storageIndicatorController.selectedIndicatorValueScore.end}" />
-						</p:commandButton>
+						</p:commandLink>
 					</p:column>
 
 					<p:column headerText="#{msg['name']}">

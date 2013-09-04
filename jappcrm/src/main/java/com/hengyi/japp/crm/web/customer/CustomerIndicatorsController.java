@@ -16,10 +16,10 @@ import com.hengyi.japp.crm.web.AbstractController;
 public class CustomerIndicatorsController extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
-	private List<CustomerIndicator> indicators;
-	private CustomerIndicator indicator;
+	private List<Indicator> indicators;
+	private Indicator indicator;
 
-	public List<CustomerIndicator> getIndicators() {
+	public List<Indicator> getIndicators() {
 		if (indicators == null)
 			indicators = customerService.findAllIndicator();
 		return indicators;

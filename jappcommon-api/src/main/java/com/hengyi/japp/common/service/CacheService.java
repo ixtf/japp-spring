@@ -20,4 +20,6 @@ public interface CacheService {
 	void setSession(Object key, Object value) throws Exception;
 
 	UserDTO getUser() throws Exception;
+
+	// AsyncEventBus getAsyncEventBus();
 }

@@ -12,6 +12,9 @@ import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.repository.IndicatorRepository;
+import com.hengyi.japp.crm.event.EventPublisher;
+import com.hengyi.japp.crm.event.SyncEventPublisher;
+import com.hengyi.japp.crm.event.indicator.IndicatorUpdateEvent;
 import com.hengyi.japp.crm.service.IndicatorService;
 
 @Named
@@ -19,6 +22,10 @@ import com.hengyi.japp.crm.service.IndicatorService;
 public class IndicatorServiceImpl implements IndicatorService {
 	@Inject
 	protected Neo4jOperations template;
+	@Inject
+	private EventPublisher eventPublisher;
+	@Inject
+	private SyncEventPublisher syncEventPublisher;
 	@Inject
 	private IndicatorRepository indicatorRepository;
 
@@ -34,6 +41,7 @@ public class IndicatorServiceImpl implements IndicatorService {
 		indicatorRepository.save(indicator);
 		for (IndicatorValueScore indicatorValueScore : indicatorValueScores)
 			template.save(indicatorValueScore);
+		syncEventPublisher.publish(new IndicatorUpdateEvent(indicator));
 	}
 
 	@Override

@@ -26,10 +26,15 @@ public class IndicatorScore extends AbstractNeo4j implements Serializable {
 		super();
 	}
 
-	public IndicatorScore(Crm start, Indicator end) {
-		super();
+	public IndicatorScore(Crm start, Indicator end, double score) {
+		this();
 		this.start = start;
 		this.end = end;
+		this.score = score;
+	}
+
+	public IndicatorScore(Crm start, Indicator end) {
+		this(start, end, 0);
 	}
 
 	public Crm getStart() {

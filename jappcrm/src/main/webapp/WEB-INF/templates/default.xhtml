@@ -60,6 +60,14 @@
 									</h:outputLink></li>
 								<li class="divider"></li>
 								<li><h:outputLink
+										value="#{request.contextPath}/customer/indicator">
+										<h:outputText value="#{msg['customer']}#{msg['indicator']}" />
+									</h:outputLink></li>
+								<li><h:outputLink
+										value="#{request.contextPath}/storage/indicator">
+										<h:outputText value="#{msg['storage']}#{msg['indicator']}" />
+									</h:outputLink></li>
+								<li><h:outputLink
 										value="#{request.contextPath}/indicatorValue">
 										<h:outputText value="#{msg['indicatorValue']}" />
 									</h:outputLink></li>

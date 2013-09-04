@@ -10,32 +10,54 @@
 			<p:growl id="messages" showDetail="true" />
 			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
 				<h:outputText value="#{msg['name']}" />
-				<h:inputText id="customer-name"
-					value="#{customersController.nameSearch}" />
+				<h:inputText id="storage-name"
+					value="#{storagesController.nameSearch}" />
 				<p:commandButton value="#{msg['search']}" update=":form"
-					action="#{customersController.search}" icon="ui-icon-search" />
+					action="#{storagesController.search}" icon="ui-icon-search" />
 			</h:panelGrid>
 
-			<p:contextMenu for="tableCustomers">
+			<p:contextMenu for="tableStorages">
+				<p:submenu label="#{msg['report']}" icon="ui-icon-document">
+					<p:menuitem value="#{msg['basicInfoReport']}"
+						action="#{storagesController.basicInfoReport}" />
+					<p:menuitem value="#{msg['creditRiskReport']}"
+						action="#{storagesController.creditRiskReport}" />
+					<p:menuitem value="#{msg['fiCreditRiskReport']}"
+						action="#{storagesController.fiCreditRiskReport}" />
+				</p:submenu>
+				<p:separator />
 				<p:menuitem value="#{msg['edit']}"
-					action="#{customersController.edit}" icon="ui-icon-pencil" />
+					action="#{storagesController.edit}" icon="ui-icon-pencil" />
 				<p:menuitem value="#{msg['delete']}" type="button"
-					onclick="confirmDialogDeleteCustomer.show()" icon="ui-icon-close" />
+					onclick="confirmDialogDeleteStorage.show()" icon="ui-icon-close" />
 			</p:contextMenu>
 			<p:confirmDialog message="#{msg['operation.confirm']}?"
-				severity="alert" widgetVar="confirmDialogDeleteCustomer">
+				severity="alert" widgetVar="confirmDialogDeleteStorage">
 				<p:commandButton value="#{msg['operation.submit']}" update=":form"
-					action="#{customersController.delete}"
-					oncomplete="confirmDialogDeleteCustomer.hide()" />
+					action="#{storagesController.delete}"
+					oncomplete="confirmDialogDeleteStorage.hide()" />
 			</p:confirmDialog>
-			<p:dataTable id="tableCustomers" var="_customer"
-				value="#{customersController.lazyCustomerModel}"
-				selection="#{customersController.customer}"
-				rowKey="#{_customer.nodeId}" selectionMode="single"
-				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-				lazy="true" paginator="true" rows="2" stickyHeader="true">
+			<p:dataTable id="tableStorages" var="_storage"
+				value="#{storagesController.lazyStorageModel}"
+				selection="#{storagesController.storage}"
+				rowKey="#{_storage.nodeId}" selectionMode="single"
+				rows="#{storagesController.pageSize}" paginator="true"
+				stickyHeader="true" lazy="true">
+				<f:facet name="header">
+					<h:outputText value="#{msg['storage']}" />
+				</f:facet>
+
 				<p:column headerText="#{msg['name']}">
-					<h:outputText value="#{_customer.name}" />
+					<h:outputText value="#{_storage.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['associate']}#{msg['storage']}">
+					<p:dataList var="_associate" value="#{_storage.associatesAsList}">
+						<h:outputLink
+							value="#{request.contextPath}/storages/#{_associate.end.nodeId}">
+							<h:outputText value="#{_associate.end}" />
+						</h:outputLink>
+					</p:dataList>
 				</p:column>
 			</p:dataTable>
 		</h:form>

@@ -14,7 +14,8 @@ import com.google.common.base.Objects;
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 
 @RelationshipEntity(type = IndicatorValueScore.RELATIONSHIP)
-public class IndicatorValueScore extends AbstractNeo4j implements Serializable {
+public class IndicatorValueScore extends AbstractNeo4j implements Serializable,
+		Comparable<IndicatorValueScore> {
 	private static final long serialVersionUID = -5080366361699844394L;
 	public static final String RELATIONSHIP = "INDICATORVALUE_SCORE";
 	@StartNode
@@ -29,10 +30,15 @@ public class IndicatorValueScore extends AbstractNeo4j implements Serializable {
 		super();
 	}
 
-	public IndicatorValueScore(Indicator start, IndicatorValue end) {
+	public IndicatorValueScore(Indicator start, IndicatorValue end, double score) {
 		super();
 		this.start = start;
 		this.end = end;
+		this.score = score;
+	}
+
+	public IndicatorValueScore(Indicator start, IndicatorValue end) {
+		this(start, end, 0);
 	}
 
 	public IndicatorValueScore(Indicator start) {
@@ -90,5 +96,10 @@ public class IndicatorValueScore extends AbstractNeo4j implements Serializable {
 	@Override
 	public String toString() {
 		return getStart() + "-" + getEnd() + "-" + getScore();
+	}
+
+	@Override
+	public int compareTo(IndicatorValueScore o) {
+		return o == null ? -1 : Double.compare(getScore(), o.getScore());
 	}
 }

@@ -16,7 +16,8 @@ public abstract class IndicatorController extends AbstractController {
 
 	public void save() {
 		try {
-			indicatorService.save(indicator, indicatorValueScores);
+			getIndicator().setOperator(cacheService.getCurrentOperator());
+			indicatorService.save(indicator, getIndicatorValueScores());
 			addInfoMessage("保存成功！");
 		} catch (Exception e) {
 			addErrorMessage(e);
@@ -27,12 +28,12 @@ public abstract class IndicatorController extends AbstractController {
 		if (!getIndicatorValueScores().contains(
 				getSelectedIndicatorValueScore()))
 			indicatorValueScores.add(selectedIndicatorValueScore);
-		selectedIndicatorValueScore = null;
+		setSelectedIndicatorValueScore(null);
 	}
 
 	public void removeIndicatorValueScore() {
 		getIndicatorValueScores().remove(getSelectedIndicatorValueScore());
-		selectedIndicatorValueScore = null;
+		setSelectedIndicatorValueScore(null);
 	}
 
 	public Indicator getIndicator() {
@@ -76,5 +77,15 @@ public abstract class IndicatorController extends AbstractController {
 	public void setSelectedIndicatorValueScore(
 			IndicatorValueScore selectedIndicatorValueScore) {
 		this.selectedIndicatorValueScore = selectedIndicatorValueScore;
+	}
+
+	public boolean isHasIndicatorValues() {
+		switch (getIndicator().getIndicatorType()) {
+		case SIMPLE:
+			return true;
+		case CALCULATE:
+			return false;
+		}
+		return false;
 	}
 }

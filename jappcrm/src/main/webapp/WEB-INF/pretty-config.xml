@@ -31,37 +31,37 @@
 
 	<url-mapping id="customerBasicInfoReport">
 		<pattern
-			value="/customers/#{customerReportController.nodeId}/basicInfoReport" />
-		<view-id value="/faces/customer/basicInfoReport.jsf" />
+			value="/customers/#{customerReportController.nodeId}/report/basicInfo" />
+		<view-id value="/faces/customer/report/basicInfo.jsf" />
 	</url-mapping>
 
 	<url-mapping id="customerCreditRiskReport">
 		<pattern
-			value="/customers/#{customerReportController.nodeId}/creditRiskReport" />
-		<view-id value="/faces/customer/creditRiskReport.jsf" />
+			value="/customers/#{customerReportController.nodeId}/report/creditRisk" />
+		<view-id value="/faces/customer/report/creditRisk.jsf" />
 	</url-mapping>
 
 	<url-mapping id="customerFiCreditRiskReport">
 		<pattern
-			value="/customers/#{customerReportController.nodeId}/fiCreditRiskReport" />
+			value="/customers/#{customerReportController.nodeId}/report/fiCreditRisk" />
 		<view-id value="/faces/customer/fiCreditRiskReport.jsf" />
 	</url-mapping>
 
 	<url-mapping id="storageUpdate">
-		<pattern value="/storages/#{storageController.uuid}" />
+		<pattern value="/storages/#{storageController.nodeId}" />
 		<view-id value="/faces/storage/update.jsf" />
 	</url-mapping>
 
 	<url-mapping id="storageCreditRatingReport">
 		<pattern
-			value="/storages/#{storageReportController.nodeId}/creditRatingReport" />
-		<view-id value="/faces/storage/creditRatingReport.jsf" />
+			value="/storages/#{storageReportController.nodeId}/report/creditRating" />
+		<view-id value="/faces/storage/report/creditRating.jsf" />
 	</url-mapping>
 
 	<url-mapping id="storageFiCreditRiskReport">
 		<pattern
-			value="/storages/#{storageReportController.nodeId}/fiCreditRiskReport" />
-		<view-id value="/faces/storage/fiCreditRiskReport.jsf" />
+			value="/storages/#{storageReportController.nodeId}/report/fiCreditRisk" />
+		<view-id value="/faces/storage/report/fiCreditRisk.jsf" />
 	</url-mapping>
 
 	<!-- <url-mapping id="indicatorNew"> <pattern value="/#{indicatorController.type}/indicator" 

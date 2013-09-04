@@ -11,6 +11,18 @@ import com.hengyi.japp.common.service.CacheService;
 import com.hengyi.japp.common.shiro.ShiroUtil;
 
 public abstract class CacheServiceImpl implements CacheService {
+	// private final AsyncEventBus asyncEventBus;
+	//
+	// public CacheServiceImpl() {
+	// super();
+	// asyncEventBus = new AsyncEventBus(Executors.newCachedThreadPool());
+	// }
+	//
+	// @Override
+	// public AsyncEventBus getAsyncEventBus() {
+	// return asyncEventBus;
+	// }
+
 	@Override
 	public String getTheme() {
 		return DEFAULT_THEME.getName();

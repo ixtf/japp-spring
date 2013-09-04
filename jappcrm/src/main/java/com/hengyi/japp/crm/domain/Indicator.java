@@ -15,24 +15,92 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
+import com.hengyi.japp.crm.data.IndicatorType;
 
 @NodeEntity
-public abstract class Indicator extends AbstractNeo4j implements Serializable {
+public abstract class Indicator extends Modifiable implements Serializable {
 	private static final long serialVersionUID = 3991202655674862197L;
-	/*
-	 * 需要通过msg来访问，国际化
-	 */
 	@NotBlank
 	@Indexed(unique = true, level = Level.INSTANCE)
 	protected String name;
 	@Min(0)
 	protected double percent;
+	@Min(0)
+	protected IndicatorType indicatorType = IndicatorType.SIMPLE;
 	@RelatedToVia(type = IndicatorValueScore.RELATIONSHIP, elementClass = IndicatorValueScore.class)
 	@Fetch
 	protected Set<IndicatorValueScore> indicatorValueScores;
+
+	public double calculateScore(Crm crm, Neo4jOperations template) {
+		switch (indicatorType) {
+		case SIMPLE:
+			return calculateScoreBySimple(
+					ImmutableSet.copyOf(crm.getIndicatorValues()), template)
+					* getPercent();
+		case CALCULATE:
+			try {
+				return calculateScoreByCalculate(crm, template) * getPercent();
+			} catch (Exception e) {
+				return 0;
+			}
+		}
+		return 0;
+	}
+
+	public double calculateScore(Set<IndicatorValue> indicatorValues,
+			Neo4jOperations template) {
+		switch (indicatorType) {
+		case SIMPLE:
+			return calculateScoreBySimple(indicatorValues, template)
+					* getPercent();
+		case CALCULATE:
+			throw new UnsupportedOperationException();
+		}
+		return 0;
+	}
+
+	private double calculateScoreBySimple(Set<IndicatorValue> indicatorValues,
+			Neo4jOperations template) {
+		double result = 0;
+		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores()) {
+			if (!indicatorValues.contains(indicatorValueScore.getEnd()))
+				continue;
+			double score = indicatorValueScore.getScore();
+			result = result < score ? score : result;
+		}
+		return result;
+	}
+
+	protected abstract double calculateScoreByCalculate(Crm crm,
+			Neo4jOperations template) throws Exception;
+
+	public List<IndicatorValueScore> getIndicatorValueScoresAsList() {
+		return Lists.newArrayList(getIndicatorValueScores());
+	}
+
+	public List<IndicatorValueScore> getIndicatorValueScores(Crm crm,
+			Neo4jOperations template) {
+		List<IndicatorValueScore> result = Lists.newArrayList();
+		Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
+				.getIndicatorValues(template));
+		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores(template))
+			if (indicatorValues.contains(indicatorValueScore.getEnd()))
+				result.add(indicatorValueScore);
+		return result;
+	}
+
+	public Indicator() {
+		super();
+	}
+
+	public Indicator(String name, double percent) {
+		super();
+		this.name = name;
+		this.percent = percent;
+	}
 
 	public String getName() {
 		return name;
@@ -47,8 +115,9 @@ public abstract class Indicator extends AbstractNeo4j implements Serializable {
 	}
 
 	public Iterable<IndicatorValueScore> getIndicatorValueScores() {
-		if (indicatorValueScores == null)
-			indicatorValueScores = Sets.newHashSet();
+		if (IndicatorType.CALCULATE.equals(indicatorType)
+				|| indicatorValueScores == null)
+			indicatorValueScores = Sets.newTreeSet();
 		return indicatorValueScores;
 	}
 
@@ -57,20 +126,9 @@ public abstract class Indicator extends AbstractNeo4j implements Serializable {
 		return template.fetch(getIndicatorValueScores());
 	}
 
-	public List<IndicatorValueScore> getIndicatorValueScoresAsList() {
-		return Lists.newArrayList(getIndicatorValueScores());
-	}
-
 	public List<IndicatorValueScore> getIndicatorValueScoresAsList(
 			Neo4jOperations template) {
 		return Lists.newArrayList(getIndicatorValueScores(template));
-	}
-
-	public Iterable<IndicatorValue> getIndicatorValues(Neo4jOperations template) {
-		Set<IndicatorValue> result = Sets.newHashSet();
-		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores())
-			result.add(indicatorValueScore.getEnd(template));
-		return result;
 	}
 
 	public void setPercent(double percent) {
@@ -81,6 +139,14 @@ public abstract class Indicator extends AbstractNeo4j implements Serializable {
 			Iterable<IndicatorValueScore> indicatorValueScores) {
 		this.indicatorValueScores = indicatorValueScores == null ? null : Sets
 				.newHashSet(indicatorValueScores);
+	}
+
+	public IndicatorType getIndicatorType() {
+		return indicatorType;
+	}
+
+	public void setIndicatorType(IndicatorType indicatorType) {
+		this.indicatorType = indicatorType;
 	}
 
 	@Override

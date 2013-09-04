@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -14,18 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
 import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
-import com.hengyi.japp.crm.domain.IndicatorScore;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.repository.CrmRepository;
-import com.hengyi.japp.crm.event.CrmUpdateEvent;
+import com.hengyi.japp.crm.event.EventPublisher;
+import com.hengyi.japp.crm.event.SyncEventPublisher;
+import com.hengyi.japp.crm.event.crm.CrmUpdateEvent;
+import com.hengyi.japp.crm.service.CacheServiceFacade;
 import com.hengyi.japp.crm.service.CrmService;
 
 @Named
@@ -36,7 +35,13 @@ public class CrmServiceImpl implements CrmService {
 	@Inject
 	private CrmRepository crmRepository;
 	@Inject
-	private EventBus eventBus;
+	private EventPublisher eventPublisher;
+	@Inject
+	private SyncEventPublisher syncEventPublisher;
+	// @Inject
+	// private EventBus eventBus;
+	@Inject
+	private CacheServiceFacade cacheServiceFacade;
 
 	@Override
 	public Crm findOne(Long nodeId) {
@@ -52,30 +57,16 @@ public class CrmServiceImpl implements CrmService {
 		crm.setCommunicatee(communicatee);
 		crm.setCommunicatees(communicatees);
 		crm.setAssociates(associates);
-		Set<IndicatorScore> indicatorScores = Sets.newHashSet();
 		Set<IndicatorValue> indicatorValues = Sets.newHashSet();
 		for (Entry<Indicator, List<IndicatorValueScore>> entry : indicatorMap
-				.entrySet()) {
-			Indicator indicator = entry.getKey();
-			IndicatorScore indicatorScore = new IndicatorScore(crm, indicator);
-			indicatorScores.add(indicatorScore);
-			double maxScore = 0;
-			for (IndicatorValueScore indicatorValueScore : entry.getValue()) {
+				.entrySet())
+			for (IndicatorValueScore indicatorValueScore : entry.getValue())
 				indicatorValues.add(indicatorValueScore.getEnd());
-				double score = indicatorValueScore.getScore();
-				maxScore = maxScore < score ? score : maxScore;
-			}
-			indicatorScore.setScore(maxScore * indicator.getPercent());
-		}
-		crm.setIndicatorScores(indicatorScores);
 		crm.setIndicatorValues(indicatorValues);
 		crmRepository.save(crm);
 		for (Associate associate : associates)
 			template.save(associate);
-		for (IndicatorScore indicatorScore : indicatorScores)
-			template.save(indicatorScore);
-		// TODO test--delete
-		eventBus.post(new CrmUpdateEvent(crm.getNodeId()));
+		eventPublisher.publish(new CrmUpdateEvent(crm));
 	}
 
 	@Override
@@ -84,20 +75,19 @@ public class CrmServiceImpl implements CrmService {
 	}
 
 	@Override
-	public Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(Crm crm) {
-		// TODO Auto-generated method stub
+	public Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(Crm crm,
+			Iterable<Indicator> indicators) {
 		ImmutableMap.Builder<Indicator, List<IndicatorValueScore>> builder = ImmutableMap
 				.builder();
+		for (Indicator indicator : indicators)
+			builder.put(indicator,
+					indicator.getIndicatorValueScores(crm, template));
 		return builder.build();
 	}
 
-	@Subscribe
-	public void crmUpdateEvent(CrmUpdateEvent event) {
-		System.out.print(event);
-	}
-
-	@PostConstruct
-	private void init() {
-		eventBus.register(this);
-	}
+	// @PostConstruct
+	// private void init() {
+	// eventBus.register(this);
+	// cacheServiceFacade.getAsyncEventBus().register(this);
+	// }
 }

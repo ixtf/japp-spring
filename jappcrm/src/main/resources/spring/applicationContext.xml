@@ -20,7 +20,8 @@
 	</bean>
 
 	<bean id="dozer" class="org.dozer.spring.DozerBeanMapperFactoryBean" />
-	<bean id="eventBus" class="com.google.common.eventbus.EventBus" />
+	<!-- <bean id="eventBus" class="com.google.common.eventbus.EventBus"
+		scope="singleton" /> -->
 
 	<context:component-scan base-package="com.hengyi.japp.crm">
 		<context:exclude-filter type="annotation"
@@ -33,7 +34,7 @@
 	<import resource="spring-cxf.xml" />
 	<import resource="spring-shiro.xml" />
 
-	<!-- <task:annotation-driven /> -->
+	<task:annotation-driven />
 	<bean id="deployProperties" p:location="classpath:deploy.properties"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean" />
 </beans>

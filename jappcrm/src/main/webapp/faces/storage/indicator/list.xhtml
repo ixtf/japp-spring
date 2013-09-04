@@ -10,6 +10,10 @@
 			<p:growl id="messages" showDetail="true" />
 			<p:dataTable id="tableStorageIndicators" var="_indicator"
 				value="#{storageIndicatorsController.indicators}">
+				<f:facet name="header">
+					<h:outputText value="#{msg['storage']}#{msg['indicator']}" />
+				</f:facet>
+
 				<p:column style="width:4%">
 					<h:outputLink
 						value="#{request.contextPath}/storage/indicators/#{_indicator.nodeId}">

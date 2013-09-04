@@ -1,9 +1,12 @@
 package com.hengyi.japp.crm.domain.customer;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
+import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Crm;
 
 @NodeEntity
@@ -29,5 +32,10 @@ public class Customer extends Crm implements CustomerBasicInfoReport,
 
 	public void setCoBusiness(String coBusiness) {
 		this.coBusiness = StringUtils.trim(coBusiness);
+	}
+
+	@Override
+	public List<Customer> getAssociatedCustomers() {
+		return null;
 	}
 }

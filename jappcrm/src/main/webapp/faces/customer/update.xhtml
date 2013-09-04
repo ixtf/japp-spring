@@ -93,13 +93,13 @@
 			</h:panelGrid>
 			<p:tabView id="tabView" dynamic="true">
 				<p:tab title="#{msg['customer']}#{msg['indicator']}">
-					<ui:include src="updateIndicator.xhtml" />
+					<ui:include src="updateFragment/updateIndicator.xhtml" />
 				</p:tab>
 				<p:tab title="#{msg['associate']}#{msg['customer']}">
-					<ui:include src="updateAssociate.xhtml" />
+					<ui:include src="updateFragment/updateAssociate.xhtml" />
 				</p:tab>
 				<p:tab title="#{msg['communicatee']}">
-					<ui:include src="updateCommunicatee.xhtml" />
+					<ui:include src="updateFragment/updateCommunicatee.xhtml" />
 				</p:tab>
 			</p:tabView>
 			<p:commandButton action="#{customerController.save}" update=":form"
