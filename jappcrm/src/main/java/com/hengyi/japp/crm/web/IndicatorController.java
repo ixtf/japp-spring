@@ -18,9 +18,9 @@ public abstract class IndicatorController extends AbstractController {
 		try {
 			getIndicator().setOperator(cacheService.getCurrentOperator());
 			indicatorService.save(indicator, getIndicatorValueScores());
-			addInfoMessage("保存成功！");
+			operationSuccessMessage();
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 

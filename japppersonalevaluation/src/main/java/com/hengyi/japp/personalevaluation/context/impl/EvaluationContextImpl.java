@@ -23,7 +23,7 @@ import com.hengyi.japp.personalevaluation.domain.node.Task;
 import com.hengyi.japp.personalevaluation.domain.node.TaskConfig;
 import com.hengyi.japp.personalevaluation.domain.relationship.LevelEvaluation;
 import com.hengyi.japp.personalevaluation.event.EvaluationEvent;
-import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
+import com.hengyi.japp.personalevaluation.service.CacheService;
 import com.hengyi.japp.personalevaluation.service.EvaluationService;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.utils.MyUtil;
@@ -48,7 +48,7 @@ public class EvaluationContextImpl implements EvaluationContext {
 	public EvaluationContextImpl(
 			TaskConfigPersonContext taskConfigPersonContext,
 			ContextFactory contextFactory, Neo4jOperations template,
-			Mapper dozer, EventBus eventBus, CacheServiceFacade cacheService,
+			Mapper dozer, EventBus eventBus, CacheService cacheService,
 			OperatorService operatorService, EvaluationService evaluationService)
 			throws Exception {
 		this.taskConfigPersonContext = taskConfigPersonContext;

@@ -19,6 +19,11 @@
 		<view-id value="/faces/crmType/update.jsf" />
 	</url-mapping>
 
+	<url-mapping id="certificateUpdate">
+		<pattern value="/certificates/#{certificateController.nodeId}" />
+		<view-id value="/faces/certificate/update.jsf" />
+	</url-mapping>
+
 	<url-mapping id="indicatorValueUpdate">
 		<pattern value="/indicatorValues/#{indicatorValueController.nodeId}" />
 		<view-id value="/faces/indicatorValue/update.jsf" />

@@ -27,7 +27,7 @@ public class CacheServiceImpl implements CacheService {
 				Operator.class);
 		if (operator == null) {
 			UserDTO user = getSession(
-					com.hengyi.japp.common.Constant.SESSION_USER, UserDTO.class);
+					com.hengyi.japp.common.CommonConstant.SESSION_USER, UserDTO.class);
 			operator = operatorRepository.findOne(user.getUuid());
 			if (operator == null) {
 				operator = new Operator(user.getUuid(), user.getName());

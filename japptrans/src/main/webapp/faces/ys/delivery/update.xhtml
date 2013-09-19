@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText value="#{msg['new']}-"
+					rendered="#{empty ysDeliveryController.ysDelivery.uuid}" />
+				<h:outputText value="#{msg['ysDelivery']}" />
+			</h1>
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputLabel for="number" value="#{msg['number']}" />
+				<h:inputText id="number"
+					value="#{ysDeliveryController.ysDelivery.number}" />
+				<p:message for="number" />
+
+				<h:outputLabel for="recordDate" value="#{msg['date']}" />
+				<p:calendar id="recordDate"
+					value="#{ysDeliveryController.ysDelivery.recordDate}"
+					locale="zh_CN" navigator="true" pattern="yyyy-MM-dd" />
+				<p:message for="recordDate" />
+			</h:panelGrid>
+			<p:commandButton action="#{ysDeliveryController.save}" update=":form"
+				value="#{msg['operation.submit']}"
+				rendered="#{empty ysDeliveryController.ysDelivery.uuid}"
+				styleClass="ui-priority-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

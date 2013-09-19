@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.google.common.base.Objects;
 import com.hengyi.japp.common.domain.shared.ValueObject;
@@ -15,8 +16,10 @@ import com.hengyi.japp.common.sap.Constant;
 @XmlRootElement(namespace = Constant.NAME_SPACE, name = "LipsPK")
 public class LipsPK implements ValueObject<LipsPK> {
 	private static final long serialVersionUID = 91678506001070459L;
+	@NotBlank
 	@Column(nullable = false, updatable = false, length = 10)
 	private String vbeln;
+	@NotBlank
 	@Column(nullable = false, updatable = false, length = 6)
 	private String posnr;
 

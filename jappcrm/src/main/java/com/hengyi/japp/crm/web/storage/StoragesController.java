@@ -7,7 +7,6 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.Constant.URL;
 import com.hengyi.japp.crm.domain.storage.Storage;
 import com.hengyi.japp.crm.web.AbstractController;
 import com.hengyi.japp.crm.web.data.LazyStorageModel;
@@ -23,7 +22,7 @@ public class StoragesController extends AbstractController implements
 	private List<Storage> searchResult;
 
 	public void edit() {
-		redirect(URL.STORAGES + "/" + getStorage().getNodeId());
+		redirect(urlUtil.getStoragesPath() + "/" + getStorage().getNodeId());
 	}
 
 	public void delete() {
@@ -31,9 +30,9 @@ public class StoragesController extends AbstractController implements
 			crmService.delete(getStorage());
 			if (searchResult != null)
 				searchResult.remove(getStorage());
-			addInfoMessage("删除成功！");
+			operationSuccessMessage();
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 
@@ -42,22 +41,22 @@ public class StoragesController extends AbstractController implements
 			searchResult = storageService.findAllByQuery(nameSearch);
 			lazyStorageModel = new LazyStorageModel(searchResult);
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 
 	public void basicInfoReport() {
-		redirect(URL.CUSTOMERS + "/" + getStorage().getNodeId()
+		redirect(urlUtil.getStoragesPath() + "/" + getStorage().getNodeId()
 				+ "/basicInfoReport");
 	}
 
 	public void creditRiskReport() {
-		redirect(URL.CUSTOMERS + "/" + getStorage().getNodeId()
+		redirect(urlUtil.getStoragesPath() + "/" + getStorage().getNodeId()
 				+ "/creditRiskReport");
 	}
 
 	public void fiCreditRiskReport() {
-		redirect(URL.CUSTOMERS + "/" + getStorage().getNodeId()
+		redirect(urlUtil.getStoragesPath() + "/" + getStorage().getNodeId()
 				+ "/fiCreditRiskReport");
 	}
 

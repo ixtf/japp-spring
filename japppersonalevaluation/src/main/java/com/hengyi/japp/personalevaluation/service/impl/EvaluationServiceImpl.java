@@ -29,7 +29,7 @@ import com.hengyi.japp.personalevaluation.domain.relationship.LevelEvaluation;
 import com.hengyi.japp.personalevaluation.domain.repository.KpiRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.PersonRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.TaskRepository;
-import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
+import com.hengyi.japp.personalevaluation.service.CacheService;
 import com.hengyi.japp.personalevaluation.service.EvaluationService;
 
 @Named
@@ -39,7 +39,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 	@Resource(name = "jappCommonSoapClient")
 	private com.hengyi.japp.common.ws.SoapService jappCommonSoapClient;
 	@Inject
-	private CacheServiceFacade cacheService;
+	private CacheService cacheService;
 	@Inject
 	private Neo4jOperations template;
 	@Inject
@@ -108,7 +108,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	private void checkSubmit() throws Exception {
-		Task task = cacheService.getSession(SESSION_TASK, Task.class);
+		Task task = cacheService.getSession(SESSION_TASK);
 		if (!task.isActive())
 			throw new Exception(ErrorCode.ERROR_NOT_ACTIVE);
 		Person self = findOnePerson(cacheService.getCurrentTask(),

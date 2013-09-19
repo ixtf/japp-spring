@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.common.collect.ImmutableSet;
-import com.hengyi.japp.common.application.Constant;
-import com.hengyi.japp.common.application.Constant.AdminWeb;
+import com.hengyi.japp.common.CommonConstant;
+import com.hengyi.japp.common.Constant.AdminWeb;
 import com.hengyi.japp.common.command.UserBindCommand;
 import com.hengyi.japp.common.command.UserSearchCommand;
 import com.hengyi.japp.common.domain.node.User;
@@ -70,7 +70,7 @@ public class UserController extends AbstractController {
 			throws Exception {
 		User user = userService.findOne(uuid);
 		if (user == null)
-			throw new Exception(Constant.ErrorCode.USER_NOT_EXIST + uuid);
+			throw new Exception(CommonConstant.ErrorCode.USER_NOT_EXIST + uuid);
 		return new ModelAndView(AdminWeb.userUpdateView).addObject("command",
 				user);
 	}

@@ -15,7 +15,7 @@ public interface CommunicateeService {
 
 	List<Communicatee> findAll(Pageable pageRequest);
 
-	List<Communicatee> findAllByQuery(String nameSearch);
+	List<Communicatee> findAllByQuery(String nameSearch) throws Exception;
 
 	long count();
 }

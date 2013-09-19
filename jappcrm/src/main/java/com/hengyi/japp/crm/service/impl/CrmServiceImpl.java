@@ -12,8 +12,10 @@ import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.crm.domain.Associate;
+import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.CrmType;
@@ -24,7 +26,9 @@ import com.hengyi.japp.crm.domain.repository.CrmRepository;
 import com.hengyi.japp.crm.event.EventPublisher;
 import com.hengyi.japp.crm.event.SyncEventPublisher;
 import com.hengyi.japp.crm.event.crm.CrmUpdateEvent;
-import com.hengyi.japp.crm.service.CacheServiceFacade;
+import com.hengyi.japp.crm.exception.NoChiefCommunicateeException;
+import com.hengyi.japp.crm.exception.NoIndicatorValueException;
+import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CrmService;
 
 @Named
@@ -41,19 +45,40 @@ public class CrmServiceImpl implements CrmService {
 	// @Inject
 	// private EventBus eventBus;
 	@Inject
-	private CacheServiceFacade cacheServiceFacade;
+	private CacheService cacheServiceFacade;
 
 	@Override
 	public Crm findOne(Long nodeId) {
 		return crmRepository.findOne(nodeId);
 	}
 
+	private void checkSave(Crm crm,
+			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
+			CrmType crmType, Iterable<Certificate> certificates,
+			Communicatee communicatee, Iterable<Communicatee> communicatees,
+			Iterable<Associate> associates) throws Exception {
+		if (communicatee == null)
+			throw new NoChiefCommunicateeException();
+
+		List<Indicator> noValueIndicators = Lists.newArrayList();
+		for (Entry<Indicator, List<IndicatorValueScore>> entry : indicatorMap
+				.entrySet())
+			if (entry.getValue().isEmpty())
+				noValueIndicators.add(entry.getKey());
+		if (!noValueIndicators.isEmpty())
+			throw new NoIndicatorValueException(noValueIndicators);
+	}
+
 	@Override
 	public void save(Crm crm,
 			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			CrmType crmType, Communicatee communicatee,
-			Iterable<Communicatee> communicatees, Iterable<Associate> associates) {
+			CrmType crmType, Iterable<Certificate> certificates,
+			Communicatee communicatee, Iterable<Communicatee> communicatees,
+			Iterable<Associate> associates) throws Exception {
+		checkSave(crm, indicatorMap, crmType, certificates, communicatee,
+				communicatees, associates);
 		crm.setCrmType(crmType);
+		crm.setCertificates(certificates);
 		crm.setCommunicatee(communicatee);
 		crm.setCommunicatees(communicatees);
 		crm.setAssociates(associates);

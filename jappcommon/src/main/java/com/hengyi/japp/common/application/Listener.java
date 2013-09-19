@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.hengyi.japp.common.application.event.EventPublisher;
-import com.hengyi.japp.common.application.event.init.AppInitEvent;
+import com.hengyi.japp.common.event.EventPublisher;
+import com.hengyi.japp.common.event.init.AppInitEvent;
 
 public class Listener implements ServletContextListener, HttpSessionListener {
 	private final Logger log = LoggerFactory.getLogger(getClass());

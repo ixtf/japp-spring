@@ -14,7 +14,7 @@ public interface StorageService {
 
 	long count();
 
-	List<Storage> findAllByQuery(String nameSearch);
+	List<Storage> findAllByQuery(String nameSearch) throws Exception;
 
 	List<Indicator> findAllIndicator();
 }

@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.hengyi.japp.common.sap.dto.SapVbkdDTO;
 import com.hengyi.japp.common.sap.dto.VbapPK;
-import com.hengyi.japp.common.service.SapService;
+import com.hengyi.japp.common.service.CommonSapService;
 import com.hengyi.japp.foreign.dto.ForeignSapLikpDTO;
 import com.hengyi.japp.foreign.dto.ForeignSapVbakDTO;
 
-public interface SapServiceFacade extends SapService {
+public interface SapServiceFacade extends CommonSapService {
 	ForeignSapVbakDTO findVbak(String vbeln) throws Exception;
 
 	ForeignSapLikpDTO findLikp(String vbeln) throws Exception;

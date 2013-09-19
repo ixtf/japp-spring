@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+			<p:dataTable id="tableStorageIndicators" var="_indicator"
+				value="#{storageIndicatorsController.indicators}">
+				<f:facet name="header">
+					<h:outputText value="#{msg['storage']}#{msg['indicator']}" />
+				</f:facet>
+
+				<p:column style="width:4%">
+					<h:outputLink
+						value="#{request.contextPath}/storage/indicators/#{_indicator.nodeId}">
+						<h:outputText value="#{msg['edit']}" />
+					</h:outputLink>
+				</p:column>
+
+				<p:column headerText="#{msg['name']}" sortBy="#{_indicator.name}">
+					<h:outputText value="#{_indicator.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['indicatorPercent']}"
+					sortBy="#{_indicator.percent}">
+					<h:outputText value="#{_indicator.percent}">
+						<f:convertNumber type="percent" />
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputText value="#{msg['name']}" />
+				<h:inputText id="storage-name"
+					value="#{storagesController.nameSearch}" />
+				<p:commandButton value="#{msg['search']}" update=":form"
+					action="#{storagesController.search}" icon="ui-icon-search" />
+			</h:panelGrid>
+
+			<p:contextMenu for="tableStorages">
+				<p:submenu label="#{msg['report']}" icon="ui-icon-document">
+					<p:menuitem value="#{msg['basicInfoReport']}"
+						action="#{storagesController.basicInfoReport}" />
+					<p:menuitem value="#{msg['creditRiskReport']}"
+						action="#{storagesController.creditRiskReport}" />
+					<p:menuitem value="#{msg['fiCreditRiskReport']}"
+						action="#{storagesController.fiCreditRiskReport}" />
+				</p:submenu>
+				<p:separator />
+				<p:menuitem value="#{msg['edit']}"
+					action="#{storagesController.edit}" icon="ui-icon-pencil" />
+				<p:menuitem value="#{msg['delete']}" type="button"
+					onclick="confirmDialogDeleteStorage.show()" icon="ui-icon-close" />
+			</p:contextMenu>
+			<p:confirmDialog message="#{msg['operation.confirm']}?"
+				severity="alert" widgetVar="confirmDialogDeleteStorage">
+				<p:commandButton value="#{msg['operation.submit']}" update=":form"
+					action="#{storagesController.delete}"
+					oncomplete="confirmDialogDeleteStorage.hide()" />
+			</p:confirmDialog>
+			<p:dataTable id="tableStorages" var="_storage"
+				value="#{storagesController.lazyStorageModel}"
+				selection="#{storagesController.storage}"
+				rowKey="#{_storage.nodeId}" selectionMode="single"
+				rows="#{storagesController.pageSize}" paginator="true"
+				stickyHeader="true" lazy="true">
+				<f:facet name="header">
+					<h:outputText value="#{msg['storage']}" />
+				</f:facet>
+
+				<p:column headerText="#{msg['name']}">
+					<h:outputText value="#{_storage.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['associate']}#{msg['storage']}">
+					<p:dataList var="_associate" value="#{_storage.associatesAsList}">
+						<h:outputLink
+							value="#{request.contextPath}/storages/#{_associate.end.nodeId}">
+							<h:outputText value="#{_associate.end}" />
+						</h:outputLink>
+					</p:dataList>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -10,12 +10,12 @@ import org.springframework.context.ApplicationContext;
 
 import com.google.common.collect.Maps;
 import com.hengyi.japp.common.sap.annotation.SapHandler;
-import com.hengyi.japp.common.service.impl.SapServiceImpl;
+import com.hengyi.japp.common.service.impl.CommonSapServiceImpl;
 import com.hengyi.japp.personalevaluation.service.SapServiceFacade;
 import com.sap.conn.jco.server.JCoServerFunctionHandler;
 
 @Named
-public class SapServiceFacadeImpl extends SapServiceImpl implements
+public class SapServiceFacadeImpl extends CommonSapServiceImpl implements
 		SapServiceFacade {
 	@Resource
 	private ApplicationContext context;

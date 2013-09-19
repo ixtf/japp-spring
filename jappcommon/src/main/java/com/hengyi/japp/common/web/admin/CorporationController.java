@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.common.collect.ImmutableSet;
-import com.hengyi.japp.common.application.Constant;
-import com.hengyi.japp.common.application.Constant.AdminWeb;
+import com.hengyi.japp.common.CommonConstant;
+import com.hengyi.japp.common.Constant.AdminWeb;
 import com.hengyi.japp.common.command.CorporationBindCommand;
 import com.hengyi.japp.common.domain.node.Corporation;
 import com.hengyi.japp.common.domain.node.bind.BindCorporation;
@@ -42,7 +42,7 @@ public class CorporationController extends AbstractController {
 			throws Exception {
 		Corporation corporation = corporationService.findOne(uuid);
 		if (corporation == null)
-			throw new Exception(Constant.ErrorCode.CORPORATION_NOT_EXIST + uuid);
+			throw new Exception(CommonConstant.ErrorCode.CORPORATION_NOT_EXIST + uuid);
 		return new ModelAndView(AdminWeb.corporationUpdateView).addObject(
 				"command", corporation);
 	}
@@ -52,7 +52,7 @@ public class CorporationController extends AbstractController {
 			throws Exception {
 		Corporation corporation = corporationService.findOne(uuid);
 		if (corporation == null)
-			throw new Exception(Constant.ErrorCode.CORPORATION_NOT_EXIST + uuid);
+			throw new Exception(CommonConstant.ErrorCode.CORPORATION_NOT_EXIST + uuid);
 		template.fetch(corporation.getBindCorporations());
 		return new ModelAndView(AdminWeb.corporationBindView).addObject(
 				"corporation", corporation).addObject("command",

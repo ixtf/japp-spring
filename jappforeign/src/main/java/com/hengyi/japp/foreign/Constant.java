@@ -1,6 +1,6 @@
 package com.hengyi.japp.foreign;
 
-public final class Constant extends com.hengyi.japp.common.Constant {
+public final class Constant extends com.hengyi.japp.common.CommonConstant {
 	public static final String NAME_SPACE = "com.hengyi.japp.foreign";
 
 	public static class SapFunction {
@@ -16,7 +16,7 @@ public final class Constant extends com.hengyi.japp.common.Constant {
 	}
 
 	public static class ErrorCode extends
-			com.hengyi.japp.common.Constant.ErrorCode {
+			com.hengyi.japp.common.CommonConstant.ErrorCode {
 		public static final String MODEIFY_NOT_INIT_INVOICE = "MODEIFY_NOT_INIT_INVOICE";
 	}
 }

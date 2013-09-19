@@ -16,7 +16,7 @@ public interface CustomerService {
 
 	long count();
 
-	List<Customer> findAllByQuery(String nameSearch);
+	List<Customer> findAllByQuery(String nameSearch) throws Exception;
 
 	List<Indicator> findAllIndicator();
 

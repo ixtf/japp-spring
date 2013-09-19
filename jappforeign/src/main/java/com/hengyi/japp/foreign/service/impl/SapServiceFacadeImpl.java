@@ -14,7 +14,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
-import com.hengyi.japp.common.sap.SapUtil;
+import com.hengyi.japp.common.sap.CommonSapUtil;
 import com.hengyi.japp.common.sap.annotation.SapHandler;
 import com.hengyi.japp.common.sap.dto.SapKna1DTO;
 import com.hengyi.japp.common.sap.dto.SapLikpDTO;
@@ -25,7 +25,7 @@ import com.hengyi.japp.common.sap.dto.SapVbapDTO;
 import com.hengyi.japp.common.sap.dto.SapVbkdDTO;
 import com.hengyi.japp.common.sap.dto.SapVbkdvbDTO;
 import com.hengyi.japp.common.sap.dto.VbapPK;
-import com.hengyi.japp.common.service.impl.SapServiceImpl;
+import com.hengyi.japp.common.service.impl.CommonSapServiceImpl;
 import com.hengyi.japp.foreign.Constant;
 import com.hengyi.japp.foreign.dto.ForeignSapLikpDTO;
 import com.hengyi.japp.foreign.dto.ForeignSapVbakDTO;
@@ -37,7 +37,7 @@ import com.sap.conn.jco.server.JCoServerFunctionHandler;
 
 @Named
 @Singleton
-public class SapServiceFacadeImpl extends SapServiceImpl implements
+public class SapServiceFacadeImpl extends CommonSapServiceImpl implements
 		SapServiceFacade {
 	private Cache<String, ForeignSapVbakDTO> vbakCache = CacheBuilder
 			.newBuilder().maximumSize(100).build();
@@ -68,15 +68,15 @@ public class SapServiceFacadeImpl extends SapServiceImpl implements
 		execute(function);
 
 		list = function.getExportParameterList();
-		SapVbakDTO sapVbak = SapUtil.convert(list.getStructure("E_VBAK"),
+		SapVbakDTO sapVbak = CommonSapUtil.convert(list.getStructure("E_VBAK"),
 				SapVbakDTO.class);
-		SapVbkdvbDTO sapVbkdvb = SapUtil.convert(list.getStructure("E_VBKD"),
+		SapVbkdvbDTO sapVbkdvb = CommonSapUtil.convert(list.getStructure("E_VBKD"),
 				SapVbkdvbDTO.class);
-		SapKna1DTO sapKna1 = SapUtil.convert(list.getStructure("E_KNA1"),
+		SapKna1DTO sapKna1 = CommonSapUtil.convert(list.getStructure("E_KNA1"),
 				SapKna1DTO.class);
-		SapTvzbtDTO sapTvzbt = SapUtil.convert(list.getStructure("E_TVZBT"),
+		SapTvzbtDTO sapTvzbt = CommonSapUtil.convert(list.getStructure("E_TVZBT"),
 				SapTvzbtDTO.class);
-		List<SapVbapDTO> sapVbaps = SapUtil.convert(list.getTable("EST_VBAP"),
+		List<SapVbapDTO> sapVbaps = CommonSapUtil.convert(list.getTable("EST_VBAP"),
 				SapVbapDTO.class);
 		String key1 = StringUtils.trim(list.getString("E_VBELN_1"));
 		String key2 = StringUtils.trim(list.getString("E_VBELN_2"));
@@ -95,11 +95,11 @@ public class SapServiceFacadeImpl extends SapServiceImpl implements
 		execute(function);
 
 		list = function.getExportParameterList();
-		SapLikpDTO sapLikp = SapUtil.convert(list.getStructure("E_LIKP"),
+		SapLikpDTO sapLikp = CommonSapUtil.convert(list.getStructure("E_LIKP"),
 				SapLikpDTO.class);
-		SapKna1DTO sapKna1 = SapUtil.convert(list.getStructure("E_KNA1"),
+		SapKna1DTO sapKna1 = CommonSapUtil.convert(list.getStructure("E_KNA1"),
 				SapKna1DTO.class);
-		List<SapLipsDTO> sapLipss = SapUtil.convert(list.getTable("EST_LIPS"),
+		List<SapLipsDTO> sapLipss = CommonSapUtil.convert(list.getTable("EST_LIPS"),
 				SapLipsDTO.class);
 		String key1 = StringUtils.trim(list.getString("E_VBELN_1"));
 		String key2 = StringUtils.trim(list.getString("E_VBELN_2"));
@@ -144,7 +144,7 @@ public class SapServiceFacadeImpl extends SapServiceImpl implements
 		function.getImportParameterList().setValue("I_BSTKD", bstkd);
 		execute(function);
 		JCoTable table = function.getTableParameterList().getTable("ET_VBKD");
-		return SapUtil.convert(table, SapVbkdDTO.class);
+		return CommonSapUtil.convert(table, SapVbkdDTO.class);
 	}
 
 	@Override

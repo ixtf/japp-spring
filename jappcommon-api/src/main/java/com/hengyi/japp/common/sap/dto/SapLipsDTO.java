@@ -3,10 +3,13 @@ package com.hengyi.japp.common.sap.dto;
 import java.math.BigDecimal;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.hengyi.japp.common.domain.shared.ValueObject;
 import com.hengyi.japp.common.sap.Constant;
@@ -15,10 +18,16 @@ import com.hengyi.japp.common.sap.Constant;
 @XmlRootElement(namespace = Constant.NAME_SPACE, name = "LipsDTO")
 public class SapLipsDTO implements ValueObject<SapLipsDTO> {
 	private static final long serialVersionUID = 2595418267567514743L;
+	@NotNull
 	private LipsPK pk;
+	@NotNull
+	@Min(0)
 	private BigDecimal lfimg;
+	@NotBlank
 	private String vrkme;
+	@NotBlank
 	private String matnr;
+	@NotBlank
 	private String arktx;
 	private String vgbel;
 	private String vgpos;

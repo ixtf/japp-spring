@@ -26,7 +26,7 @@ import com.hengyi.japp.personalevaluation.domain.repository.KpiRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.PersonRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.TaskConfigRepository;
 import com.hengyi.japp.personalevaluation.domain.repository.TaskRepository;
-import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
+import com.hengyi.japp.personalevaluation.service.CacheService;
 import com.hengyi.japp.personalevaluation.service.EvaluationService;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.service.TaskService;
@@ -36,7 +36,7 @@ import com.hengyi.japp.personalevaluation.service.TaskService;
 // @Veto
 public class TaskServiceImpl implements TaskService {
 	@Inject
-	private CacheServiceFacade cacheService;
+	private CacheService cacheService;
 	@Inject
 	private Neo4jOperations template;
 	@Inject

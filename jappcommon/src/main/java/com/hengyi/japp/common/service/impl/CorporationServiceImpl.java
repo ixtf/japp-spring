@@ -6,7 +6,8 @@ import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableSet;
-import com.hengyi.japp.common.application.Constant;
+import com.hengyi.japp.common.CommonConstant;
+import com.hengyi.japp.common.Constant;
 import com.hengyi.japp.common.command.BindCorporationUpdateCommand;
 import com.hengyi.japp.common.command.CorporationBindCommand;
 import com.hengyi.japp.common.data.BindCorporationType;
@@ -66,7 +67,7 @@ public class CorporationServiceImpl implements CorporationService {
 			throws Exception {
 		Corporation corporation = findOne(command.getUuid());
 		if (corporation == null)
-			throw new Exception(Constant.ErrorCode.CORPORATION_NOT_EXIST
+			throw new Exception(CommonConstant.ErrorCode.CORPORATION_NOT_EXIST
 					+ command.getUuid());
 		AbstractBindCorporation bindCorporation = findOneBindCorporation(
 				command.getBindCorporationType(), command.getId());

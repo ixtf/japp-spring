@@ -1,6 +1,6 @@
 package com.hengyi.japp.common.sap;
 
-public class Constant extends com.hengyi.japp.common.Constant {
+public class Constant extends com.hengyi.japp.common.CommonConstant {
 	public static final String NAME_SPACE = "com.hengyi.japp.common.sap";
 
 	public static class FunctionName {

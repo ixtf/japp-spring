@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import com.hengyi.japp.common.util.MyUtil;
+import com.hengyi.japp.common.MyUtil;
 import com.sun.istack.NotNull;
 
 @NodeEntity

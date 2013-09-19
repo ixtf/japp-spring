@@ -8,8 +8,8 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
 	<jaxws:client id="jappCommonSoapClient" serviceClass="com.hengyi.japp.common.ws.SoapService"
-		address="http://192.168.0.125:8080/common/ws/soap/jappCommon?wsdl" />
+		address="http://192.168.0.124:8080/common/ws/soap/jappCommon?wsdl" />
 
-	<jaxws:endpoint id="jappForeignSoap" address="/jappForeign"
-		publish="true" implementor="com.hengyi.japp.foreign.ws.SoapServiceImpl" />
+	<jaxws:endpoint id="jappTransSoap" address="/jappTrans"
+		publish="true" implementor="com.hengyi.japp.trans.ws.SoapServiceImpl" />
 </beans>

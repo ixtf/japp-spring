@@ -7,13 +7,13 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.Constant.URL;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.web.data.LazyCommunicateeModel;
 
 @Named
 @Scope("view")
-public class CommunicateesController extends AbstractController implements Serializable{
+public class CommunicateesController extends AbstractController implements
+		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
 	private LazyCommunicateeModel lazyCommunicateeModel;
 	private Communicatee communicatee;
@@ -25,9 +25,9 @@ public class CommunicateesController extends AbstractController implements Seria
 			communicateeService.delete(communicatee);
 			if (searchResult != null)
 				searchResult.remove(communicatee);
-			addInfoMessage("删除成功！");
+			operationSuccessMessage();
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 
@@ -36,12 +36,13 @@ public class CommunicateesController extends AbstractController implements Seria
 			searchResult = communicateeService.findAllByQuery(nameSearch);
 			lazyCommunicateeModel = new LazyCommunicateeModel(searchResult);
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 
 	public void edit() {
-		redirect(URL.COMMUNICATEES + "/" + getCommunicatee().getNodeId());
+		redirect(urlUtil.getCommunicateesPath() + "/"
+				+ getCommunicatee().getNodeId());
 	}
 
 	public Communicatee getCommunicatee() {

@@ -6,12 +6,12 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.Constant.URL;
 import com.hengyi.japp.crm.domain.Communicatee;
 
 @Named
-@Scope("request")
-public class CommunicateeController extends AbstractController implements Serializable{
+@Scope("view")
+public class CommunicateeController extends AbstractController implements
+		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
 	private Long nodeId;
 	private Communicatee communicatee;
@@ -19,9 +19,9 @@ public class CommunicateeController extends AbstractController implements Serial
 	public void save() {
 		try {
 			communicateeService.save(communicatee);
-			redirect(URL.COMMUNICATEES);
+			operationSuccessMessage();
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 

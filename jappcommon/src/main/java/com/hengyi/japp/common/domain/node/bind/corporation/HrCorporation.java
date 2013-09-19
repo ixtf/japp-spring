@@ -7,7 +7,7 @@ import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
-import com.hengyi.japp.common.application.Constant;
+import com.hengyi.japp.common.Constant;
 import com.hengyi.japp.common.data.BindCorporationType;
 import com.sun.istack.NotNull;
 

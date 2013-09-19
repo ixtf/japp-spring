@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hengyi.japp.crm.domain.Associate;
+import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.CrmType;
@@ -14,8 +15,9 @@ public interface CrmService {
 	Crm findOne(Long nodeId);
 
 	void save(Crm crm, Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			CrmType crmType, Communicatee communicatee,
-			Iterable<Communicatee> communicatees, Iterable<Associate> associates);
+			CrmType crmType, Iterable<Certificate> certificates,
+			Communicatee communicatee, Iterable<Communicatee> communicatees,
+			Iterable<Associate> associates) throws Exception;
 
 	void delete(Crm crm) throws Exception;
 

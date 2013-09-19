@@ -18,7 +18,7 @@
 	<bean
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"></bean>
 
-	<jpa:repositories base-package="com.hengyi.japp.foreign" />
+	<jpa:repositories base-package="com.hengyi.japp.trans" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
 		p:entityManagerFactory-ref="entityManagerFactory" />
@@ -26,8 +26,7 @@
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 		p:dataSource-ref="appDataSource" p:persistenceUnitName="${app.persistenceUnitName}">
 		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-				p:generateDdl="true" p:showSql="true" />
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
 	</bean>
 	<bean id="appDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"

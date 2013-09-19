@@ -12,7 +12,7 @@ import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
-import com.hengyi.japp.common.application.Constant;
+import com.hengyi.japp.common.Constant;
 import com.hengyi.japp.common.domain.node.bind.user.InnerUser;
 import com.hengyi.japp.common.service.CacheService;
 import com.hengyi.japp.common.service.UserService;
@@ -32,8 +32,8 @@ public class LocalRealm extends JdbcRealm {
 		InnerUser user = userService.findOneInnerUser(username);
 		if (user == null)
 			return null;
-		cacheService.setSessionData(Constant.SESSION_USER, user.getUser());
-		cacheService.setSessionData(Constant.SESSION_PRINCIPALTYPE,
+		cacheService.setSession(Constant.SESSION_USER, user.getUser());
+		cacheService.setSession(Constant.SESSION_PRINCIPALTYPE,
 				user.getPrincipalType());
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(username,
 				user.getPassword().toCharArray(), user.getPrincipalType()

@@ -15,11 +15,11 @@ import com.google.common.collect.Sets;
 import com.hengyi.japp.common.dto.HrOrganizationDTO;
 import com.hengyi.japp.common.sap.annotation.SapHandler;
 import com.hengyi.japp.common.service.SapServiceFacade;
-import com.hengyi.japp.common.service.impl.SapServiceImpl;
+import com.hengyi.japp.common.service.impl.CommonSapServiceImpl;
 import com.sap.conn.jco.server.JCoServerFunctionHandler;
 
 @Service
-public class SapServiceFacadeImpl extends SapServiceImpl implements
+public class SapServiceFacadeImpl extends CommonSapServiceImpl implements
 		SapServiceFacade {
 	@Resource
 	private ApplicationContext context;

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Properties;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.shiro.SecurityUtils;
@@ -13,13 +14,15 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.common.data.PrincipalType;
-import com.hengyi.japp.crm.Constant.URL;
+import com.hengyi.japp.crm.UrlUtil;
 
 @Named
 @Scope("request")
 // @Join(path = "/login", to = "/faces/login.jsf")
 public class AuthController extends AbstractController implements Serializable {
 	private static final long serialVersionUID = 3708518912737819900L;
+	@Inject
+	protected UrlUtil urlUtil;
 	@Resource(name = "deployProperties")
 	private Properties deployProperties;
 	@NotBlank
@@ -33,14 +36,14 @@ public class AuthController extends AbstractController implements Serializable {
 			UsernamePasswordToken token = new UsernamePasswordToken(username,
 					password);
 			subject.login(token);
-			redirect(URL.HOME);
+			redirect(urlUtil.getHomePath());
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 
 	public void logout() {
-		String url = URL.LOGIN;
+		String url = urlUtil.getLoginPath();
 		try {
 			if (PrincipalType.SSO.equals(cacheService.getPrincipalType()))
 				url = deployProperties.getProperty("casLogoutUrl");
@@ -49,14 +52,6 @@ public class AuthController extends AbstractController implements Serializable {
 		}
 		SecurityUtils.getSubject().logout();
 		redirect(url);
-	}
-
-	public boolean isAuthenticated() {
-		return SecurityUtils.getSubject().isAuthenticated();
-	}
-
-	public boolean isAdmin() {
-		return SecurityUtils.getSubject().hasRole("admin");
 	}
 
 	public String getUsername() {

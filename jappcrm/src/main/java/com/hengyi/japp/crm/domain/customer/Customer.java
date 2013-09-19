@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Crm;
 
 @NodeEntity

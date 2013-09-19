@@ -10,12 +10,6 @@
 	<packaging>war</packaging>
 	<name>jappcommon</name>
 	<dependencies>
-		<dependency>
-			<groupId>com.hengyi.japp</groupId>
-			<artifactId>jappcommon-api</artifactId>
-			<!-- <scope>provided</scope> -->
-		</dependency>
-
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

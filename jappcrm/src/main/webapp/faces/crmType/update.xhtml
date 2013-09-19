@@ -7,6 +7,7 @@
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
 			<h1 class="title ui-widget-header ui-corner-all">
 				<h:outputText value="#{msg['new']}-"
 					rendered="#{empty crmTypeController.crmType.nodeId}" />

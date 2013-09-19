@@ -5,11 +5,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.hengyi.japp.crm.MyUtil;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.repository.CommunicateeRepository;
 import com.hengyi.japp.crm.service.CommunicateeService;
@@ -41,8 +41,10 @@ public class CommunicateeServiceImpl implements CommunicateeService {
 	}
 
 	@Override
-	public List<Communicatee> findAllByQuery(String nameSearch) {
-		nameSearch = StringUtils.trimToEmpty(nameSearch);
+	public List<Communicatee> findAllByQuery(String nameSearch)
+			throws Exception {
+		MyUtil.checkSearch(nameSearch);
+		// nameSearch = StringUtils.trimToEmpty(nameSearch);
 		return Lists.newArrayList(communicateeRepository.findAllByQuery("name",
 				nameSearch));
 	}

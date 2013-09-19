@@ -7,7 +7,7 @@ import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.support.index.IndexType;
 
-import com.hengyi.japp.common.Constant;
+import com.hengyi.japp.common.CommonConstant;
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 
 @NodeEntity
@@ -40,7 +40,7 @@ public class Operator extends AbstractNeo4j implements Serializable {
 
 	public String getTheme() {
 		if (theme == null)
-			theme = Constant.DEFAULT_THEME.getName();
+			theme = CommonConstant.DEFAULT_THEME.getName();
 		return theme;
 	}
 

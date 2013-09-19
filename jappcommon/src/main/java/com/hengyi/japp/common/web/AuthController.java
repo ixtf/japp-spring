@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hengyi.japp.common.application.Constant;
+import com.hengyi.japp.common.CommonConstant;
+import com.hengyi.japp.common.CommonConstant.URL;
+import com.hengyi.japp.common.CommonConstant.VIEW;
 import com.hengyi.japp.common.service.CacheService;
 
 @Controller
@@ -29,17 +31,17 @@ public class AuthController extends AbstractController {
 	@Resource(name = "deployProperties")
 	private Properties deployProperties;
 
-	@RequestMapping(value = Constant.LOGIN_URL, method = RequestMethod.GET)
+	@RequestMapping(value = URL.LOGIN, method = RequestMethod.GET)
 	public ModelAndView loginForm() {
-		return new ModelAndView(Constant.LOGIN_VIEW);
+		return new ModelAndView(VIEW.LOGIN);
 	}
 
-	@RequestMapping(value = Constant.UNAUTHORIZED_URL, method = RequestMethod.GET)
+	@RequestMapping(value = URL.UNAUTHORIZED, method = RequestMethod.GET)
 	public ModelAndView unauthorized() {
-		return new ModelAndView(Constant.UNAUTHORIZED_VIEW);
+		return new ModelAndView(VIEW.UNAUTHORIZED);
 	}
 
-	@RequestMapping(value = Constant.LOGIN_URL, method = RequestMethod.POST)
+	@RequestMapping(value = URL.LOGIN, method = RequestMethod.POST)
 	public void login(
 			@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username,
 			@RequestParam(FormAuthenticationFilter.DEFAULT_PASSWORD_PARAM) String password,
@@ -54,12 +56,13 @@ public class AuthController extends AbstractController {
 				currentUser.login(token);
 				cacheService.setSessionData();
 			} catch (UnknownAccountException e) {
-				addErrorMessage(model, Constant.ErrorCode.USER_NOT_EXIST,
+				addErrorMessage(model, CommonConstant.ErrorCode.USER_NOT_EXIST,
 						token.getUsername());
 			} catch (IncorrectCredentialsException e) {
-				addErrorMessage(model, Constant.ErrorCode.PASSWORD_INCORRECT);
+				addErrorMessage(model,
+						CommonConstant.ErrorCode.PASSWORD_INCORRECT);
 			} catch (LockedAccountException e) {
-				addErrorMessage(model, Constant.ErrorCode.USER_LOCKED,
+				addErrorMessage(model, CommonConstant.ErrorCode.USER_LOCKED,
 						token.getUsername());
 			} catch (AuthenticationException e) {
 				throw new Exception(e);
@@ -68,7 +71,7 @@ public class AuthController extends AbstractController {
 	}
 
 	// 退出
-	@RequestMapping(value = Constant.LOGOUT_URL, method = RequestMethod.GET)
+	@RequestMapping(value = URL.LOGOUT, method = RequestMethod.GET)
 	public void logout(Model model) {
 		Subject currentUser = SecurityUtils.getSubject();
 		currentUser.logout();

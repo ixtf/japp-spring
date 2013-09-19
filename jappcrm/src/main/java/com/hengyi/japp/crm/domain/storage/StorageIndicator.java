@@ -17,6 +17,7 @@ public class StorageIndicator extends Indicator {
 		List<StorageIndicator> result = Lists.newArrayList();
 		result.add(new StorageIndicatorDurationYears());
 		result.add(new StorageIndicatorRegisterCapcital());
+		result.add(new StorageIndicatorCapcital());
 		return result;
 	}
 

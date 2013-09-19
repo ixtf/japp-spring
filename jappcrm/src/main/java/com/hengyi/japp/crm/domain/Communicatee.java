@@ -12,7 +12,7 @@ import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 
 @NodeEntity
 public class Communicatee extends AbstractNeo4j implements Serializable {
-	private static final long serialVersionUID = 3104842085602923519L;
+	private static final long serialVersionUID = 3570510694131593628L;
 	@NotBlank
 	@Indexed
 	private String name;

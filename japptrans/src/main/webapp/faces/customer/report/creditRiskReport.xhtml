@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:commandButton value="#{msg['print']}" type="button"
+				icon="ui-icon-print">
+				<p:printer target="report" />
+			</p:commandButton>
+			<p:panelGrid id="report"
+				style="margin-left:auto;margin-right:auto;width:210mm;">
+				<f:facet name="header">
+					<p:row>
+						<p:column colspan="2">
+							<h:outputText value="#{msg['customer']}#{msg['creditRiskReport']}"
+								style="font-size:1.6em" />
+						</p:column>
+					</p:row>
+				</f:facet>
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msg['name']}" />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{customerBasicInfoReportController.report.name}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msg['registerNumber']}" />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{customerBasicInfoReportController.report.registerNumber}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msg['durationYears']}" />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{customerBasicInfoReportController.report.durationYears}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText value="#{msg['registerPlace']}" />
+					</p:column>
+					<p:column>
+						<h:outputText
+							value="#{customerBasicInfoReportController.report.registerPlace}" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

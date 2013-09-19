@@ -21,7 +21,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.hengyi.japp.common.application.Constant;
+import com.hengyi.japp.common.CommonConstant;
 import com.hengyi.japp.common.data.PrincipalType;
 import com.hengyi.japp.common.domain.node.Corporation;
 import com.hengyi.japp.common.domain.node.User;
@@ -68,7 +68,7 @@ public class SoapServiceImpl implements SoapService {
 			}
 			log.error("用户：{} 登录成功，却找不到对应juser！");
 		} catch (Exception e) {
-			throw new Exception(Constant.ErrorCode.USER_UNIQUE_NOT_EXIST
+			throw new Exception(CommonConstant.ErrorCode.USER_UNIQUE_NOT_EXIST
 					+ username);
 		} finally {
 			subject.logout();
@@ -82,7 +82,7 @@ public class SoapServiceImpl implements SoapService {
 		BindUser bindUser = userService.findOneBindUser(principalType,
 				principal);
 		if (bindUser == null)
-			throw new Exception(Constant.ErrorCode.USER_NOT_EXIST
+			throw new Exception(CommonConstant.ErrorCode.USER_NOT_EXIST
 					+ principalType + principal);
 		return dozer.map(bindUser.getUser(), UserDTO.class);
 	}
@@ -91,7 +91,7 @@ public class SoapServiceImpl implements SoapService {
 	public Collection<BindUserDTO> findBindUser(String uuid) throws Exception {
 		User user = userService.findOne(uuid);
 		if (user == null)
-			throw new Exception(Constant.ErrorCode.USER_NOT_EXIST + uuid);
+			throw new Exception(CommonConstant.ErrorCode.USER_NOT_EXIST + uuid);
 		ImmutableList.Builder<BindUserDTO> builder = ImmutableList.builder();
 		for (BindUser bindUser : template.fetch(user.getBindUsers()))
 			builder.add(dozer.map(bindUser, BindUserDTO.class));
@@ -103,7 +103,7 @@ public class SoapServiceImpl implements SoapService {
 			throws Exception {
 		User user = userService.findOne(uuid);
 		if (user == null)
-			throw new Exception(Constant.ErrorCode.USER_NOT_EXIST + uuid);
+			throw new Exception(CommonConstant.ErrorCode.USER_NOT_EXIST + uuid);
 		ImmutableList.Builder<CorporationDTO> builder = ImmutableList.builder();
 		for (Corporation corporation : corporationService.findAllByUser(user)) {
 			builder.add(dozer.map(corporation, CorporationDTO.class));

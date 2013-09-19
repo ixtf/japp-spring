@@ -5,11 +5,11 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.base.Objects;
-import com.hengyi.japp.common.Constant;
+import com.hengyi.japp.common.CommonConstant;
 import com.hengyi.japp.common.data.BindCorporationType;
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 
-@XmlRootElement(namespace = Constant.NAME_SPACE, name = "BindCorporation")
+@XmlRootElement(namespace = CommonConstant.NAME_SPACE, name = "BindCorporation")
 public class BindCorporationDTO extends AbstractNeo4j implements Serializable {
 	private static final long serialVersionUID = -4450533355291540767L;
 	private BindCorporationType bindCorporationType;

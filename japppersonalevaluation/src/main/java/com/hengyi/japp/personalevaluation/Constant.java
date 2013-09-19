@@ -1,7 +1,7 @@
 package com.hengyi.japp.personalevaluation;
 
 
-public final class Constant extends com.hengyi.japp.common.Constant {
+public final class Constant extends com.hengyi.japp.common.CommonConstant {
 	public static final String SESSION_TASK = "__SESSION_TASK__";
 	public static final int _YEAR = 2013;
 
@@ -28,7 +28,7 @@ public final class Constant extends com.hengyi.japp.common.Constant {
 	}
 
 	public static final class ErrorCode extends
-			com.hengyi.japp.common.Constant.ErrorCode {
+			com.hengyi.japp.common.CommonConstant.ErrorCode {
 		public static final String ERROR_JSON_CONVERT = "error.json.convert";
 		public static final String ERROR_NOT_SUBMIT = "error.not.submit";
 		public static final String ERROR_NOT_MANAGER = "error.not.manager";

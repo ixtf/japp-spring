@@ -3,12 +3,10 @@ package com.hengyi.japp.crm.web;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.Constant.URL;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 
 @Named
@@ -25,10 +23,13 @@ public class IndicatorValuesController extends AbstractController implements
 	}
 
 	public void edit() {
-		redirect(URL.INDICATORVALUES + "/" + getIndicatorValue().getNodeId());
+		redirect(urlUtil.getIndicatorValuesPath() + "/"
+				+ getIndicatorValue().getNodeId());
 	}
 
 	public List<IndicatorValue> getIndicatorValues() {
+		if (indicatorValues == null)
+			indicatorValues = indicatorValueService.findAll();
 		return indicatorValues;
 	}
 
@@ -46,10 +47,5 @@ public class IndicatorValuesController extends AbstractController implements
 
 	public void setNameSearch(String nameSearch) {
 		this.nameSearch = nameSearch;
-	}
-
-	@PostConstruct
-	public void init() {
-		indicatorValues = indicatorValueService.findAll();
 	}
 }

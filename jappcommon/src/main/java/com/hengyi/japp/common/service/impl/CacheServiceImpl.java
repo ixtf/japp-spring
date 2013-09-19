@@ -7,7 +7,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
-import com.hengyi.japp.common.application.Constant;
+import com.hengyi.japp.common.Constant;
 import com.hengyi.japp.common.data.PrincipalType;
 import com.hengyi.japp.common.domain.node.User;
 import com.hengyi.japp.common.domain.node.bind.BindUser;
@@ -17,7 +17,8 @@ import com.hengyi.japp.common.service.UserService;
 
 @Service
 @SuppressWarnings("unchecked")
-public class CacheServiceImpl implements CacheService {
+public class CacheServiceImpl extends CommonCacheServiceImpl implements
+		CacheService {
 	@Resource
 	private UserRepository userRepository;
 	@Resource
@@ -49,19 +50,5 @@ public class CacheServiceImpl implements CacheService {
 				principal);
 		session.setAttribute(Constant.SESSION_USER, bindUser.getUser());
 		session.setAttribute(Constant.SESSION_PRINCIPALTYPE, principalType);
-	}
-
-	@Override
-	public <T> T getSessionData(String key, Class<T> T) {
-		Subject subject = SecurityUtils.getSubject();
-		Session session = subject.getSession();
-		return (T) session.getAttribute(key);
-	}
-
-	@Override
-	public void setSessionData(String key, Object value) {
-		Subject subject = SecurityUtils.getSubject();
-		Session session = subject.getSession();
-		session.setAttribute(key, value);
 	}
 }

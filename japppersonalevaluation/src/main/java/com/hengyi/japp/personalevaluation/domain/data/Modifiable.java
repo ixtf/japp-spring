@@ -7,7 +7,7 @@ import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
-import com.hengyi.japp.common.Constant;
+import com.hengyi.japp.common.CommonConstant;
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 import com.hengyi.japp.personalevaluation.domain.node.Operator;
 
@@ -23,7 +23,7 @@ public class Modifiable extends AbstractNeo4j implements Serializable {
 	protected Date modifyTime;
 
 	public void setOperator(Operator operator) {
-		if (operator.getUuid().equals(Constant.ADMIN_PRINCIPAL))
+		if (operator.getUuid().equals(CommonConstant.ADMIN_PRINCIPAL))
 			return;
 		this.modifier = operator;
 		this.modifyTime = new Date();

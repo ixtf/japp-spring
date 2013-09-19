@@ -14,7 +14,7 @@ import com.hengyi.japp.personalevaluation.domain.data.TaskConfigKpi;
 import com.hengyi.japp.personalevaluation.domain.node.Operator;
 import com.hengyi.japp.personalevaluation.domain.node.Task;
 import com.hengyi.japp.personalevaluation.domain.node.TaskConfig;
-import com.hengyi.japp.personalevaluation.service.CacheServiceFacade;
+import com.hengyi.japp.personalevaluation.service.CacheService;
 import com.hengyi.japp.personalevaluation.service.OperatorService;
 import com.hengyi.japp.personalevaluation.service.TaskService;
 
@@ -22,7 +22,7 @@ public abstract class AbstractTaskConfigContext implements TaskConfigContext {
 	protected ContextFactory contextFactory;
 	protected Neo4jOperations template;
 	protected Mapper dozer;
-	protected CacheServiceFacade cacheService;
+	protected CacheService cacheService;
 	protected OperatorService operatorService;
 	protected TaskService taskService;
 
@@ -64,7 +64,7 @@ public abstract class AbstractTaskConfigContext implements TaskConfigContext {
 
 	public AbstractTaskConfigContext(Long taskNodeId,
 			ContextFactory contextFactory, Neo4jOperations template,
-			Mapper dozer, CacheServiceFacade cacheService,
+			Mapper dozer, CacheService cacheService,
 			OperatorService operatorService, TaskService taskService)
 			throws Exception {
 		super();

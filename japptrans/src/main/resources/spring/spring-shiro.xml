@@ -10,7 +10,9 @@
 		p:cacheManager-ref="shiroEhcacheManager">
 		<property name="realms">
 			<set>
+				<ref bean="shiroIniRealm" />
 				<ref bean="shiroRealm" />
+				<ref bean="shiroSsoRealm" />
 			</set>
 		</property>
 	</bean>
@@ -29,8 +31,11 @@
 			<value>
 				/sso = shiroSsoFilter
 				/login = anon
+				/javax.faces.resource/** = anon
 				/resources/** = anon
 				/ws/** = anon
+				/faces/** = roles[admin]
+				/admin/** = roles[admin]
 				/** = authc
 			</value>
 		</property>
@@ -43,8 +48,16 @@
 		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor" />
 	<bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager" />
 
-	<bean id="shiroRealm" class="com.hengyi.japp.common.shiro.BaseRealm"
+	<bean id="shiroIniRealm" class="org.apache.shiro.realm.text.IniRealm"
+		p:resourcePath="${shiro.ini.resourcePath}" p:credentialsMatcher-ref="shiroIniCredentialsMatcher"
+		p:name="INI" />
+	<bean id="shiroRealm" class="com.hengyi.japp.common.shiro.BaseRealm" />
+	<bean id="shiroSsoRealm" class="com.hengyi.japp.common.shiro.BaseSsoRealm"
 		p:casServerUrlPrefix="${casServerUrlPrefix}" p:casService="${casService}" />
+
+	<bean id="shiroIniCredentialsMatcher" p:hashAlgorithmName="SHA-512"
+		p:storedCredentialsHexEncoded="false" p:hashIterations="5000"
+		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" />
 
 	<context:property-placeholder
 		properties-ref="deployProperties" />

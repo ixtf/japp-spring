@@ -27,9 +27,9 @@ public class ThemeController extends AbstractController implements Serializable{
 			operatorService.updateTheme(getCurrentOperator().getUuid(),
 					getTheme());
 			cacheService.getCurrentOperator().setTheme(getTheme());
-			addInfoMessage("皮肤设定成功！");
+			infoMessage("皮肤设定成功！");
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 }

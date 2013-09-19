@@ -6,7 +6,6 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.Constant.URL;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 
 @Named
@@ -20,9 +19,9 @@ public class IndicatorValueController extends AbstractController implements
 	public void save() {
 		try {
 			indicatorValueService.save(indicatorValue);
-			redirect(URL.INDICATORVALUES);
+			operationSuccessMessage();
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 

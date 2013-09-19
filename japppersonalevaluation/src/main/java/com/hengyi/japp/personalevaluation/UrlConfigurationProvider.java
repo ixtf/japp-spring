@@ -1,6 +1,6 @@
 package com.hengyi.japp.personalevaluation;
 
-import static com.hengyi.japp.common.Constant.ADMIN_PRINCIPAL;
+import static com.hengyi.japp.common.CommonConstant.ADMIN_PRINCIPAL;
 
 import javax.servlet.ServletContext;
 

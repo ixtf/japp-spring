@@ -7,7 +7,6 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.Constant.URL;
 import com.hengyi.japp.crm.domain.customer.Customer;
 import com.hengyi.japp.crm.web.AbstractController;
 import com.hengyi.japp.crm.web.data.LazyCustomerModel;
@@ -23,7 +22,7 @@ public class CustomersController extends AbstractController implements
 	private List<Customer> searchResult;
 
 	public void edit() {
-		redirect(URL.CUSTOMERS + "/" + getCustomer().getNodeId());
+		redirect(urlUtil.getCustomersPath() + "/" + getCustomer().getNodeId());
 	}
 
 	public void delete() {
@@ -31,9 +30,9 @@ public class CustomersController extends AbstractController implements
 			crmService.delete(getCustomer());
 			if (searchResult != null)
 				searchResult.remove(getCustomer());
-			addInfoMessage("删除成功！");
+			operationSuccessMessage();
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 
@@ -42,22 +41,22 @@ public class CustomersController extends AbstractController implements
 			searchResult = customerService.findAllByQuery(nameSearch);
 			lazyCustomerModel = new LazyCustomerModel(searchResult);
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 
 	public void basicInfoReport() {
-		redirect(URL.CUSTOMERS + "/" + getCustomer().getNodeId()
+		redirect(urlUtil.getCustomersPath() + "/" + getCustomer().getNodeId()
 				+ "/report/basicInfo");
 	}
 
 	public void creditRiskReport() {
-		redirect(URL.CUSTOMERS + "/" + getCustomer().getNodeId()
+		redirect(urlUtil.getCustomersPath() + "/" + getCustomer().getNodeId()
 				+ "/report/creditRisk");
 	}
 
 	public void fiCreditRiskReport() {
-		redirect(URL.CUSTOMERS + "/" + getCustomer().getNodeId()
+		redirect(urlUtil.getCustomersPath() + "/" + getCustomer().getNodeId()
 				+ "/report/fiCreditRisk");
 	}
 

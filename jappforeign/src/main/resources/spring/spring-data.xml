@@ -26,8 +26,7 @@
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
 		p:dataSource-ref="appDataSource" p:persistenceUnitName="${app.persistenceUnitName}">
 		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-				p:generateDdl="true" p:showSql="true" />
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
 	</bean>
 	<bean id="appDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"

@@ -11,12 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.EventBus;
+import com.hengyi.japp.crm.MyUtil;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.repository.StorageIndicatorRepository;
 import com.hengyi.japp.crm.domain.repository.StorageRepository;
 import com.hengyi.japp.crm.domain.storage.Storage;
 import com.hengyi.japp.crm.domain.storage.StorageIndicator;
-import com.hengyi.japp.crm.service.CacheServiceFacade;
+import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.StorageService;
 
 @Named
@@ -24,10 +25,10 @@ import com.hengyi.japp.crm.service.StorageService;
 public class StorageServiceImpl implements StorageService {
 	@Inject
 	private Neo4jOperations template;
-//	@Inject
-//	private EventBus eventBus;
+	// @Inject
+	// private EventBus eventBus;
 	@Inject
-	private CacheServiceFacade cacheServiceFacade;
+	private CacheService cacheServiceFacade;
 	@Inject
 	private StorageRepository storageRepository;
 	@Inject
@@ -49,7 +50,8 @@ public class StorageServiceImpl implements StorageService {
 	}
 
 	@Override
-	public List<Storage> findAllByQuery(String nameSearch) {
+	public List<Storage> findAllByQuery(String nameSearch) throws Exception {
+		MyUtil.checkSearch(nameSearch);
 		return Lists.newArrayList(storageRepository.findAllByQuery("name",
 				nameSearch));
 	}

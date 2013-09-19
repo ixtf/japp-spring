@@ -12,12 +12,12 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.support.index.IndexType;
 
-import com.hengyi.japp.common.application.Constant;
+import com.hengyi.japp.common.Constant;
+import com.hengyi.japp.common.MyUtil;
 import com.hengyi.japp.common.domain.node.Corporation;
 import com.hengyi.japp.common.domain.node.bind.BindCorporation;
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 import com.hengyi.japp.common.domain.shared.Entity;
-import com.hengyi.japp.common.util.MyUtil;
 
 @NodeEntity
 public abstract class AbstractBindCorporation extends AbstractNeo4j implements

@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputText value="#{msg['name']}" />
+				<h:inputText id="customer-name"
+					value="#{customersController.nameSearch}" />
+				<p:commandButton value="#{msg['search']}" update=":form"
+					action="#{customersController.search}" icon="ui-icon-search" />
+			</h:panelGrid>
+
+			<p:contextMenu for="tableCustomers">
+				<p:menuitem value="#{msg['edit']}"
+					action="#{customersController.edit}" icon="ui-icon-pencil" />
+				<p:menuitem value="#{msg['delete']}" type="button"
+					onclick="confirmDialogDeleteCustomer.show()" icon="ui-icon-close" />
+			</p:contextMenu>
+			<p:confirmDialog message="#{msg['operation.confirm']}?"
+				severity="alert" widgetVar="confirmDialogDeleteCustomer">
+				<p:commandButton value="#{msg['operation.submit']}" update=":form"
+					action="#{customersController.delete}"
+					oncomplete="confirmDialogDeleteCustomer.hide()" />
+			</p:confirmDialog>
+			<p:dataTable id="tableCustomers" var="_customer"
+				value="#{customersController.lazyCustomerModel}"
+				selection="#{customersController.customer}"
+				rowKey="#{_customer.nodeId}" selectionMode="single"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				lazy="true" paginator="true" rows="2" stickyHeader="true">
+				<p:column headerText="#{msg['name']}">
+					<h:outputText value="#{_customer.name}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,6 +1,6 @@
 package com.hengyi.japp.crm;
 
-import static com.hengyi.japp.common.Constant.ADMIN_PRINCIPAL;
+import static com.hengyi.japp.common.CommonConstant.ADMIN_PRINCIPAL;
 
 import javax.servlet.ServletContext;
 
@@ -16,13 +16,11 @@ import org.ocpsoft.rewrite.servlet.config.Path;
 import org.ocpsoft.rewrite.servlet.config.Redirect;
 import org.ocpsoft.rewrite.servlet.config.rule.Join;
 
-import com.hengyi.japp.crm.Constant.JSF;
-import com.hengyi.japp.crm.Constant.URL;
-
 public class UrlConfigurationProvider extends HttpConfigurationProvider {
 
 	@Override
 	public Configuration getConfiguration(ServletContext context) {
+		UrlUtil urlUtil = new UrlUtil();
 		Condition loggedIn = new Condition() {
 			@Override
 			public boolean evaluate(Rewrite event, EvaluationContext context) {
@@ -39,59 +37,88 @@ public class UrlConfigurationProvider extends HttpConfigurationProvider {
 		return ConfigurationBuilder
 				.begin()
 				.addRule()
-				.when(Direction.isInbound().and(Path.matches(URL.LOGIN))
+				.when(Direction.isInbound()
+						.and(Path.matches(urlUtil.getLoginPath()))
 						.and(loggedIn))
 				.perform(
-						Redirect.temporary(context.getContextPath() + URL.HOME))
-				.addRule(Join.path(URL.LOGIN).to(JSF.LOGIN))
+						Redirect.temporary(context.getContextPath()
+								+ urlUtil.getHomePath()))
+				.addRule(
+						Join.path(urlUtil.getLoginPath()).to(
+								urlUtil.getLoginView()))
 				.addRule()
-				.when(Direction.isInbound().and(Path.matches(URL.HOME))
-						.and(admin))
+				.when(Direction.isInbound()
+						.and(Path.matches(urlUtil.getHomePath())).and(admin))
 				.perform(
-						Redirect.temporary(context.getContextPath() + URL.ADMIN))
-				.addRule(Join.path(URL.ADMIN).to(JSF.ADMIN))
-				.addRule(Join.path(URL.THEME).to(JSF.THEME))
+						Redirect.temporary(context.getContextPath()
+								+ urlUtil.getAdminHomePath()))
+				.addRule(
+						Join.path(urlUtil.getAdminHomePath()).to(
+								urlUtil.getAdminHomeView()))
+				.addRule(
+						Join.path(urlUtil.getThemePath()).to(
+								urlUtil.getThemeView()))
 				.when(loggedIn)
-				.addRule(Join.path(URL.HOME).to(JSF.HOME))
 				.addRule(
-						Join.path(URL.COMMUNICATEE_NEW)
-								.to(JSF.COMMUNICATEE_NEW))
-				.addRule(Join.path(URL.COMMUNICATEES).to(JSF.COMMUNICATEES))
-				.addRule(Join.path(URL.CRMTYPE_NEW).to(JSF.CRMTYPE_NEW))
-				.addRule(Join.path(URL.CRMTYPES).to(JSF.CRMTYPES))
+						Join.path(urlUtil.getHomePath()).to(
+								urlUtil.getHomeView()))
+
 				.addRule(
-						Join.path(URL.INDICATORVALUE_NEW).to(
-								JSF.INDICATORVALUE_NEW))
-				.addRule(Join.path(URL.INDICATORVALUES).to(JSF.INDICATORVALUES))
-				.addRule(Join.path(URL.CUSTOMER_NEW).to(JSF.CUSTOMER_NEW))
-				.addRule(Join.path(URL.CUSTOMERS).to(JSF.CUSTOMERS))
-				.addRule(Join.path(URL.STORAGE_NEW).to(JSF.STORAGE_NEW))
-				.addRule(Join.path(URL.STORAGES).to(JSF.STORAGES))
-				// .addRule(Join.path(URL.INDICATORS).to(JSF.INDICATORS))
+						Join.path(urlUtil.getCrmTypeNewPath()).to(
+								urlUtil.getCrmTypeUpdateView()))
 				.addRule(
-						Join.path(URL.CUSTOMER_INDICATOR_NEW).to(
-								JSF.CUSTOMER_INDICATOR_NEW))
+						Join.path(urlUtil.getCrmTypesPath()).to(
+								urlUtil.getCrmTypesView()))
+
 				.addRule(
-						Join.path(URL.CUSTOMER_INDICATORS).to(
-								JSF.CUSTOMER_INDICATORS))
+						Join.path(urlUtil.getCertificateNewPath()).to(
+								urlUtil.getCertificateUpdateView()))
 				.addRule(
-						Join.path(URL.CUSTOMER_INDICATOR_NEW).to(
-								JSF.CUSTOMER_INDICATOR_NEW))
+						Join.path(urlUtil.getCertificatesPath()).to(
+								urlUtil.getCertificatesView()))
+
 				.addRule(
-						Join.path(URL.CUSTOMER_INDICATORS).to(
-								JSF.CUSTOMER_INDICATORS))
+						Join.path(urlUtil.getCommunicateeNewPath()).to(
+								urlUtil.getCommunicateeUpdateView()))
 				.addRule(
-						Join.path(URL.STORAGE_INDICATOR_NEW).to(
-								JSF.STORAGE_INDICATOR_NEW))
+						Join.path(urlUtil.getCommunicateesPath()).to(
+								urlUtil.getCommunicateesView()))
+
 				.addRule(
-						Join.path(URL.STORAGE_INDICATORS).to(
-								JSF.STORAGE_INDICATORS))
+						Join.path(urlUtil.getIndicatorValueNewPath()).to(
+								urlUtil.getIndicatorValueUpdateView()))
 				.addRule(
-						Join.path(URL.STORAGE_INDICATOR_NEW).to(
-								JSF.STORAGE_INDICATOR_NEW))
+						Join.path(urlUtil.getIndicatorValuesPath()).to(
+								urlUtil.getIndicatorValuesView()))
+
 				.addRule(
-						Join.path(URL.STORAGE_INDICATORS).to(
-								JSF.STORAGE_INDICATORS));
+						Join.path(urlUtil.getCustomerIndicatorNewPath()).to(
+								urlUtil.getCustomerIndicatorUpdateView()))
+				.addRule(
+						Join.path(urlUtil.getCustomerIndicatorsPath()).to(
+								urlUtil.getCustomerIndicatorsView()))
+				.addRule(
+						Join.path(urlUtil.getCustomerNewPath()).to(
+								urlUtil.getCustomerUpdateView()))
+				.addRule(
+						Join.path(urlUtil.getCustomersPath()).to(
+								urlUtil.getCustomersView()))
+
+				.addRule(
+						Join.path(urlUtil.getStorageIndicatorNewPath()).to(
+								urlUtil.getStorageIndicatorUpdateView()))
+				.addRule(
+						Join.path(urlUtil.getStorageIndicatorsPath()).to(
+								urlUtil.getStorageIndicatorsView()))
+				.addRule(
+						Join.path(urlUtil.getStorageNewPath()).to(
+								urlUtil.getStorageUpdateView()))
+				.addRule(
+						Join.path(urlUtil.getStoragesPath()).to(
+								urlUtil.getStoragesView()))
+				.addRule(
+						Join.path(urlUtil.getStoragesPath()).to(
+								urlUtil.getStoragesView()));
 	}
 
 	@Override

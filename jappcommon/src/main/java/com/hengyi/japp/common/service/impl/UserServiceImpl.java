@@ -6,8 +6,9 @@ import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.hengyi.japp.common.application.Constant;
-import com.hengyi.japp.common.application.event.EventPublisher;
+import com.hengyi.japp.common.CommonConstant;
+import com.hengyi.japp.common.Constant;
+import com.hengyi.japp.common.MyUtil;
 import com.hengyi.japp.common.command.UserBindCommand;
 import com.hengyi.japp.common.command.UserSearchCommand;
 import com.hengyi.japp.common.data.PrincipalType;
@@ -19,9 +20,9 @@ import com.hengyi.japp.common.domain.repository.UserRepository;
 import com.hengyi.japp.common.domain.repository.bind.BindUserRepository;
 import com.hengyi.japp.common.domain.repository.bind.InnerUserRepository;
 import com.hengyi.japp.common.domain.repository.bind.SsoUserRepository;
+import com.hengyi.japp.common.event.EventPublisher;
 import com.hengyi.japp.common.service.CorporationService;
 import com.hengyi.japp.common.service.UserService;
-import com.hengyi.japp.common.util.MyUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService {
 	public BindUser bindUser(UserBindCommand command) throws Exception {
 		User user = findOne(command.getUuid());
 		if (user == null)
-			throw new Exception(Constant.ErrorCode.USER_NOT_EXIST);
+			throw new Exception(CommonConstant.ErrorCode.USER_NOT_EXIST);
 		AbstractBindUser bindUser = findOneBindUser(command.getPrincipalType(),
 				command.getPrincipal());
 		if (bindUser == null)
@@ -102,11 +103,11 @@ public class UserServiceImpl implements UserService {
 	public BindUser unBindUser(UserBindCommand command) throws Exception {
 		User user = findOne(command.getUuid());
 		if (user == null)
-			throw new Exception(Constant.ErrorCode.USER_NOT_EXIST);
+			throw new Exception(CommonConstant.ErrorCode.USER_NOT_EXIST);
 		BindUser bindUser = findOneBindUser(command.getPrincipalType(),
 				command.getPrincipal());
 		if (bindUser == null)
-			throw new Exception(Constant.ErrorCode.BINDUSER_NOT_EXIST);
+			throw new Exception(CommonConstant.ErrorCode.BINDUSER_NOT_EXIST);
 		template.fetch(user.getBindUsers());
 		user.getBindUsers().remove(bindUser);
 		save(user);

@@ -12,6 +12,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.domain.Associate;
+import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.CrmType;
@@ -23,6 +24,9 @@ public abstract class CrmController extends AbstractController {
 	private Crm crm;
 	@NotNull
 	private CrmType crmType;
+	@NotNull
+	@Size(min = 1)
+	private List<Certificate> certificates;
 	@NotNull
 	@Size(min = 1)
 	// Crm关联的指标值，已经被选中，用于保存
@@ -58,10 +62,11 @@ public abstract class CrmController extends AbstractController {
 		try {
 			getCrm().setOperator(cacheService.getCurrentOperator());
 			crmService.save(crm, getIndicatorMap(), getCrmType(),
-					getCommunicatee(), getCommunicatees(), getAssociates());
-			addInfoMessage("保存成功！");
+					getCertificates(), getCommunicatee(), getCommunicatees(),
+					getAssociates());
+			operationSuccessMessage();
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 
@@ -91,6 +96,12 @@ public abstract class CrmController extends AbstractController {
 		if (crmType == null)
 			crmType = getCrm().getCrmType();
 		return crmType;
+	}
+
+	public List<Certificate> getCertificates() {
+		if (certificates == null)
+			certificates = Lists.newArrayList(getCrm().getCertificates());
+		return certificates;
 	}
 
 	public Communicatee getCommunicatee() {
@@ -198,6 +209,10 @@ public abstract class CrmController extends AbstractController {
 
 	public void setCrmType(CrmType crmType) {
 		this.crmType = crmType;
+	}
+
+	public void setCertificates(List<Certificate> certificates) {
+		this.certificates = certificates;
 	}
 
 	public IndicatorValueScore getSelectedIndicatorValueScore() {

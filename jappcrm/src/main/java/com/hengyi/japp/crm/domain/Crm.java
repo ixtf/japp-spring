@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +34,7 @@ public abstract class Crm extends Modifiable implements Serializable {
 	public static final String FIELD_DURATIONYEARS = "durationYears";
 
 	public static final String CRM_TYPE = "CRM_TYPE";
+	public static final String CERTIFICATE = "CERTIFICATE";
 	public static final String CRM_COMMUNICATEE = "CHIEF_COMMUNICATEE";
 	public static final String CRM_COMMUNICATEES = "COMMUNICATEE";
 	public static final String CRM_INDICATORVALUE = "INDICATOR_VALUE";
@@ -45,6 +47,7 @@ public abstract class Crm extends Modifiable implements Serializable {
 	@NotBlank
 	protected String registerPlace;
 	@NotNull
+	@Past
 	protected Date registerDate;
 	@NotNull
 	@Min(0)
@@ -67,6 +70,9 @@ public abstract class Crm extends Modifiable implements Serializable {
 	@RelatedTo(type = CRM_TYPE)
 	@Fetch
 	protected CrmType crmType;
+	@RelatedTo(type = CERTIFICATE, elementClass = Certificate.class)
+	@Fetch
+	protected Set<Certificate> certificates;
 	@RelatedToVia(type = Associate.RELATIONSHIP, elementClass = Associate.class, direction = Direction.BOTH)
 	@Fetch
 	protected Set<Associate> associates;
@@ -175,8 +181,18 @@ public abstract class Crm extends Modifiable implements Serializable {
 		return crmType;
 	}
 
+	public Iterable<Certificate> getCertificates() {
+		if (certificates == null)
+			certificates = Sets.newHashSet();
+		return certificates;
+	}
+
 	public void setCrmType(CrmType crmType) {
 		this.crmType = crmType;
+	}
+
+	public void setCertificates(Iterable<Certificate> certificates) {
+		this.certificates = Sets.newHashSet(certificates);
 	}
 
 	public String getName() {

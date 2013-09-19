@@ -1,8 +1,8 @@
 package com.hengyi.japp.common.shiro;
 
-import static com.hengyi.japp.common.Constant.SESSION_PRINCIPAL;
-import static com.hengyi.japp.common.Constant.SESSION_PRINCIPALTYPE;
-import static com.hengyi.japp.common.Constant.SESSION_USER;
+import static com.hengyi.japp.common.CommonConstant.SESSION_PRINCIPAL;
+import static com.hengyi.japp.common.CommonConstant.SESSION_PRINCIPALTYPE;
+import static com.hengyi.japp.common.CommonConstant.SESSION_USER;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -14,13 +14,13 @@ import com.hengyi.japp.common.ws.SoapService;
 
 @SuppressWarnings("unchecked")
 public final class ShiroUtil {
-	public static <T> T getSession(Object key, Class<T> value) throws Exception {
+	public static <T> T getSession(Object key) {
 		Subject subject = SecurityUtils.getSubject();
 		Session session = subject.getSession();
 		return (T) session.getAttribute(key);
 	}
 
-	public static void setSession(Object key, Object value) throws Exception {
+	public static void setSession(Object key, Object value) {
 		Subject subject = SecurityUtils.getSubject();
 		Session session = subject.getSession();
 		session.setAttribute(key, value);
@@ -37,14 +37,18 @@ public final class ShiroUtil {
 	}
 
 	public static PrincipalType getPrincipalType() throws Exception {
-		return getSession(SESSION_PRINCIPALTYPE, PrincipalType.class);
+		return getSession(SESSION_PRINCIPALTYPE);
 	}
 
 	public static Object getPrincipal() throws Exception {
-		return getSession(SESSION_PRINCIPAL, Object.class);
+		return getSession(SESSION_PRINCIPAL);
 	}
 
 	public static UserDTO getUser() throws Exception {
-		return getSession(SESSION_USER, UserDTO.class);
+		return getSession(SESSION_USER);
+	}
+
+	public static boolean isAuthenticated() {
+		return SecurityUtils.getSubject().isAuthenticated();
 	}
 }

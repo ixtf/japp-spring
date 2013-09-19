@@ -1,7 +1,6 @@
 package com.hengyi.japp.crm.web;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -16,16 +15,22 @@ import org.springframework.data.neo4j.template.Neo4jOperations;
 
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.Constant;
+import com.hengyi.japp.crm.MessageUtil;
+import com.hengyi.japp.crm.UrlUtil;
+import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Operator;
+import com.hengyi.japp.crm.domain.repository.CertificateRepository;
 import com.hengyi.japp.crm.domain.repository.CrmTypeRepository;
-import com.hengyi.japp.crm.service.CacheServiceFacade;
+import com.hengyi.japp.crm.service.BugService;
+import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CommunicateeService;
 import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.CustomerService;
 import com.hengyi.japp.crm.service.IndicatorService;
 import com.hengyi.japp.crm.service.IndicatorValueService;
 import com.hengyi.japp.crm.service.OperatorService;
+import com.hengyi.japp.crm.service.ReprotService;
 import com.hengyi.japp.crm.service.StorageService;
 
 public abstract class AbstractController {
@@ -35,7 +40,9 @@ public abstract class AbstractController {
 	@Inject
 	protected Mapper dozer;
 	@Inject
-	protected CacheServiceFacade cacheService;
+	protected UrlUtil urlUtil;
+	@Inject
+	protected CacheService cacheService;
 	@Inject
 	protected OperatorService operatorService;
 	@Inject
@@ -51,29 +58,25 @@ public abstract class AbstractController {
 	@Inject
 	protected StorageService storageService;
 	@Inject
-	protected CrmTypeRepository crmTypeRepository;
+	protected ReprotService reprotService;
+	@Inject
+	protected BugService bugService;
 
-	public List<CrmType> getCrmTypes() {
+	@Inject
+	protected CrmTypeRepository crmTypeRepository;
+	@Inject
+	protected CertificateRepository certificateRepository;
+
+	public List<CrmType> getAllCrmTypes() {
 		return Lists.newArrayList(crmTypeRepository.findAll());
+	}
+
+	public List<Certificate> getAllCertificates() {
+		return Lists.newArrayList(certificateRepository.findAll());
 	}
 
 	public int getPageSize() {
 		return Constant.PAGE_SIZE;
-	}
-
-	protected void addInfoMessage(String s) {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, s, "Success!"));
-	}
-
-	protected void addErrorMessage(Exception e) {
-		ResourceBundle msg = ResourceBundle.getBundle("messages", FacesContext
-				.getCurrentInstance().getViewRoot().getLocale());
-		String errorMessage = getRootErrorMessage(e);
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage,
-						"Save Unsuccessful"));
 	}
 
 	protected void redirect(String url) {
@@ -88,7 +91,7 @@ public abstract class AbstractController {
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect(prefix + url);
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 
@@ -101,7 +104,7 @@ public abstract class AbstractController {
 							new FacesMessage(FacesMessage.SEVERITY_INFO, s,
 									"Success!"));
 		} catch (Exception e) {
-			addErrorMessage(e);
+			errorMessage(e);
 		}
 	}
 
@@ -111,18 +114,25 @@ public abstract class AbstractController {
 		pushContext.push("/" + getCurrentOperator().getUuid(), facesMessage);
 	}
 
-	protected String getRootErrorMessage(Exception e) {
-		String errorMessage = "Registration failed. See server log for more information";
-		if (e == null) {
-			return errorMessage;
-		}
+	protected void operationSuccessMessage() {
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, MessageUtil
+						.operationSuccess(), null));
+	}
 
-		Throwable t = e;
-		while (t != null) {
-			errorMessage = t.getLocalizedMessage();
-			t = t.getCause();
-		}
-		return errorMessage;
+	protected void infoMessage(String s) {
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+						MessageUtil.info(), s));
+	}
+
+	protected void errorMessage(Exception e) {
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, MessageUtil
+						.operationFailure(), e.getLocalizedMessage()));
 	}
 
 	public Operator getCurrentOperator() throws Exception {
