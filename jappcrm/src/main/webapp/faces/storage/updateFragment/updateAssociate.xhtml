@@ -40,12 +40,12 @@
 			<h:inputText id="selectStorage-nameSearch"
 				value="#{storagesController.nameSearch}" />
 			<p:commandButton value="#{msg['search']}" process="@this,@parent"
-				update="tableSelectedStorages"
-				action="#{storagesController.search}" icon="ui-icon-search" />
+				update="tableSelectedStorages" action="#{storagesController.search}"
+				icon="ui-icon-search" />
 		</h:panelGrid>
 
 		<p:dataTable id="tableSelectedStorages" var="_storage"
-			value="#{storagesController.lazyStorageModel}" lazy="true"
+			value="#{storagesController.crms}" lazy="true"
 			rows="#{storagesController.pageSize}" paginator="true"
 			stickyHeader="true">
 			<p:column headerText="#{msg['operation']}" style="width:4%">

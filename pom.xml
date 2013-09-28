@@ -232,7 +232,12 @@
 			</dependency>
 			<dependency>
 				<groupId>org.ocpsoft.rewrite</groupId>
-				<artifactId>rewrite-integration-cdi</artifactId>
+				<artifactId>rewrite-integration-spring</artifactId>
+				<version>${rewrite.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ocpsoft.rewrite</groupId>
+				<artifactId>rewrite-security-integration-shiro</artifactId>
 				<version>${rewrite.version}</version>
 			</dependency>
 			<dependency>
@@ -274,10 +279,6 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-		<dependency>
-			<groupId>com.hengyi.japp</groupId>
-			<artifactId>jappcommon-api</artifactId>
-		</dependency>
 		<!-- JSR-330 -->
 		<dependency>
 			<groupId>javax.inject</groupId>
@@ -413,7 +414,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>1.2.0.Final</version>
+			<version>1.3.0.Final</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

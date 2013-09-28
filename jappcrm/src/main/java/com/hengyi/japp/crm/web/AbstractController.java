@@ -2,6 +2,7 @@ package com.hengyi.japp.crm.web;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -17,28 +18,37 @@ import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.Constant;
 import com.hengyi.japp.crm.MessageUtil;
 import com.hengyi.japp.crm.UrlUtil;
+import com.hengyi.japp.crm.data.CrmField;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Operator;
 import com.hengyi.japp.crm.domain.repository.CertificateRepository;
 import com.hengyi.japp.crm.domain.repository.CrmTypeRepository;
+import com.hengyi.japp.crm.domain.repository.CustomerReportRepository;
 import com.hengyi.japp.crm.service.BugService;
 import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CommunicateeService;
-import com.hengyi.japp.crm.service.CrmService;
+import com.hengyi.japp.crm.service.CustomerReportService;
 import com.hengyi.japp.crm.service.CustomerService;
 import com.hengyi.japp.crm.service.IndicatorService;
 import com.hengyi.japp.crm.service.IndicatorValueService;
 import com.hengyi.japp.crm.service.OperatorService;
-import com.hengyi.japp.crm.service.ReprotService;
+import com.hengyi.japp.crm.service.StorageReportService;
 import com.hengyi.japp.crm.service.StorageService;
 
 public abstract class AbstractController {
 	protected final Logger log = LoggerFactory.getLogger(getClass());
-	@Inject
+	@Resource
 	protected Neo4jOperations template;
-	@Inject
+	@Resource
 	protected Mapper dozer;
+	@Resource
+	protected CrmTypeRepository crmTypeRepository;
+	@Resource
+	protected CertificateRepository certificateRepository;
+	@Resource
+	protected CustomerReportRepository customerReportRepository;
+
 	@Inject
 	protected UrlUtil urlUtil;
 	@Inject
@@ -48,24 +58,19 @@ public abstract class AbstractController {
 	@Inject
 	protected CommunicateeService communicateeService;
 	@Inject
-	protected CrmService crmService;
-	@Inject
 	protected IndicatorService indicatorService;
 	@Inject
 	protected IndicatorValueService indicatorValueService;
 	@Inject
 	protected CustomerService customerService;
 	@Inject
+	protected CustomerReportService customerReportService;
+	@Inject
 	protected StorageService storageService;
 	@Inject
-	protected ReprotService reprotService;
+	protected StorageReportService storageReportService;
 	@Inject
 	protected BugService bugService;
-
-	@Inject
-	protected CrmTypeRepository crmTypeRepository;
-	@Inject
-	protected CertificateRepository certificateRepository;
 
 	public List<CrmType> getAllCrmTypes() {
 		return Lists.newArrayList(crmTypeRepository.findAll());
@@ -73,6 +78,10 @@ public abstract class AbstractController {
 
 	public List<Certificate> getAllCertificates() {
 		return Lists.newArrayList(certificateRepository.findAll());
+	}
+
+	public List<CrmField> getAllCrmFields() {
+		return Lists.newArrayList(CrmField.values());
 	}
 
 	public int getPageSize() {

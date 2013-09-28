@@ -34,22 +34,20 @@
 		<view-id value="/faces/customer/update.jsf" />
 	</url-mapping>
 
+	<url-mapping id="customerIndicatorUpdate">
+		<pattern value="/customer/indicators/#{customerIndicatorController.nodeId}" />
+		<view-id value="/faces/customer/indicator/update.jsf" />
+	</url-mapping>
+
+	<url-mapping id="customerReportUpdate">
+		<pattern value="/customer/reports/#{customerReportController.nodeId}" />
+		<view-id value="/faces/customer/reports/update.jsf" />
+	</url-mapping>
+
 	<url-mapping id="customerBasicInfoReport">
 		<pattern
 			value="/customers/#{customerReportController.nodeId}/report/basicInfo" />
 		<view-id value="/faces/customer/report/basicInfo.jsf" />
-	</url-mapping>
-
-	<url-mapping id="customerCreditRiskReport">
-		<pattern
-			value="/customers/#{customerReportController.nodeId}/report/creditRisk" />
-		<view-id value="/faces/customer/report/creditRisk.jsf" />
-	</url-mapping>
-
-	<url-mapping id="customerFiCreditRiskReport">
-		<pattern
-			value="/customers/#{customerReportController.nodeId}/report/fiCreditRisk" />
-		<view-id value="/faces/customer/fiCreditRiskReport.jsf" />
 	</url-mapping>
 
 	<url-mapping id="storageUpdate">
@@ -57,30 +55,13 @@
 		<view-id value="/faces/storage/update.jsf" />
 	</url-mapping>
 
-	<url-mapping id="storageCreditRatingReport">
-		<pattern
-			value="/storages/#{storageReportController.nodeId}/report/creditRating" />
-		<view-id value="/faces/storage/report/creditRating.jsf" />
-	</url-mapping>
-
-	<url-mapping id="storageFiCreditRiskReport">
-		<pattern
-			value="/storages/#{storageReportController.nodeId}/report/fiCreditRisk" />
-		<view-id value="/faces/storage/report/fiCreditRisk.jsf" />
-	</url-mapping>
-
-	<!-- <url-mapping id="indicatorNew"> <pattern value="/#{indicatorController.type}/indicator" 
-		/> <view-id value="/faces/indicator/update.jsf" /> </url-mapping> <url-mapping 
-		id="indicatorUpdate"> <pattern value="/#{indicatorController.type}/indicator/#{indicatorController.nodeId}" 
-		/> <view-id value="/faces/indicator/update.jsf" /> </url-mapping> -->
-
-	<url-mapping id="customerIndicatorUpdate">
-		<pattern value="/customer/indicators/#{customerIndicatorController.nodeId}" />
-		<view-id value="/faces/customer/indicator/update.jsf" />
-	</url-mapping>
-
 	<url-mapping id="storageIndicatorUpdate">
 		<pattern value="/storage/indicators/#{storageIndicatorController.nodeId}" />
 		<view-id value="/faces/storage/indicator/update.jsf" />
+	</url-mapping>
+
+	<url-mapping id="storageReportUpdate">
+		<pattern value="/storage/reports/#{storageReportController.nodeId}" />
+		<view-id value="/faces/storage/reports/update.jsf" />
 	</url-mapping>
 </pretty-config>

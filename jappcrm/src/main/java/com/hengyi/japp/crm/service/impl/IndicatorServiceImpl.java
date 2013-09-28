@@ -2,6 +2,7 @@ package com.hengyi.japp.crm.service.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,14 +21,14 @@ import com.hengyi.japp.crm.service.IndicatorService;
 @Named
 @Transactional
 public class IndicatorServiceImpl implements IndicatorService {
-	@Inject
+	@Resource
 	protected Neo4jOperations template;
+	@Resource
+	private IndicatorRepository indicatorRepository;
 	@Inject
 	private EventPublisher eventPublisher;
 	@Inject
 	private SyncEventPublisher syncEventPublisher;
-	@Inject
-	private IndicatorRepository indicatorRepository;
 
 	@Override
 	public Indicator findOne(Long nodeId) {

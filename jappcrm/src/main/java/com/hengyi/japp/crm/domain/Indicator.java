@@ -34,36 +34,11 @@ public abstract class Indicator extends Modifiable implements Serializable {
 	@Fetch
 	protected Set<IndicatorValueScore> indicatorValueScores;
 
-	public double calculateScore(Crm crm, Neo4jOperations template) {
-		switch (indicatorType) {
-		case SIMPLE:
-			return calculateScoreBySimple(
-					ImmutableSet.copyOf(crm.getIndicatorValues()), template)
-					* getPercent();
-		case CALCULATE:
-			try {
-				return calculateScoreByCalculate(crm, template) * getPercent();
-			} catch (Exception e) {
-				return 0;
-			}
-		}
-		return 0;
+	public double calculateScore(Crm crm) {
+		return calculateScore(ImmutableSet.copyOf(crm.getIndicatorValues()));
 	}
 
-	public double calculateScore(Set<IndicatorValue> indicatorValues,
-			Neo4jOperations template) {
-		switch (indicatorType) {
-		case SIMPLE:
-			return calculateScoreBySimple(indicatorValues, template)
-					* getPercent();
-		case CALCULATE:
-			throw new UnsupportedOperationException();
-		}
-		return 0;
-	}
-
-	private double calculateScoreBySimple(Set<IndicatorValue> indicatorValues,
-			Neo4jOperations template) {
+	private double calculateScore(Set<IndicatorValue> indicatorValues) {
 		double result = 0;
 		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores()) {
 			if (!indicatorValues.contains(indicatorValueScore.getEnd()))
@@ -71,11 +46,8 @@ public abstract class Indicator extends Modifiable implements Serializable {
 			double score = indicatorValueScore.getScore();
 			result = result < score ? score : result;
 		}
-		return result;
+		return result * getPercent();
 	}
-
-	protected abstract double calculateScoreByCalculate(Crm crm,
-			Neo4jOperations template) throws Exception;
 
 	public List<IndicatorValueScore> getIndicatorValueScoresAsList() {
 		return Lists.newArrayList(getIndicatorValueScores());

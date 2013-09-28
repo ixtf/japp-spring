@@ -7,13 +7,11 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
-
 /**
  * 已提交资格证
  * */
 @NodeEntity
-public class Certificate extends AbstractNeo4j implements Serializable {
+public class Certificate extends Modifiable implements Serializable {
 	private static final long serialVersionUID = -214887469969890618L;
 	@NotBlank
 	@Indexed(unique = true)

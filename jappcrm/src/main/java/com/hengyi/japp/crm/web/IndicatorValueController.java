@@ -18,6 +18,7 @@ public class IndicatorValueController extends AbstractController implements
 
 	public void save() {
 		try {
+			getIndicatorValue().setOperator(getCurrentOperator());
 			indicatorValueService.save(indicatorValue);
 			operationSuccessMessage();
 		} catch (Exception e) {

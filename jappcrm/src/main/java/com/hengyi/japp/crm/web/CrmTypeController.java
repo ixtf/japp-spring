@@ -18,7 +18,8 @@ public class CrmTypeController extends AbstractController implements
 
 	public void save() {
 		try {
-			crmTypeRepository.save(crmType);
+			getCrmType().setOperator(getCurrentOperator());
+			crmTypeRepository.save(getCrmType());
 			operationSuccessMessage();
 		} catch (Exception e) {
 			errorMessage(e);

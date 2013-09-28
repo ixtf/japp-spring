@@ -10,6 +10,10 @@
 	<packaging>war</packaging>
 	<name>jappcrm</name>
 	<dependencies>
+		<dependency>
+			<groupId>com.hengyi.japp</groupId>
+			<artifactId>jappcommon-api</artifactId>
+		</dependency>
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -108,6 +112,18 @@
 		<dependency>
 			<groupId>org.ocpsoft.rewrite</groupId>
 			<artifactId>rewrite-servlet</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-integration-faces</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-integration-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-security-integration-shiro</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.ocpsoft.rewrite</groupId>

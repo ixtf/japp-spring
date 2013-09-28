@@ -45,7 +45,7 @@
 		</h:panelGrid>
 
 		<p:dataTable id="tableSelectedCustomers" var="_customer"
-			value="#{customersController.lazyCustomerModel}" lazy="true"
+			value="#{customersController.crms}" lazy="true"
 			rows="#{customersController.pageSize}" paginator="true"
 			stickyHeader="true">
 			<p:column headerText="#{msg['operation']}" style="width:4%">

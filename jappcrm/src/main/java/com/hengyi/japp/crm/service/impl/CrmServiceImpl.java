@@ -5,11 +5,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.springframework.data.neo4j.template.Neo4jOperations;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -23,54 +22,42 @@ import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.repository.CrmRepository;
+import com.hengyi.japp.crm.domain.repository.CustomerIndicatorRepository;
+import com.hengyi.japp.crm.domain.repository.CustomerRepository;
+import com.hengyi.japp.crm.domain.repository.StorageIndicatorRepository;
+import com.hengyi.japp.crm.domain.repository.StorageRepository;
 import com.hengyi.japp.crm.event.EventPublisher;
 import com.hengyi.japp.crm.event.SyncEventPublisher;
-import com.hengyi.japp.crm.event.crm.CrmUpdateEvent;
 import com.hengyi.japp.crm.exception.NoChiefCommunicateeException;
 import com.hengyi.japp.crm.exception.NoIndicatorValueException;
 import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CrmService;
 
-@Named
-@Transactional
-public class CrmServiceImpl implements CrmService {
-	@Inject
+public abstract class CrmServiceImpl<T extends Crm> implements CrmService<T> {
+	@Resource
 	protected Neo4jOperations template;
+	@Resource
+	protected CrmRepository crmRepository;
+	@Resource
+	protected CustomerRepository customerRepository;
+	@Resource
+	protected CustomerIndicatorRepository customerIndicatorRepository;
+	@Resource
+	protected StorageRepository storageRepository;
+	@Resource
+	protected StorageIndicatorRepository storageIndicatorRepository;
+
 	@Inject
-	private CrmRepository crmRepository;
+	protected EventPublisher eventPublisher;
 	@Inject
-	private EventPublisher eventPublisher;
+	protected SyncEventPublisher syncEventPublisher;
 	@Inject
-	private SyncEventPublisher syncEventPublisher;
+	protected CacheService cacheServiceFacade;
+
 	// @Inject
 	// private EventBus eventBus;
-	@Inject
-	private CacheService cacheServiceFacade;
 
-	@Override
-	public Crm findOne(Long nodeId) {
-		return crmRepository.findOne(nodeId);
-	}
-
-	private void checkSave(Crm crm,
-			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			CrmType crmType, Iterable<Certificate> certificates,
-			Communicatee communicatee, Iterable<Communicatee> communicatees,
-			Iterable<Associate> associates) throws Exception {
-		if (communicatee == null)
-			throw new NoChiefCommunicateeException();
-
-		List<Indicator> noValueIndicators = Lists.newArrayList();
-		for (Entry<Indicator, List<IndicatorValueScore>> entry : indicatorMap
-				.entrySet())
-			if (entry.getValue().isEmpty())
-				noValueIndicators.add(entry.getKey());
-		if (!noValueIndicators.isEmpty())
-			throw new NoIndicatorValueException(noValueIndicators);
-	}
-
-	@Override
-	public void save(Crm crm,
+	public void save(T crm,
 			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
 			CrmType crmType, Iterable<Certificate> certificates,
 			Communicatee communicatee, Iterable<Communicatee> communicatees,
@@ -91,17 +78,32 @@ public class CrmServiceImpl implements CrmService {
 		crmRepository.save(crm);
 		for (Associate associate : associates)
 			template.save(associate);
-		eventPublisher.publish(new CrmUpdateEvent(crm));
 	}
 
-	@Override
-	public void delete(Crm crm) throws Exception {
+	private void checkSave(T crm,
+			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
+			CrmType crmType, Iterable<Certificate> certificates,
+			Communicatee communicatee, Iterable<Communicatee> communicatees,
+			Iterable<Associate> associates) throws Exception {
+		if (communicatee == null)
+			throw new NoChiefCommunicateeException();
+
+		List<Indicator> noValueIndicators = Lists.newArrayList();
+		for (Entry<Indicator, List<IndicatorValueScore>> entry : indicatorMap
+				.entrySet())
+			if (entry.getValue().isEmpty())
+				noValueIndicators.add(entry.getKey());
+		if (!noValueIndicators.isEmpty())
+			throw new NoIndicatorValueException(noValueIndicators);
+	}
+
+	public void delete(T crm) throws Exception {
 		crmRepository.delete(crm);
 	}
 
-	@Override
 	public Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(Crm crm,
 			Iterable<Indicator> indicators) {
+		// TODO 改进取数逻辑，目前有些难以理解
 		ImmutableMap.Builder<Indicator, List<IndicatorValueScore>> builder = ImmutableMap
 				.builder();
 		for (Indicator indicator : indicators)

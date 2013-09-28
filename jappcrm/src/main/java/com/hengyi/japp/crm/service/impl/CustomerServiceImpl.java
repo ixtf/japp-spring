@@ -1,41 +1,31 @@
 package com.hengyi.japp.crm.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.MyUtil;
+import com.hengyi.japp.crm.domain.Associate;
+import com.hengyi.japp.crm.domain.Certificate;
+import com.hengyi.japp.crm.domain.Communicatee;
+import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
+import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.customer.Customer;
 import com.hengyi.japp.crm.domain.customer.CustomerBasicInfoReport;
-import com.hengyi.japp.crm.domain.customer.CustomerCreditRiskReport;
 import com.hengyi.japp.crm.domain.customer.CustomerIndicator;
-import com.hengyi.japp.crm.domain.repository.CustomerIndicatorRepository;
-import com.hengyi.japp.crm.domain.repository.CustomerRepository;
-import com.hengyi.japp.crm.service.CacheService;
+import com.hengyi.japp.crm.event.customer.CustomerUpdateEvent;
 import com.hengyi.japp.crm.service.CustomerService;
 
 @Named
 @Transactional
-public class CustomerServiceImpl implements CustomerService {
-	@Inject
-	private Neo4jOperations template;
-	// @Inject
-	// private EventBus eventBus;
-	@Inject
-	private CacheService cacheServiceFacade;
-	@Inject
-	private CustomerRepository customerRepository;
-	@Inject
-	private CustomerIndicatorRepository customerIndicatorRepository;
-
+public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
+		CustomerService {
 	@Override
 	public Customer findOne(Long nodeId) {
 		return customerRepository.findOne(nodeId);
@@ -59,6 +49,17 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	public void save(Customer crm,
+			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
+			CrmType crmType, Iterable<Certificate> certificates,
+			Communicatee communicatee, Iterable<Communicatee> communicatees,
+			Iterable<Associate> associates) throws Exception {
+		super.save(crm, indicatorMap, crmType, certificates, communicatee,
+				communicatees, associates);
+		eventPublisher.publish(new CustomerUpdateEvent(crm.getNodeId()));
+	}
+
+	@Override
 	public List<Indicator> findAllIndicator() {
 		List<Indicator> result = Lists.newArrayList();
 		for (CustomerIndicator indicator : customerIndicatorRepository
@@ -74,8 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public CustomerCreditRiskReport creditRiskReport(Long nodeId) {
-		// TODO 修改报表的实现，不用entity去implement
-		return null;
+	public Customer newCrm() {
+		return new Customer();
 	}
 }

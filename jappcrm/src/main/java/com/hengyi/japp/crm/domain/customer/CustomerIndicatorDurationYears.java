@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.template.Neo4jOperations;
 
 import com.hengyi.japp.crm.data.IndicatorType;
 import com.hengyi.japp.crm.domain.Crm;
@@ -26,14 +25,13 @@ public class CustomerIndicatorDurationYears extends CustomerIndicator {
 	}
 
 	@Override
-	protected double calculateScoreByCalculate(Crm crm, Neo4jOperations template)
-			throws Exception {
+	public double calculateScore(Crm crm) {
 		int durationYears;
 		try {
 			durationYears = (int) PropertyUtils.getProperty(crm, getField());
 		} catch (Exception e) {
 			log.error(crm + "", e);
-			throw e;
+			return 0;
 		}
 		if (durationYears >= 10)
 			return 10;

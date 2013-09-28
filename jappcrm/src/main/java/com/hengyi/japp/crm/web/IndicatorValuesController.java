@@ -27,6 +27,16 @@ public class IndicatorValuesController extends AbstractController implements
 				+ getIndicatorValue().getNodeId());
 	}
 
+	public void delete() {
+		try {
+			indicatorValueService.delete(indicatorValue);
+			indicatorValues.remove(indicatorValue);
+			operationSuccessMessage();
+		} catch (Exception e) {
+			errorMessage(e);
+		}
+	}
+
 	public List<IndicatorValue> getIndicatorValues() {
 		if (indicatorValues == null)
 			indicatorValues = indicatorValueService.findAll();

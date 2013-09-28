@@ -2,14 +2,13 @@ package com.hengyi.japp.crm.service.impl;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.annotation.Resource;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.repository.IndicatorValueRepository;
 import com.hengyi.japp.crm.service.IndicatorValueService;
@@ -17,7 +16,7 @@ import com.hengyi.japp.crm.service.IndicatorValueService;
 @Named
 @Transactional
 public class IndicatorValueServiceImp implements IndicatorValueService {
-	@Inject
+	@Resource
 	private IndicatorValueRepository indicatorValueRepository;
 
 	@Override

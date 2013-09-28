@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText value="#{msg['new']}-"
+					rendered="#{empty customerReportController.report.nodeId}" />
+				<h:outputText value="#{msg['edit']}-"
+					rendered="#{not empty customerReportController.report.nodeId}" />
+				<h:outputText value="#{msg['customer']}#{msg['report']}" />
+			</h1>
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputLabel for="name" value="#{msg['name']}" />
+				<h:inputText id="name"
+					value="#{customerReportController.report.name}" />
+				<p:message for="name" />
+			</h:panelGrid>
+			<p:dataTable id="tableIndicators" var="_indicator"
+				value="#{customerReportController.indicators}">
+				<f:facet name="header">
+					<h:outputText value="#{msg['indicator']}" />
+				</f:facet>
+
+				<p:column headerText="#{msg['operation']}" style="width:4%">
+					<p:commandLink process="@this"
+						update=":form:tableIndicators,:form:message"
+						action="#{customerReportController.removeIndicator}"
+						icon="ui-icon-minus">
+						<h:outputText value="#{msg['delete']}" />
+						<f:setPropertyActionListener value="#{_indicator}"
+							target="#{customerReportController.indicator}" />
+					</p:commandLink>
+				</p:column>
+
+				<p:column headerText="#{msg['name']}" sortBy="#{_indicator.name}">
+					<h:outputText value="#{_indicator.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['indicatorPercent']}"
+					sortBy="#{_indicator.percent}">
+					<h:outputText value="#{_indicator.percent}">
+						<f:convertNumber type="percent" />
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+			<p:dataTable id="tableCustomerIndicators" var="_indicator"
+				value="#{customerIndicatorsController.indicators}">
+				<f:facet name="header">
+					<h:outputText value="#{msg['indicator']}" />
+				</f:facet>
+
+				<p:column headerText="#{msg['operation']}" style="width:4%">
+					<p:commandLink process="@this"
+						update=":form:tableIndicators,:form:message"
+						action="#{customerReportController.addIndicator}"
+						icon="ui-icon-plus">
+						<h:outputText value="#{msg['add']}" />
+						<f:setPropertyActionListener value="#{_indicator}"
+							target="#{customerReportController.indicator}" />
+					</p:commandLink>
+				</p:column>
+
+				<p:column headerText="#{msg['name']}" sortBy="#{_indicator.name}">
+					<h:outputText value="#{_indicator.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['indicatorPercent']}"
+					sortBy="#{_indicator.percent}">
+					<h:outputText value="#{_indicator.percent}">
+						<f:convertNumber type="percent" />
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+			<p:commandButton action="#{customerReportController.save}"
+				update=":form" value="#{msg['operation.submit']}"
+				styleClass="ui-priority-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

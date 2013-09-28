@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.template.Neo4jOperations;
 
 import com.hengyi.japp.crm.data.IndicatorType;
 import com.hengyi.japp.crm.domain.Crm;
@@ -27,8 +26,7 @@ public class CustomerIndicatorSaleIncome extends CustomerIndicator {
 	}
 
 	@Override
-	protected double calculateScoreByCalculate(Crm crm, Neo4jOperations template)
-			throws Exception {
+	public double calculateScore(Crm crm) {
 		// 单位：亿
 		double saleIncome;
 		try {
@@ -37,7 +35,7 @@ public class CustomerIndicatorSaleIncome extends CustomerIndicator {
 			saleIncome = b.doubleValue() / 100000000;
 		} catch (Exception e) {
 			log.error(crm + "", e);
-			throw e;
+			return 0;
 		}
 		if (saleIncome >= 1000)
 			return 10;

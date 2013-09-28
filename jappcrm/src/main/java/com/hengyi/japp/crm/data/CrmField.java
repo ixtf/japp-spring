@@ -2,8 +2,10 @@ package com.hengyi.japp.crm.data;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import com.hengyi.japp.crm.domain.Crm;
+
 @SuppressWarnings("unchecked")
-public enum ReportField {
+public enum CrmField {
 	name("name", "name"), registerNumber("registerNumber", "registerNumber"), registerPlace(
 			"registerPlace", "registerPlace"), registerDate("registerDate",
 			"registerDate"), registerCapital("registerCapital",
@@ -12,21 +14,29 @@ public enum ReportField {
 			"communicatee", "communicatee"), communicatees("communicatees",
 			"communicatee"), saleIncome("saleIncome", "saleIncome"), associates(
 			"associates", "associates"), crmType("crmType", "crmType");
-	private final String _fieldName;
+	private final String fieldName;
 	// 通过msg获取，国际化
-	private final String _displayName;
+	private final String displayName;
 
-	private ReportField(String _fieldName, String _displayName) {
-		this._fieldName = _fieldName;
-		this._displayName = _displayName;
+	private CrmField(String fieldName, String displayName) {
+		this.fieldName = fieldName;
+		this.displayName = displayName;
 	}
 
-	public <T> T getValue(Object o) throws Exception {
-		return (T) PropertyUtils.getProperty(o, _fieldName);
+	public String getFieldName() {
+		return fieldName;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public <T> T getValue(Crm crm) throws Exception {
+		return (T) PropertyUtils.getProperty(crm, fieldName);
 	}
 
 	@Override
 	public String toString() {
-		return _displayName;
+		return displayName;
 	}
 }

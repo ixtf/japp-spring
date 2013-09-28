@@ -1,53 +1,28 @@
 package com.hengyi.japp.crm.web.customer;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.domain.Associate;
-import com.hengyi.japp.crm.domain.customer.Customer;
-import com.hengyi.japp.crm.domain.customer.CustomerBasicInfoReport;
-import com.hengyi.japp.crm.domain.customer.CustomerCreditRiskReport;
-import com.hengyi.japp.crm.domain.customer.CustomerFiCreditRiskReport;
-import com.hengyi.japp.crm.web.AbstractController;
+import com.hengyi.japp.crm.domain.customer.CustomerReport;
+import com.hengyi.japp.crm.service.ReportService;
+import com.hengyi.japp.crm.web.ReportController;
 
 @Named
-@Scope("request")
-public class CustomerReportController extends AbstractController implements
-		Serializable {
+@Scope("view")
+public class CustomerReportController extends ReportController<CustomerReport>
+		implements Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
-	private Long nodeId;
-	private Customer customer;
 
-	public CustomerBasicInfoReport getBasicInfoReport() {
-		return customer;
+	@Override
+	protected CustomerReport newReport() {
+		return new CustomerReport();
 	}
 
-	public CustomerCreditRiskReport getCreditRiskReport() {
-		return customer;
-	}
-
-	public CustomerFiCreditRiskReport getFiCreditRiskReport() {
-		return customer;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	public Long getNodeId() {
-		return nodeId;
-	}
-
-	public void setNodeId(Long nodeId) {
-		this.nodeId = nodeId;
-		customer = customerService.findOne(nodeId);
+	@Override
+	protected ReportService<CustomerReport> getReportService() {
+		return customerReportService;
 	}
 }

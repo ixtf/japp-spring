@@ -18,7 +18,8 @@ public class CertificateController extends AbstractController implements
 
 	public void save() {
 		try {
-			certificateRepository.save(certificate);
+			getCertificate().setOperator(getCurrentOperator());
+			certificateRepository.save(getCertificate());
 			operationSuccessMessage();
 		} catch (Exception e) {
 			errorMessage(e);

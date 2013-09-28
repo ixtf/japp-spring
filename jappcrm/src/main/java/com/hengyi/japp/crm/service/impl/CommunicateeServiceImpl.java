@@ -2,7 +2,7 @@ package com.hengyi.japp.crm.service.impl;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.annotation.Resource;
 import javax.inject.Named;
 
 import org.springframework.data.domain.Pageable;
@@ -17,7 +17,7 @@ import com.hengyi.japp.crm.service.CommunicateeService;
 @Named
 @Transactional
 public class CommunicateeServiceImpl implements CommunicateeService {
-	@Inject
+	@Resource
 	private CommunicateeRepository communicateeRepository;
 
 	@Override

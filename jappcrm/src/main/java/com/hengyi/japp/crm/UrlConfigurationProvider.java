@@ -15,12 +15,16 @@ import org.ocpsoft.rewrite.servlet.config.HttpConfigurationProvider;
 import org.ocpsoft.rewrite.servlet.config.Path;
 import org.ocpsoft.rewrite.servlet.config.Redirect;
 import org.ocpsoft.rewrite.servlet.config.rule.Join;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class UrlConfigurationProvider extends HttpConfigurationProvider {
 
 	@Override
 	public Configuration getConfiguration(ServletContext context) {
-		UrlUtil urlUtil = new UrlUtil();
+		WebApplicationContext springContext = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(context);
+		UrlUtil urlUtil = springContext.getBean(UrlUtil.class);
 		Condition loggedIn = new Condition() {
 			@Override
 			public boolean evaluate(Rewrite event, EvaluationContext context) {
@@ -92,24 +96,24 @@ public class UrlConfigurationProvider extends HttpConfigurationProvider {
 								urlUtil.getIndicatorValuesView()))
 
 				.addRule(
+						Join.path(urlUtil.getCustomerNewPath()).to(
+								urlUtil.getCustomerUpdateView()))
+				.addRule(
+						Join.path(urlUtil.getCustomersPath()).to(
+								urlUtil.getCustomersView()))
+				.addRule(
 						Join.path(urlUtil.getCustomerIndicatorNewPath()).to(
 								urlUtil.getCustomerIndicatorUpdateView()))
 				.addRule(
 						Join.path(urlUtil.getCustomerIndicatorsPath()).to(
 								urlUtil.getCustomerIndicatorsView()))
 				.addRule(
-						Join.path(urlUtil.getCustomerNewPath()).to(
-								urlUtil.getCustomerUpdateView()))
+						Join.path(urlUtil.getCustomerReportNewPath()).to(
+								urlUtil.getCustomerReportUpdateView()))
 				.addRule(
-						Join.path(urlUtil.getCustomersPath()).to(
-								urlUtil.getCustomersView()))
+						Join.path(urlUtil.getCustomerReportsPath()).to(
+								urlUtil.getCustomerReportsView()))
 
-				.addRule(
-						Join.path(urlUtil.getStorageIndicatorNewPath()).to(
-								urlUtil.getStorageIndicatorUpdateView()))
-				.addRule(
-						Join.path(urlUtil.getStorageIndicatorsPath()).to(
-								urlUtil.getStorageIndicatorsView()))
 				.addRule(
 						Join.path(urlUtil.getStorageNewPath()).to(
 								urlUtil.getStorageUpdateView()))
@@ -117,8 +121,17 @@ public class UrlConfigurationProvider extends HttpConfigurationProvider {
 						Join.path(urlUtil.getStoragesPath()).to(
 								urlUtil.getStoragesView()))
 				.addRule(
-						Join.path(urlUtil.getStoragesPath()).to(
-								urlUtil.getStoragesView()));
+						Join.path(urlUtil.getStorageIndicatorNewPath()).to(
+								urlUtil.getStorageIndicatorUpdateView()))
+				.addRule(
+						Join.path(urlUtil.getStorageIndicatorsPath()).to(
+								urlUtil.getStorageIndicatorsView()))
+				.addRule(
+						Join.path(urlUtil.getStorageReportNewPath()).to(
+								urlUtil.getStorageReportUpdateView()))
+				.addRule(
+						Join.path(urlUtil.getStorageReportsPath()).to(
+								urlUtil.getStorageReportsView()));
 	}
 
 	@Override

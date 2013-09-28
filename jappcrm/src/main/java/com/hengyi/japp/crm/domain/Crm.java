@@ -22,6 +22,7 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.data.neo4j.template.Neo4jOperations;
+import org.springframework.web.context.ContextLoader;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -81,11 +82,14 @@ public abstract class Crm extends Modifiable implements Serializable {
 	@RelatedToVia(type = IndicatorScore.RELATIONSHIP, elementClass = IndicatorScore.class)
 	protected Set<IndicatorScore> indicatorScores;
 
-	public void indicatorScore(Indicator indicator, Neo4jOperations template) {
+	public void indicatorScore(Indicator indicator) {
+		Neo4jOperations template = ContextLoader
+				.getCurrentWebApplicationContext().getBean(
+						Neo4jOperations.class);
 		IndicatorScore indicatorScore = template.createRelationshipBetween(
 				this, indicator, IndicatorScore.class,
 				IndicatorScore.RELATIONSHIP, false);
-		indicatorScore.setScore(indicator.calculateScore(this, template));
+		indicatorScore.setScore(indicator.calculateScore(this));
 		template.save(indicatorScore);
 	}
 

@@ -2,7 +2,7 @@ package com.hengyi.japp.crm.service.impl;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.annotation.Resource;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +17,7 @@ import com.hengyi.japp.crm.service.BugService;
 @Named
 @Transactional
 public class BugServiceImpl implements BugService {
-	@Inject
+	@Resource
 	private BugRepository bugRepository;
 
 	@Override

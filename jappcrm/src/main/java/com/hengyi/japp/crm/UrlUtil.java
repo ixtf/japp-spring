@@ -135,4 +135,36 @@ public class UrlUtil extends CommonUrlUtil {
 	public String getStoragesView() {
 		return "/faces/storage/list.jsf";
 	}
+
+	public String getCustomerReportNewPath() {
+		return "/customer/report";
+	}
+
+	public String getCustomerReportUpdateView() {
+		return "/faces/customer/report/update.jsf";
+	}
+
+	public String getCustomerReportsPath() {
+		return "/customer/reports";
+	}
+
+	public String getCustomerReportsView() {
+		return "/faces/customer/report/list.jsf";
+	}
+
+	public String getStorageReportNewPath() {
+		return "/storage/report";
+	}
+
+	public String getStorageReportUpdateView() {
+		return "/faces/storage/report/update.jsf";
+	}
+
+	public String getStorageReportsPath() {
+		return "/storage/reports";
+	}
+
+	public String getStorageReportsView() {
+		return "/faces/storage/report/list.jsf";
+	}
 }
