@@ -3,17 +3,21 @@ package com.hengyi.japp.crm.web;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.crm.domain.Bug;
+import com.hengyi.japp.crm.service.BugService;
 import com.hengyi.japp.crm.web.data.LazyBugModel;
 
 @Named
 @Scope("view")
 public class BugsController extends AbstractController implements Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
+	@Inject
+	private BugService bugService;
 	private LazyBugModel lazyBugModel;
 	private Bug bug;
 	private String nameSearch;
@@ -40,7 +44,7 @@ public class BugsController extends AbstractController implements Serializable {
 	}
 
 	public void edit() {
-		redirect(urlUtil.getBugsPath() + "/" + getBug().getNodeId());
+		redirect(cacheService.getBugsPath() + "/" + getBug().getNodeId());
 	}
 
 	public LazyBugModel getLazyBugModel() {

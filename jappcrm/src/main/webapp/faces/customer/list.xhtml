@@ -20,10 +20,10 @@
 				<p:submenu label="#{msg['report']}" icon="ui-icon-document">
 					<p:menuitem value="#{msg['basicInfoReport']}"
 						action="#{customersController.basicInfoReport}" />
-					<p:menuitem value="#{msg['creditRiskReport']}"
+					<!-- <p:menuitem value="#{msg['creditRiskReport']}"
 						action="#{customersController.creditRiskReport}" />
 					<p:menuitem value="#{msg['fiCreditRiskReport']}"
-						action="#{customersController.fiCreditRiskReport}" />
+						action="#{customersController.fiCreditRiskReport}" /> -->
 				</p:submenu>
 				<p:separator />
 				<p:menuitem value="#{msg['edit']}"
@@ -38,11 +38,10 @@
 					oncomplete="confirmDialogDeleteCustomer.hide()" />
 			</p:confirmDialog>
 			<p:dataTable id="tableCustomers" var="_customer"
-				value="#{customersController.lazyCustomerModel}"
-				selection="#{customersController.customer}"
-				rowKey="#{_customer.nodeId}" selectionMode="single"
-				rows="#{customersController.pageSize}" paginator="true"
-				stickyHeader="true" lazy="true">
+				value="#{customersController.crms}"
+				selection="#{customersController.crm}" rowKey="#{_customer.nodeId}"
+				selectionMode="single" rows="#{customersController.pageSize}"
+				paginator="true" stickyHeader="true" lazy="true">
 				<f:facet name="header">
 					<h:outputText value="#{msg['customer']}" />
 				</f:facet>

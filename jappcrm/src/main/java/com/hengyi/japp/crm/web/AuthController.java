@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.common.data.PrincipalType;
-import com.hengyi.japp.crm.UrlUtil;
+import com.hengyi.japp.crm.service.CacheService;
 
 @Named
 @Scope("request")
@@ -22,7 +22,7 @@ import com.hengyi.japp.crm.UrlUtil;
 public class AuthController extends AbstractController implements Serializable {
 	private static final long serialVersionUID = 3708518912737819900L;
 	@Inject
-	protected UrlUtil urlUtil;
+	protected CacheService cacheService;
 	@Resource(name = "deployProperties")
 	private Properties deployProperties;
 	@NotBlank
@@ -36,14 +36,14 @@ public class AuthController extends AbstractController implements Serializable {
 			UsernamePasswordToken token = new UsernamePasswordToken(username,
 					password);
 			subject.login(token);
-			redirect(urlUtil.getHomePath());
+			redirect(cacheService.getHomePath());
 		} catch (Exception e) {
 			errorMessage(e);
 		}
 	}
 
 	public void logout() {
-		String url = urlUtil.getLoginPath();
+		String url = cacheService.getLoginPath();
 		try {
 			if (PrincipalType.SSO.equals(cacheService.getPrincipalType()))
 				url = deployProperties.getProperty("casLogoutUrl");

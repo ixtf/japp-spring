@@ -1,23 +1,33 @@
 package com.hengyi.japp.crm.web;
 
-import java.io.Serializable;
 import java.util.List;
 
-import com.hengyi.japp.crm.domain.report.Report;
+import javax.annotation.PostConstruct;
 
-public abstract class ReportsController extends AbstractController implements
-		Serializable {
-	private static final long serialVersionUID = -6359781138513690580L;
-	private List<Report> reports;
-	private Report report;
+import com.hengyi.japp.crm.domain.Report;
+import com.hengyi.japp.crm.service.ReportService;
 
-	public abstract void edit();
+public abstract class ReportsController<T extends Report> extends
+		AbstractController {
+	private ReportService<T> reportService;
+	private List<T> reports;
+	private T report;
 
-	protected abstract List<Report> findAllReports();
+	@PostConstruct
+	private void init() {
+		reportService = getReportService();
+		reports = reportService.findAll();
+	}
+
+	protected abstract ReportService<T> getReportService();
+
+	public void edit() {
+		redirect(reportService.getUpdatePath(getReport().getNodeId()));
+	}
 
 	public void delete() {
 		try {
-			reprotService.delete(report);
+			reportService.delete(report);
 			reports.remove(report);
 			operationSuccessMessage();
 		} catch (Exception e) {
@@ -25,17 +35,15 @@ public abstract class ReportsController extends AbstractController implements
 		}
 	}
 
-	public List<Report> getReports() {
-		if (reports == null)
-			reports = findAllReports();
+	public List<T> getReports() {
 		return reports;
 	}
 
-	public Report getReport() {
+	public T getReport() {
 		return report;
 	}
 
-	public void setReport(Report report) {
+	public void setReport(T report) {
 		this.report = report;
 	}
 }

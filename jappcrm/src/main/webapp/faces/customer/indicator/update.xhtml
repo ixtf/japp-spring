@@ -70,7 +70,7 @@
 			</p:dataTable>
 
 			<p:panel rendered="#{customerIndicatorController.hasIndicatorValues}"
-				header="#{msg['selectIndicatorValue']}" toggleable="true">
+				header="#{msg['select']}#{msg['indicatorValue']}" toggleable="true">
 				<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
 					<h:outputLabel for="indicatorValue-nameSearch"
 						value="#{msg['name']}" />
@@ -97,6 +97,10 @@
 
 					<p:column headerText="#{msg['name']}">
 						<h:outputText value="#{_indicatorValue.name}" />
+					</p:column>
+
+					<p:column headerText="#{msg['note']}">
+						<h:outputText value="#{_indicatorValue.note}" />
 					</p:column>
 				</p:dataTable>
 			</p:panel>

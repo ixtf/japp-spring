@@ -1,6 +1,6 @@
 package com.hengyi.japp.crm.service.impl;
 
-import javax.inject.Inject;
+import javax.annotation.Resource;
 import javax.inject.Named;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +14,7 @@ import com.hengyi.japp.crm.service.OperatorService;
 @Transactional
 // @Veto
 public class OperatorServiceImpl implements OperatorService {
-	@Inject
+	@Resource
 	private OperatorRepository operatorRepository;
 
 	@Override

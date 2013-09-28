@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Scope;
 import com.hengyi.japp.crm.domain.Communicatee;
 
 @Named
-@Scope("view")
+@Scope("request")
 public class CommunicateeController extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
@@ -18,7 +18,8 @@ public class CommunicateeController extends AbstractController implements
 
 	public void save() {
 		try {
-			communicateeService.save(communicatee);
+			getCommunicatee().setOperator(getCurrentOperator());
+			communicateeService.save(getCommunicatee());
 			operationSuccessMessage();
 		} catch (Exception e) {
 			errorMessage(e);

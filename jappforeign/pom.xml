@@ -11,6 +11,10 @@
 	<name>foreign</name>
 	<description>外贸部业务</description>
 	<dependencies>
+		<dependency>
+			<groupId>com.hengyi.japp</groupId>
+			<artifactId>jappcommon-api</artifactId>
+		</dependency>
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -18,10 +18,12 @@ import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
+import com.hengyi.japp.crm.service.CrmService;
 
-public abstract class CrmController extends AbstractController {
+public abstract class CrmController<T extends Crm> extends AbstractController {
+	private CrmService<T> crmService;
 	private Long nodeId;
-	private Crm crm;
+	private T crm;
 	@NotNull
 	private CrmType crmType;
 	@NotNull
@@ -52,11 +54,18 @@ public abstract class CrmController extends AbstractController {
 	 */
 	private IndicatorValueScore selectedIndicatorValueScore;
 
-	protected abstract Crm newCrm();
+	@PostConstruct
+	protected void init() {
+		crmService = getCrmService();
 
-	protected abstract Crm findOne(Long nodeId);
+		ImmutableList.Builder<Indicator> builder = ImmutableList.builder();
+		for (Indicator indicator : crmService.findAllIndicator())
+			if (!indicator.getIndicatorValueScoresAsList(template).isEmpty())
+				builder.add(indicator);
+		indicators = builder.build();
+	}
 
-	protected abstract Iterable<Indicator> getAssociatedIndicators();
+	protected abstract CrmService<T> getCrmService();
 
 	public void save() {
 		try {
@@ -82,13 +91,13 @@ public abstract class CrmController extends AbstractController {
 				selectedIndicatorValueScore);
 	}
 
-	public Crm getCrm() {
+	public T getCrm() {
 		if (crm != null)
 			return crm;
 		if (nodeId == null)
-			crm = newCrm();
+			crm = crmService.newCrm();
 		else
-			crm = findOne(nodeId);
+			crm = crmService.findOne(nodeId);
 		return crm;
 	}
 
@@ -222,14 +231,5 @@ public abstract class CrmController extends AbstractController {
 	public void setSelectedIndicatorValueScore(
 			IndicatorValueScore selectedIndicatorValueScore) {
 		this.selectedIndicatorValueScore = selectedIndicatorValueScore;
-	}
-
-	@PostConstruct
-	protected void init() {
-		ImmutableList.Builder<Indicator> builder = ImmutableList.builder();
-		for (Indicator indicator : getAssociatedIndicators())
-			if (!indicator.getIndicatorValueScoresAsList(template).isEmpty())
-				builder.add(indicator);
-		indicators = builder.build();
 	}
 }

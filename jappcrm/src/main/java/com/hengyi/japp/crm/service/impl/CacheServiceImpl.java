@@ -5,6 +5,7 @@ import static com.hengyi.japp.common.CommonConstant.ADMIN_PRINCIPAL;
 import static com.hengyi.japp.common.CommonConstant.SESSION_OPERATOR;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -26,14 +27,15 @@ import com.hengyi.japp.crm.service.OperatorService;
 @Singleton
 public class CacheServiceImpl extends CommonCacheServiceImpl implements
 		CacheService {
+	@Resource
+	private CrmTypeRepository crmTypeRepository;
+	@Resource
+	private CertificateRepository certificateRepository;
+	@Resource
+	private IndicatorRepository indicatorRepository;
+
 	@Inject
 	private OperatorService operatorService;
-	@Inject
-	private CrmTypeRepository crmTypeRepository;
-	@Inject
-	private CertificateRepository certificateRepository;
-	@Inject
-	private IndicatorRepository indicatorRepository;
 
 	@Override
 	public Operator getCurrentOperator() throws Exception {

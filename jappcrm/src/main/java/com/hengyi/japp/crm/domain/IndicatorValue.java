@@ -8,14 +8,14 @@ import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.google.common.base.Objects;
-import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 
 @NodeEntity
-public class IndicatorValue extends AbstractNeo4j implements Serializable {
+public class IndicatorValue extends Modifiable implements Serializable {
 	private static final long serialVersionUID = -5080366361699844394L;
 	@NotBlank
-	@Indexed(unique = true)
+	@Indexed
 	private String name;
+	private String note;
 
 	public IndicatorValue() {
 		super();
@@ -32,6 +32,14 @@ public class IndicatorValue extends AbstractNeo4j implements Serializable {
 
 	public void setName(String name) {
 		this.name = StringUtils.trim(name);
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = StringUtils.trim(note);
 	}
 
 	@Override

@@ -2,17 +2,27 @@ package com.hengyi.japp.crm.web;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
+import com.hengyi.japp.crm.service.IndicatorService;
 
-public abstract class IndicatorController extends AbstractController {
+public abstract class IndicatorController<T extends Indicator> extends
+		AbstractController {
+	private IndicatorService<T> indicatorService;
 	private Long nodeId;
-	private Indicator indicator;
+	private T indicator;
 	private List<IndicatorValueScore> indicatorValueScores;
 	private IndicatorValueScore selectedIndicatorValueScore;
 
-	protected abstract Indicator newIndicator();
+	@PostConstruct
+	protected void init() {
+		indicatorService = getIndicatorService();
+	}
+
+	protected abstract IndicatorService<T> getIndicatorService();
 
 	public void save() {
 		try {
@@ -36,13 +46,13 @@ public abstract class IndicatorController extends AbstractController {
 		setSelectedIndicatorValueScore(null);
 	}
 
-	public Indicator getIndicator() {
+	public T getIndicator() {
 		return indicator != null ? indicator : initIndicator();
 	}
 
-	protected Indicator initIndicator() {
+	protected T initIndicator() {
 		if (nodeId == null)
-			indicator = newIndicator();
+			indicator = indicatorService.newIndicator();
 		else {
 			indicator = indicatorService.findOne(nodeId);
 			indicatorValueScores = Lists.newArrayList(indicator

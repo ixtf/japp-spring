@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
+import com.hengyi.japp.common.service.CommonUrlService;
 import com.hengyi.japp.crm.domain.Communicatee;
 
-public interface CommunicateeService {
+public interface CommunicateeService extends CommonUrlService<Long> {
 	Communicatee findOne(Long nodeId);
 
 	void save(Communicatee communicatee) throws Exception;

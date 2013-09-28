@@ -1,40 +1,33 @@
 package com.hengyi.japp.crm.service.impl;
 
-import java.util.List;
-
+import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.springframework.data.neo4j.template.Neo4jOperations;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
+import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.repository.IndicatorRepository;
 import com.hengyi.japp.crm.event.EventPublisher;
 import com.hengyi.japp.crm.event.SyncEventPublisher;
 import com.hengyi.japp.crm.event.indicator.IndicatorUpdateEvent;
+import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.IndicatorService;
 
-@Named
-@Transactional
-public class IndicatorServiceImpl implements IndicatorService {
-	@Inject
+public abstract class IndicatorServiceImpl<T extends Indicator> extends
+		CommonUrlServiceImpl<Long> implements IndicatorService<T> {
+	@Resource
 	protected Neo4jOperations template;
-	@Inject
-	private EventPublisher eventPublisher;
-	@Inject
-	private SyncEventPublisher syncEventPublisher;
-	@Inject
-	private IndicatorRepository indicatorRepository;
+	@Resource
+	protected IndicatorRepository indicatorRepository;
 
-	@Override
-	public Indicator findOne(Long nodeId) {
-		return indicatorRepository.findOne(nodeId);
-	}
+	@Inject
+	protected EventPublisher eventPublisher;
+	@Inject
+	protected SyncEventPublisher syncEventPublisher;
 
-	public void save(Indicator indicator,
+	public void save(T indicator,
 			Iterable<IndicatorValueScore> indicatorValueScores)
 			throws Exception {
 		indicator.setIndicatorValueScores(indicatorValueScores);
@@ -45,12 +38,14 @@ public class IndicatorServiceImpl implements IndicatorService {
 	}
 
 	@Override
-	public void delete(Indicator indicator) throws Exception {
-		throw new UnsupportedOperationException();
+	public void delete(T indicator) throws Exception {
+		indicatorRepository.delete(indicator);
 	}
 
 	@Override
-	public List<Indicator> findAll() {
-		return Lists.newArrayList(indicatorRepository.findAll());
+	public String getNewPath() {
+		return getCrmService().getNewPath() + "/indicator";
 	}
+
+	protected abstract CrmService<?> getCrmService();
 }

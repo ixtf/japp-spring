@@ -18,12 +18,12 @@
 
 			<p:contextMenu for="tableStorages">
 				<p:submenu label="#{msg['report']}" icon="ui-icon-document">
-					<p:menuitem value="#{msg['basicInfoReport']}"
+					<!-- <p:menuitem value="#{msg['basicInfoReport']}"
 						action="#{storagesController.basicInfoReport}" />
 					<p:menuitem value="#{msg['creditRiskReport']}"
 						action="#{storagesController.creditRiskReport}" />
 					<p:menuitem value="#{msg['fiCreditRiskReport']}"
-						action="#{storagesController.fiCreditRiskReport}" />
+						action="#{storagesController.fiCreditRiskReport}" /> -->
 				</p:submenu>
 				<p:separator />
 				<p:menuitem value="#{msg['edit']}"
@@ -38,8 +38,8 @@
 					oncomplete="confirmDialogDeleteStorage.hide()" />
 			</p:confirmDialog>
 			<p:dataTable id="tableStorages" var="_storage"
-				value="#{storagesController.lazyStorageModel}"
-				selection="#{storagesController.storage}"
+				value="#{storagesController.crms}"
+				selection="#{storagesController.crm}"
 				rowKey="#{_storage.nodeId}" selectionMode="single"
 				rows="#{storagesController.pageSize}" paginator="true"
 				stickyHeader="true" lazy="true">

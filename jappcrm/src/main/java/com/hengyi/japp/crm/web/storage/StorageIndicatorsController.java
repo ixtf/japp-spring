@@ -1,35 +1,27 @@
 package com.hengyi.japp.crm.web.storage;
 
 import java.io.Serializable;
-import java.util.List;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.storage.StorageIndicator;
-import com.hengyi.japp.crm.web.AbstractController;
+import com.hengyi.japp.crm.service.IndicatorService;
+import com.hengyi.japp.crm.service.storage.StorageIndicatorService;
+import com.hengyi.japp.crm.web.IndicatorsController;
 
 @Named
 @Scope("view")
-public class StorageIndicatorsController extends AbstractController implements
-		Serializable {
+public class StorageIndicatorsController extends
+		IndicatorsController<StorageIndicator> implements Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
-	private List<Indicator> indicators;
-	private Indicator indicator;
+	@Inject
+	private StorageIndicatorService storageIndicatorService;
 
-	public List<Indicator> getIndicators() {
-		if (indicators == null)
-			indicators = storageService.findAllIndicator();
-		return indicators;
-	}
-
-	public Indicator getIndicator() {
-		return indicator;
-	}
-
-	public void setIndicator(StorageIndicator indicator) {
-		this.indicator = indicator;
+	@Override
+	protected IndicatorService<StorageIndicator> getIndicatorService() {
+		return storageIndicatorService;
 	}
 }

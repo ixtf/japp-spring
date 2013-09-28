@@ -10,6 +10,10 @@
 	<packaging>war</packaging>
 	<name>japptrans</name>
 	<dependencies>
+		<dependency>
+			<groupId>com.hengyi.japp</groupId>
+			<artifactId>jappcommon-api</artifactId>
+		</dependency>
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -99,5 +103,17 @@
 	</dependencies>
 	<build>
 		<finalName>trans</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.source}</target>
+					<compilerArguments>
+						<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+					</compilerArguments>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

@@ -34,7 +34,7 @@
 		</p:column>
 	</p:dataTable>
 
-	<p:panel header="#{msg['selectCustomer']}" toggleable="true">
+	<p:panel header="#{msg['select']}#{msg['customer']}" toggleable="true">
 		<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
 			<h:outputLabel for="selectCustomer-nameSearch" value="#{msg['name']}" />
 			<h:inputText id="selectCustomer-nameSearch"
@@ -45,7 +45,7 @@
 		</h:panelGrid>
 
 		<p:dataTable id="tableSelectedCustomers" var="_customer"
-			value="#{customersController.lazyCustomerModel}" lazy="true"
+			value="#{customersController.crms}" lazy="true"
 			rows="#{customersController.pageSize}" paginator="true"
 			stickyHeader="true">
 			<p:column headerText="#{msg['operation']}" style="width:4%">

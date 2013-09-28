@@ -34,18 +34,18 @@
 		</p:column>
 	</p:dataTable>
 
-	<p:panel header="#{msg['selectStorage']}" toggleable="true">
+	<p:panel header="#{msg['select']}#{msg['storage']}" toggleable="true">
 		<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
 			<h:outputLabel for="selectStorage-nameSearch" value="#{msg['name']}" />
 			<h:inputText id="selectStorage-nameSearch"
 				value="#{storagesController.nameSearch}" />
 			<p:commandButton value="#{msg['search']}" process="@this,@parent"
-				update="tableSelectedStorages"
-				action="#{storagesController.search}" icon="ui-icon-search" />
+				update="tableSelectedStorages" action="#{storagesController.search}"
+				icon="ui-icon-search" />
 		</h:panelGrid>
 
 		<p:dataTable id="tableSelectedStorages" var="_storage"
-			value="#{storagesController.lazyStorageModel}" lazy="true"
+			value="#{storagesController.crms}" lazy="true"
 			rows="#{storagesController.pageSize}" paginator="true"
 			stickyHeader="true">
 			<p:column headerText="#{msg['operation']}" style="width:4%">

@@ -1,29 +1,30 @@
 package com.hengyi.japp.crm.event.indicator;
 
-import javax.inject.Inject;
+import javax.annotation.Resource;
 import javax.inject.Named;
 
 import org.springframework.context.ApplicationListener;
-import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.repository.CrmRepository;
+import com.hengyi.japp.crm.domain.repository.IndicatorRepository;
 
 @Named
 @Transactional
 public class IndicatorUpdateEventListener implements
 		ApplicationListener<IndicatorUpdateEvent> {
-	@Inject
-	private Neo4jOperations template;
-	@Inject
+	@Resource
+	private IndicatorRepository indicatorRepository;
+	@Resource
 	private CrmRepository crmRepository;
 
 	@Override
 	public void onApplicationEvent(IndicatorUpdateEvent event) {
-		Indicator indicator = (Indicator) event.getSource();
+		Long nodeId = (Long) event.getSource();
+		Indicator indicator = indicatorRepository.findOne(nodeId);
 		for (Crm crm : crmRepository.findAllByIndicator(indicator))
-			crm.indicatorScore(indicator, template);
+			crm.indicatorScore(indicator);
 	}
 }

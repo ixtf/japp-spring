@@ -12,7 +12,7 @@ import com.hengyi.japp.crm.domain.Bug;
 import com.hengyi.japp.crm.service.BugService;
 
 public class LazyBugModel extends LazyDataModel<Bug> {
-	private static final long serialVersionUID = -4588805142596251105L;
+	private static final long serialVersionUID = 4941079990169518007L;
 	private BugService bugService;
 	private List<Bug> datasource;
 
