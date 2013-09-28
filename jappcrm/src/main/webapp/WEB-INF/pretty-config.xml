@@ -9,6 +9,12 @@
 		<action>#{authController.logout}</action>
 	</url-mapping>
 
+	<url-mapping id="crmReport">
+		<pattern
+			value="/crms/#{crmReportController.crmNodeId}/reports/#{crmReportController.reportNodeId}" />
+		<view-id value="/faces/crmReport.jsf" />
+	</url-mapping>
+
 	<url-mapping id="communicateeUpdate">
 		<pattern value="/communicatees/#{communicateeController.nodeId}" />
 		<view-id value="/faces/communicatee/update.jsf" />
@@ -41,7 +47,7 @@
 
 	<url-mapping id="customerReportUpdate">
 		<pattern value="/customer/reports/#{customerReportController.nodeId}" />
-		<view-id value="/faces/customer/reports/update.jsf" />
+		<view-id value="/faces/customer/report/update.jsf" />
 	</url-mapping>
 
 	<url-mapping id="customerBasicInfoReport">
@@ -62,6 +68,6 @@
 
 	<url-mapping id="storageReportUpdate">
 		<pattern value="/storage/reports/#{storageReportController.nodeId}" />
-		<view-id value="/faces/storage/reports/update.jsf" />
+		<view-id value="/faces/storage/report/update.jsf" />
 	</url-mapping>
 </pretty-config>

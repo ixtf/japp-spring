@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+			<p:contextMenu for="tableReports">
+				<p:menuitem value="#{msg['edit']}"
+					action="#{storageReportsController.edit}" icon="ui-icon-pencil" />
+				<p:menuitem value="#{msg['delete']}" type="button"
+					onclick="confirmDialogDeleteCrmType.show()" icon="ui-icon-close"
+					disabled="true" />
+			</p:contextMenu>
+			<p:confirmDialog message="#{msg['operation.confirm']}?"
+				severity="alert" widgetVar="confirmDialogDeleteCrmType">
+				<p:commandButton value="#{msg['operation.submit']}" update=":form"
+					action="#{storageReportsController.delete}"
+					oncomplete="confirmDialogDeleteCrmType.hide()" />
+			</p:confirmDialog>
+			<p:dataTable id="tableReports" var="_report"
+				value="#{storageReportsController.reports}"
+				selection="#{storageReportsController.report}"
+				rowKey="#{_report.nodeId}" selectionMode="single">
+				<f:facet name="header">
+					<h:outputText value="#{msg['storage']}#{msg['report']}" />
+				</f:facet>
+
+				<p:column headerText="#{msg['name']}">
+					<h:outputText value="#{_report.name}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

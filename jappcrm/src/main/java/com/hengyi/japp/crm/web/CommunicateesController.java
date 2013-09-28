@@ -41,7 +41,7 @@ public class CommunicateesController extends AbstractController implements
 	}
 
 	public void edit() {
-		redirect(urlUtil.getCommunicateesPath() + "/"
+		redirect(communicateeService.getManagePath() + "/"
 				+ getCommunicatee().getNodeId());
 	}
 

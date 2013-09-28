@@ -9,14 +9,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
 import com.hengyi.japp.crm.MyUtil;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.repository.CommunicateeRepository;
 import com.hengyi.japp.crm.service.CommunicateeService;
 
-@Named
+@Named("communicateeService")
 @Transactional
-public class CommunicateeServiceImpl implements CommunicateeService {
+public class CommunicateeServiceImpl extends CommonUrlServiceImpl<Long>
+		implements CommunicateeService {
 	@Resource
 	private CommunicateeRepository communicateeRepository;
 
@@ -52,5 +54,10 @@ public class CommunicateeServiceImpl implements CommunicateeService {
 	@Override
 	public long count() {
 		return communicateeRepository.count();
+	}
+
+	@Override
+	public String getNewPath() {
+		return "/communicatee";
 	}
 }

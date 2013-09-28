@@ -9,13 +9,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.repository.IndicatorValueRepository;
 import com.hengyi.japp.crm.service.IndicatorValueService;
 
-@Named
+@Named("indicatorValueService")
 @Transactional
-public class IndicatorValueServiceImp implements IndicatorValueService {
+public class IndicatorValueServiceImp extends CommonUrlServiceImpl<Long>
+		implements IndicatorValueService {
 	@Resource
 	private IndicatorValueRepository indicatorValueRepository;
 
@@ -44,5 +46,10 @@ public class IndicatorValueServiceImp implements IndicatorValueService {
 		nameSearch = StringUtils.trimToEmpty(nameSearch);
 		return Lists.newArrayList(indicatorValueRepository.findAllByQuery(
 				"name", nameSearch));
+	}
+
+	@Override
+	public String getNewPath() {
+		return "/indicatorValue";
 	}
 }

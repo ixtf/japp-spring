@@ -32,12 +32,12 @@ public class CrmTypesController extends AbstractController implements
 	}
 
 	public void edit() {
-		redirect(urlUtil.getCrmTypesPath() + "/" + getCrmType().getNodeId());
+		redirect(crmTypeService.getUpdatePath(getCrmType().getNodeId()));
 	}
 
 	public void delete() {
 		try {
-			crmTypeRepository.delete(crmType);
+			crmTypeService.delete(crmType);
 			crmTypes.remove(crmType);
 			operationSuccessMessage();
 		} catch (Exception e) {
@@ -47,6 +47,6 @@ public class CrmTypesController extends AbstractController implements
 
 	@PostConstruct
 	public void init() {
-		crmTypes = Lists.newArrayList(crmTypeRepository.findAll());
+		crmTypes = Lists.newArrayList(crmTypeService.findAll());
 	}
 }

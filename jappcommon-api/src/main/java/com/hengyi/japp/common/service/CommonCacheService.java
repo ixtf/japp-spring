@@ -24,4 +24,32 @@ public interface CommonCacheService {
 	boolean isAuthenticated();
 
 	boolean isAdmin();
+
+	String getHomePath();
+
+	String getHomeView();
+
+	String getLoginPath();
+
+	String getLoginView();
+
+	String getLogoutPath();
+
+	String getThemePath();
+
+	String getThemeView();
+
+	String getAdminHomePath();
+
+	String getAdminHomeView();
+
+	String getUnauthorizedPath();
+
+	String getBugNewPath();
+
+	String getBugUpdateView();
+
+	String getBugsPath();
+
+	String getBugsView();
 }

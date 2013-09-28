@@ -13,6 +13,7 @@ import org.springframework.data.neo4j.template.Neo4jOperations;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
 import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
@@ -22,10 +23,6 @@ import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.repository.CrmRepository;
-import com.hengyi.japp.crm.domain.repository.CustomerIndicatorRepository;
-import com.hengyi.japp.crm.domain.repository.CustomerRepository;
-import com.hengyi.japp.crm.domain.repository.StorageIndicatorRepository;
-import com.hengyi.japp.crm.domain.repository.StorageRepository;
 import com.hengyi.japp.crm.event.EventPublisher;
 import com.hengyi.japp.crm.event.SyncEventPublisher;
 import com.hengyi.japp.crm.exception.NoChiefCommunicateeException;
@@ -33,19 +30,12 @@ import com.hengyi.japp.crm.exception.NoIndicatorValueException;
 import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CrmService;
 
-public abstract class CrmServiceImpl<T extends Crm> implements CrmService<T> {
+public abstract class CrmServiceImpl<T extends Crm> extends
+		CommonUrlServiceImpl<Long> implements CrmService<T> {
 	@Resource
-	protected Neo4jOperations template;
+	private Neo4jOperations template;
 	@Resource
-	protected CrmRepository crmRepository;
-	@Resource
-	protected CustomerRepository customerRepository;
-	@Resource
-	protected CustomerIndicatorRepository customerIndicatorRepository;
-	@Resource
-	protected StorageRepository storageRepository;
-	@Resource
-	protected StorageIndicatorRepository storageIndicatorRepository;
+	private CrmRepository crmRepository;
 
 	@Inject
 	protected EventPublisher eventPublisher;

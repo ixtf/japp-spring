@@ -8,7 +8,6 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<p:growl id="messages" showDetail="true" />
-
 			<p:contextMenu for="tableReports">
 				<p:menuitem value="#{msg['edit']}"
 					action="#{customerReportsController.edit}" icon="ui-icon-pencil" />
@@ -27,7 +26,7 @@
 				selection="#{customerReportsController.report}"
 				rowKey="#{_report.nodeId}" selectionMode="single">
 				<f:facet name="header">
-					<h:outputText value="#{msg['crmType']}" />
+					<h:outputText value="#{msg['customer']}#{msg['report']}" />
 				</f:facet>
 
 				<p:column headerText="#{msg['name']}">

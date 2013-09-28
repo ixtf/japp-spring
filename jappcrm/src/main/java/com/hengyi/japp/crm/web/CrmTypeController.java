@@ -19,7 +19,7 @@ public class CrmTypeController extends AbstractController implements
 	public void save() {
 		try {
 			getCrmType().setOperator(getCurrentOperator());
-			crmTypeRepository.save(getCrmType());
+			crmTypeService.save(getCrmType());
 			operationSuccessMessage();
 		} catch (Exception e) {
 			errorMessage(e);
@@ -32,7 +32,7 @@ public class CrmTypeController extends AbstractController implements
 		if (nodeId == null)
 			crmType = new CrmType();
 		else
-			crmType = crmTypeRepository.findOne(nodeId);
+			crmType = crmTypeService.findOne(nodeId);
 		return crmType;
 	}
 

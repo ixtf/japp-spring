@@ -21,64 +21,11 @@
 					value="#{customerReportController.report.name}" />
 				<p:message for="name" />
 			</h:panelGrid>
-			<p:dataTable id="tableIndicators" var="_indicator"
-				value="#{customerReportController.indicators}">
-				<f:facet name="header">
-					<h:outputText value="#{msg['indicator']}" />
-				</f:facet>
-
-				<p:column headerText="#{msg['operation']}" style="width:4%">
-					<p:commandLink process="@this"
-						update=":form:tableIndicators,:form:message"
-						action="#{customerReportController.removeIndicator}"
-						icon="ui-icon-minus">
-						<h:outputText value="#{msg['delete']}" />
-						<f:setPropertyActionListener value="#{_indicator}"
-							target="#{customerReportController.indicator}" />
-					</p:commandLink>
-				</p:column>
-
-				<p:column headerText="#{msg['name']}" sortBy="#{_indicator.name}">
-					<h:outputText value="#{_indicator.name}" />
-				</p:column>
-
-				<p:column headerText="#{msg['indicatorPercent']}"
-					sortBy="#{_indicator.percent}">
-					<h:outputText value="#{_indicator.percent}">
-						<f:convertNumber type="percent" />
-					</h:outputText>
-				</p:column>
-			</p:dataTable>
-			<p:dataTable id="tableCustomerIndicators" var="_indicator"
-				value="#{customerIndicatorsController.indicators}">
-				<f:facet name="header">
-					<h:outputText value="#{msg['indicator']}" />
-				</f:facet>
-
-				<p:column headerText="#{msg['operation']}" style="width:4%">
-					<p:commandLink process="@this"
-						update=":form:tableIndicators,:form:message"
-						action="#{customerReportController.addIndicator}"
-						icon="ui-icon-plus">
-						<h:outputText value="#{msg['add']}" />
-						<f:setPropertyActionListener value="#{_indicator}"
-							target="#{customerReportController.indicator}" />
-					</p:commandLink>
-				</p:column>
-
-				<p:column headerText="#{msg['name']}" sortBy="#{_indicator.name}">
-					<h:outputText value="#{_indicator.name}" />
-				</p:column>
-
-				<p:column headerText="#{msg['indicatorPercent']}"
-					sortBy="#{_indicator.percent}">
-					<h:outputText value="#{_indicator.percent}">
-						<f:convertNumber type="percent" />
-					</h:outputText>
-				</p:column>
-			</p:dataTable>
+			<p:selectOneMenu id="bug" rendered="false" />
+			<ui:include src="updateFragment/updateIndicator.xhtml" />
+			<ui:include src="updateFragment/updateCrmField.xhtml" />
 			<p:commandButton action="#{customerReportController.save}"
-				update=":form" value="#{msg['operation.submit']}"
+				update=":form" value="#{msg['operation.submit']}" ajax="false"
 				styleClass="ui-priority-primary" />
 		</h:form>
 	</ui:define>

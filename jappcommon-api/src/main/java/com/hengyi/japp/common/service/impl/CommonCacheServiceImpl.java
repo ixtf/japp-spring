@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 
-import com.hengyi.japp.common.CommonUrlUtil;
 import com.hengyi.japp.common.data.PrincipalType;
 import com.hengyi.japp.common.data.Theme;
 import com.hengyi.japp.common.dto.UserDTO;
@@ -70,85 +69,73 @@ public abstract class CommonCacheServiceImpl implements CommonCacheService {
 		return SecurityUtils.getSubject().hasRole(Constant.ADMIN_PRINCIPAL);
 	}
 
-	// private final AsyncEventBus asyncEventBus;
-	//
-	// public CacheServiceImpl() {
-	// super();
-	// asyncEventBus = new AsyncEventBus(Executors.newCachedThreadPool());
-	// }
-	//
-	// @Override
-	// public AsyncEventBus getAsyncEventBus() {
-	// return asyncEventBus;
-	// }
+	@Override
+	public String getHomePath() {
+		return "/";
+	}
 
-	// @Override
-	// public String getHomePath() {
-	// return CommonUrlUtil.getHomePath();
-	// }
-	//
-	// @Override
-	// public String getHomeView() {
-	// return CommonUrlUtil.getHomeView();
-	// }
-	//
-	// @Override
-	// public String getLoginPath() {
-	// return CommonUrlUtil.getLoginPath();
-	// }
-	//
-	// @Override
-	// public String getLoginView() {
-	// return CommonUrlUtil.getLoginView();
-	// }
-	//
-	// @Override
-	// public String getLogoutPath() {
-	// return CommonUrlUtil.getLogoutPath();
-	// }
-	//
-	// @Override
-	// public String getThemePath() {
-	// return CommonUrlUtil.getThemePath();
-	// }
-	//
-	// @Override
-	// public String getThemeView() {
-	// return CommonUrlUtil.getThemeView();
-	// }
-	//
-	// @Override
-	// public String getAdminHomePath() {
-	// return CommonUrlUtil.getAdminHomePath();
-	// }
-	//
-	// @Override
-	// public String getAdminHomeView() {
-	// return CommonUrlUtil.getAdminHomeView();
-	// }
-	//
-	// @Override
-	// public String getUnauthorizedPath() {
-	// return CommonUrlUtil.getUnauthorizedPath();
-	// }
-	//
-	// @Override
-	// public String getBugNewPath() {
-	// return CommonUrlUtil.getBugNewPath();
-	// }
-	//
-	// @Override
-	// public String getBugUpdateView() {
-	// return CommonUrlUtil.getBugUpdateView();
-	// }
-	//
-	// @Override
-	// public String getBugsPath() {
-	// return CommonUrlUtil.getBugsPath();
-	// }
-	//
-	// @Override
-	// public String getBugsView() {
-	// return CommonUrlUtil.getBugsView();
-	// }
+	@Override
+	public String getHomeView() {
+		return "/faces/home.jsf";
+	}
+
+	@Override
+	public String getLoginPath() {
+		return "/login";
+	}
+
+	@Override
+	public String getLoginView() {
+		return "/faces/login.jsf";
+	}
+
+	@Override
+	public String getLogoutPath() {
+		return "/logout";
+	}
+
+	@Override
+	public String getThemePath() {
+		return "/theme";
+	}
+
+	@Override
+	public String getThemeView() {
+		return "/faces/theme.jsf";
+	}
+
+	@Override
+	public String getAdminHomePath() {
+		return "/admin";
+	}
+
+	@Override
+	public String getAdminHomeView() {
+		return "/faces/admin/index.jsf";
+	}
+
+	@Override
+	public String getUnauthorizedPath() {
+		return "/unauthorized";
+	}
+
+	@Override
+	public String getBugNewPath() {
+		return "/bug";
+	}
+
+	@Override
+	public String getBugUpdateView() {
+		return "/faces/bug/update.jsf";
+	}
+
+	@Override
+	public String getBugsPath() {
+		return "/bugs";
+	}
+
+	@Override
+	public String getBugsView() {
+		return "/faces/bug/list.jsf";
+	}
 }

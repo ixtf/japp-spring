@@ -10,7 +10,7 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import com.hengyi.japp.crm.domain.Crm;
 
 @NodeEntity
-public class Storage extends Crm implements StorageCreditRatingReport {
+public class Storage extends Crm {
 	private static final long serialVersionUID = -831678558917732185L;
 	public static final String FIELD_CAPACITY = "capacity";
 	@NotNull

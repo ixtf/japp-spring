@@ -19,7 +19,7 @@ public class CertificateController extends AbstractController implements
 	public void save() {
 		try {
 			getCertificate().setOperator(getCurrentOperator());
-			certificateRepository.save(getCertificate());
+			certificateService.save(getCertificate());
 			operationSuccessMessage();
 		} catch (Exception e) {
 			errorMessage(e);
@@ -32,7 +32,7 @@ public class CertificateController extends AbstractController implements
 		if (nodeId == null)
 			certificate = new Certificate();
 		else
-			certificate = certificateRepository.findOne(nodeId);
+			certificate = certificateService.findOne(nodeId);
 		return certificate;
 	}
 

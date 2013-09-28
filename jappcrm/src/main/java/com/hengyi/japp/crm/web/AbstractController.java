@@ -17,24 +17,16 @@ import org.springframework.data.neo4j.template.Neo4jOperations;
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.Constant;
 import com.hengyi.japp.crm.MessageUtil;
-import com.hengyi.japp.crm.UrlUtil;
 import com.hengyi.japp.crm.data.CrmField;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Operator;
-import com.hengyi.japp.crm.domain.repository.CertificateRepository;
-import com.hengyi.japp.crm.domain.repository.CrmTypeRepository;
-import com.hengyi.japp.crm.domain.repository.CustomerReportRepository;
-import com.hengyi.japp.crm.service.BugService;
 import com.hengyi.japp.crm.service.CacheService;
+import com.hengyi.japp.crm.service.CertificateService;
 import com.hengyi.japp.crm.service.CommunicateeService;
-import com.hengyi.japp.crm.service.CustomerReportService;
-import com.hengyi.japp.crm.service.CustomerService;
-import com.hengyi.japp.crm.service.IndicatorService;
+import com.hengyi.japp.crm.service.CrmTypeService;
 import com.hengyi.japp.crm.service.IndicatorValueService;
 import com.hengyi.japp.crm.service.OperatorService;
-import com.hengyi.japp.crm.service.StorageReportService;
-import com.hengyi.japp.crm.service.StorageService;
 
 public abstract class AbstractController {
 	protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -42,42 +34,25 @@ public abstract class AbstractController {
 	protected Neo4jOperations template;
 	@Resource
 	protected Mapper dozer;
-	@Resource
-	protected CrmTypeRepository crmTypeRepository;
-	@Resource
-	protected CertificateRepository certificateRepository;
-	@Resource
-	protected CustomerReportRepository customerReportRepository;
-
-	@Inject
-	protected UrlUtil urlUtil;
 	@Inject
 	protected CacheService cacheService;
 	@Inject
 	protected OperatorService operatorService;
 	@Inject
+	protected CrmTypeService crmTypeService;
+	@Inject
+	protected CertificateService certificateService;
+	@Inject
 	protected CommunicateeService communicateeService;
 	@Inject
-	protected IndicatorService indicatorService;
-	@Inject
 	protected IndicatorValueService indicatorValueService;
-	@Inject
-	protected CustomerService customerService;
-	@Inject
-	protected CustomerReportService customerReportService;
-	@Inject
-	protected StorageService storageService;
-	@Inject
-	protected StorageReportService storageReportService;
-	@Inject
-	protected BugService bugService;
 
 	public List<CrmType> getAllCrmTypes() {
-		return Lists.newArrayList(crmTypeRepository.findAll());
+		return Lists.newArrayList(crmTypeService.findAll());
 	}
 
 	public List<Certificate> getAllCertificates() {
-		return Lists.newArrayList(certificateRepository.findAll());
+		return Lists.newArrayList(certificateService.findAll());
 	}
 
 	public List<CrmField> getAllCrmFields() {

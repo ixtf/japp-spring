@@ -13,8 +13,9 @@ import com.google.common.base.Objects;
 public class IndicatorValue extends Modifiable implements Serializable {
 	private static final long serialVersionUID = -5080366361699844394L;
 	@NotBlank
-	@Indexed(unique = true)
+	@Indexed
 	private String name;
+	private String note;
 
 	public IndicatorValue() {
 		super();
@@ -31,6 +32,14 @@ public class IndicatorValue extends Modifiable implements Serializable {
 
 	public void setName(String name) {
 		this.name = StringUtils.trim(name);
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = StringUtils.trim(note);
 	}
 
 	@Override

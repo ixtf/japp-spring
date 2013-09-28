@@ -23,8 +23,8 @@ public class IndicatorValuesController extends AbstractController implements
 	}
 
 	public void edit() {
-		redirect(urlUtil.getIndicatorValuesPath() + "/"
-				+ getIndicatorValue().getNodeId());
+		redirect(indicatorValueService.getUpdatePath(getIndicatorValue()
+				.getNodeId()));
 	}
 
 	public void delete() {

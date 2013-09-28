@@ -2,25 +2,52 @@ package com.hengyi.japp.crm.web;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import com.hengyi.japp.crm.domain.Indicator;
+import com.hengyi.japp.crm.service.IndicatorService;
 
-public abstract class IndicatorsController extends AbstractController {
-	private List<Indicator> indicators;
-	private Indicator indicator;
+public abstract class IndicatorsController<T extends Indicator> extends
+		AbstractController {
+	private IndicatorService<T> indicatorService;
+	private List<T> indicators;
+	private T indicator;
 
-	public List<Indicator> getIndicators() {
+	@PostConstruct
+	private void init() {
+		indicatorService = getIndicatorService();
+		indicators = indicatorService.findAll();
+	}
+
+	protected abstract IndicatorService<T> getIndicatorService();
+
+	public void edit() {
+		redirect(indicatorService.getUpdatePath(getIndicator().getNodeId()));
+	}
+
+	public void delete() {
+		try {
+			indicatorService.delete(getIndicator());
+			indicators.remove(indicator);
+			operationSuccessMessage();
+		} catch (Exception e) {
+			errorMessage(e);
+		}
+	}
+
+	public List<T> getIndicators() {
 		return indicators;
 	}
 
-	public Indicator getIndicator() {
+	public T getIndicator() {
 		return indicator;
 	}
 
-	public void setIndicators(List<Indicator> indicators) {
+	public void setIndicators(List<T> indicators) {
 		this.indicators = indicators;
 	}
 
-	public void setIndicator(Indicator indicator) {
+	public void setIndicator(T indicator) {
 		this.indicator = indicator;
 	}
 }

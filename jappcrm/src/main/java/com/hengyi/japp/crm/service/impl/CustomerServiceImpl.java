@@ -3,6 +3,7 @@ package com.hengyi.japp.crm.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.inject.Named;
 
 import org.springframework.data.domain.PageRequest;
@@ -17,15 +18,21 @@ import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.customer.Customer;
-import com.hengyi.japp.crm.domain.customer.CustomerBasicInfoReport;
 import com.hengyi.japp.crm.domain.customer.CustomerIndicator;
+import com.hengyi.japp.crm.domain.repository.CustomerIndicatorRepository;
+import com.hengyi.japp.crm.domain.repository.CustomerRepository;
 import com.hengyi.japp.crm.event.customer.CustomerUpdateEvent;
-import com.hengyi.japp.crm.service.CustomerService;
+import com.hengyi.japp.crm.service.customer.CustomerService;
 
-@Named
+@Named("customerService")
 @Transactional
 public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
 		CustomerService {
+	@Resource
+	private CustomerRepository customerRepository;
+	@Resource
+	private CustomerIndicatorRepository customerIndicatorRepository;
+
 	@Override
 	public Customer findOne(Long nodeId) {
 		return customerRepository.findOne(nodeId);
@@ -56,7 +63,7 @@ public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
 			Iterable<Associate> associates) throws Exception {
 		super.save(crm, indicatorMap, crmType, certificates, communicatee,
 				communicatees, associates);
-		eventPublisher.publish(new CustomerUpdateEvent(crm.getNodeId()));
+		syncEventPublisher.publish(new CustomerUpdateEvent(crm.getNodeId()));
 	}
 
 	@Override
@@ -69,13 +76,12 @@ public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
 	}
 
 	@Override
-	public CustomerBasicInfoReport basicInfoReport(Long nodeId) {
-		// TODO 修改报表的实现，不用entity去implement
-		return null;
+	public Customer newCrm() {
+		return new Customer();
 	}
 
 	@Override
-	public Customer newCrm() {
-		return new Customer();
+	public String getNewPath() {
+		return "/customer";
 	}
 }

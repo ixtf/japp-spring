@@ -9,5 +9,4 @@ import com.hengyi.japp.crm.domain.Report;
 @NodeEntity
 public class StorageReport extends Report implements Serializable {
 	private static final long serialVersionUID = 3994195669260400485L;
-
 }

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.storage.Storage;
-import com.hengyi.japp.crm.service.StorageService;
+import com.hengyi.japp.crm.service.storage.StorageService;
 
 @Named
 @Transactional

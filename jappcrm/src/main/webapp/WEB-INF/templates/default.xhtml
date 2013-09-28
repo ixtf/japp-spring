@@ -44,59 +44,67 @@
 								<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><h:outputLink
-										value="#{request.contextPath}#{urlUtil.customerNewPath}">
+										value="#{request.contextPath}#{customerService.newPath}">
 										<h:outputText value="#{msg['customer']}" />
 									</h:outputLink></li>
 								<li><h:outputLink
-										value="#{request.contextPath}#{urlUtil.storageNewPath}">
+										value="#{request.contextPath}#{storageService.newPath}">
 										<h:outputText value="#{msg['storage']}" />
 									</h:outputLink></li>
 								<li class="divider"></li>
 								<!-- <li class="nav-header">Nav header</li> -->
 								<li><h:outputLink
-										value="#{request.contextPath}#{urlUtil.crmTypeNewPath}">
+										value="#{request.contextPath}#{crmTypeService.newPath}">
 										<h:outputText value="#{msg['crmType']}" />
 									</h:outputLink></li>
 								<li><h:outputLink
-										value="#{request.contextPath}#{urlUtil.certificateNewPath}">
+										value="#{request.contextPath}#{certificateService.newPath}">
 										<h:outputText value="#{msg['certificate']}" />
 									</h:outputLink></li>
 								<li><h:outputLink
-										value="#{request.contextPath}#{urlUtil.communicateeNewPath}">
+										value="#{request.contextPath}#{communicateeService.newPath}">
 										<h:outputText value="#{msg['communicatee']}" />
 									</h:outputLink></li>
 								<li class="divider"></li>
 								<li><h:outputLink
-										value="#{request.contextPath}#{urlUtil.customerIndicatorNewPath}">
+										value="#{request.contextPath}#{customerIndicatorService.newPath}">
 										<h:outputText value="#{msg['customer']}#{msg['indicator']}" />
 									</h:outputLink></li>
 								<li><h:outputLink
-										value="#{request.contextPath}#{urlUtil.storageIndicatorNewPath}">
+										value="#{request.contextPath}#{storageIndicatorService.newPath}">
 										<h:outputText value="#{msg['storage']}#{msg['indicator']}" />
 									</h:outputLink></li>
 								<li><h:outputLink
-										value="#{request.contextPath}#{urlUtil.indicatorValueNewPath}">
+										value="#{request.contextPath}#{customerReportService.newPath}">
+										<h:outputText value="#{msg['customer']}#{msg['report']}" />
+									</h:outputLink></li>
+								<li><h:outputLink
+										value="#{request.contextPath}#{storageReportService.newPath}">
+										<h:outputText value="#{msg['storage']}#{msg['report']}" />
+									</h:outputLink></li>
+								<li><h:outputLink
+										value="#{request.contextPath}#{indicatorValueService.newPath}">
 										<h:outputText value="#{msg['indicatorValue']}" />
 									</h:outputLink></li>
 							</ul></li>
 						<li><h:outputLink
-								value="#{request.contextPath}#{urlUtil.customersPath}">
+								value="#{request.contextPath}#{customerService.managePath}">
 								<h:outputText value="#{msg['customer']}#{msg['manage']}" />
 							</h:outputLink></li>
 						<li><h:outputLink
-								value="#{request.contextPath}#{urlUtil.storagesPath}">
+								value="#{request.contextPath}#{storageService.managePath}">
 								<h:outputText value="#{msg['storage']}#{msg['manage']}" />
 							</h:outputLink></li>
 						<li><h:outputLink
-								value="#{request.contextPath}#{urlUtil.crmTypesPath}">
+								value="#{request.contextPath}#{crmTypeService.managePath}">
 								<h:outputText value="#{msg['crmType']}#{msg['manage']}" />
 							</h:outputLink></li>
 						<li><h:outputLink
-								value="#{request.contextPath}#{urlUtil.certificatesPath}">
+								value="#{request.contextPath}#{certificateService.managePath}">
 								<h:outputText value="#{msg['certificate']}#{msg['manage']}" />
 							</h:outputLink></li>
 						<li><h:outputLink
-								value="#{request.contextPath}#{urlUtil.communicateesPath}">
+								value="#{request.contextPath}#{communicateeService.managePath}">
 								<h:outputText value="#{msg['communicatee']}#{msg['manage']}" />
 							</h:outputLink></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -105,18 +113,31 @@
 								class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><h:outputLink
-										value="#{request.contextPath}#{urlUtil.customerIndicatorsPath}">
+										value="#{request.contextPath}#{customerIndicatorService.managePath}">
 										<h:outputText value="#{msg['customer']}#{msg['indicator']}" />
 									</h:outputLink></li>
 								<li><h:outputLink
-										value="#{request.contextPath}#{urlUtil.storageIndicatorsPath}">
+										value="#{request.contextPath}#{storageIndicatorService.managePath}">
 										<h:outputText value="#{msg['storage']}#{msg['indicator']}" />
 									</h:outputLink></li>
 							</ul></li>
-						<li><h:outputLink
-								value="#{request.contextPath}#{urlUtil.indicatorValuesPath}">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"><h:outputText
+									value="#{msg['report']}#{msg['manage']}" /> <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><h:outputLink
+										value="#{request.contextPath}#{customerReportService.managePath}">
+										<h:outputText value="#{msg['customer']}#{msg['report']}" />
+									</h:outputLink></li>
+								<li><h:outputLink
+										value="#{request.contextPath}#{storageReportService.managePath}">
+										<h:outputText value="#{msg['storage']}#{msg['report']}" />
+									</h:outputLink></li>
+							</ul></li>
+						<!-- <li><h:outputLink
+								value="#{request.contextPath}#{indicatorValueService.managePath}">
 								<h:outputText value="#{msg['indicatorValue']}#{msg['manage']}" />
-							</h:outputLink></li>
+							</h:outputLink></li> -->
 					</ul>
 					<div class="btn-group pull-right">
 						<a href="javascript:void(0)"
@@ -130,7 +151,8 @@
 							<li><a href="javascript:void(0)"> <h:outputText
 										value="#{cacheService.principalType}(#{cacheService.principal})" />
 							</a></li>
-							<li><h:outputLink value="#{request.contextPath}/theme"
+							<li><h:outputLink
+									value="#{request.contextPath}/#{cacheService.themePath}"
 									rendered="#{cacheService.authenticated}">
 									<h:outputText value="#{msg['theme.title']}" />
 								</h:outputLink></li>
@@ -140,7 +162,8 @@
 									<h:outputText value="#{msg['bug']}" />
 								</h:outputLink></li> -->
 							<li class="divider"></li>
-							<li><h:outputLink value="#{request.contextPath}/logout"
+							<li><h:outputLink
+									value="#{request.contextPath}/#{cacheService.logoutPath}"
 									rendered="#{cacheService.authenticated}">
 									<h:outputText value="#{msg['logout.title']}" />
 								</h:outputLink></li>

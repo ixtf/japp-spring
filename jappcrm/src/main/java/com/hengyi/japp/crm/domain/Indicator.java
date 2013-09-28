@@ -34,19 +34,21 @@ public abstract class Indicator extends Modifiable implements Serializable {
 	@Fetch
 	protected Set<IndicatorValueScore> indicatorValueScores;
 
-	public double calculateScore(Crm crm) {
-		return calculateScore(ImmutableSet.copyOf(crm.getIndicatorValues()));
+	public final double calculateScorePercent(Crm crm) {
+		return calculateScore(crm) * getPercent();
 	}
 
-	private double calculateScore(Set<IndicatorValue> indicatorValues) {
+	public double calculateScore(Crm crm) {
 		double result = 0;
+		Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
+				.getIndicatorValues());
 		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores()) {
 			if (!indicatorValues.contains(indicatorValueScore.getEnd()))
 				continue;
 			double score = indicatorValueScore.getScore();
 			result = result < score ? score : result;
 		}
-		return result * getPercent();
+		return result;
 	}
 
 	public List<IndicatorValueScore> getIndicatorValueScoresAsList() {

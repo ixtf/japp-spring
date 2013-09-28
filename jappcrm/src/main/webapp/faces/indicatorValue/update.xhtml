@@ -20,6 +20,11 @@
 				<h:inputText id="name"
 					value="#{indicatorValueController.indicatorValue.name}" />
 				<p:message for="name" />
+
+				<h:outputLabel for="note" value="#{msg['note']}" />
+				<h:inputText id="note"
+					value="#{indicatorValueController.indicatorValue.note}" />
+				<p:message for="note" />
 			</h:panelGrid>
 			<p:commandButton action="#{indicatorValueController.save}"
 				update=":form" value="#{msg['operation.submit']}"

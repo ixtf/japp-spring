@@ -21,7 +21,9 @@ public abstract class ReportsController<T extends Report> extends
 
 	protected abstract ReportService<T> getReportService();
 
-	public abstract void edit();
+	public void edit() {
+		redirect(reportService.getUpdatePath(getReport().getNodeId()));
+	}
 
 	public void delete() {
 		try {

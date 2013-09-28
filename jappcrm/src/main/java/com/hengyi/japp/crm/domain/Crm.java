@@ -89,7 +89,7 @@ public abstract class Crm extends Modifiable implements Serializable {
 		IndicatorScore indicatorScore = template.createRelationshipBetween(
 				this, indicator, IndicatorScore.class,
 				IndicatorScore.RELATIONSHIP, false);
-		indicatorScore.setScore(indicator.calculateScore(this));
+		indicatorScore.setScore(indicator.calculateScorePercent(this));
 		template.save(indicatorScore);
 	}
 

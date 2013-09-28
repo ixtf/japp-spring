@@ -5,24 +5,36 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import com.hengyi.japp.crm.domain.Crm;
+import com.hengyi.japp.crm.domain.Report;
 import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.web.data.LazyCrmModel;
 
-public abstract class CrmsController<T extends Crm> extends AbstractController {
-	private CrmService<T> crmService;
-	private LazyCrmModel<T> crms;
-	private T crm;
+public abstract class CrmsController<CRM extends Crm> extends
+		AbstractController {
+	private CrmService<CRM> crmService;
+	private LazyCrmModel<CRM> crms;
+	private CRM crm;
 	private String nameSearch;
-	private List<T> searchResult;
+	private List<CRM> searchResult;
+	private Report report;
 
 	@PostConstruct
 	private void init() {
 		crmService = getCrmService();
 	}
 
-	protected abstract CrmService<T> getCrmService();
+	protected abstract CrmService<CRM> getCrmService();
 
-	public abstract void edit();
+	protected abstract List<? extends Report> getReports();
+
+	public void report() {
+		redirect(getCrmService().getUpdatePath(crm.getNodeId()) + "/reports/"
+				+ report.getNodeId());
+	}
+
+	public void edit() {
+		redirect(crmService.getUpdatePath(getCrm().getNodeId()));
+	}
 
 	public void delete() {
 		try {
@@ -38,19 +50,19 @@ public abstract class CrmsController<T extends Crm> extends AbstractController {
 	public void search() {
 		try {
 			searchResult = crmService.findAllByQuery(nameSearch);
-			crms = new LazyCrmModel<T>(searchResult);
+			crms = new LazyCrmModel<CRM>(searchResult);
 		} catch (Exception e) {
 			errorMessage(e);
 		}
 	}
 
-	public LazyCrmModel<T> getCrms() {
+	public LazyCrmModel<CRM> getCrms() {
 		if (crms == null)
-			crms = new LazyCrmModel<T>(crmService);
+			crms = new LazyCrmModel<CRM>(crmService);
 		return crms;
 	}
 
-	public T getCrm() {
+	public CRM getCrm() {
 		return crm;
 	}
 
@@ -58,15 +70,23 @@ public abstract class CrmsController<T extends Crm> extends AbstractController {
 		return nameSearch;
 	}
 
-	public List<T> getSearchResult() {
+	public List<CRM> getSearchResult() {
 		return searchResult;
 	}
 
-	public void setCrm(T crm) {
+	public void setCrm(CRM crm) {
 		this.crm = crm;
 	}
 
 	public void setNameSearch(String nameSearch) {
 		this.nameSearch = nameSearch;
+	}
+
+	public Report getReport() {
+		return report;
+	}
+
+	public void setReport(Report report) {
+		this.report = report;
 	}
 }

@@ -2,21 +2,18 @@ package com.hengyi.japp.crm.service.impl;
 
 import javax.annotation.Resource;
 
+import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
+import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.Report;
-import com.hengyi.japp.crm.domain.repository.CustomerReportRepository;
 import com.hengyi.japp.crm.domain.repository.ReportRepository;
-import com.hengyi.japp.crm.domain.repository.StorageReportRepository;
+import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.ReportService;
 
-public abstract class ReportServiceImpl<T extends Report> implements
-		ReportService<T> {
+public abstract class ReportServiceImpl<T extends Report> extends
+		CommonUrlServiceImpl<Long> implements ReportService<T> {
 	@Resource
 	protected ReportRepository reportRepository;
-	@Resource
-	protected CustomerReportRepository customerReportRepository;
-	@Resource
-	protected StorageReportRepository storageReportRepository;
 
 	@Override
 	public void save(T report, Iterable<Indicator> indicators) {
@@ -28,4 +25,11 @@ public abstract class ReportServiceImpl<T extends Report> implements
 	public void delete(T report) {
 		reportRepository.delete(report);
 	}
+
+	@Override
+	public String getNewPath() {
+		return getCrmService().getNewPath() + "/report";
+	}
+
+	protected abstract CrmService<? extends Crm> getCrmService();
 }

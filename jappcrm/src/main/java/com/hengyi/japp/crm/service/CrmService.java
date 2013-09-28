@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.data.domain.PageRequest;
 
+import com.hengyi.japp.common.service.CommonUrlService;
 import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
@@ -13,7 +14,7 @@ import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 
-public interface CrmService<T extends Crm> {
+public interface CrmService<T extends Crm> extends CommonUrlService<Long> {
 	T newCrm();
 
 	T findOne(Long nodeId);

@@ -32,13 +32,12 @@ public class CertificatesController extends AbstractController implements
 	}
 
 	public void edit() {
-		redirect(urlUtil.getCertificatesPath() + "/"
-				+ getCertificate().getNodeId());
+		redirect(certificateService.getUpdatePath(getCertificate().getNodeId()));
 	}
 
 	public void delete() {
 		try {
-			certificateRepository.delete(certificate);
+			certificateService.delete(certificate);
 			certificates.remove(certificate);
 			operationSuccessMessage();
 		} catch (Exception e) {
@@ -48,6 +47,6 @@ public class CertificatesController extends AbstractController implements
 
 	@PostConstruct
 	public void init() {
-		certificates = Lists.newArrayList(certificateRepository.findAll());
+		certificates = Lists.newArrayList(certificateService.findAll());
 	}
 }
