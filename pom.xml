@@ -274,10 +274,6 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-		<dependency>
-			<groupId>com.hengyi.japp</groupId>
-			<artifactId>jappcommon-api</artifactId>
-		</dependency>
 		<!-- JSR-330 -->
 		<dependency>
 			<groupId>javax.inject</groupId>

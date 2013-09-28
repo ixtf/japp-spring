@@ -15,12 +15,17 @@ import org.ocpsoft.rewrite.servlet.config.HttpConfigurationProvider;
 import org.ocpsoft.rewrite.servlet.config.Path;
 import org.ocpsoft.rewrite.servlet.config.Redirect;
 import org.ocpsoft.rewrite.servlet.config.rule.Join;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class UrlConfigurationProvider extends HttpConfigurationProvider {
 
 	@Override
 	public Configuration getConfiguration(ServletContext context) {
-		UrlUtil urlUtil = new UrlUtil();
+		WebApplicationContext springContext = WebApplicationContextUtils
+				.getWebApplicationContext(context);
+		UrlUtil urlUtil = springContext.getBean(UrlUtil.class);
+
 		Condition loggedIn = new Condition() {
 			@Override
 			public boolean evaluate(Rewrite event, EvaluationContext context) {
