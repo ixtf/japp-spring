@@ -27,6 +27,7 @@ import com.hengyi.japp.crm.service.OperatorService;
 @Singleton
 public class CacheServiceImpl extends CommonCacheServiceImpl implements
 		CacheService {
+	private static final long serialVersionUID = -1792873339689539591L;
 	@Resource
 	private CrmTypeRepository crmTypeRepository;
 	@Resource

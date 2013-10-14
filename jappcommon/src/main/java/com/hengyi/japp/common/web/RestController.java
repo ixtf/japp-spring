@@ -1,6 +1,5 @@
 package com.hengyi.japp.common.web;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.http.MediaType;
@@ -49,7 +48,8 @@ public class RestController extends AbstractController implements SoapService {
 			@PathVariable("principalType") final PrincipalType principalType,
 			@PathVariable("query") final String query) throws Exception {
 		List<BindUserDTO> result = Lists.newArrayList();
-		for (BindUser user : userService.queryAllBindUser("*" + query + "*")) {
+		for (BindUser user : userService.findAllBindUserByQuery("*" + query
+				+ "*")) {
 			result.add(dozer.map(user, BindUserDTO.class));
 		}
 		return result;
@@ -69,8 +69,8 @@ public class RestController extends AbstractController implements SoapService {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@Override
 	public @ResponseBody
-	Collection<CorporationDTO> findAllCorporation(
-			@PathVariable("uuid") String uuid) throws Exception {
+	List<CorporationDTO> findAllCorporation(@PathVariable("uuid") String uuid)
+			throws Exception {
 		return soapService.findAllCorporation(uuid);
 	}
 
@@ -87,16 +87,16 @@ public class RestController extends AbstractController implements SoapService {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@Override
 	public @ResponseBody
-	Collection<BindUserDTO> findBindUser(@PathVariable("uuid") final String uuid)
+	List<BindUserDTO> findAllBindUser(@PathVariable("uuid") final String uuid)
 			throws Exception {
-		return soapService.findBindUser(uuid);
+		return soapService.findAllBindUser(uuid);
 	}
 
 	@RequestMapping(value = "/hrOrganizations", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@Override
 	public @ResponseBody
-	Collection<HrOrganizationDTO> findAllHrOrganization() throws Exception {
+	List<HrOrganizationDTO> findAllHrOrganization() throws Exception {
 		return soapService.findAllHrOrganization();
 	}
 
@@ -104,7 +104,7 @@ public class RestController extends AbstractController implements SoapService {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@Override
 	public @ResponseBody
-	Collection<BindUserDTO> findHrUsersByHrOrganization(
+	List<BindUserDTO> findHrUsersByHrOrganization(
 			@PathVariable("orgId") final String orgId) {
 		return soapService.findHrUsersByHrOrganization(orgId);
 	}
@@ -115,5 +115,25 @@ public class RestController extends AbstractController implements SoapService {
 	public @ResponseBody
 	Double calString(@PathVariable("cal") final String cal) throws Exception {
 		return soapService.calString(cal);
+	}
+
+	@RequestMapping(value = "/findAllUserByQuery/{nameSearch}", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@Override
+	public @ResponseBody
+	List<UserDTO> findAllUserByQuery(
+			@PathVariable("nameSearch") final String nameSearch)
+			throws Exception {
+		return soapService.findAllUserByQuery(nameSearch);
+	}
+
+	@RequestMapping(value = "/findAllUserByQuery/{nameSearch}/{size}", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@Override
+	public @ResponseBody
+	List<UserDTO> findAllUserByQuery_Size(
+			@PathVariable("nameSearch") final String nameSearch,
+			@PathVariable("size") final int size) throws Exception {
+		return soapService.findAllUserByQuery_Size(nameSearch, size);
 	}
 }

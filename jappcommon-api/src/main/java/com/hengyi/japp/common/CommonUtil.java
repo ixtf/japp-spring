@@ -4,6 +4,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.faces.context.FacesContext;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 
@@ -23,6 +25,12 @@ public class CommonUtil {
 
 	public static final ResourceBundle resourceBundle(String baseName) {
 		Locale locale = LocaleContextHolder.getLocale();
+		return ResourceBundle.getBundle(baseName, locale);
+	}
+
+	public static final ResourceBundle resourceBundle(String baseName,
+			FacesContext context) {
+		Locale locale = context.getELContext().getLocale();
 		return ResourceBundle.getBundle(baseName, locale);
 	}
 

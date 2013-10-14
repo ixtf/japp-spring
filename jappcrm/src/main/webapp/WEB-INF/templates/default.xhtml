@@ -160,10 +160,10 @@
 							<!-- <li><h:outputLink value="#{cacheService.bugNewPath}"
 									rendered="#{cacheService.authenticated}">
 									<h:outputText value="#{msg['bug']}" />
-								</h:outputLink></li> -->
-							<li class="divider"></li>
+								</h:outputLink></li> 
+							<li class="divider"></li>-->
 							<li><h:outputLink
-									value="#{request.contextPath}/#{cacheService.logoutPath}"
+									value="#{request.contextPath}#{cacheService.logoutPath}"
 									rendered="#{cacheService.authenticated}">
 									<h:outputText value="#{msg['logout.title']}" />
 								</h:outputLink></li>
@@ -188,12 +188,13 @@
 			</f:facet>
 		</p:ajaxStatus>
 	</ui:insert>
-	<p:growl showDetail="true" sticky="true" widgetVar="pushMessage" />
+	<!-- transport="long-polling" -->
+	<!-- <p:growl showDetail="true" sticky="true" widgetVar="pushMessage" />
 	<p:socket onMessage="handleMessage"
 		channel="/#{cacheService.currentOperator.uuid}"
-		transport="long-polling" rendered="#{cacheService.authenticated}" />
+		rendered="#{cacheService.authenticated}" />
 	<script type="text/javascript">
 	function handleMessage(facesmessage){pushMessage.show([facesmessage]);}
-	</script>
+	</script> -->
 </h:body>
 </html>

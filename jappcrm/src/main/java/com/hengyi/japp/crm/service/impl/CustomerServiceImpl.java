@@ -28,6 +28,7 @@ import com.hengyi.japp.crm.service.customer.CustomerService;
 @Transactional
 public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
 		CustomerService {
+	private static final long serialVersionUID = -1339563029393145730L;
 	@Resource
 	private CustomerRepository customerRepository;
 	@Resource
@@ -63,7 +64,7 @@ public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
 			Iterable<Associate> associates) throws Exception {
 		super.save(crm, indicatorMap, crmType, certificates, communicatee,
 				communicatees, associates);
-		syncEventPublisher.publish(new CustomerUpdateEvent(crm.getNodeId()));
+		eventPublisher.publish(new CustomerUpdateEvent(crm.getNodeId()));
 	}
 
 	@Override

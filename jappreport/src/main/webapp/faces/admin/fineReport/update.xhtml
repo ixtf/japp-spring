@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/admin.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
+
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText value="#{msg['new']}-"
+					rendered="#{empty fineReportController.report.nodeId}" />
+				<h:outputText value="#{msg['edit']}-"
+					rendered="#{not empty fineReportController.report.nodeId}" />
+				<h:outputText value="Fine Report" />
+			</h1>
+
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputLabel for="name" value="#{msg['name']}" />
+				<h:inputText id="name" value="#{fineReportController.report.name}" />
+				<p:message for="name" />
+
+				<h:outputLabel for="cpt" value="#{msg['cpt']}" />
+				<h:inputText id="cpt" value="#{fineReportController.report.cpt}" />
+				<p:message for="cpt" />
+
+				<h:outputLabel for="note" value="#{msg['note']}" />
+				<p:inputTextarea id="note"
+					value="#{fineReportController.report.note}" />
+				<p:message for="note" />
+			</h:panelGrid>
+			<p:commandButton action="#{fineReportController.save}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

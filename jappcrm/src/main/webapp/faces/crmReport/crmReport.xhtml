@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
+			<p:tabView id="tabView" dynamic="true" orientation="bottom">
+				<p:tab title="#{msg['indicator']}"
+					rendered="#{not empty crmReportController.crmReport.crmReportIndicators}">
+					<ui:include src="crmReportIndicator.xhtml" />
+				</p:tab>
+				<p:tab title="#{msg['crmField']}"
+					rendered="#{not empty crmReportController.crmReport.crmReportFields}">
+					<ui:include src="crmReportField.xhtml" />
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>

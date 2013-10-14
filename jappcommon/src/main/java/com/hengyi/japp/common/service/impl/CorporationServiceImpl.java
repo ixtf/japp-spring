@@ -1,9 +1,9 @@
 package com.hengyi.japp.common.service.impl;
 
 import javax.annotation.Resource;
+import javax.inject.Named;
 
 import org.springframework.data.neo4j.template.Neo4jOperations;
-import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableSet;
 import com.hengyi.japp.common.CommonConstant;
@@ -20,8 +20,8 @@ import com.hengyi.japp.common.domain.repository.CorporationRepository;
 import com.hengyi.japp.common.domain.repository.bind.BindCorporationRepository;
 import com.hengyi.japp.common.service.CorporationService;
 
+@Named
 @SuppressWarnings("unchecked")
-@Service
 public class CorporationServiceImpl implements CorporationService {
 	@Resource
 	private Neo4jOperations template;

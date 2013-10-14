@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
@@ -91,15 +92,27 @@ public abstract class CrmServiceImpl<T extends Crm> extends
 		crmRepository.delete(crm);
 	}
 
+	// 取Crm已经选中的indicatorValue，在和indicator关联的indicatorValue中选
 	public Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(Crm crm,
 			Iterable<Indicator> indicators) {
-		// TODO 改进取数逻辑，目前有些难以理解
 		ImmutableMap.Builder<Indicator, List<IndicatorValueScore>> builder = ImmutableMap
 				.builder();
+		Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
+				.getIndicatorValues(template));
 		for (Indicator indicator : indicators)
 			builder.put(indicator,
-					indicator.getIndicatorValueScores(crm, template));
+					getIndicatorValueScores(indicator, indicatorValues));
 		return builder.build();
+	}
+
+	private List<IndicatorValueScore> getIndicatorValueScores(
+			Indicator indicator, Set<IndicatorValue> indicatorValues) {
+		List<IndicatorValueScore> result = Lists.newArrayList();
+		for (IndicatorValueScore indicatorValueScore : indicator
+				.getIndicatorValueScores(template))
+			if (indicatorValues.contains(indicatorValueScore.getEnd()))
+				result.add(indicatorValueScore);
+		return result;
 	}
 
 	// @PostConstruct

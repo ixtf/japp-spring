@@ -12,7 +12,7 @@ import com.hengyi.japp.crm.domain.Crm;
 @NodeEntity
 public class Storage extends Crm {
 	private static final long serialVersionUID = -831678558917732185L;
-	public static final String FIELD_CAPACITY = "capacity";
+	// public static final String FIELD_CAPACITY = "capacity";
 	@NotNull
 	@Min(0)
 	private BigDecimal capacity;

@@ -51,7 +51,7 @@ public class UserController extends AbstractController {
 		if (StringUtils.isEmpty(command.getName()))
 			return userList(0);
 		ImmutableSet.Builder<User> users = ImmutableSet.builder();
-		for (User user : userService.queryAll(command)) {
+		for (User user : userService.findAllByQuery(command)) {
 			template.fetch(user.getBindUsers());
 			users.add(user);
 		}

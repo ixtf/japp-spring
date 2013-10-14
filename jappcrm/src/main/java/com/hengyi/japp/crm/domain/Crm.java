@@ -30,9 +30,9 @@ import com.google.common.collect.Sets;
 @NodeEntity
 public abstract class Crm extends Modifiable implements Serializable {
 	private static final long serialVersionUID = -2000360302877825388L;
-	public static final String FIELD_SALEINCOME = "saleIncome";
-	public static final String FIELD_REGISTERCAPITAL = "registerCapital";
-	public static final String FIELD_DURATIONYEARS = "durationYears";
+	// public static final String FIELD_SALEINCOME = "saleIncome";
+	// public static final String FIELD_REGISTERCAPITAL = "registerCapital";
+	// public static final String FIELD_DURATIONYEARS = "durationYears";
 
 	public static final String CRM_TYPE = "CRM_TYPE";
 	public static final String CERTIFICATE = "CERTIFICATE";

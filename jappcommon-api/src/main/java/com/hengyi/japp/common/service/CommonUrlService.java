@@ -5,6 +5,10 @@ import java.io.Serializable;
 public interface CommonUrlService<ID extends Serializable> {
 	String getNewPath();
 
+	String getNewView();
+
+	String getUpdatePath();
+
 	String getUpdatePath(ID id);
 
 	String getUpdateView();

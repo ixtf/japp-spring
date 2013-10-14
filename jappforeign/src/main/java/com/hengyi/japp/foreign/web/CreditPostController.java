@@ -7,9 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.foreign.application.event.vbak.CreditPostWriteToSapEvent;
 import com.hengyi.japp.foreign.domain.CreditPost;
 import com.hengyi.japp.foreign.domain.CreditPostRecieveInfo;
+import com.hengyi.japp.foreign.event.vbak.CreditPostWriteToSapEvent;
 
 @Named
 @Scope("session")

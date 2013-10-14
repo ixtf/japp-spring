@@ -75,7 +75,7 @@ public class CommonUrlConfigurationProvider extends HttpConfigurationProvider {
 						Join.path(cacheService.getHomePath()).to(
 								cacheService.getHomeView()));
 
-		for (CommonUrlService urlService : springContext.getBeansOfType(
+		for (CommonUrlService<?> urlService : springContext.getBeansOfType(
 				CommonUrlService.class).values())
 			urlService(builder, urlService);
 
@@ -83,12 +83,15 @@ public class CommonUrlConfigurationProvider extends HttpConfigurationProvider {
 	}
 
 	private void urlService(ConfigurationBuilder builder,
-			CommonUrlService urlService) {
+			CommonUrlService<?> urlService) {
 		builder.addRule(
-				Join.path(urlService.getNewPath()).to(
-						urlService.getUpdateView())).addRule(
-				Join.path(urlService.getManagePath()).to(
-						urlService.getManageView()));
+				Join.path(urlService.getNewPath()).to(urlService.getNewView()))
+				.addRule(
+						Join.path(urlService.getUpdatePath()).to(
+								urlService.getUpdateView()))
+				.addRule(
+						Join.path(urlService.getManagePath()).to(
+								urlService.getManageView()));
 	}
 
 	@Override

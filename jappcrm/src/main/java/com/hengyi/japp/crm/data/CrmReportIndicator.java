@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorScore;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
@@ -22,9 +24,12 @@ public class CrmReportIndicator implements Serializable {
 			CrmReport crmReport) {
 		ImmutableList.Builder<CrmReportIndicator> builder = ImmutableList
 				.builder();
+		Set<Indicator> indicators = ImmutableSet.copyOf(crmReport.getReport()
+				.getIndicators());
 		for (IndicatorScore indicatorScore : crmReport.getCrm()
 				.getIndicatorScores())
-			builder.add(new CrmReportIndicator(crmReport, indicatorScore));
+			if (indicators.contains(indicatorScore.getEnd()))
+				builder.add(new CrmReportIndicator(crmReport, indicatorScore));
 		return builder.build();
 	}
 

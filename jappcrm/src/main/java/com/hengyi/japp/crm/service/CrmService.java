@@ -1,5 +1,6 @@
 package com.hengyi.japp.crm.service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,8 @@ import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 
-public interface CrmService<T extends Crm> extends CommonUrlService<Long> {
+public interface CrmService<T extends Crm> extends CommonUrlService<Long>,
+		Serializable {
 	T newCrm();
 
 	T findOne(Long nodeId);

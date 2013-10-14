@@ -6,7 +6,7 @@ import javax.inject.Named;
 import org.springframework.context.ApplicationListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hengyi.japp.crm.event.EventPublisher;
+import com.hengyi.japp.crm.event.SyncEventPublisher;
 import com.hengyi.japp.crm.event.indicator.IndicatorUpdateEvent;
 
 @Named
@@ -14,11 +14,11 @@ import com.hengyi.japp.crm.event.indicator.IndicatorUpdateEvent;
 public class CustomerIndicatorUpdateEventListener implements
 		ApplicationListener<CustomerIndicatorUpdateEvent> {
 	@Inject
-	protected EventPublisher eventPublisher;
+	protected SyncEventPublisher syncEventPublisher;
 
 	@Override
 	public void onApplicationEvent(CustomerIndicatorUpdateEvent event) {
 		Long nodeId = (Long) event.getSource();
-		eventPublisher.publish(new IndicatorUpdateEvent(nodeId));
+		syncEventPublisher.publish(new IndicatorUpdateEvent(nodeId));
 	}
 }

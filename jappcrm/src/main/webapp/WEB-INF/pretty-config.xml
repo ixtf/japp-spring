@@ -12,7 +12,7 @@
 	<url-mapping id="crmReport">
 		<pattern
 			value="/crms/#{crmReportController.crmNodeId}/reports/#{crmReportController.reportNodeId}" />
-		<view-id value="/faces/crmReport.jsf" />
+		<view-id value="/faces/crmReport/crmReport.jsf" />
 	</url-mapping>
 
 	<url-mapping id="communicateeUpdate">

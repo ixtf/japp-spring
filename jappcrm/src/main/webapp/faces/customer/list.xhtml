@@ -17,14 +17,8 @@
 			</h:panelGrid>
 
 			<p:contextMenu for="tableCustomers">
-				<p:submenu label="#{msg['report']}" icon="ui-icon-document">
-					<p:menuitem value="#{msg['basicInfoReport']}"
-						action="#{customersController.basicInfoReport}" />
-					<!-- <p:menuitem value="#{msg['creditRiskReport']}"
-						action="#{customersController.creditRiskReport}" />
-					<p:menuitem value="#{msg['fiCreditRiskReport']}"
-						action="#{customersController.fiCreditRiskReport}" /> -->
-				</p:submenu>
+				<p:submenu label="#{msg['report']}" icon="ui-icon-document"
+					binding="#{customersController.reportSubmenu}" />
 				<p:separator />
 				<p:menuitem value="#{msg['edit']}"
 					action="#{customersController.edit}" icon="ui-icon-pencil" />

@@ -63,7 +63,7 @@ public class StorageServiceImpl extends CrmServiceImpl<Storage> implements
 			Iterable<Associate> associates) throws Exception {
 		super.save(crm, indicatorMap, crmType, certificates, communicatee,
 				communicatees, associates);
-		syncEventPublisher.publish(new StorageUpdateEvent(crm.getNodeId()));
+		eventPublisher.publish(new StorageUpdateEvent(crm.getNodeId()));
 	}
 
 	@Override

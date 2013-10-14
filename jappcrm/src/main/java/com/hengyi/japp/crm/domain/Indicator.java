@@ -55,14 +55,20 @@ public abstract class Indicator extends Modifiable implements Serializable {
 		return Lists.newArrayList(getIndicatorValueScores());
 	}
 
-	public List<IndicatorValueScore> getIndicatorValueScores(Crm crm,
+	public List<IndicatorValue> getIndicatorValues(Crm crm,
 			Neo4jOperations template) {
-		List<IndicatorValueScore> result = Lists.newArrayList();
+		return template.fetch(getIndicatorValues(crm));
+	}
+
+	public List<IndicatorValue> getIndicatorValues(Crm crm) {
+		List<IndicatorValue> result = Lists.newArrayList();
 		Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
-				.getIndicatorValues(template));
-		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores(template))
-			if (indicatorValues.contains(indicatorValueScore.getEnd()))
-				result.add(indicatorValueScore);
+				.getIndicatorValues());
+		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores()) {
+			IndicatorValue indicatorValue = indicatorValueScore.getEnd();
+			if (indicatorValues.contains(indicatorValue))
+				result.add(indicatorValue);
+		}
 		return result;
 	}
 

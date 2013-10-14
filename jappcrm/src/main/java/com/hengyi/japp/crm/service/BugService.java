@@ -1,12 +1,13 @@
 package com.hengyi.japp.crm.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
 
 import com.hengyi.japp.crm.domain.Bug;
 
-public interface BugService {
+public interface BugService extends Serializable {
 	Bug findOne(Long nodeId);
 
 	void save(Bug bug);

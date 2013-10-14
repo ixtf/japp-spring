@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/admin.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputLabel for="nameSearch" value="#{msg['name']}" />
+				<h:inputText id="nameSearch" value="#{rolesController.nameSearch}" />
+				<p:commandButton value="#{msg['search']}" update=":form"
+					action="#{rolesController.search}" icon="ui-icon-search" />
+			</h:panelGrid>
+
+			<p:contextMenu for="tableRoles">
+				<p:menuitem value="#{msg['edit']}" action="#{rolesController.edit}"
+					icon="ui-icon-pencil" />
+				<p:menuitem value="#{msg['delete']}" type="button"
+					onclick="confirmDialogDeleteFineReport.show()" icon="ui-icon-close" />
+			</p:contextMenu>
+			<p:confirmDialog message="#{msg['operation.confirm']}?"
+				severity="alert" widgetVar="confirmDialogDeleteFineReport">
+				<p:commandButton value="#{msg['operation.submit']}" update=":form"
+					action="#{rolesController.delete}"
+					oncomplete="confirmDialogDeleteFineReport.hide()" />
+			</p:confirmDialog>
+			<p:dataTable id="tableRoles" var="_role"
+				value="#{rolesController.roles}" selection="#{rolesController.role}"
+				rowKey="#{_role.nodeId}" selectionMode="single"
+				rows="#{rolesController.pageSize}" paginator="true" lazy="true"
+				stickyHeader="true">
+				<p:column headerText="#{msg['name']}">
+					<h:outputText value="#{_role.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['note']}">
+					<h:outputText value="#{_role.note}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

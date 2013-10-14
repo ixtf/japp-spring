@@ -1,7 +1,6 @@
 package com.hengyi.japp.crm.web.customer;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -9,8 +8,8 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.crm.domain.customer.Customer;
-import com.hengyi.japp.crm.domain.customer.CustomerReport;
 import com.hengyi.japp.crm.service.CrmService;
+import com.hengyi.japp.crm.service.ReportService;
 import com.hengyi.japp.crm.service.customer.CustomerReportService;
 import com.hengyi.japp.crm.service.customer.CustomerService;
 import com.hengyi.japp.crm.web.CrmsController;
@@ -37,7 +36,7 @@ public class CustomersController extends CrmsController<Customer> implements
 	}
 
 	@Override
-	protected List<CustomerReport> getReports() {
-		return customerReportService.findAll();
+	protected ReportService<?> getReportService() {
+		return customerReportService;
 	}
 }

@@ -28,6 +28,17 @@
 					maxValue="1" />
 				<p:message for="percent" />
 			</h:panelGrid>
+			<h:panelGrid columns="3" cellpadding="5"
+				rendered="#{cacheService.admin and (not customerIndicatorController.hasIndicatorValues)}">
+				<h:outputLabel for="crmField" value="#{msg['crmField']}" />
+				<p:selectOneMenu id="crmField"
+					value="#{customerIndicatorController.indicator.crmField}">
+					<f:selectItems var="_crmField"
+						value="#{customerController.allCrmFields}"
+						itemLabel="#{msg[_crmField.displayName]}" />
+				</p:selectOneMenu>
+				<p:message for="crmField" />
+			</h:panelGrid>
 			<p:selectOneMenu id="bug" rendered="false" />
 			<p:dataTable id="tableIndicatorValueScores"
 				rendered="#{customerIndicatorController.hasIndicatorValues}"

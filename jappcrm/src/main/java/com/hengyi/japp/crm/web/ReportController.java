@@ -51,7 +51,7 @@ public abstract class ReportController<T extends Report> extends
 	}
 
 	public void removeCrmFiled() {
-		report.getCrmFields().remove(getIndicator());
+		report.getCrmFields().remove(getCrmField());
 	}
 
 	public T getReport() {

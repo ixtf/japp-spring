@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/admin.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
+
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText value="#{msg['new']}-#{msg['operator']}" />
+			</h1>
+
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputLabel for="uuid" value="UUID" />
+				<p:inputText id="uuid" value="#{operatorController.operator.uuid}"
+					readonly="true" />
+				<p:message for="uuid" />
+
+				<h:outputLabel for="principalType" value="Principal Type" />
+				<p:selectManyMenu id="principalType"
+					value="#{operatorController.principalType}">
+					<f:selectItems var="_principalType"
+						value="#{operatorController.allPrincipalTypes}"
+						itemLabel="#{_principalType.name}" />
+				</p:selectManyMenu>
+				<p:message for="principalType" />
+
+				<h:outputLabel for="principal" value="Principal" />
+				<p:autoComplete id="principal"
+					value="#{operatorController.principal}"
+					completeMethod="#{operatorController.autoCompletePrincipal}"
+					forceSelection="true" />
+				<p:message for="principal" />
+
+				<h:outputLabel for="name" value="#{msg['name']}" />
+				<h:inputText id="name" value="#{operatorController.operator.name}" />
+				<p:message for="name" />
+			</h:panelGrid>
+			<p:commandButton action="#{operatorController.save}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

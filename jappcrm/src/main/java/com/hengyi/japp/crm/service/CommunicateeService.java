@@ -1,5 +1,6 @@
 package com.hengyi.japp.crm.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -7,7 +8,8 @@ import org.springframework.data.domain.Pageable;
 import com.hengyi.japp.common.service.CommonUrlService;
 import com.hengyi.japp.crm.domain.Communicatee;
 
-public interface CommunicateeService extends CommonUrlService<Long> {
+public interface CommunicateeService extends CommonUrlService<Long>,
+		Serializable {
 	Communicatee findOne(Long nodeId);
 
 	void save(Communicatee communicatee) throws Exception;

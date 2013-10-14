@@ -1,11 +1,13 @@
 package com.hengyi.japp.common.service.impl;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Service;
 
 import com.hengyi.japp.common.Constant;
 import com.hengyi.japp.common.data.PrincipalType;
@@ -15,13 +17,13 @@ import com.hengyi.japp.common.domain.repository.UserRepository;
 import com.hengyi.japp.common.service.CacheService;
 import com.hengyi.japp.common.service.UserService;
 
-@Service
-@SuppressWarnings("unchecked")
+@Named
+@Singleton
 public class CacheServiceImpl extends CommonCacheServiceImpl implements
 		CacheService {
 	@Resource
 	private UserRepository userRepository;
-	@Resource
+	@Inject
 	private UserService userService;
 
 	@Override

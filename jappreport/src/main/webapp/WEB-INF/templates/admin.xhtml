@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<title><h:outputText value="#{msg['project.title']}" /></title>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+	</f:facet>
+	<f:facet name="last">
+		<h:outputStylesheet library="css" name="bootstrap.css" />
+		<h:outputStylesheet library="css" name="bootstrap-responsive.min.css" />
+		<h:outputStylesheet library="css" name="all.css" />
+		<h:outputScript library="js" name="PrimeFacesLocales.js" />
+		<h:outputScript library="js" name="bootstrap.min.js" />
+		<h:outputScript library="javax.faces" name="jsf.js" />
+	</f:facet>
+	<ui:insert name="head" />
+</h:head>
+<h:body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse"
+					data-target=".navbar-responsive-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<h:outputLink value="#{request.contextPath}" class="brand">
+					<h:outputText value="#{msg['home.title']}" />
+				</h:outputLink>
+				<div class="nav-collapse collapse navbar-responsive-collapse">
+					<ul class="nav">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"><h:outputText value="#{msg['new']}" />
+								<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><h:outputLink
+										value="#{request.contextPath}#{fineReportService.newPath}">
+										<h:outputText value="Fine Report" />
+									</h:outputLink></li>
+								<li class="divider"></li>
+								<li><h:outputLink
+										value="#{request.contextPath}#{roleService.newPath}">
+										<h:outputText value="#{msg['role']}" />
+									</h:outputLink></li>
+								<li><h:outputLink
+										value="#{request.contextPath}#{operatorService.newPath}">
+										<h:outputText value="#{msg['operator']}" />
+									</h:outputLink></li>
+							</ul></li>
+						<li><h:outputLink
+								value="#{request.contextPath}#{fineReportService.managePath}">
+								<h:outputText value="Fine Report#{msg['manage']}" />
+							</h:outputLink></li>
+						<li><h:outputLink
+								value="#{request.contextPath}#{roleService.managePath}">
+								<h:outputText value="#{msg['role']}#{msg['manage']}" />
+							</h:outputLink></li>
+						<li><h:outputLink
+								value="#{request.contextPath}#{operatorService.managePath}">
+								<h:outputText value="#{msg['operator']}#{msg['manage']}" />
+							</h:outputLink></li>
+					</ul>
+					<div class="btn-group pull-right">
+						<a href="javascript:void(0)"
+							class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+							icon="ui-icon-arrowrefresh-1-w"> <i
+							class="icon-user icon-white"></i> <h:outputText
+								value="#{cacheService.currentOperator.name}"
+								rendered="#{cacheService.authenticated}" /> <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="javascript:void(0)"> <h:outputText
+										value="#{cacheService.principalType}(#{cacheService.principal})" />
+							</a></li>
+							<li><h:outputLink
+									value="#{request.contextPath}/#{cacheService.themePath}"
+									rendered="#{cacheService.authenticated}">
+									<h:outputText value="#{msg['theme.title']}" />
+								</h:outputLink></li>
+							<li class="divider"></li>
+							<!-- <li><h:outputLink value="#{cacheService.bugNewPath}"
+									rendered="#{cacheService.authenticated}">
+									<h:outputText value="#{msg['bug']}" />
+								</h:outputLink></li> 
+							<li class="divider"></li>-->
+							<li><h:outputLink
+									value="#{request.contextPath}#{cacheService.logoutPath}"
+									rendered="#{cacheService.authenticated}">
+									<h:outputText value="#{msg['logout.title']}" />
+								</h:outputLink></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid ui-widget">
+		<ui:insert name="content" />
+	</div>
+	<ui:insert name="status">
+		<p:ajaxStatus
+			style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
+			<f:facet name="start">
+				<!-- <p:graphicImage library="img" value="ajax-loader.gif" /> -->
+			</f:facet>
+
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
+	</ui:insert>
+	<!-- transport="long-polling" -->
+	<!-- <p:growl showDetail="true" sticky="true" widgetVar="pushMessage" />
+	<p:socket onMessage="handleMessage"
+		channel="/#{cacheService.currentOperator.uuid}"
+		rendered="#{cacheService.authenticated}" />
+	<script type="text/javascript">
+	function handleMessage(facesmessage){pushMessage.show([facesmessage]);}
+	</script> -->
+</h:body>
+</html>

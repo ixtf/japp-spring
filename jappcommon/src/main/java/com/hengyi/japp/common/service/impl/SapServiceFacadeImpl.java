@@ -6,19 +6,18 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.inject.Named;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.common.dto.HrOrganizationDTO;
 import com.hengyi.japp.common.sap.annotation.SapHandler;
 import com.hengyi.japp.common.service.SapServiceFacade;
-import com.hengyi.japp.common.service.impl.CommonSapServiceImpl;
 import com.sap.conn.jco.server.JCoServerFunctionHandler;
 
-@Service
+@Named
 public class SapServiceFacadeImpl extends CommonSapServiceImpl implements
 		SapServiceFacade {
 	@Resource

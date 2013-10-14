@@ -1,9 +1,11 @@
 package com.hengyi.japp.crm.service;
 
+import java.io.Serializable;
+
 import com.hengyi.japp.common.dto.UserDTO;
 import com.hengyi.japp.crm.domain.Operator;
 
-public interface OperatorService {
+public interface OperatorService extends Serializable {
 	Operator findOne(Long nodeId) throws Exception;
 
 	Operator findOne(String uuid) throws Exception;

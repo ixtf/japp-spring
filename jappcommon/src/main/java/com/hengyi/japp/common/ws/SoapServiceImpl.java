@@ -1,6 +1,5 @@
 package com.hengyi.japp.common.ws;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +21,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.common.CommonConstant;
+import com.hengyi.japp.common.command.UserSearchCommand;
 import com.hengyi.japp.common.data.PrincipalType;
 import com.hengyi.japp.common.domain.node.Corporation;
 import com.hengyi.japp.common.domain.node.User;
@@ -88,7 +88,30 @@ public class SoapServiceImpl implements SoapService {
 	}
 
 	@Override
-	public Collection<BindUserDTO> findBindUser(String uuid) throws Exception {
+	public List<UserDTO> findAllUserByQuery(String nameSearch) throws Exception {
+		ImmutableList.Builder<UserDTO> builder = ImmutableList.builder();
+		for (User user : userService.findAllByQuery(new UserSearchCommand(
+				nameSearch)))
+			builder.add(dozer.map(user, UserDTO.class));
+		return builder.build();
+	}
+
+	@Override
+	public List<UserDTO> findAllUserByQuery_Size(String nameSearch, int size)
+			throws Exception {
+		ImmutableList.Builder<UserDTO> builder = ImmutableList.builder();
+		int count = 0;
+		for (User user : userService.findAllByQuery(new UserSearchCommand(
+				nameSearch))) {
+			if (count++ >= size)
+				break;
+			builder.add(dozer.map(user, UserDTO.class));
+		}
+		return builder.build();
+	}
+
+	@Override
+	public List<BindUserDTO> findAllBindUser(String uuid) throws Exception {
 		User user = userService.findOne(uuid);
 		if (user == null)
 			throw new Exception(CommonConstant.ErrorCode.USER_NOT_EXIST + uuid);
@@ -99,7 +122,7 @@ public class SoapServiceImpl implements SoapService {
 	}
 
 	@Override
-	public Collection<CorporationDTO> findAllCorporation(String uuid)
+	public List<CorporationDTO> findAllCorporation(String uuid)
 			throws Exception {
 		User user = userService.findOne(uuid);
 		if (user == null)
@@ -116,8 +139,7 @@ public class SoapServiceImpl implements SoapService {
 			+ "where to_char(cur_date,'yyyy-MM-dd')=?";
 
 	@Override
-	public Collection<HrOrganizationDTO> findAllHrOrganization()
-			throws Exception {
+	public List<HrOrganizationDTO> findAllHrOrganization() throws Exception {
 		Set<HrOrganizationDTO> result = Sets.newHashSet();
 		SqlRowSet rs = hrJdbcTemplate.queryForRowSet(findAllHrOrganizationSql,
 				new DateTime().plusDays(-1).toString("yyyy-MM-dd"));
@@ -128,14 +150,14 @@ public class SoapServiceImpl implements SoapService {
 			org.setpId(rs.getString(3));
 			result.add(org);
 		}
-		return result;
+		return ImmutableList.copyOf(result);
 	}
 
 	private final String findHrUsersByHrOrganizationSql = "select EMP_SN as username,EMP_NAME as name "
 			+ "from HR_USERS where DEPARTMENT_CODE=? and IS_ENABLED='1' order by EMP_SN";
 
 	@Override
-	public Collection<BindUserDTO> findHrUsersByHrOrganization(String orgId) {
+	public List<BindUserDTO> findHrUsersByHrOrganization(String orgId) {
 		List<BindUserDTO> result = Lists.newArrayList();
 		SqlRowSet rs = hrJdbcTemplate.queryForRowSet(
 				findHrUsersByHrOrganizationSql, orgId);

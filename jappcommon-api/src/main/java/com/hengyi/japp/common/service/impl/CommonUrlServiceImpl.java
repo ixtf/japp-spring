@@ -12,6 +12,16 @@ public abstract class CommonUrlServiceImpl<ID extends Serializable> implements
 	}
 
 	@Override
+	public String getNewView() {
+		return getUpdateView();
+	}
+
+	@Override
+	public String getUpdatePath() {
+		return getManagePath() + "/{id}";
+	}
+
+	@Override
 	public String getUpdateView() {
 		return getViewPrefix() + "/update.jsf";
 	}
