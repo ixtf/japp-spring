@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
+import com.hengyi.japp.crm.domain.CrmField;
 
 public class CrmReportField implements Serializable {
 	private static final long serialVersionUID = 718162184462560481L;
@@ -28,7 +29,14 @@ public class CrmReportField implements Serializable {
 	}
 
 	public Object getValue() throws Exception {
-		return crmField.getValue(crmReport.getCrm());
+		// Object value = crmField.getValue(crmReport.getCrm());
+		// if (value instanceof Date)
+		// value = DATEFORMAT.format(value);
+		// else if (crmField.equals(CrmField.communicatee))
+		// value = DATEFORMAT.format(value);
+		// else if (crmField.equals(CrmField.communicatees))
+		// value = DATEFORMAT.format(value);
+		// return value;
+		return null;
 	}
-
 }

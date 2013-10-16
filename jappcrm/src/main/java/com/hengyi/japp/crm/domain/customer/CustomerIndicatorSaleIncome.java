@@ -1,17 +1,14 @@
 package com.hengyi.japp.crm.domain.customer;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import com.google.common.collect.Lists;
-import com.hengyi.japp.crm.data.CrmField;
 import com.hengyi.japp.crm.data.IndicatorType;
 import com.hengyi.japp.crm.domain.Crm;
-import com.hengyi.japp.crm.domain.IndicatorValue;
+import com.hengyi.japp.crm.domain.CrmField;
 
 @NodeEntity
 public class CustomerIndicatorSaleIncome extends CustomerIndicator {
@@ -22,17 +19,11 @@ public class CustomerIndicatorSaleIncome extends CustomerIndicator {
 	public CustomerIndicatorSaleIncome() {
 		super("销售收入", 0.12);
 		setIndicatorType(IndicatorType.CALCULATE);
-		setCrmField(CrmField.saleIncome);
+		// setCrmField(CrmField.saleIncome);
 	}
 
 	private BigDecimal getValue(Crm crm) {
 		return getCrmField().getValue(crm);
-	}
-
-	@Override
-	public List<IndicatorValue> getIndicatorValues(Crm crm) {
-		return Lists.newArrayList(new IndicatorValue(String
-				.valueOf(getValue(crm))));
 	}
 
 	@Override

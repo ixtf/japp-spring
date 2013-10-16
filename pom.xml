@@ -30,10 +30,10 @@
 		<springframework.version>3.2.4.RELEASE</springframework.version>
 		<spring.neo4j.version>2.3.1.RELEASE</spring.neo4j.version>
 		<slf4j.version>1.7.1</slf4j.version>
-		<!-- <primefaces.version>4.0.RC1</primefaces.version> <primefaces.extensions.version>1.0.0.RC1</primefaces.extensions.version> -->
+		<!-- <primefaces.version>4.0</primefaces.version> <primefaces.extensions.version>1.0.0.RC1</primefaces.extensions.version> -->
 		<primefaces.version>3.5</primefaces.version>
 		<primefaces.extensions.version>0.7.1</primefaces.extensions.version>
-		<atmosphere.version>2.0.1</atmosphere.version>
+		<atmosphere.version>2.0.3</atmosphere.version>
 		<junit.version>4.10</junit.version>
 		<mockito.version>1.9.0</mockito.version>
 		<aspectj.version>1.7.1</aspectj.version>

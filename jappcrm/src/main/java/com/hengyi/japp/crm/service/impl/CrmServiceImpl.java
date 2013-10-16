@@ -26,13 +26,11 @@ import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.repository.CrmRepository;
 import com.hengyi.japp.crm.event.EventPublisher;
 import com.hengyi.japp.crm.event.SyncEventPublisher;
-import com.hengyi.japp.crm.exception.NoChiefCommunicateeException;
-import com.hengyi.japp.crm.exception.NoIndicatorValueException;
 import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CrmService;
 
-public abstract class CrmServiceImpl<T extends Crm> extends
-		CommonUrlServiceImpl<Long> implements CrmService<T> {
+public abstract class CrmServiceImpl<CRM extends Crm> extends
+		CommonUrlServiceImpl<Long> implements CrmService<CRM> {
 	@Resource
 	private Neo4jOperations template;
 	@Resource
@@ -48,14 +46,14 @@ public abstract class CrmServiceImpl<T extends Crm> extends
 	// @Inject
 	// private EventBus eventBus;
 
-	public void save(T crm,
+	public void save(CRM crm,
 			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			CrmType crmType, Iterable<Certificate> certificates,
+			Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
 			Communicatee communicatee, Iterable<Communicatee> communicatees,
 			Iterable<Associate> associates) throws Exception {
-		checkSave(crm, indicatorMap, crmType, certificates, communicatee,
+		checkSave(crm, indicatorMap, crmTypes, certificates, communicatee,
 				communicatees, associates);
-		crm.setCrmType(crmType);
+		crm.setCrmTypes(crmTypes);
 		crm.setCertificates(certificates);
 		crm.setCommunicatee(communicatee);
 		crm.setCommunicatees(communicatees);
@@ -71,29 +69,29 @@ public abstract class CrmServiceImpl<T extends Crm> extends
 			template.save(associate);
 	}
 
-	private void checkSave(T crm,
+	private void checkSave(CRM crm,
 			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			CrmType crmType, Iterable<Certificate> certificates,
+			Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
 			Communicatee communicatee, Iterable<Communicatee> communicatees,
 			Iterable<Associate> associates) throws Exception {
-		if (communicatee == null)
-			throw new NoChiefCommunicateeException();
+		// if (communicatee == null)
+		// throw new NoChiefCommunicateeException();
 
-		List<Indicator> noValueIndicators = Lists.newArrayList();
-		for (Entry<Indicator, List<IndicatorValueScore>> entry : indicatorMap
-				.entrySet())
-			if (entry.getValue().isEmpty())
-				noValueIndicators.add(entry.getKey());
-		if (!noValueIndicators.isEmpty())
-			throw new NoIndicatorValueException(noValueIndicators);
+		// List<Indicator> noValueIndicators = Lists.newArrayList();
+		// for (Entry<Indicator, List<IndicatorValueScore>> entry : indicatorMap
+		// .entrySet())
+		// if (entry.getValue().isEmpty())
+		// noValueIndicators.add(entry.getKey());
+		// if (!noValueIndicators.isEmpty())
+		// throw new NoIndicatorValueException(noValueIndicators);
 	}
 
-	public void delete(T crm) throws Exception {
+	public void delete(CRM crm) throws Exception {
 		crmRepository.delete(crm);
 	}
 
 	// 取Crm已经选中的indicatorValue，在和indicator关联的indicatorValue中选
-	public Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(Crm crm,
+	public Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(CRM crm,
 			Iterable<Indicator> indicators) {
 		ImmutableMap.Builder<Indicator, List<IndicatorValueScore>> builder = ImmutableMap
 				.builder();

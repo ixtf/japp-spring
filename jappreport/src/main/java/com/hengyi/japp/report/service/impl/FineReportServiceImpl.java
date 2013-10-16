@@ -36,6 +36,11 @@ public class FineReportServiceImpl extends ReportServiceImpl<FineReport>
 	}
 
 	@Override
+	public List<FineReport> findAll() {
+		return Lists.newArrayList(fineReportRepository.findAll());
+	}
+
+	@Override
 	public List<FineReport> findAll(PageRequest pageRequest) {
 		return Lists.newArrayList(fineReportRepository.findAll(pageRequest));
 	}

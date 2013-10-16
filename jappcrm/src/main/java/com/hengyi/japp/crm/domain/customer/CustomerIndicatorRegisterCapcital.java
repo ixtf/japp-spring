@@ -8,9 +8,9 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.google.common.collect.Lists;
-import com.hengyi.japp.crm.data.CrmField;
 import com.hengyi.japp.crm.data.IndicatorType;
 import com.hengyi.japp.crm.domain.Crm;
+import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 
 @NodeEntity
@@ -22,7 +22,7 @@ public class CustomerIndicatorRegisterCapcital extends CustomerIndicator {
 	public CustomerIndicatorRegisterCapcital() {
 		super("注册资本", 0.12);
 		setIndicatorType(IndicatorType.CALCULATE);
-		setCrmField(CrmField.registerCapital);
+		// setCrmField(CrmField.registerCapital);
 	}
 
 	private BigDecimal getValue(Crm crm) {

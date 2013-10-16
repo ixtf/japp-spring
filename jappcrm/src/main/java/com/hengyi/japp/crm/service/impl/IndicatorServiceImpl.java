@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import org.springframework.data.neo4j.template.Neo4jOperations;
+import org.springframework.transaction.support.TransactionSynchronizationAdapter;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.google.common.collect.Sets;
 import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
@@ -42,8 +44,21 @@ public abstract class IndicatorServiceImpl<T extends Indicator> extends
 		indicatorRepository.save(indicator);
 		for (IndicatorValueScore indicatorValueScore : indicatorValueScores)
 			template.save(indicatorValueScore);
-		if (isUpdate)
-			eventPublisher.publish(new IndicatorUpdateEvent(indicator));
+
+		if (isUpdate) {
+			final IndicatorUpdateEvent event = new IndicatorUpdateEvent(
+					indicator);
+			if (TransactionSynchronizationManager.isActualTransactionActive())
+				TransactionSynchronizationManager
+						.registerSynchronization(new TransactionSynchronizationAdapter() {
+							@Override
+							public void afterCommit() {
+								eventPublisher.publish(event);
+							}
+						});
+			else
+				eventPublisher.publish(event);
+		}
 	}
 
 	private void checkSave(T indicator,
@@ -52,9 +67,13 @@ public abstract class IndicatorServiceImpl<T extends Indicator> extends
 		Set<IndicatorValue> reUseIndicatorValues = Sets.newHashSet();
 		for (IndicatorValueScore indicatorValueScore : indicatorValueScores) {
 			IndicatorValue indicatorValue = indicatorValueScore.getEnd();
-			if (indicatorRepository.findAllByIndicatorValue(indicatorValue)
-					.iterator().hasNext())
+			for (Indicator reUserIndicator : indicatorRepository
+					.findAllByIndicatorValue(indicatorValue)) {
+				if (reUserIndicator.equals(indicator))
+					continue;
 				reUseIndicatorValues.add(indicatorValue);
+				break;
+			}
 		}
 		if (!reUseIndicatorValues.isEmpty())
 			throw new ReUseIndicatorValueException(reUseIndicatorValues);

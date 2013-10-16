@@ -152,7 +152,7 @@
 										value="#{cacheService.principalType}(#{cacheService.principal})" />
 							</a></li>
 							<li><h:outputLink
-									value="#{request.contextPath}/#{cacheService.themePath}"
+									value="#{request.contextPath}#{cacheService.themePath}"
 									rendered="#{cacheService.authenticated}">
 									<h:outputText value="#{msg['theme.title']}" />
 								</h:outputLink></li>

@@ -14,7 +14,7 @@ import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.Report;
 import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.ReportService;
-import com.hengyi.japp.crm.web.data.LazyCrmModel;
+import com.hengyi.japp.crm.web.model.LazyCrmModel;
 
 public abstract class CrmsController<CRM extends Crm> extends
 		AbstractController {

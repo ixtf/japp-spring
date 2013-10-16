@@ -25,13 +25,15 @@ public class CommonUtil {
 
 	public static final ResourceBundle resourceBundle(String baseName) {
 		Locale locale = LocaleContextHolder.getLocale();
-		return ResourceBundle.getBundle(baseName, locale);
-	}
-
-	public static final ResourceBundle resourceBundle(String baseName,
-			FacesContext context) {
-		Locale locale = context.getELContext().getLocale();
-		return ResourceBundle.getBundle(baseName, locale);
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (context != null)
+			locale = context.getELContext().getLocale();
+		try {
+			return ResourceBundle.getBundle(baseName, locale);
+		} catch (Exception e) {
+			// TODO resource 需要改进
+			return ResourceBundle.getBundle(baseName, Locale.CHINA);
+		}
 	}
 
 	public static ResourceBundle errorResourceBundle() {
@@ -40,5 +42,9 @@ public class CommonUtil {
 
 	public static ResourceBundle messageResourceBundle() {
 		return resourceBundle("messages");
+	}
+
+	public static String get(String key) {
+		return messageResourceBundle().getString(key);
 	}
 }

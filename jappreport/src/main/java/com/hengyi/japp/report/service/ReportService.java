@@ -22,6 +22,8 @@ public interface ReportService<T extends Report> extends
 
 	long count();
 
+	List<T> findAll();
+
 	List<T> findAll(PageRequest pageRequest);
 
 	List<T> findAllByQuery(String nameSearch) throws Exception;

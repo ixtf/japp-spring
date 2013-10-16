@@ -1,38 +1,33 @@
 package com.hengyi.japp.crm.domain.storage;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
-import com.google.common.collect.Lists;
-import com.hengyi.japp.crm.data.CrmField;
 import com.hengyi.japp.crm.data.IndicatorType;
 import com.hengyi.japp.crm.domain.Crm;
-import com.hengyi.japp.crm.domain.IndicatorValue;
+import com.hengyi.japp.crm.domain.CrmField;
 
 @NodeEntity
 public class StorageIndicatorCapcital extends StorageIndicator {
 	private static final long serialVersionUID = 6158224090934716798L;
 	@NotNull
+	@RelatedTo
+	@Fetch
 	private CrmField crmField;
 
 	public StorageIndicatorCapcital() {
 		super("仓储容量", 0.08);
 		setIndicatorType(IndicatorType.CALCULATE);
-		setCrmField(CrmField.capacity);
+		// setCrmField(CrmFieldType.capacity);
 	}
 
 	private BigDecimal getValue(Crm crm) {
 		return getCrmField().getValue(crm);
-	}
-
-	@Override
-	public List<IndicatorValue> getIndicatorValues(Crm crm) {
-		return Lists.newArrayList(new IndicatorValue(String
-				.valueOf(getValue(crm))));
 	}
 
 	@Override

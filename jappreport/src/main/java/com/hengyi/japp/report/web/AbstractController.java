@@ -22,6 +22,7 @@ import com.hengyi.japp.report.MessageUtil;
 import com.hengyi.japp.report.domain.Operator;
 import com.hengyi.japp.report.service.CacheService;
 import com.hengyi.japp.report.service.OperatorService;
+import com.hengyi.japp.report.service.ReportServiceFactory;
 import com.hengyi.japp.report.service.RoleService;
 
 public abstract class AbstractController {
@@ -36,6 +37,8 @@ public abstract class AbstractController {
 	protected OperatorService operatorService;
 	@Inject
 	protected RoleService roleService;
+	@Inject
+	protected ReportServiceFactory reportServiceFactory;
 
 	public List<PrincipalType> getAllPrincipalTypes() {
 		return Lists.newArrayList(PrincipalType.values());
@@ -45,7 +48,7 @@ public abstract class AbstractController {
 		return Constant.PAGE_SIZE;
 	}
 
-	protected void redirect(String url) {
+	public static void redirect(String url) {
 		String prefix = "/report";
 		try {
 			if (url.indexOf("http") >= 0)
@@ -87,14 +90,14 @@ public abstract class AbstractController {
 						.operationSuccess(), null));
 	}
 
-	protected void infoMessage(String s) {
+	public static void infoMessage(String s) {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO,
 						MessageUtil.info(), s));
 	}
 
-	protected void errorMessage(Exception e) {
+	public static void errorMessage(Exception e) {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, MessageUtil

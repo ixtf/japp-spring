@@ -33,6 +33,8 @@ public abstract class Report extends AbstractNeo4j implements Serializable {
 		this.note = StringUtils.trim(note);
 	}
 
+	public abstract String getUrl();
+
 	@Override
 	public String toString() {
 		return getName();

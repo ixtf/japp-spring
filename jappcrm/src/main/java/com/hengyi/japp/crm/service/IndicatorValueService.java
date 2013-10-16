@@ -1,13 +1,11 @@
 package com.hengyi.japp.crm.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.hengyi.japp.common.service.CommonUrlService;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 
-public interface IndicatorValueService extends CommonUrlService<Long>,
-		Serializable {
+public interface IndicatorValueService extends CommonUrlService<Long> {
 	IndicatorValue findOne(Long nodeId);
 
 	void save(IndicatorValue indicatorValue);

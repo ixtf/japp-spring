@@ -8,6 +8,8 @@ import javax.inject.Named;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationAdapter;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.MyUtil;
@@ -58,12 +60,23 @@ public class StorageServiceImpl extends CrmServiceImpl<Storage> implements
 	@Override
 	public void save(Storage crm,
 			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			CrmType crmType, Iterable<Certificate> certificates,
+			Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
 			Communicatee communicatee, Iterable<Communicatee> communicatees,
 			Iterable<Associate> associates) throws Exception {
-		super.save(crm, indicatorMap, crmType, certificates, communicatee,
+		super.save(crm, indicatorMap, crmTypes, certificates, communicatee,
 				communicatees, associates);
-		eventPublisher.publish(new StorageUpdateEvent(crm.getNodeId()));
+
+		final StorageUpdateEvent event = new StorageUpdateEvent(crm.getNodeId());
+		if (TransactionSynchronizationManager.isActualTransactionActive())
+			TransactionSynchronizationManager
+					.registerSynchronization(new TransactionSynchronizationAdapter() {
+						@Override
+						public void afterCommit() {
+							eventPublisher.publish(event);
+						}
+					});
+		else
+			eventPublisher.publish(event);
 	}
 
 	@Override

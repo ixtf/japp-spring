@@ -1,4 +1,4 @@
-package com.hengyi.japp.crm.web.data;
+package com.hengyi.japp.crm.web.model;
 
 import java.util.List;
 import java.util.Map;

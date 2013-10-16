@@ -66,6 +66,10 @@
 					<h:outputText value="#{_indicatorValueScore.end.name}" />
 				</p:column>
 
+				<p:column headerText="#{msg['note']}">
+					<h:outputText value="#{_indicatorValueScore.end.note}" />
+				</p:column>
+
 				<p:column headerText="#{msg['indicatorScore']}"
 					sortBy="#{_indicatorValueScore.score}">
 					<p:cellEditor>

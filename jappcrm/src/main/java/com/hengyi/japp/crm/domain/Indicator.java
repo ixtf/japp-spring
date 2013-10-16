@@ -1,10 +1,11 @@
 package com.hengyi.japp.crm.domain;
 
-import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
@@ -15,20 +16,23 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.crm.data.IndicatorType;
+import com.hengyi.japp.crm.web.model.CrmReportLineModel;
 
 @NodeEntity
-public abstract class Indicator extends Modifiable implements Serializable {
+public abstract class Indicator extends Modifiable implements
+		CrmReportLineModel<Indicator> {
 	private static final long serialVersionUID = 3991202655674862197L;
 	@NotBlank
 	@Indexed(unique = true, level = Level.INSTANCE)
 	protected String name;
 	@Min(0)
 	protected double percent;
-	@Min(0)
+	@NotNull
 	protected IndicatorType indicatorType = IndicatorType.SIMPLE;
 	@RelatedToVia(type = IndicatorValueScore.RELATIONSHIP, elementClass = IndicatorValueScore.class)
 	@Fetch
@@ -61,6 +65,10 @@ public abstract class Indicator extends Modifiable implements Serializable {
 	}
 
 	public List<IndicatorValue> getIndicatorValues(Crm crm) {
+		if (IndicatorType.CALCULATE.equals(this.getIndicatorType()))
+			// return Lists.newArrayList(new IndicatorValue(String
+			// .valueOf(getValue(crm))));
+			return ImmutableList.of();
 		List<IndicatorValue> result = Lists.newArrayList();
 		Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
 				.getIndicatorValues());
@@ -132,5 +140,21 @@ public abstract class Indicator extends Modifiable implements Serializable {
 	@Override
 	public String toString() {
 		return this.getName();
+	}
+
+	public String getReportLineName() {
+		return this.getName();
+	}
+
+	public String getReportLineName(Locale locale) {
+		return this.getName();
+	}
+
+	public Object getReportLineValue(Crm crm) {
+		return getIndicatorValues(crm);
+	}
+
+	public Indicator getReportLineData() {
+		return this;
 	}
 }

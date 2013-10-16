@@ -1,10 +1,13 @@
 package com.hengyi.japp.common.domain.shared;
 
+import java.io.Serializable;
+
 import org.springframework.data.neo4j.annotation.GraphId;
 
 import com.google.common.base.Objects;
 
-public abstract class AbstractNeo4j {
+public abstract class AbstractNeo4j implements Serializable {
+	private static final long serialVersionUID = 5367146318436443822L;
 	@GraphId
 	protected Long nodeId;
 

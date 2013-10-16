@@ -48,7 +48,7 @@
 					<p:dataList var="_associate" value="#{_customer.associatesAsList}">
 						<h:outputLink
 							value="#{request.contextPath}/customers/#{_associate.end.nodeId}">
-							<h:outputText value="#{_associate.end}" />
+							<h:outputText value="#{_associate.end}（#{_associate.note}）" />
 						</h:outputLink>
 					</p:dataList>
 				</p:column>

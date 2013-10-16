@@ -8,6 +8,8 @@ import javax.inject.Named;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationAdapter;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.MyUtil;
@@ -28,7 +30,6 @@ import com.hengyi.japp.crm.service.customer.CustomerService;
 @Transactional
 public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
 		CustomerService {
-	private static final long serialVersionUID = -1339563029393145730L;
 	@Resource
 	private CustomerRepository customerRepository;
 	@Resource
@@ -59,12 +60,24 @@ public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
 	@Override
 	public void save(Customer crm,
 			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			CrmType crmType, Iterable<Certificate> certificates,
+			Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
 			Communicatee communicatee, Iterable<Communicatee> communicatees,
 			Iterable<Associate> associates) throws Exception {
-		super.save(crm, indicatorMap, crmType, certificates, communicatee,
+		super.save(crm, indicatorMap, crmTypes, certificates, communicatee,
 				communicatees, associates);
-		eventPublisher.publish(new CustomerUpdateEvent(crm.getNodeId()));
+
+		final CustomerUpdateEvent event = new CustomerUpdateEvent(
+				crm.getNodeId());
+		if (TransactionSynchronizationManager.isActualTransactionActive())
+			TransactionSynchronizationManager
+					.registerSynchronization(new TransactionSynchronizationAdapter() {
+						@Override
+						public void afterCommit() {
+							eventPublisher.publish(event);
+						}
+					});
+		else
+			eventPublisher.publish(event);
 	}
 
 	@Override

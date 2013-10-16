@@ -2,6 +2,7 @@ package com.hengyi.japp.crm.domain.customer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.hengyi.japp.crm.domain.Crm;
@@ -10,8 +11,10 @@ import com.hengyi.japp.crm.domain.Crm;
 public class Customer extends Crm {
 	private static final long serialVersionUID = -831678558917732185L;
 	@NotBlank
+	@Indexed
 	private String mainBusiness;
 	@NotBlank
+	@Indexed
 	private String coBusiness;
 
 	public String getMainBusiness() {

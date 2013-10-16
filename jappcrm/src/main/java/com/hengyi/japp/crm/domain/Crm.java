@@ -1,15 +1,14 @@
 package com.hengyi.japp.crm.domain;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
@@ -28,7 +27,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 @NodeEntity
-public abstract class Crm extends Modifiable implements Serializable {
+public abstract class Crm extends Modifiable {
 	private static final long serialVersionUID = -2000360302877825388L;
 	// public static final String FIELD_SALEINCOME = "saleIncome";
 	// public static final String FIELD_REGISTERCAPITAL = "registerCapital";
@@ -51,14 +50,17 @@ public abstract class Crm extends Modifiable implements Serializable {
 	@Past
 	protected Date registerDate;
 	@NotNull
+	@Future
+	protected Date registerInvalidDate;
+	@NotNull
 	@Min(0)
 	protected BigDecimal registerCapital;
 	@NotBlank
 	protected String represent;
 	@NotBlank
 	protected String addressName;
-	@NotBlank
-	@Pattern(regexp = "^[1-9][0-9]{5}$")
+	// @NotBlank
+	// @Pattern(regexp = "^[1-9][0-9]{5}$")
 	protected String zipCode;
 	@RelatedTo(type = CRM_COMMUNICATEE)
 	@Fetch
@@ -68,9 +70,9 @@ public abstract class Crm extends Modifiable implements Serializable {
 	@NotNull
 	@Min(0)
 	protected BigDecimal saleIncome;
-	@RelatedTo(type = CRM_TYPE)
+	@RelatedTo(type = CRM_TYPE, elementClass = CrmType.class)
 	@Fetch
-	protected CrmType crmType;
+	protected Set<CrmType> crmTypes;
 	@RelatedTo(type = CERTIFICATE, elementClass = Certificate.class)
 	@Fetch
 	protected Set<Certificate> certificates;
@@ -181,8 +183,10 @@ public abstract class Crm extends Modifiable implements Serializable {
 		this.communicatees = Sets.newHashSet(communicatees);
 	}
 
-	public CrmType getCrmType() {
-		return crmType;
+	public Iterable<CrmType> getCrmTypes() {
+		if (crmTypes == null)
+			crmTypes = Sets.newHashSet();
+		return crmTypes;
 	}
 
 	public Iterable<Certificate> getCertificates() {
@@ -191,8 +195,8 @@ public abstract class Crm extends Modifiable implements Serializable {
 		return certificates;
 	}
 
-	public void setCrmType(CrmType crmType) {
-		this.crmType = crmType;
+	public void setCrmTypes(Iterable<CrmType> crmTypes) {
+		this.crmTypes = Sets.newHashSet(crmTypes);
 	}
 
 	public void setCertificates(Iterable<Certificate> certificates) {
@@ -261,6 +265,14 @@ public abstract class Crm extends Modifiable implements Serializable {
 
 	public void setZipCode(String zipCode) {
 		this.zipCode = StringUtils.trim(zipCode);
+	}
+
+	public Date getRegisterInvalidDate() {
+		return registerInvalidDate;
+	}
+
+	public void setRegisterInvalidDate(Date registerInvalidDate) {
+		this.registerInvalidDate = registerInvalidDate;
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package com.hengyi.japp.crm.service;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -15,27 +14,26 @@ import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 
-public interface CrmService<T extends Crm> extends CommonUrlService<Long>,
-		Serializable {
-	T newCrm();
+public interface CrmService<CRM extends Crm> extends CommonUrlService<Long> {
+	CRM newCrm();
 
-	T findOne(Long nodeId);
+	CRM findOne(Long nodeId);
 
-	void save(T crm, Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			CrmType crmType, Iterable<Certificate> certificates,
+	void save(CRM crm, Map<Indicator, List<IndicatorValueScore>> indicatorMap,
+			Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
 			Communicatee communicatee, Iterable<Communicatee> communicatees,
 			Iterable<Associate> associates) throws Exception;
 
-	void delete(T crm) throws Exception;
+	void delete(CRM crm) throws Exception;
 
-	List<T> findAll(PageRequest pageRequest);
+	List<CRM> findAll(PageRequest pageRequest);
 
 	long count();
 
-	List<T> findAllByQuery(String nameSearch) throws Exception;
+	List<CRM> findAllByQuery(String nameSearch) throws Exception;
 
 	List<Indicator> findAllIndicator();
 
-	Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(Crm crm,
+	Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(CRM crm,
 			Iterable<Indicator> indicators);
 }
