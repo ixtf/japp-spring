@@ -6,16 +6,18 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.inject.Named;
 
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.MyUtil;
+import com.hengyi.japp.crm.data.CrmFieldType;
 import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
+import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
@@ -28,27 +30,13 @@ import com.hengyi.japp.crm.service.customer.CustomerService;
 
 @Named("customerService")
 @Transactional
+@SuppressWarnings("unchecked")
 public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
 		CustomerService {
 	@Resource
 	private CustomerRepository customerRepository;
 	@Resource
 	private CustomerIndicatorRepository customerIndicatorRepository;
-
-	@Override
-	public Customer findOne(Long nodeId) {
-		return customerRepository.findOne(nodeId);
-	}
-
-	@Override
-	public List<Customer> findAll(PageRequest pageRequest) {
-		return Lists.newArrayList(customerRepository.findAll(pageRequest));
-	}
-
-	@Override
-	public long count() {
-		return customerRepository.count();
-	}
 
 	@Override
 	public List<Customer> findAllByQuery(String nameSearch) throws Exception {
@@ -90,6 +78,13 @@ public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
 	}
 
 	@Override
+	public List<CrmField> findAllCrmField() {
+		List<CrmField> result = findAllCrmField(CrmFieldType.CRM);
+		result.addAll(findAllCrmField(CrmFieldType.CUSTOMER));
+		return result;
+	}
+
+	@Override
 	public Customer newCrm() {
 		return new Customer();
 	}
@@ -97,5 +92,10 @@ public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
 	@Override
 	public String getNewPath() {
 		return "/customer";
+	}
+
+	@Override
+	public <R extends Repository<Customer, Long>> R getRepository() {
+		return (R) customerRepository;
 	}
 }

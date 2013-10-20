@@ -14,15 +14,18 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
+import com.hengyi.japp.common.service.AbstractCommonCrudNeo4jService;
+import com.hengyi.japp.crm.data.CrmFieldType;
 import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.Crm;
+import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
+import com.hengyi.japp.crm.domain.repository.CrmFieldRepository;
 import com.hengyi.japp.crm.domain.repository.CrmRepository;
 import com.hengyi.japp.crm.event.EventPublisher;
 import com.hengyi.japp.crm.event.SyncEventPublisher;
@@ -30,12 +33,14 @@ import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CrmService;
 
 public abstract class CrmServiceImpl<CRM extends Crm> extends
-		CommonUrlServiceImpl<Long> implements CrmService<CRM> {
+		AbstractCommonCrudNeo4jService<CRM> implements CrmService<CRM> {
 	@Resource
 	private Neo4jOperations template;
 	@Resource
 	private CrmRepository crmRepository;
 
+	@Resource
+	protected CrmFieldRepository crmFieldRepository;
 	@Inject
 	protected EventPublisher eventPublisher;
 	@Inject
@@ -86,10 +91,6 @@ public abstract class CrmServiceImpl<CRM extends Crm> extends
 		// throw new NoIndicatorValueException(noValueIndicators);
 	}
 
-	public void delete(CRM crm) throws Exception {
-		crmRepository.delete(crm);
-	}
-
 	// 取Crm已经选中的indicatorValue，在和indicator关联的indicatorValue中选
 	public Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(CRM crm,
 			Iterable<Indicator> indicators) {
@@ -113,9 +114,9 @@ public abstract class CrmServiceImpl<CRM extends Crm> extends
 		return result;
 	}
 
-	// @PostConstruct
-	// private void init() {
-	// eventBus.register(this);
-	// cacheServiceFacade.getAsyncEventBus().register(this);
-	// }
+	@Override
+	public List<CrmField> findAllCrmField(CrmFieldType crmFieldType) {
+		return Lists.newArrayList(crmFieldRepository.findAllByPropertyValue(
+				"crmFieldType", crmFieldType));
+	}
 }

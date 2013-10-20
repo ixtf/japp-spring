@@ -21,7 +21,7 @@ public class StorageIndicatorDurationYears extends StorageIndicator {
 	public StorageIndicatorDurationYears() {
 		super("已经营年限", 0.04);
 		setIndicatorType(IndicatorType.CALCULATE);
-		setCrmField(CrmField.durationYears);
+		// setCrmField(CrmField.durationYears);
 	}
 
 	@Override

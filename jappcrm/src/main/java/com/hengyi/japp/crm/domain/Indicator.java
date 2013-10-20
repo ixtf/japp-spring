@@ -1,7 +1,6 @@
 package com.hengyi.japp.crm.domain;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.validation.constraints.Min;
@@ -21,11 +20,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.crm.data.IndicatorType;
-import com.hengyi.japp.crm.web.model.CrmReportLineModel;
 
 @NodeEntity
-public abstract class Indicator extends Modifiable implements
-		CrmReportLineModel<Indicator> {
+public abstract class Indicator extends Modifiable {
 	private static final long serialVersionUID = 3991202655674862197L;
 	@NotBlank
 	@Indexed(unique = true, level = Level.INSTANCE)
@@ -55,15 +52,6 @@ public abstract class Indicator extends Modifiable implements
 		return result;
 	}
 
-	public List<IndicatorValueScore> getIndicatorValueScoresAsList() {
-		return Lists.newArrayList(getIndicatorValueScores());
-	}
-
-	public List<IndicatorValue> getIndicatorValues(Crm crm,
-			Neo4jOperations template) {
-		return template.fetch(getIndicatorValues(crm));
-	}
-
 	public List<IndicatorValue> getIndicatorValues(Crm crm) {
 		if (IndicatorType.CALCULATE.equals(this.getIndicatorType()))
 			// return Lists.newArrayList(new IndicatorValue(String
@@ -78,6 +66,15 @@ public abstract class Indicator extends Modifiable implements
 				result.add(indicatorValue);
 		}
 		return result;
+	}
+
+	public List<IndicatorValueScore> getIndicatorValueScoresAsList() {
+		return Lists.newArrayList(getIndicatorValueScores());
+	}
+
+	public List<IndicatorValue> getIndicatorValues(Crm crm,
+			Neo4jOperations template) {
+		return template.fetch(getIndicatorValues(crm));
 	}
 
 	public Indicator() {
@@ -140,21 +137,5 @@ public abstract class Indicator extends Modifiable implements
 	@Override
 	public String toString() {
 		return this.getName();
-	}
-
-	public String getReportLineName() {
-		return this.getName();
-	}
-
-	public String getReportLineName(Locale locale) {
-		return this.getName();
-	}
-
-	public Object getReportLineValue(Crm crm) {
-		return getIndicatorValues(crm);
-	}
-
-	public Indicator getReportLineData() {
-		return this;
 	}
 }

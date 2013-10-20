@@ -4,10 +4,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.faces.context.FacesContext;
-
 import org.apache.commons.beanutils.PropertyUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
 
 import com.google.common.collect.Maps;
 
@@ -24,10 +21,11 @@ public class CommonUtil {
 	}
 
 	public static final ResourceBundle resourceBundle(String baseName) {
-		Locale locale = LocaleContextHolder.getLocale();
-		FacesContext context = FacesContext.getCurrentInstance();
-		if (context != null)
-			locale = context.getELContext().getLocale();
+		return ResourceBundle.getBundle(baseName, Locale.CHINA);
+	}
+
+	public static final ResourceBundle resourceBundle(String baseName,
+			Locale locale) {
 		try {
 			return ResourceBundle.getBundle(baseName, locale);
 		} catch (Exception e) {
@@ -40,11 +38,23 @@ public class CommonUtil {
 		return resourceBundle("errors");
 	}
 
+	public static ResourceBundle errorResourceBundle(Locale locale) {
+		return resourceBundle("errors", locale);
+	}
+
 	public static ResourceBundle messageResourceBundle() {
 		return resourceBundle("messages");
 	}
 
+	public static ResourceBundle messageResourceBundle(Locale locale) {
+		return resourceBundle("messages", locale);
+	}
+
 	public static String get(String key) {
 		return messageResourceBundle().getString(key);
+	}
+
+	public static String get(String key, Locale locale) {
+		return messageResourceBundle(locale).getString(key);
 	}
 }

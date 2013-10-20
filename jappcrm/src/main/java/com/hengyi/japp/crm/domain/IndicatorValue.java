@@ -17,6 +17,10 @@ public class IndicatorValue extends Modifiable implements Serializable {
 	private String name;
 	private String note;
 
+	public boolean evaluate(IndicatorValue indicatorValue) {
+		return this.equals(indicatorValue);
+	}
+
 	public IndicatorValue() {
 		super();
 	}
@@ -41,6 +45,18 @@ public class IndicatorValue extends Modifiable implements Serializable {
 	public void setNote(String note) {
 		this.note = StringUtils.trim(note);
 	}
+
+	// @RelatedToVia(type = IndicatorValueScore.RELATIONSHIP, elementClass =
+	// IndicatorValueScore.class, direction = Direction.INCOMING)
+	// private Indicator indicator;
+	//
+	// public Indicator getIndicator() {
+	// return indicator;
+	// }
+	//
+	// public void setIndicator(Indicator indicator) {
+	// this.indicator = indicator;
+	// }
 
 	@Override
 	public boolean equals(Object o) {

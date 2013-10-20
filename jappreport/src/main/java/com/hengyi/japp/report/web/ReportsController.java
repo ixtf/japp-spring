@@ -2,13 +2,15 @@ package com.hengyi.japp.report.web;
 
 import java.util.List;
 
+import org.primefaces.model.LazyDataModel;
+
+import com.hengyi.japp.common.web.model.LazyNeo4jModel;
 import com.hengyi.japp.report.domain.Report;
 import com.hengyi.japp.report.service.ReportService;
-import com.hengyi.japp.report.web.data.LazyReportModel;
 
 public abstract class ReportsController<T extends Report> extends
 		AbstractController {
-	private LazyReportModel<T> reports;
+	private LazyDataModel<T> reports;
 	private String nameSearch;
 	private List<T> searchResult;
 	private T report;
@@ -33,15 +35,15 @@ public abstract class ReportsController<T extends Report> extends
 	public void search() {
 		try {
 			searchResult = getReportService().findAllByQuery(nameSearch);
-			reports = new LazyReportModel<T>(searchResult);
+			reports = new LazyNeo4jModel<>(searchResult);
 		} catch (Exception e) {
 			errorMessage(e);
 		}
 	}
 
-	public LazyReportModel<T> getReports() {
+	public LazyDataModel<T> getReports() {
 		if (reports == null)
-			reports = new LazyReportModel<>(getReportService());
+			reports = new LazyNeo4jModel<>(getReportService());
 		return reports;
 	}
 
@@ -57,7 +59,7 @@ public abstract class ReportsController<T extends Report> extends
 		return report;
 	}
 
-	public void setReports(LazyReportModel<T> reports) {
+	public void setReports(LazyDataModel<T> reports) {
 		this.reports = reports;
 	}
 

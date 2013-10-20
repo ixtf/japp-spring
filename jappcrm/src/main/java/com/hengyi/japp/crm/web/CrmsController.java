@@ -11,7 +11,7 @@ import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
 
 import com.hengyi.japp.crm.domain.Crm;
-import com.hengyi.japp.crm.domain.Report;
+import com.hengyi.japp.crm.domain.report.Report;
 import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.ReportService;
 import com.hengyi.japp.crm.web.model.LazyCrmModel;
@@ -40,16 +40,8 @@ public abstract class CrmsController<CRM extends Crm> extends
 	// for (Report report : reportService.findAll()) {
 	// UIMenuItem menuItem = new UIMenuItem();
 	// menuItem.setValue(report.getName());
-	// menuItem.setTitle(String.valueOf(report.getNodeId()));
-	// menuItem.setAjax(false);
-	// menuItem.addActionListener(new ActionListener() {
-	// @Override
-	// public void processAction(ActionEvent event)
-	// throws AbortProcessingException {
-	// redirect("/crms/" + crm.getNodeId() + "/reports/"
-	// + ((UIMenuItem) event.getSource()).getTitle());
-	// }
-	// });
+	// menuItem.setUrl("/crms/" + crm.getNodeId() + "/reports/"
+	// + report.getNodeId());
 	// reportSubmenu.getElements().add(menuItem);
 	// }
 	// }

@@ -22,7 +22,7 @@ public class StorageIndicatorRegisterCapcital extends StorageIndicator {
 	public StorageIndicatorRegisterCapcital() {
 		super("注册资本", 0.1);
 		setIndicatorType(IndicatorType.CALCULATE);
-		setCrmField(CrmField.registerCapital);
+		// setCrmField(CrmField.registerCapital);
 	}
 
 	private BigDecimal getValue(Crm crm) {

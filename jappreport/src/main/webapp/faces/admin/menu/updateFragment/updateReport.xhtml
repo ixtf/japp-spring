@@ -1,0 +1,213 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<title>YDCX</title>
+<meta http-equiv="X-UA-Compatible" content="IE=5, IE=EmulateIE7, chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="author" content="FineReport">
+<meta name="Copyright" content="FineReport">
+<meta name="description" content="FineReport--Web Reporting Tool">
+<meta name="keywords" content="FineReport,Web Reporting Tool">
+	<link rel="stylesheet" type="text/css" href="/WebReport/ReportServer?op=emb&resource=finereport.css"/>
+	<link rel="stylesheet" type="text/css" href="/WebReport/ReportServer?op=emb&resource=toolbar.css"/>
+	
+	<script type="text/javascript" src="/WebReport/ReportServer?op=emb&resource=finereport.js&inter=zh_CN"></script>
+  	<script type="text/javascript" src="/WebReport/ReportServer?op=resource&resource=/com/fr/web/core/js/chart.constants.js"></script>
+	<script type="text/javascript" src="/WebReport/ReportServer?op=resource&resource=/com/fr/web/core/js/chart.shape.js"></script>
+	<script type="text/javascript" src="/WebReport/ReportServer?op=resource&resource=/com/fr/web/core/js/chart.plotattr.js"></script>
+	<script type="text/javascript" src="/WebReport/ReportServer?op=resource&resource=/com/fr/web/core/js/chart.event.js"></script>
+	<script type="text/javascript" src="/WebReport/ReportServer?op=resource&resource=/com/fr/web/core/js/chart.glyph.js"></script>
+	<!--[if lte IE 9]><script type="text/javascript" src="/WebReport/ReportServer?op=resource&resource=/com/fr/web/core/js/excanvas.js"></script><![endif]-->
+	
+	<script type="text/javascript">
+	if ($.browser.msie && $.browser.version == '6.0') {
+		document.namespaces.add("fv", "urn:schemas-microsoft-com:vml", '#default#VML');
+	}
+	//bug 11536
+	if (($.browser.webkit) || $.browser.msie) {
+		$('<style type="text/css">table.x-table{overflow:visible}</style>').appendTo($('head'));
+	}
+	</script>
+	<script type="text/javascript">
+	$(function() {
+	var $reportPane = $("<div class='reportPane'></div>");
+	contentPane = FR.createWidget($.extend({renderEl : $reportPane}, {"listeners":[],"type":"page"}));
+		
+	// alex:此处必须把contentPane注册到FR.SessionMgr里面,不然下面初始化工具栏时的_g(sessionID)会返回null
+	FR.SessionMgr.register('35642', contentPane);
+	;
+	var $toolbar_Conf = [{"position":"north","toolbarConf":{"items":[{"icon":"css:x-emb-first","listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"afterinit"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().gotoFirstPage()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"click"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"startload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this[_g().currentPageIndex==1?'disable':'enable']()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"afterload"}],"text":"首页","widgetUrl":"","invisible":false,"type":"button","disabled":false,"render":true},{"icon":"css:x-emb-previous","listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"afterinit"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().gotoPreviousPage()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"click"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"startload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this[_g().currentPageIndex==1?'disable':'enable']()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"afterload"}],"text":"上一页","widgetUrl":"","invisible":false,"type":"button","disabled":false,"render":true},{"innerWidget":{"alignment":"left","items":[{"el":{"maxDecLength":16,"listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"startload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.enable();;this.editComp.attr('disabled', false);this.setValue((_g().currentPageIndex))}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"afterload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{if(e.keyCode == $.ui.keyCode.ENTER){_g().gotoPage(this.getValue())}}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"afteredit"}],"style":"text-align:center","widgetUrl":"","invisible":false,"maxIntLength":32,"allowNegative":false,"allowDecimals":false,"needSubmit":true,"type":"number","disabled":false},"width":50},{"el":{"listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{if(_g().reportTotalPage>0)this.setText(\"/\"+_g().reportTotalPage); else this.setText(\"/\");}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"afterload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;}, this)
+},"eventName":"_g()"}],"decoration":"none","invisible":false,"noWrap":false,"autoline":true,"type":"label","needSubmit":true,"fontfamily":"宋体","verticalcenter":true,"textalign":"center","widgetUrl":"","color":"rgb(0,0,0)","disabled":false,"fontsize":12},"width":40}],"widgetUrl":"","invisible":false,"hgap":0,"type":"horizontal","vgap":2,"disabled":false},"widgetUrl":"","invisible":false,"type":"composite","disabled":false},{"icon":"css:x-emb-next","listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"afterinit"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().gotoNextPage()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"click"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"startload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this[_g().currentPageIndex==_g().reportTotalPage?'disable':'enable']()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"afterload"}],"text":"下一页","widgetUrl":"","invisible":false,"type":"button","disabled":false,"render":true},{"icon":"css:x-emb-last","listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"afterinit"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().gotoLastPage()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"click"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"startload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this[_g().currentPageIndex==_g().reportTotalPage?'disable':'enable']()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"afterload"}],"text":"末页","widgetUrl":"","invisible":false,"type":"button","disabled":false,"render":true},{"icon":"css:x-emb-flashprint","listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"afterinit"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().flashPrint()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"click"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"startload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.enable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"afterload"}],"text":"打印[客户端]","widgetUrl":"","invisible":false,"type":"button","disabled":false,"render":true},{"istoolbarmenu":true,"icon":"css:x-emb-print","listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"afterinit"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"startload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.enable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"afterload"}],"text":"打印","widgetUrl":"","invisible":false,"menu":[{"showTextSrc":true,"iconSrc":"css:x-emb-pdfprint","showIconSrc":true,"src":"打印[客户端]","handler":function(e,item){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().pdfPrint('false')}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+}},{"showTextSrc":true,"iconSrc":"css:x-emb-appletprint","showIconSrc":true,"src":"Applet打印","handler":function(e,item){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().appletPrint()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+}},{"showTextSrc":true,"iconSrc":"css:x-emb-flashprint","showIconSrc":true,"src":"打印[客户端]","handler":function(e,item){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().flashPrint()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+}}],"type":"menubutton","disabled":false,"render":true},{"istoolbarmenu":true,"icon":"css:x-emb-export","listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"afterinit"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"startload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.enable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"afterload"}],"text":"输出","widgetUrl":"","invisible":false,"menu":[{"showTextSrc":true,"iconSrc":"css:x-emb-pdf","showIconSrc":true,"src":"PDF","handler":function(e,item){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().exportReportToPDF('ori')}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+}},{"showTextSrc":true,"iconSrc":"css:x-emb-excel","showIconSrc":true,"src":"Excel","submenu":[{"showTextSrc":true,"iconSrc":"css:x-emb-excel","showIconSrc":true,"src":"分页导出","handler":function(e,item){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().exportReportToExcel('page')}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+}},{"showTextSrc":true,"iconSrc":"css:x-emb-excel","showIconSrc":true,"src":"原样导出","handler":function(e,item){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().exportReportToExcel('simple')}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+}},{"showTextSrc":true,"iconSrc":"css:x-emb-excel","showIconSrc":true,"src":"分页分Sheet导出","handler":function(e,item){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().exportReportToExcel('sheet')}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+}}]},{"showTextSrc":true,"iconSrc":"css:x-emb-word","showIconSrc":true,"src":"Word","handler":function(e,item){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().exportReportToWord()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+}},{"showTextSrc":true,"iconSrc":"css:x-emb-image","showIconSrc":true,"src":"Image","handler":function(e,item){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().exportReportToImage('PNG')}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+}}],"type":"menubutton","disabled":false,"render":true},{"icon":"css:x-emb-email","listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"afterinit"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{_g().emailReport()}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"click"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"startload"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.enable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"target":_g(),"eventName":"afterload"}],"text":"邮件","widgetUrl":"","invisible":false,"type":"button","disabled":false,"render":true}],"widgetUrl":"","invisible":false,"type":"toolbar","disabled":"true"}}];
+	var float_toolbars = [];
+	contentPane.on("init", function() {
+		var regions = [{region:'center', el:$reportPane}];
+		// 装载工具栏
+		// carl:浮动工具栏假如在reportContent之后生成，那么它里面的背景在readContent的时候就会被clear，所以提前生成，afterload之后显示
+        // contentPane.toolbar如果是多个工具栏就搞成数组
+        if($toolbar_Conf.length > 1) {
+            contentPane.toolbar = [];
+        }
+		$.each($toolbar_Conf, function(idx, conf) {
+			var toolbar = FR.createWidget($.extend({
+				type : "toolbar"
+			}, conf.toolbarConf));
+            if($toolbar_Conf.length == 1) {
+                contentPane.toolbar = toolbar;
+            } else {
+                contentPane.toolbar.push(toolbar);
+            }
+			if (conf.position == 'south' || conf.position == 'north') {
+				regions.push({region:conf.position, el:toolbar.element});				
+			} else {
+				var position = {position:'absolute', 'z-index': 1};
+				$.extend(position, conf.position);
+				toolbar.element.css(position).appendTo($reportPane);
+				float_toolbars[float_toolbars.length] = toolbar;
+				float_toolbars[float_toolbars.length - 1].position = position;
+				float_toolbars[float_toolbars.length - 1].element.css(position.left ? 'left' : 'right',9999);
+			}
+		});
+
+		var $container = FR.createWidget({
+			type : "border",
+			items : regions,
+			renderEl : "body"
+		});
+
+		$container.doLayout();
+		$(window).resize(function() {
+			$container.doLayout();
+		})
+	});
+	contentPane.on("afterload", function(){
+		// 显示浮动工具栏
+		$.each(float_toolbars, function(idx, float_toolbar){
+			float_toolbar.element.css(float_toolbar.position);
+		});
+	});
+	
+	(function() {
+		this.currentSessionID = '35642';
+FR.SessionMgr.register(this.currentSessionID, this);
+if ('page' == 'preview') {
+	this.__singlesheet__ = '';
+	if (this.__singlesheet__.length > 0) {
+		this.__singlesheet__ = true;
+	}
+	this.reportIndex = parseInt('');
+}
+if (FR.__isdebug__ !== true) {
+	$.extend(FR.PagePane.prototype,{currentPageIndex:0,reportTotalPage:0,isLoadingPage:-1,pagesLoaded:[],gotoFirstPage:function(){this.gotoPage(1)},gotoPreviousPage:function(){if(this.currentPageIndex<=1){return}this.gotoPage(this.currentPageIndex-1)},gotoNextPage:function(){this.gotoPage(this.currentPageIndex+1)},gotoLastPage:function(){this.gotoPage(2147483647)},gotoPage:function(a){if(typeof a!="number"||isNaN(a)){return}if(a<1){a=1}if(this.isLoadingPage>=0){return}this.fireEvent(FR.Events.STARTLOAD);
+this.isLoadingPage=a;this.$contentPane.__load__({url:FR.servletURL,params:{op:"page_content",sessionID:this.currentSessionID,pn:a},scripts:true,forceDisplay:true,timeout:3600000,callback:function(){this.fireEvent(FR.Events.AFTERLOAD);this.$contentPane.asComponent({type:"fr_form",selector:"td[widget]"});var m=$(".frozen-page",this.$contentPane);if(m.length>0){var o=$(".pageContentDIV",this.$contentPane);var l=o.hasClass("contentDIV");if(l){var p=this;var q=function(){p.$contentPane.css("overflow","hidden");
+m.css("height",o.height()-parseInt($(".report-background",o).css("top")));var i=Math.min(p.$contentPane.width(),o.width());m.css("width",i-parseInt($(".report-background",o).css("left")));FR.layoutFrozen(m,p.$contentPane.offset().top)};q();var u=$(".HF-footer",this.$container);var f=$(".frozen-center").height()+$(".frozen-north").height()-u.height()-17+parseInt($(".report-background").css("top"));u.css("top",f+"px")}else{this.$contentPane.asComponent({type:"border",items:[{region:"center",el:o}]});
+var c=[{region:"center",el:m}];var w=$(".HF-header",this.$container);if(w.length>0){c.push({region:"north",el:w})}var u=$(".HF-footer",this.$container);if(u.length>0){c.push({region:"south",el:u})}o.asComponent({type:"border",items:c});FR.layoutFrozen(m,this.$contentPane.offset().top);this.$contentPane.doLayout()}if($.browser.msie&&parseInt($.browser.version)<9&&$.support.boxModel==true){var v=function(z,y){var i=[];i[0]=0;var k=z.find("colgroup:eq(0)").children();var A;var j=i.length;$.each(k,function(B,C){A=$(C);
+if(y){var D=y[B+j]-y[B+j-1];if(C.offsetWidth!=D){var E=parseInt(A.css("width"))+D-C.offsetWidth;A.css("width",E);if(B==0&&C.offsetWidth!=D){A.css("width",E+D-C.offsetWidth)}}}else{i[B+j]=i[B+j-1]+C.offsetWidth}});return i};var d=$(".frozen-corner",this.$container);if(d.length>0){var g=v($(".frozen-west",this.$container));v(d,g)}}}else{this.$contentPane.css({overflow:"auto"})}if($.browser.msie&&$.browser.version=="8.0"&&!$.support.boxModel){var n=$("tr:hidden",this.$contentPane);for(var t=0;t<n.length;
+t++){var b=n.eq(t).next("tr");for(var s=0;s<b.children().length;s++){var h=b.children().eq(s);for(var r=1;r<4;r++){if(h.hasClass("btw"+r)){h.css("border-top-width",r*2)}}}}}this.isLoadingPage=-1;if(FR.isMobile()){var o=$(".pageContentDIV",this.$contentPane);o.css("position","relative");$(".content-container").width(o.width());$(".content-container").height(o.height());$(".content-container").css("overflow","hidden");var x=this.currentPageIndex<this.reportTotalPage?true:false;var e=this.currentPageIndex>1?true:false;
+var p=this;FR.MobileTools.showPageNumber();if(FR.isAndroid()){if(window.android&&$.isFunction(window.android.onFinish)){window.android.onFinish()}}}}.createDelegate(this)})},pageSetup:function(){FR.showIframeDialog({title:FR.i18n.PageSetup_Page_Setup,width:620,height:370,url:FR.servletURL+"?op=fr_dialog&cmd=page_setup_dialog&sessionID="+this.currentSessionID})},printReportServer:function(){FR.showIframeDialog({title:FR.i18n.ReportServerP_Print_Server,width:540,height:300,url:FR.servletURL+"?op=fr_dialog&cmd=read_print_server_dialog&sessionID="+this.currentSessionID+"&pn="+this.currentPageIndex})
+},emailReport:function(){if(this.fireEvent(FR.Events.BEMAIL)===false){return}FR.showIframeDialog({title:FR.i18n.Email,width:400,height:400,url:FR.servletURL+"?op=fr_dialog&cmd=write_email_dialog&sessionID="+this.currentSessionID});this.fireEvent(FR.Events.AEMAIL)},pdfPrint:function(a){if(this.fireEvent(FR.Events.BPDFPRINT)===false){return}if($.browser.msie){FR.doPDFPrint(this.currentSessionID,a)}else{window.location=FR.servletURL+"?op=export&sessionID="+this.currentSessionID+"&format=pdf&isPDFPrint=true&extype=ori";
+this.fireEvent(FR.Events.APDFPRINT)}},appletPrint:function(){FR.doAppletPrint(this.currentSessionID)},flashPrint:function(){FR.doFlashPrint(this.currentSessionID,this.currentPageIndex)},exportReportToPDF:function(a){if(this.fireEvent(FR.Events.BTOPDF)===false){return}window.location=FR.servletURL+"?op=export&sessionID="+this.currentSessionID+"&format=pdf&extype="+a;this.fireEvent(FR.Events.ATOPDF)},exportReportToExcel:function(a){if(this.fireEvent(FR.Events.BTOEXCEL)===false){return}if(a=="ldpage"){FR.Msg.toast(FR.i18n.LargeData_Page_Info)
+}window.location=FR.servletURL+"?op=export&sessionID="+this.currentSessionID+"&format=excel&extype="+a;this.fireEvent(FR.Events.ATOEXCEL)},exportReportToWord:function(){if(this.fireEvent(FR.Events.BTOWORD)===false){return}window.location=FR.servletURL+"?op=export&sessionID="+this.currentSessionID+"&format=word";this.fireEvent(FR.Events.ATOWORD)},exportReportToImage:function(a){if(this.fireEvent(FR.Events.BTOIMAGE)===false){return}window.location=FR.servletURL+"?op=export&sessionID="+this.currentSessionID+"&format=image&extype="+a;
+this.fireEvent(FR.Events.ATOIMAGE)},exportReportToHtml:function(){if(this.fireEvent(FR.Events.BTOHTML)===false){return}window.location=FR.servletURL+"?op=export&sessionID="+this.currentSessionID+"&format=html";this.fireEvent(FR.Events.ATOHTML)},printPreview:function(){window.open(FR.servletURL+"?op=print_preview&cmd=pw_init_page&__pi__=false&sessionID="+this.currentSessionID,"_blank","Scrollbar=yes,Resizable=yes,fullscreean=yes")},SetPrinterOffset:function(){FR.showIframeDialog({title:FR.i18n.SetPrinter_Offset,width:420,height:300,url:FR.servletURL+"?op=printer_offset&cmd=pt_open&sessionID="+this.currentSessionID})
+},initContentPane:function(){this.on("afterload",function(){this.autoScale()})},loadContentPane:function(){this.gotoPage(1)}});function onBridgeReady(a){contentPane.bridge=a.bridge;FR.MobileTools.doWaitingTODO();contentPane.bridge.init(function(b){contentPane.gotoPage(parseInt(b))})}if(FR.isMobile()){document.addEventListener("WebViewJavascriptBridgeReady",onBridgeReady,false)};
+}
+this.options.cutpage = '';
+this.loadReportPane({param:{"isForm":true,"parambg":{"background":"rgb(255,255,255)"},"height":51,"width":1000,"showType":1,"html":{"items":[{"widgetName":"CODE","invisible":false,"width":80,"norepeat":true,"type":"combo","needSubmit":true,"directEdit":true,"controlAttr":{"data":[{"text":"所有公司","value":""},{"text":"石化有限","value":"1000"},{"text":"聚合物","value":"2000"},{"text":"高新材料","value":"3000"},{"text":"上海恒逸","value":"6000"},{"text":"逸盛石化","value":"7000"}],"value":"所有公司"},"mode":"remote","height":21,"widgetUrl":"/WebReport/ReportServer?op=widget&widgetname=code&sessionID=35642","autoMode":true,"value":"所有公司","searchTime":200,"y":22,"disabled":false,"x":377},{"widgetName":"KIND","invisible":false,"width":80,"norepeat":true,"dependence":["code"],"type":"combo","needSubmit":true,"directEdit":true,"controlAttr":{"value":""},"mode":"remote","height":21,"widgetUrl":"/WebReport/ReportServer?op=widget&widgetname=kind&sessionID=35642","autoMode":true,"value":"","searchTime":200,"y":22,"disabled":false,"x":503},{"listeners":[{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{this.disable();}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"click"},{"once":false,"action":function(e){
+var as=arguments; return FR.tc(function(){arguments=as;;return eval("(function(){try{if (this.options.form != null && $.isFunction(this.options.form.formSubmit)) {\r\n    this.options.form.QueryBtn = this;\r\n\tthis.options.form.formSubmit({\r\n\turl : \"/WebReport/ReportServer?op=fr_dialog&cmd=parameters_d&sessionID=35642\",\r\n\tasyn : true,\r\n\tcallback : function(res, status) {\r\n\t\tif (FR.isMobile()) {\r\n    \t\tlurl = '/WebReport/ReportServer?op=mobile_reportshow&__pi__=false&sessionID=35642';\r\n    \t\tFR.MobileTools.openLink(lurl, '_blank');\r\n    \t\t_g().$toolbarBtnBack.show();\r\n    \t} else {\r\n        \t_g().loadContentPane();\r\n    \t}\r\n\t}}\t\t\t\t\r\n\t);\r\n\tvar self = this;\r\n\t_g().once(\"afterload\", function() {\r\n\t\tself.enable();\r\n\t})\r\n}}catch(ex){FR.Msg.toast(FR.i18n.Custom+'JS'+FR.i18n.Error+' : '+ex.message);}}).createDelegate(this, [], 0).apply(this, arguments)");}, this)
+},"eventName":"click"}],"text":"查询","isToggle":false,"widgetName":"FORMSUBMIT0","invisible":false,"width":80,"type":"button","render":true,"hotkeys":"enter","height":21,"widgetUrl":"/WebReport/ReportServer?op=widget&widgetname=formSubmit0&sessionID=35642","disabled":false,"y":22,"x":642}],"widgetUrl":"/WebReport/ReportServer?op=widget&widgetname=para&sessionID=35642","invisible":false,"widgetName":"PARA","hgap":0,"type":"absolute","vgap":0,"disabled":false},"alignLocation":1,"delay":false},sheets:[],browserbg:{}});
+    }).apply(contentPane);
+});
+	</script>
+</ui:composition>

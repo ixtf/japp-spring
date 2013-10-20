@@ -7,27 +7,7 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<div class="navbar-fixed-top">
-				<p:menubar>
-					<p:menuitem value="生产日报表演示" action="#{homeController.report}"
-						icon="ui-icon-document">
-						<f:setPropertyActionListener target="#{homeController.url}"
-							value="test1.cpt" />
-					</p:menuitem>
-					<p:menuitem value="辅料报表" action="#{homeController.report}"
-						icon="ui-icon-document">
-						<f:setPropertyActionListener target="#{homeController.url}"
-							value="辅料报表.cpt" />
-					</p:menuitem>
-					<p:menuitem value="产销" action="#{homeController.report}"
-						icon="ui-icon-document">
-						<f:setPropertyActionListener target="#{homeController.url}"
-							value="产销.cpt" />
-					</p:menuitem>
-					<p:menuitem value="库存数量" action="#{homeController.report}"
-						icon="ui-icon-document">
-						<f:setPropertyActionListener target="#{homeController.url}"
-							value="库存数量.cpt" />
-					</p:menuitem>
+				<p:menubar model="">
 				</p:menubar>
 			</div>
 			<iframe id="iframeReport" src="#{homeController.url}" frameborder="0"

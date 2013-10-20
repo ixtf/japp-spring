@@ -34,6 +34,10 @@
 				rowKey="#{_report.nodeId}" selectionMode="single"
 				rows="#{fineReportsController.pageSize}" paginator="true"
 				lazy="true" stickyHeader="true">
+				<p:column headerText="#{msg['menu']}">
+					<h:outputText value="#{_report.menu}" />
+				</p:column>
+
 				<p:column headerText="#{msg['name']}">
 					<h:outputText value="#{_report.name}" />
 				</p:column>
@@ -42,8 +46,24 @@
 					<h:outputText value="#{_report.cpt}" />
 				</p:column>
 
+				<p:column headerText="op">
+					<h:outputText value="#{_report.opType}" />
+				</p:column>
+
+				<p:column headerText="__bypagesize__">
+					<h:outputText value="#{_report.bypagesize}" />
+				</p:column>
+
+				<p:column headerText="__pi__">
+					<h:outputText value="#{_report.pi}" />
+				</p:column>
+
+				<p:column headerText="__showtoolbar__">
+					<h:outputText value="#{_report.showtoolbar}" />
+				</p:column>
+
 				<p:column headerText="#{msg['note']}">
-					<h:outputText value="#{_role.note}" />
+					<h:outputText value="#{_report.note}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>

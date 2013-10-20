@@ -6,16 +6,18 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.inject.Named;
 
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.MyUtil;
+import com.hengyi.japp.crm.data.CrmFieldType;
 import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
+import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
@@ -28,27 +30,13 @@ import com.hengyi.japp.crm.service.storage.StorageService;
 
 @Named("storageService")
 @Transactional
+@SuppressWarnings("unchecked")
 public class StorageServiceImpl extends CrmServiceImpl<Storage> implements
 		StorageService {
 	@Resource
 	private StorageRepository storageRepository;
 	@Resource
 	private StorageIndicatorRepository storageIndicatorRepository;
-
-	@Override
-	public Storage findOne(Long nodeId) {
-		return storageRepository.findOne(nodeId);
-	}
-
-	@Override
-	public List<Storage> findAll(PageRequest pageRequest) {
-		return Lists.newArrayList(storageRepository.findAll(pageRequest));
-	}
-
-	@Override
-	public long count() {
-		return storageRepository.count();
-	}
 
 	@Override
 	public List<Storage> findAllByQuery(String nameSearch) throws Exception {
@@ -88,6 +76,13 @@ public class StorageServiceImpl extends CrmServiceImpl<Storage> implements
 	}
 
 	@Override
+	public List<CrmField> findAllCrmField() {
+		List<CrmField> result = findAllCrmField(CrmFieldType.CRM);
+		result.addAll(findAllCrmField(CrmFieldType.STORAGE));
+		return result;
+	}
+
+	@Override
 	public Storage newCrm() {
 		return new Storage();
 	}
@@ -95,5 +90,10 @@ public class StorageServiceImpl extends CrmServiceImpl<Storage> implements
 	@Override
 	public String getNewPath() {
 		return "/storage";
+	}
+
+	@Override
+	public <R extends Repository<Storage, Long>> R getRepository() {
+		return (R) storageRepository;
 	}
 }

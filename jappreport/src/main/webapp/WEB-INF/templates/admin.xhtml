@@ -23,6 +23,10 @@
 									<b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li><h:outputLink
+											value="#{request.contextPath}#{menuService.newPath}">
+											<h:outputText value="#{msg['menu']}" />
+										</h:outputLink></li>
+									<li><h:outputLink
 											value="#{request.contextPath}#{fineReportService.newPath}">
 											<h:outputText value="Fine Report" />
 										</h:outputLink></li>
@@ -39,6 +43,10 @@
 							<li><h:outputLink
 									value="#{request.contextPath}#{fineReportService.managePath}">
 									<h:outputText value="Fine Report#{msg['manage']}" />
+								</h:outputLink></li>
+							<li><h:outputLink
+									value="#{request.contextPath}#{menuService.managePath}">
+									<h:outputText value="#{msg['menu']}#{msg['manage']}" />
 								</h:outputLink></li>
 							<li><h:outputLink
 									value="#{request.contextPath}#{roleService.managePath}">
@@ -63,7 +71,7 @@
 											value="#{cacheService.principalType}(#{cacheService.principal})" />
 								</a></li>
 								<li><h:outputLink
-										value="#{request.contextPath}/#{cacheService.themePath}"
+										value="#{request.contextPath}#{cacheService.themePath}"
 										rendered="#{cacheService.authenticated}">
 										<h:outputText value="#{msg['theme.title']}" />
 									</h:outputLink></li>

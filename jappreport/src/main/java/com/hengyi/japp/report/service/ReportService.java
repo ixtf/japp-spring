@@ -1,30 +1,16 @@
 package com.hengyi.japp.report.service;
 
-import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.data.domain.PageRequest;
-
-import com.hengyi.japp.common.service.CommonUrlService;
+import com.hengyi.japp.common.service.CommonCrudNeo4jService;
+import com.hengyi.japp.report.domain.Menu;
 import com.hengyi.japp.report.domain.Report;
 
 public interface ReportService<T extends Report> extends
-		CommonUrlService<Long>, Serializable {
-	T findOne(Long nodeId);
-
+		CommonCrudNeo4jService<T> {
 	T newReport();
 
-	void save(T report);
-
-	void delete(T report);
-
-	void delete(Long nodeId);
-
-	long count();
-
-	List<T> findAll();
-
-	List<T> findAll(PageRequest pageRequest);
+	void save(T report, Menu menu) throws Exception;
 
 	List<T> findAllByQuery(String nameSearch) throws Exception;
 

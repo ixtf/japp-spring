@@ -2,11 +2,13 @@ package com.hengyi.japp.report.web;
 
 import java.io.Serializable;
 
+import javax.annotation.Resource;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.common.data.PrincipalType;
+import com.hengyi.japp.common.dto.UserDTO;
 import com.hengyi.japp.report.domain.Operator;
 
 @Named
@@ -14,9 +16,11 @@ import com.hengyi.japp.report.domain.Operator;
 public class OperatorController extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = 3627241517253990782L;
+	@Resource(name = "jappCommonSoapClient")
+	private com.hengyi.japp.common.ws.SoapService jappCommonSoapClient;
 	private Long nodeId;
 	private PrincipalType principalType;
-	private Object principal;
+	private String principal;
 	private Operator operator;
 
 	public void save() {
@@ -28,13 +32,20 @@ public class OperatorController extends AbstractController implements
 		}
 	}
 
+	public void newOperator() {
+		try {
+			UserDTO user = jappCommonSoapClient.findOneUser(principalType,
+					principal);
+			operator = operatorService.findOne(user);
+			redirect(operatorService.getUpdatePath(operator.getNodeId()));
+		} catch (Exception e) {
+			errorMessage(e);
+		}
+	}
+
 	public Operator getOperator() {
-		if (operator != null)
-			return operator;
-		if (nodeId == null)
-			operator = new Operator();
-		else
-			operator = operatorService.findOne(nodeId);
+		if (operator == null)
+			operator = operatorService.findOne(getNodeId());
 		return operator;
 	}
 
@@ -54,7 +65,7 @@ public class OperatorController extends AbstractController implements
 		return principalType;
 	}
 
-	public Object getPrincipal() {
+	public String getPrincipal() {
 		return principal;
 	}
 
@@ -62,7 +73,7 @@ public class OperatorController extends AbstractController implements
 		this.principalType = principalType;
 	}
 
-	public void setPrincipal(Object principal) {
+	public void setPrincipal(String principal) {
 		this.principal = principal;
 	}
 }

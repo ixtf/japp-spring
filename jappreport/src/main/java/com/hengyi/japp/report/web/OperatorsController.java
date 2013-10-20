@@ -5,10 +5,11 @@ import java.util.List;
 
 import javax.inject.Named;
 
+import org.primefaces.model.LazyDataModel;
 import org.springframework.context.annotation.Scope;
 
+import com.hengyi.japp.common.web.model.LazyNeo4jModel;
 import com.hengyi.japp.report.domain.Operator;
-import com.hengyi.japp.report.web.data.LazyOperatorModel;
 
 @Named
 @Scope("view")
@@ -16,7 +17,7 @@ public class OperatorsController extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = -7807995349596234400L;
 	private String nameSearch;
-	private LazyOperatorModel operators;
+	private LazyDataModel<Operator> operators;
 	private List<Operator> searchResult;
 	private Operator operator;
 
@@ -27,15 +28,15 @@ public class OperatorsController extends AbstractController implements
 	public void search() {
 		try {
 			searchResult = operatorService.findAllByQuery(nameSearch);
-			operators = new LazyOperatorModel(searchResult);
+			operators = new LazyNeo4jModel<Operator>(searchResult);
 		} catch (Exception e) {
 			errorMessage(e);
 		}
 	}
 
-	public LazyOperatorModel getOperators() {
+	public LazyDataModel<Operator> getOperators() {
 		if (operators == null)
-			operators = new LazyOperatorModel(operatorService);
+			operators = new LazyNeo4jModel<Operator>(operatorService);
 		return operators;
 	}
 
@@ -51,7 +52,7 @@ public class OperatorsController extends AbstractController implements
 		this.nameSearch = nameSearch;
 	}
 
-	public void setOperators(LazyOperatorModel operators) {
+	public void setOperators(LazyDataModel<Operator> operators) {
 		this.operators = operators;
 	}
 

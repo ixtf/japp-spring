@@ -17,18 +17,37 @@
 			</h1>
 
 			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
-				<h:outputLabel for="name" value="#{msg['name']}" />
-				<h:inputText id="name" value="#{fineReportController.report.name}" />
-				<p:message for="name" />
-
+				<ui:include src="/faces/admin/report/update.xhtml">
+					<ui:param name="reportController" value="#{fineReportController}" />
+				</ui:include>
 				<h:outputLabel for="cpt" value="#{msg['cpt']}" />
 				<h:inputText id="cpt" value="#{fineReportController.report.cpt}" />
 				<p:message for="cpt" />
 
-				<h:outputLabel for="note" value="#{msg['note']}" />
-				<p:inputTextarea id="note"
-					value="#{fineReportController.report.note}" />
-				<p:message for="note" />
+				<h:outputLabel for="opType" value="op" />
+				<p:selectOneMenu id="opType"
+					value="#{fineReportController.report.opType}">
+					<f:selectItems value="#{fineReportController.allOpTypes}" />
+				</p:selectOneMenu>
+				<p:message for="opType" />
+
+				<h:outputLabel for="bypagesize" value="__bypagesize__" />
+				<p:selectBooleanButton id="bypagesize"
+					value="#{fineReportController.report.bypagesize}" onLabel="Yes"
+					offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+				<p:message for="bypagesize" />
+
+				<h:outputLabel for="pi" value="__pi__" />
+				<p:selectBooleanButton id="pi"
+					value="#{fineReportController.report.pi}" onLabel="Yes"
+					offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+				<p:message for="pi" />
+
+				<h:outputLabel for="showtoolbar" value="__showtoolbar__" />
+				<p:selectBooleanButton id="showtoolbar"
+					value="#{fineReportController.report.showtoolbar}" onLabel="Yes"
+					offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+				<p:message for="showtoolbar" />
 			</h:panelGrid>
 			<p:commandButton action="#{fineReportController.save}" update=":form"
 				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />

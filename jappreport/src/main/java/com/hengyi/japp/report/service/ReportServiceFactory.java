@@ -29,11 +29,11 @@ public class ReportServiceFactory implements Serializable {
 			throw new RuntimeException("ReportService not found !");
 	}
 
-	public <T extends Report> ReportService<?> get(T report) {
-		return get(report.getClass());
+	public <T extends Report> ReportService<T> get(T report) {
+		return (ReportService<T>) get(report.getClass());
 	}
 
-	public ReportService<?> get(Long reportNodeId) {
+	public ReportService<? extends Report> get(Long reportNodeId) {
 		return get(reportRepository.findOne(reportNodeId));
 	}
 }

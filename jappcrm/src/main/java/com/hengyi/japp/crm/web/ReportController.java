@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.Indicator;
-import com.hengyi.japp.crm.domain.Report;
+import com.hengyi.japp.crm.domain.report.Report;
 import com.hengyi.japp.crm.service.ReportService;
 
 public abstract class ReportController<T extends Report> extends
@@ -47,15 +47,17 @@ public abstract class ReportController<T extends Report> extends
 	}
 
 	public void addCrmFiled() {
-		if (!report.getCrmFields().contains(getCrmField()))
-			report.getCrmFields().add(crmField);
+		if (!getCrmFields().contains(getCrmField()))
+			crmFields.add(crmField);
 	}
 
 	public void removeCrmFiled() {
-		report.getCrmFields().remove(getCrmField());
+		getCrmFields().remove(getCrmField());
 	}
 
 	public List<CrmField> getCrmFields() {
+		if (crmFields == null)
+			crmFields = Lists.newArrayList(getReport().getCrmFields());
 		return crmFields;
 	}
 

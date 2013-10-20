@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/admin.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
+
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText value="#{msg['new']}-"
+					rendered="#{empty menuController.menu.nodeId}" />
+				<h:outputText value="#{msg['edit']}-"
+					rendered="#{not empty menuController.menu.nodeId}" />
+				<h:outputText value="#{msg['menu']}" />
+			</h1>
+
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputLabel for="parent" value="#{msg['parentMenu']}" />
+				<p:selectOneMenu id="parent" value="#{menuController.parent}"
+					converter="menu">
+					<f:selectItem itemLabel="" />
+					<f:selectItems value="#{menuController.allMenus}" />
+				</p:selectOneMenu>
+				<p:message for="parent" />
+
+				<h:outputLabel for="name" value="#{msg['name']}" />
+				<h:inputText id="name" value="#{menuController.menu.name}" />
+				<p:message for="name" />
+			</h:panelGrid>
+
+			<!-- <p:tabView id="tabView" dynamic="true">
+				<p:tab title="#{msg['subMenu']}">
+					<ui:include src="updateFragment/updateSubMenu.xhtml" />
+				</p:tab>
+				<p:tab title="#{msg['associate']}#{msg['report']}">
+					<ui:include src="updateFragment/updateReport.xhtml" />
+				</p:tab>
+			</p:tabView> -->
+			<p:commandButton action="#{menuController.save}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

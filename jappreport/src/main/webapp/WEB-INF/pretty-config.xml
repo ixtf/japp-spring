@@ -10,7 +10,7 @@
 	</url-mapping>
 
 	<url-mapping id="reportDisplay">
-		<pattern value="/reports/#{reportDisplayController.nodeId}/display" />
+		<pattern value="/display" />
 		<view-id value="/faces/report/display.jsf" />
 	</url-mapping>
 
@@ -22,6 +22,11 @@
 	<url-mapping id="operatorUpdate">
 		<pattern value="/admin/operators/#{operatorController.nodeId}" />
 		<view-id value="/faces/admin/operator/update.jsf" />
+	</url-mapping>
+
+	<url-mapping id="menuUpdate">
+		<pattern value="/admin/menus/#{menuController.nodeId}" />
+		<view-id value="/faces/admin/menu/update.jsf" />
 	</url-mapping>
 
 	<url-mapping id="fineReportUpdate">

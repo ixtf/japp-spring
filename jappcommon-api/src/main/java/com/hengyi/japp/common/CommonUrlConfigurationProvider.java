@@ -19,7 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.hengyi.japp.common.service.CommonCacheService;
-import com.hengyi.japp.common.service.CommonUrlService;
+import com.hengyi.japp.common.service.CommonCrudService;
 
 public class CommonUrlConfigurationProvider extends HttpConfigurationProvider {
 	@Override
@@ -75,15 +75,15 @@ public class CommonUrlConfigurationProvider extends HttpConfigurationProvider {
 						Join.path(cacheService.getHomePath()).to(
 								cacheService.getHomeView()));
 
-		for (CommonUrlService<?> urlService : springContext.getBeansOfType(
-				CommonUrlService.class).values())
+		for (CommonCrudService<?, ?> urlService : springContext.getBeansOfType(
+				CommonCrudService.class).values())
 			urlService(builder, urlService);
 
 		return builder;
 	}
 
 	private void urlService(ConfigurationBuilder builder,
-			CommonUrlService<?> urlService) {
+			CommonCrudService<?, ?> urlService) {
 		builder.addRule(
 				Join.path(urlService.getNewPath()).to(urlService.getNewView()))
 				.addRule(

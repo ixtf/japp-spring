@@ -1,47 +1,31 @@
 package com.hengyi.japp.crm.service.impl;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.inject.Named;
 
+import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
-import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
+import com.hengyi.japp.common.service.AbstractCommonCrudNeo4jService;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.repository.CrmTypeRepository;
 import com.hengyi.japp.crm.service.CrmTypeService;
 
 @Named("crmTypeService")
 @Transactional
-public class CrmTypeServiceImpl extends CommonUrlServiceImpl<Long> implements
-		CrmTypeService {
+@SuppressWarnings("unchecked")
+public class CrmTypeServiceImpl extends AbstractCommonCrudNeo4jService<CrmType>
+		implements CrmTypeService {
 	@Resource
 	private CrmTypeRepository crmTypeRepository;
 
 	@Override
-	public CrmType findOne(Long nodeId) {
-		return nodeId == null ? null : crmTypeRepository.findOne(nodeId);
-	}
-
-	@Override
-	public void save(CrmType crmType) throws Exception {
-		crmTypeRepository.save(crmType);
-	}
-
-	@Override
-	public void delete(CrmType crmType) throws Exception {
-		crmTypeRepository.delete(crmType);
-	}
-
-	@Override
-	public List<CrmType> findAll() {
-		return Lists.newArrayList(crmTypeRepository.findAll());
-	}
-
-	@Override
 	public String getNewPath() {
 		return "/crmType";
+	}
+
+	@Override
+	public <RP extends Repository<CrmType, Long>> RP getRepository() {
+		return (RP) crmTypeRepository;
 	}
 }

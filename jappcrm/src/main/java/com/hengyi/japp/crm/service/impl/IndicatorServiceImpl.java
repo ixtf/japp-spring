@@ -10,7 +10,7 @@ import org.springframework.transaction.support.TransactionSynchronizationAdapter
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.google.common.collect.Sets;
-import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
+import com.hengyi.japp.common.service.AbstractCommonCrudNeo4jService;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
@@ -23,7 +23,7 @@ import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.IndicatorService;
 
 public abstract class IndicatorServiceImpl<T extends Indicator> extends
-		CommonUrlServiceImpl<Long> implements IndicatorService<T> {
+		AbstractCommonCrudNeo4jService<T> implements IndicatorService<T> {
 	@Resource
 	protected Neo4jOperations template;
 	@Resource
@@ -77,11 +77,6 @@ public abstract class IndicatorServiceImpl<T extends Indicator> extends
 		}
 		if (!reUseIndicatorValues.isEmpty())
 			throw new ReUseIndicatorValueException(reUseIndicatorValues);
-	}
-
-	@Override
-	public void delete(T indicator) throws Exception {
-		indicatorRepository.delete(indicator);
 	}
 
 	@Override

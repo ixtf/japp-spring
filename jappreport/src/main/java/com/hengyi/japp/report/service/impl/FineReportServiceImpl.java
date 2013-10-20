@@ -6,44 +6,25 @@ import java.util.Properties;
 import javax.annotation.Resource;
 import javax.inject.Named;
 
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.hengyi.japp.report.MyUtil;
+import com.hengyi.japp.report.domain.Menu;
 import com.hengyi.japp.report.domain.finereport.FineReport;
 import com.hengyi.japp.report.domain.repository.FineReportRepository;
 import com.hengyi.japp.report.service.finereport.FineReportService;
 
 @Named("fineReportService")
 @Transactional
+@SuppressWarnings("unchecked")
 public class FineReportServiceImpl extends ReportServiceImpl<FineReport>
 		implements FineReportService {
-	private static final long serialVersionUID = 8616574989379917977L;
 	@Resource
 	private FineReportRepository fineReportRepository;
 	@Resource(name = "deployProperties")
 	private Properties deployProperties;
-
-	@Override
-	public FineReport findOne(Long nodeId) {
-		return fineReportRepository.findOne(nodeId);
-	}
-
-	@Override
-	public long count() {
-		return fineReportRepository.count();
-	}
-
-	@Override
-	public List<FineReport> findAll() {
-		return Lists.newArrayList(fineReportRepository.findAll());
-	}
-
-	@Override
-	public List<FineReport> findAll(PageRequest pageRequest) {
-		return Lists.newArrayList(fineReportRepository.findAll(pageRequest));
-	}
 
 	@Override
 	public List<FineReport> findAllByQuery(String nameSearch) throws Exception {
@@ -64,6 +45,18 @@ public class FineReportServiceImpl extends ReportServiceImpl<FineReport>
 
 	@Override
 	public String getUrl(FineReport report) {
-		return deployProperties.getProperty("fineReportlet") + report.getCpt();
+		return deployProperties.getProperty("fineReportlet")
+				+ report.getParms();
+	}
+
+	@Override
+	public <R extends Repository<FineReport, Long>> R getRepository() {
+		return (R) fineReportRepository;
+	}
+
+	@Override
+	public void save(FineReport report, Menu menu) throws Exception {
+		report.setMenu(menu);
+		save(report);
 	}
 }

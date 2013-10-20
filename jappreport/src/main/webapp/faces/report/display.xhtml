@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<p:tabView id="tabView" var="_reportModel"
+			value="#{reportDisplayController.reportModels}"
+			activeIndex="#{reportDisplayController.activeIndex}">
+
+			<p:ajax event="tabClose"
+				listener="#{reportDisplayController.onTabClose}" />
+			<p:ajax event="tabChange"
+				listener="#{reportDisplayController.onTabChange}" />
+
+			<p:tab title="#{_reportModel.report}" closable="true">
+				<h:form>
+					<iframe src="#{_reportModel.url}" width="100%" />
+				</h:form>
+				<script type="text/javascript">$("iframe").attr("scrolling","no").height("1000px");</script>
+			</p:tab>
+		</p:tabView>
+	</ui:define>
+</ui:composition>

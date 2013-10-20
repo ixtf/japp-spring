@@ -16,11 +16,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
 import com.google.common.collect.Lists;
+import com.google.common.eventbus.EventBus;
 import com.hengyi.japp.common.data.PrincipalType;
 import com.hengyi.japp.report.Constant;
 import com.hengyi.japp.report.MessageUtil;
 import com.hengyi.japp.report.domain.Operator;
+import com.hengyi.japp.report.domain.finereport.OpType;
 import com.hengyi.japp.report.service.CacheService;
+import com.hengyi.japp.report.service.MenuService;
 import com.hengyi.japp.report.service.OperatorService;
 import com.hengyi.japp.report.service.ReportServiceFactory;
 import com.hengyi.japp.report.service.RoleService;
@@ -38,7 +41,15 @@ public abstract class AbstractController {
 	@Inject
 	protected RoleService roleService;
 	@Inject
+	protected MenuService menuService;
+	@Inject
 	protected ReportServiceFactory reportServiceFactory;
+	@Resource
+	protected EventBus eventBus;
+
+	public List<OpType> getAllOpTypes() {
+		return Lists.newArrayList(OpType.values());
+	}
 
 	public List<PrincipalType> getAllPrincipalTypes() {
 		return Lists.newArrayList(PrincipalType.values());

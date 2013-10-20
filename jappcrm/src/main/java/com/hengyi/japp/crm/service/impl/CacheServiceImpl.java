@@ -8,14 +8,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.hengyi.japp.common.service.impl.CommonCacheServiceImpl;
+import com.hengyi.japp.common.service.AbstractCommonCacheService;
 import com.hengyi.japp.crm.domain.Operator;
 import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.OperatorService;
 
 @Named("cacheService")
 @Singleton
-public class CacheServiceImpl extends CommonCacheServiceImpl implements
+public class CacheServiceImpl extends AbstractCommonCacheService implements
 		CacheService {
 	@Inject
 	private OperatorService operatorService;

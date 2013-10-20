@@ -5,12 +5,12 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.inject.Named;
 
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.hengyi.japp.common.dto.UserDTO;
-import com.hengyi.japp.common.service.impl.CommonUrlServiceImpl;
+import com.hengyi.japp.common.service.AbstractCommonCrudNeo4jService;
 import com.hengyi.japp.report.MyUtil;
 import com.hengyi.japp.report.domain.Operator;
 import com.hengyi.japp.report.domain.repository.OperatorRepository;
@@ -18,16 +18,11 @@ import com.hengyi.japp.report.service.OperatorService;
 
 @Named("operatorService")
 @Transactional
-public class OperatorServiceImpl extends CommonUrlServiceImpl<Long> implements
-		OperatorService {
-	private static final long serialVersionUID = -8878721144489697640L;
+@SuppressWarnings("unchecked")
+public class OperatorServiceImpl extends
+		AbstractCommonCrudNeo4jService<Operator> implements OperatorService {
 	@Resource
 	private OperatorRepository operatorRepository;
-
-	@Override
-	public Operator findOne(Long nodeId) {
-		return nodeId == null ? null : operatorRepository.findOne(nodeId);
-	}
 
 	@Override
 	public Operator findOne(String uuid) {
@@ -43,11 +38,6 @@ public class OperatorServiceImpl extends CommonUrlServiceImpl<Long> implements
 			save(operator);
 		}
 		return operator;
-	}
-
-	@Override
-	public void save(Operator operator) throws Exception {
-		operatorRepository.save(operator);
 	}
 
 	@Override
@@ -68,19 +58,14 @@ public class OperatorServiceImpl extends CommonUrlServiceImpl<Long> implements
 	}
 
 	@Override
-	public List<Operator> findAll(PageRequest pageRequest) {
-		return Lists.newArrayList(operatorRepository.findAll(pageRequest));
-	}
-
-	@Override
-	public long count() {
-		return operatorRepository.count();
-	}
-
-	@Override
 	public List<Operator> findAllByQuery(String nameSearch) throws Exception {
 		MyUtil.checkSearch(nameSearch);
 		return Lists.newArrayList(operatorRepository.findAllByQuery("name",
 				nameSearch));
+	}
+
+	@Override
+	public <R extends Repository<Operator, Long>> R getRepository() {
+		return (R) operatorRepository;
 	}
 }

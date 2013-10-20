@@ -14,10 +14,8 @@
 		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
 		<param-value>true</param-value>
 	</context-param>
-	<!-- <context-param>
-		<param-name>com.sun.faces.expressionFactory</param-name>
-		<param-value>com.sun.el.ExpressionFactoryImpl</param-value>
-	</context-param> -->
+	<!-- <context-param> <param-name>com.sun.faces.expressionFactory</param-name> 
+		<param-value>com.sun.el.ExpressionFactoryImpl</param-value> </context-param> -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -29,6 +27,9 @@
 	</listener>
 	<listener>
 		<listener-class>org.ocpsoft.rewrite.servlet.impl.RewriteServletContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.hengyi.japp.report.application.Listener</listener-class>
 	</listener>
 	<!-- Reads request input using UTF-8 encoding -->
 	<filter>

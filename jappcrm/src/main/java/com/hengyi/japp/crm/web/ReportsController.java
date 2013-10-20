@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import com.hengyi.japp.crm.domain.Report;
+import com.hengyi.japp.crm.domain.report.Report;
 import com.hengyi.japp.crm.service.ReportService;
 
 public abstract class ReportsController<T extends Report> extends

@@ -24,12 +24,6 @@ public class CustomersController extends CrmsController<Customer> implements
 	@Inject
 	private CustomerReportService customerReportService;
 
-	public void basicInfoReport() {
-		// TODO 报表连接重新修改
-		redirect(customerService.getUpdatePath(getCrm().getNodeId())
-				+ "/report/basicInfo");
-	}
-
 	@Override
 	protected CrmService<Customer> getCrmService() {
 		return customerService;

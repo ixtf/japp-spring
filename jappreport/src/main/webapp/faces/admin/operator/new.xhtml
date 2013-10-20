@@ -13,33 +13,21 @@
 			</h1>
 
 			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
-				<h:outputLabel for="uuid" value="UUID" />
-				<p:inputText id="uuid" value="#{operatorController.operator.uuid}"
-					readonly="true" />
-				<p:message for="uuid" />
-
 				<h:outputLabel for="principalType" value="Principal Type" />
-				<p:selectManyMenu id="principalType"
+				<p:selectOneMenu id="principalType"
 					value="#{operatorController.principalType}">
 					<f:selectItems var="_principalType"
-						value="#{operatorController.allPrincipalTypes}"
-						itemLabel="#{_principalType.name}" />
-				</p:selectManyMenu>
+						value="#{operatorController.allPrincipalTypes}" />
+				</p:selectOneMenu>
 				<p:message for="principalType" />
 
 				<h:outputLabel for="principal" value="Principal" />
-				<p:autoComplete id="principal"
-					value="#{operatorController.principal}"
-					completeMethod="#{operatorController.autoCompletePrincipal}"
-					forceSelection="true" />
+				<h:inputText id="principal" value="#{operatorController.principal}" />
 				<p:message for="principal" />
-
-				<h:outputLabel for="name" value="#{msg['name']}" />
-				<h:inputText id="name" value="#{operatorController.operator.name}" />
-				<p:message for="name" />
 			</h:panelGrid>
-			<p:commandButton action="#{operatorController.save}" update=":form"
-				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
+			<p:commandButton action="#{operatorController.newOperator}"
+				update=":form" value="#{msg['operation.submit']}"
+				styleClass="ui-priority-primary" />
 		</h:form>
 	</ui:define>
 </ui:composition>

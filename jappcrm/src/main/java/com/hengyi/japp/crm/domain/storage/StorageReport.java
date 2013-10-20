@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
-import com.hengyi.japp.crm.domain.Report;
+import com.hengyi.japp.crm.domain.report.Report;
 
 @NodeEntity
 public class StorageReport extends Report implements Serializable {
