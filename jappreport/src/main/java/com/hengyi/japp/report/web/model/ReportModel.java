@@ -3,22 +3,16 @@ package com.hengyi.japp.report.web.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.springframework.web.context.ContextLoader;
-
 import com.hengyi.japp.report.domain.Report;
-import com.hengyi.japp.report.service.ReportServiceFactory;
 
 public class ReportModel implements Serializable {
 	private static final long serialVersionUID = -3028260849248683610L;
 	private final Report report;
-	private String url;
+	private final String url;
 
-	public ReportModel(Report report) {
+	public ReportModel(Report report, String url) {
 		this.report = report;
-		ReportServiceFactory reportServiceFactory = ContextLoader
-				.getCurrentWebApplicationContext().getBean(
-						ReportServiceFactory.class);
-		url = reportServiceFactory.get(getReport()).getUrl(getReport());
+		this.url = url;
 	}
 
 	public Report getReport() {

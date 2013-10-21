@@ -3,7 +3,7 @@ package com.hengyi.japp.report.event.init;
 import java.io.File;
 import java.util.Set;
 
-import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -17,26 +17,31 @@ import org.springframework.util.ResourceUtils;
 
 import com.google.common.collect.Sets;
 import com.hengyi.japp.report.domain.Menu;
+import com.hengyi.japp.report.domain.Role;
 import com.hengyi.japp.report.domain.finereport.FineReport;
-import com.hengyi.japp.report.domain.repository.FineReportRepository;
-import com.hengyi.japp.report.domain.repository.MenuRepository;
+import com.hengyi.japp.report.service.MenuService;
+import com.hengyi.japp.report.service.ReportFactory;
+import com.hengyi.japp.report.service.RoleService;
 
 @Named
 @Singleton
 @Transactional
 public class AppInitListener implements ApplicationListener<AppInitEvent> {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	@Resource
-	private FineReportRepository fineReportRepository;
-	@Resource
-	private MenuRepository menuRepository;
+	@Inject
+	private ReportFactory reportFactory;
+	@Inject
+	private MenuService menuService;
+	@Inject
+	private RoleService roleService;
 
 	@Override
 	public void onApplicationEvent(AppInitEvent event) {
-		if (fineReportRepository.count() > 0)
+		if (roleService.count() > 0)
 			return;
 		try {
 			log.info("=============开始初始化=============");
+			initRole();
 			initCpts();
 			log.info("=============开始完成=============");
 		} catch (Exception e) {
@@ -44,10 +49,16 @@ public class AppInitListener implements ApplicationListener<AppInitEvent> {
 		}
 	}
 
+	private void initRole() throws Exception {
+		Role role = new Role();
+		role.setName("superUser");
+		roleService.save(role);
+	}
+
 	private void initCpts() throws Exception {
 		Menu menu = new Menu();
 		menu.setName("报表分析");
-		menuRepository.save(menu);
+		menuService.save(menu);
 		Set<FineReport> reports = Sets.newHashSet();
 		File file = ResourceUtils.getFile("classpath:cpts.xls");
 		jxl.Workbook workbook = Workbook.getWorkbook(file);
@@ -62,26 +73,6 @@ public class AppInitListener implements ApplicationListener<AppInitEvent> {
 
 			reports.add(report);
 		}
-		fineReportRepository.save(reports);
+		reportFactory.reportService(FineReport.class).save(reports);
 	}
-
-	// private void initCpts() throws Exception {
-	// Menu menu = new Menu();
-	// menu.setName("报表分析");
-	// Set<FineReport> reports = Sets.newHashSet();
-	// File file = ResourceUtils.getFile("classpath:cpts.xls");
-	// jxl.Workbook workbook = Workbook.getWorkbook(file);
-	// jxl.Sheet sheet = workbook.getSheet(0);
-	// for (int i = 1; i < sheet.getRows(); i++) {
-	// String cpt = sheet.getCell(0, i).getContents();
-	// String name = sheet.getCell(1, i).getContents();
-	// FineReport report = new FineReport();
-	// report.setCpt(cpt);
-	// report.setName(name);
-	// reports.add(report);
-	// }
-	// fineReportRepository.save(reports);
-	// menu.setReports(reports);
-	// menuRepository.save(menu);
-	// }
 }

@@ -16,11 +16,15 @@ import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 @NodeEntity
 public class Role extends AbstractNeo4j implements Serializable {
 	private static final long serialVersionUID = 1896078677101981112L;
+	public static final String ROLE_REPORT = "ROLE_REPORT";
+	public static final String ROLE_MENU = "ROLE_MENU";
 	@Indexed(unique = true)
 	private String name;
 	private String note;
-	@RelatedTo
-	private Set<Operator> operators;
+	@RelatedTo(type = ROLE_MENU, elementClass = Menu.class)
+	private Set<Menu> menus;
+	@RelatedTo(type = ROLE_REPORT)
+	private Set<Report> reports;
 
 	@NotBlank
 	public String getName() {
@@ -39,18 +43,32 @@ public class Role extends AbstractNeo4j implements Serializable {
 		this.note = StringUtils.trim(note);
 	}
 
-	public Iterable<Operator> getOperators() {
-		if (operators == null)
-			operators = Sets.newHashSet();
-		return operators;
+	public Iterable<Menu> getMenus() {
+		if (menus == null)
+			menus = Sets.newHashSet();
+		return menus;
 	}
 
-	public Iterable<Operator> getOperators(Neo4jOperations template) {
-		return template.fetch(getOperators());
+	public Iterable<Menu> getMenus(Neo4jOperations template) {
+		return template.fetch(getMenus());
 	}
 
-	public void setOperators(Iterable<Operator> operators) {
-		this.operators = Sets.newHashSet(operators);
+	public Iterable<Report> getReports() {
+		if (reports == null)
+			reports = Sets.newHashSet();
+		return reports;
+	}
+
+	public Iterable<Report> getReports(Neo4jOperations template) {
+		return template.fetch(getReports());
+	}
+
+	public void setMenus(Iterable<Menu> menus) {
+		this.menus = Sets.newHashSet(menus);
+	}
+
+	public void setReports(Iterable<? extends Report> reports) {
+		this.reports = Sets.newHashSet(reports);
 	}
 
 	@Override

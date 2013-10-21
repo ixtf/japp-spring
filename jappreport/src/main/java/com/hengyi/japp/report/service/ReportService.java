@@ -15,4 +15,8 @@ public interface ReportService<T extends Report> extends
 	List<T> findAllByQuery(String nameSearch) throws Exception;
 
 	String getUrl(T report);
+
+	List<Report> findAllByMenu(Menu menu);
+
+	List<Report> findAllByMenu(Iterable<Menu> menus);
 }

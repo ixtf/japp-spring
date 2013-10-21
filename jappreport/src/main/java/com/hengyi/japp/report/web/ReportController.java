@@ -10,7 +10,6 @@ import com.hengyi.japp.report.service.ReportService;
 public abstract class ReportController<T extends Report> extends
 		AbstractController {
 	private Long nodeId;
-	private Class<T> clazz;
 	private T report;
 	private ReportService<T> reportService;
 	@NotNull
@@ -19,12 +18,9 @@ public abstract class ReportController<T extends Report> extends
 	@PostConstruct
 	private void init() {
 		reportService = getReportService();
-		System.out.println(clazz);
 	}
 
 	protected abstract ReportService<T> getReportService();
-
-	protected abstract String getUrl(T report);
 
 	public void save() {
 		try {

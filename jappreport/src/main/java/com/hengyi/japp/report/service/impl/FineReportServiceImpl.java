@@ -1,5 +1,6 @@
 package com.hengyi.japp.report.service.impl;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,7 +21,8 @@ import com.hengyi.japp.report.service.finereport.FineReportService;
 @Transactional
 @SuppressWarnings("unchecked")
 public class FineReportServiceImpl extends ReportServiceImpl<FineReport>
-		implements FineReportService {
+		implements FineReportService, Serializable {
+	private static final long serialVersionUID = 8175817014790233532L;
 	@Resource
 	private FineReportRepository fineReportRepository;
 	@Resource(name = "deployProperties")
@@ -29,8 +31,8 @@ public class FineReportServiceImpl extends ReportServiceImpl<FineReport>
 	@Override
 	public List<FineReport> findAllByQuery(String nameSearch) throws Exception {
 		MyUtil.checkSearch(nameSearch);
-		return Lists.newArrayList(fineReportRepository.findAllByQuery("name",
-				nameSearch));
+		return Lists.newArrayList(fineReportRepository.findAllByQuery(
+				FineReport.class.getSimpleName(), "name", nameSearch));
 	}
 
 	@Override

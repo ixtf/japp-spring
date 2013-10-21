@@ -11,6 +11,8 @@ public interface CommonCrudService<T, ID extends Serializable> {
 
 	void save(T t) throws Exception;
 
+	void save(Iterable<T> ts) throws Exception;
+
 	void delete(ID id) throws Exception;
 
 	void delete(T t) throws Exception;

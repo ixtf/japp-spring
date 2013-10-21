@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 
+import org.primefaces.component.submenu.Submenu;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.TabCloseEvent;
 import org.springframework.context.annotation.Scope;
@@ -22,15 +24,33 @@ public class ReportDisplayController extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = 9146840004984249764L;
 	private Map<Report, ReportModel> reportModelMap = Maps.newLinkedHashMap();
-	// 当前浏览的报表
+	// 当前正在浏览的报表
 	private ReportModel reportModel;
+	// 当前所有浏览的报表
+	private List<ReportModel> reportModels = Lists.newArrayList(reportModelMap
+			.values());
+	// 收藏菜单
+	private Submenu collectSubmenu;
 
+	// 菜单栏点选报表
 	public void menuAction(ActionEvent event) {
 		Report report = (Report) event.getComponent().getAttributes()
 				.get("report");
+		addReport(report);
+	}
+
+	// 搜索框选择报表
+	public void selectReport(SelectEvent event) throws Exception {
+		Report report = (Report) event.getObject();
+		addReport(report);
+	}
+
+	private void addReport(Report report) {
+		String url = reportFactory.reportService(report).getUrl(report);
 		if (!reportModelMap.containsKey(report)) {
-			reportModel = new ReportModel(report);
+			reportModel = new ReportModel(report, url);
 			reportModelMap.put(report, reportModel);
+			setChange();
 		}
 		reportModel = reportModelMap.get(report);
 		redirect("/display");
@@ -39,6 +59,7 @@ public class ReportDisplayController extends AbstractController implements
 	public void onTabClose(TabCloseEvent event) {
 		ReportModel closeReportModel = (ReportModel) event.getData();
 		reportModelMap.remove(closeReportModel.getReport());
+		setChange();
 		if (reportModelMap.isEmpty())
 			// 全部关闭返回首页
 			redirect("/");
@@ -51,8 +72,23 @@ public class ReportDisplayController extends AbstractController implements
 		reportModel = (ReportModel) event.getData();
 	}
 
+	// 报表浏览变化
+	public void setChange() {
+		reportModels = Lists.newArrayList(reportModelMap.values());
+		// 收藏菜单
+		collectSubmenu = cacheService.getCollectSubmenu(reportModelMap);
+	}
+
 	public List<ReportModel> getReportModels() {
-		return Lists.newArrayList(reportModelMap.values());
+		return reportModels;
+	}
+
+	public Submenu getCollectSubmenu() {
+		return collectSubmenu;
+	}
+
+	public ReportModel getReportModel() {
+		return reportModel;
 	}
 
 	public int getActiveIndex() {
@@ -61,30 +97,11 @@ public class ReportDisplayController extends AbstractController implements
 		return 0;
 	}
 
+	public void setCollectSubmenu(Submenu collectSubmenu) {
+		this.collectSubmenu = collectSubmenu;
+	}
+
 	public void setActiveIndex(int activeIndex) {
 		// System.out.println(activeIndex);
 	}
-
-	// private Cache<Report, ReportModel> reportModelCache = CacheBuilder
-	// .newBuilder().maximumSize(2)
-	// .expireAfterWrite(1000, TimeUnit.SECONDS).build();
-	//
-	// public void menuAction(ActionEvent event) {
-	// try {
-	// final Report report = (Report) event.getComponent().getAttributes()
-	// .get("report");
-	// reportModel = reportModelCache.get(report,
-	// new Callable<ReportModel>() {
-	// @Override
-	// public ReportModel call() throws Exception {
-	// // reportModel = new ReportModel(report);
-	// // reportModels.add(reportModel);
-	// return new ReportModel(report);
-	// }
-	// });
-	// redirect("/display");
-	// } catch (ExecutionException e) {
-	// errorMessage(e);
-	// }
-	// }
 }
