@@ -1,0 +1,30 @@
+body {
+	min-width: 998px;
+	padding-top: 40px;
+}
+
+h1,h2,h3 {
+	margin-top: 0;
+}
+
+h1 {
+	font-size: 1.6em;
+	font-weight: normal;
+}
+
+h2 {
+	font-size: 1.6em;
+}
+
+h3 {
+	font-size: 1em;
+	margin-top: 20px;
+}
+
+.ui-growl {
+	padding-top: 20px;
+}
+
+.ui-widget {
+	font-size: 14px !important;
+}

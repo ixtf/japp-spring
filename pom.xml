@@ -14,6 +14,7 @@
 		<module>japppersonalevaluation</module>
 		<module>japptrans</module>
 		<module>jappcrm</module>
+		<module>jappreport</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,13 +30,17 @@
 		<springframework.version>3.2.4.RELEASE</springframework.version>
 		<spring.neo4j.version>2.3.1.RELEASE</spring.neo4j.version>
 		<slf4j.version>1.7.1</slf4j.version>
+		<!-- <primefaces.version>4.0</primefaces.version> <primefaces.extensions.version>1.0.0.RC1</primefaces.extensions.version> -->
+		<primefaces.version>3.5</primefaces.version>
+		<primefaces.extensions.version>0.7.1</primefaces.extensions.version>
+		<atmosphere.version>2.0.3</atmosphere.version>
 		<junit.version>4.10</junit.version>
 		<mockito.version>1.9.0</mockito.version>
 		<aspectj.version>1.7.1</aspectj.version>
 		<jackson.version>1.9.9</jackson.version>
 		<cxf.version>2.7.6</cxf.version>
 		<shiro.version>1.2.1</shiro.version>
-		<rewrite.version>2.0.7.Final</rewrite.version>
+		<rewrite.version>2.0.8.Final</rewrite.version>
 		<deltaspike.version>0.4</deltaspike.version>
 	</properties>
 	<dependencyManagement>
@@ -175,6 +180,16 @@
 			</dependency>
 			<!-- jsf -->
 			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>el-api</artifactId>
+				<version>2.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.web</groupId>
+				<artifactId>el-impl</artifactId>
+				<version>2.2</version>
+			</dependency>
+			<dependency>
 				<groupId>com.sun.faces</groupId>
 				<artifactId>jsf-api</artifactId>
 				<version>2.1.26</version>
@@ -187,27 +202,27 @@
 			<dependency>
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
-				<version>3.5</version>
+				<version>${primefaces.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.primefaces.extensions</groupId>
 				<artifactId>primefaces-extensions</artifactId>
-				<version>0.7.1</version>
+				<version>${primefaces.extensions.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.primefaces.extensions</groupId>
 				<artifactId>resources-ckeditor</artifactId>
-				<version>0.7.1</version>
+				<version>${primefaces.extensions.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.primefaces.extensions</groupId>
 				<artifactId>resources-codemirror</artifactId>
-				<version>0.7.1</version>
+				<version>${primefaces.extensions.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.atmosphere</groupId>
 				<artifactId>atmosphere-runtime-libs</artifactId>
-				<version>2.0.0.RC5</version>
+				<version>${atmosphere.version}</version>
 				<type>pom</type>
 			</dependency>
 			<dependency>

@@ -2,41 +2,34 @@ package com.hengyi.japp.crm.domain.customer;
 
 import java.math.BigDecimal;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.NotBlank;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import com.hengyi.japp.crm.data.IndicatorType;
 import com.hengyi.japp.crm.domain.Crm;
+import com.hengyi.japp.crm.domain.CrmField;
 
 @NodeEntity
 public class CustomerIndicatorSaleIncome extends CustomerIndicator {
-	private static final long serialVersionUID = 2420361128761811827L;
-	private Logger log = LoggerFactory.getLogger(this.getClass());
-	@NotBlank
-	private String field;
+	private static final long serialVersionUID = -6811556126201545896L;
+	@NotNull
+	private CrmField crmField;
 
 	public CustomerIndicatorSaleIncome() {
 		super("销售收入", 0.12);
 		setIndicatorType(IndicatorType.CALCULATE);
-		setField(Crm.FIELD_SALEINCOME);
+		// setCrmField(CrmField.saleIncome);
+	}
+
+	private BigDecimal getValue(Crm crm) {
+		return getCrmField().getValue(crm);
 	}
 
 	@Override
 	public double calculateScore(Crm crm) {
 		// 单位：亿
-		double saleIncome;
-		try {
-			BigDecimal b = (BigDecimal) PropertyUtils.getProperty(crm,
-					getField());
-			saleIncome = b.doubleValue() / 100000000;
-		} catch (Exception e) {
-			log.error(crm + "", e);
-			return 0;
-		}
+		double saleIncome = getValue(crm).doubleValue() / 100000000;
 		if (saleIncome >= 1000)
 			return 10;
 		else if (saleIncome >= 500)
@@ -59,12 +52,11 @@ public class CustomerIndicatorSaleIncome extends CustomerIndicator {
 			return 1;
 	}
 
-	public String getField() {
-		return field;
+	public CrmField getCrmField() {
+		return crmField;
 	}
 
-	public void setField(String field) {
-		// TODO 把中间的空格也去掉
-		this.field = StringUtils.trim(field);
+	public void setCrmField(CrmField crmField) {
+		this.crmField = crmField;
 	}
 }

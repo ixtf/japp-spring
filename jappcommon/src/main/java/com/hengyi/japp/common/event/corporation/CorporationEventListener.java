@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.annotation.Resource;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
@@ -11,7 +13,6 @@ import jxl.read.biff.BiffException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 
@@ -20,8 +21,9 @@ import com.hengyi.japp.common.domain.node.bind.corporation.AbstractBindCorporati
 import com.hengyi.japp.common.domain.node.bind.corporation.HrCorporation;
 import com.hengyi.japp.common.service.CorporationService;
 
+@Named
 @Transactional
-@Component
+@Singleton
 public class CorporationEventListener implements
 		ApplicationListener<CorporationEvent> {
 	private final Logger log = LoggerFactory.getLogger(getClass());

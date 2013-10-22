@@ -1,10 +1,13 @@
 package com.hengyi.japp.common.event;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
-import org.springframework.stereotype.Component;
 
-@Component
+@Named
+@Singleton
 public class SyncEventPublisherImpl implements SyncEventPublisher {
 	private ApplicationContext publisher;
 

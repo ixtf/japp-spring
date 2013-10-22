@@ -2,20 +2,21 @@ package com.hengyi.japp.foreign.service.impl;
 
 import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Sets;
-import com.hengyi.japp.foreign.application.event.EventPublisher;
-import com.hengyi.japp.foreign.application.event.creditpost.CreditPostUpdateEvent;
-import com.hengyi.japp.foreign.application.event.vbak.CreditPostWriteToSapEvent;
 import com.hengyi.japp.foreign.domain.CreditPost;
 import com.hengyi.japp.foreign.domain.CreditPostRecieveInfo;
 import com.hengyi.japp.foreign.domain.Operator;
 import com.hengyi.japp.foreign.domain.Vbak;
 import com.hengyi.japp.foreign.domain.repository.CreditPostRepository;
+import com.hengyi.japp.foreign.event.EventPublisher;
+import com.hengyi.japp.foreign.event.creditpost.CreditPostUpdateEvent;
+import com.hengyi.japp.foreign.event.vbak.CreditPostWriteToSapEvent;
 import com.hengyi.japp.foreign.service.CreditPostService;
 import com.hengyi.japp.foreign.service.VbakService;
 
@@ -26,7 +27,7 @@ public class CreditPostServiceImpl implements CreditPostService {
 	private EventPublisher eventPublisher;
 	@Inject
 	private VbakService vbakService;
-	@Inject
+	@Resource
 	private CreditPostRepository creditPostRepository;
 
 	@Override

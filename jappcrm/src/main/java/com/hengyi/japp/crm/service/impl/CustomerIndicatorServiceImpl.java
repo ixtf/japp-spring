@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
@@ -18,6 +19,7 @@ import com.hengyi.japp.crm.service.customer.CustomerService;
 
 @Named("customerIndicatorService")
 @Transactional
+@SuppressWarnings("unchecked")
 public class CustomerIndicatorServiceImpl extends
 		IndicatorServiceImpl<CustomerIndicator> implements
 		CustomerIndicatorService {
@@ -46,5 +48,10 @@ public class CustomerIndicatorServiceImpl extends
 	@Override
 	protected CrmService<?> getCrmService() {
 		return customerService;
+	}
+
+	@Override
+	public <R extends Repository<CustomerIndicator, Long>> R getRepository() {
+		return (R) customerIndicatorRepository;
 	}
 }

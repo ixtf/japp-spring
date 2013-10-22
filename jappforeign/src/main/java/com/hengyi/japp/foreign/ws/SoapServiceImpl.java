@@ -26,17 +26,17 @@ import com.hengyi.japp.foreign.service.VbakService;
 
 @WebService
 public class SoapServiceImpl implements SoapService {
-	private final Logger log = LoggerFactory.getLogger(getClass());
+	final Logger log = LoggerFactory.getLogger(getClass());
 	@Inject
-	protected VbakService vbakService;
+	private VbakService vbakService;
 	@Inject
-	protected CreditPostService creditPostService;
+	private CreditPostService creditPostService;
 	@Inject
-	protected StockPrepareService stockPrepareService;
+	private StockPrepareService stockPrepareService;
 	@Inject
-	protected InvoiceService invoiceService;
+	private InvoiceService invoiceService;
 	@Inject
-	protected LikpService likpService;
+	private LikpService likpService;
 	@Inject
 	private OperatorService operatorService;
 

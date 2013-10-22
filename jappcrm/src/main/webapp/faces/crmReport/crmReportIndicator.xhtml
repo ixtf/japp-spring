@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:commandButton value="#{msg['print']}" type="button"
+		icon="ui-icon-print">
+		<p:printer target="crmReportIndicator" />
+	</p:commandButton>
+	<p:dataTable id="crmReportIndicator" var="_crmReportIndicator"
+		value="#{crmReportController.crmReport.crmReportIndicators}"
+		style="margin-left:auto;margin-right:auto;width:210mm;">
+		<f:facet name="header">
+			<h:outputText value="#{crmReportController.crmReport.report}"
+				style="font-size:1.6em" />
+		</f:facet>
+
+		<p:columnGroup type="header">
+			<p:row>
+				<p:column headerText="#{msg['name']}" />
+				<p:column colspan="3"
+					headerText="#{crmReportController.crmReport.crm}" />
+			</p:row>
+			<p:row>
+				<p:column headerText="#{msg['indicator']}" />
+				<p:column headerText="#{msg['indicatorScore']}" />
+				<p:column headerText="#{msg['indicatorPercent']}" />
+				<p:column
+					headerText="#{msg['indicatorScore']}*#{msg['indicatorPercent']}" />
+			</p:row>
+		</p:columnGroup>
+
+		<p:column>
+			<h:outputText value="#{_crmReportIndicator.indicatorScore.end}" />
+		</p:column>
+		<p:column style="text-align:right">
+			<h:outputText value="#{_crmReportIndicator.score}">
+				<f:convertNumber pattern="#0.00" />
+			</h:outputText>
+		</p:column>
+		<p:column style="text-align:right">
+			<h:outputText
+				value="#{_crmReportIndicator.indicatorScore.end.percent}">
+				<f:convertNumber type="percent" />
+			</h:outputText>
+		</p:column>
+		<p:column style="text-align:right">
+			<h:outputText value="#{_crmReportIndicator.indicatorScore.score}">
+				<f:convertNumber pattern="#0.00" />
+			</h:outputText>
+		</p:column>
+		<p:columnGroup type="footer">
+			<p:row>
+				<p:column colspan="3" footerText="#{msg['total']}"
+					style="text-align:right" />
+				<p:column
+					footerText="#{crmReportController.crmReport.totalIndicatorScore}"
+					style="text-align:right" />
+			</p:row>
+			<p:row>
+				<p:column footerText="#{msg['reportInputDate']}" />
+				<p:column />
+				<p:column footerText="#{msg['businessMan']}" />
+				<p:column />
+			</p:row>
+			<p:row>
+				<p:column footerText="#{msg['businessManager']}" />
+				<p:column />
+				<p:column footerText="#{msg['riskManageDep']}" />
+				<p:column />
+			</p:row>
+		</p:columnGroup>
+	</p:dataTable>
+</ui:composition>

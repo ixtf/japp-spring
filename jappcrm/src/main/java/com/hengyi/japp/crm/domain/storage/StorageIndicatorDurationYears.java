@@ -1,38 +1,38 @@
 package com.hengyi.japp.crm.domain.storage;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.NotBlank;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
+import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.data.IndicatorType;
 import com.hengyi.japp.crm.domain.Crm;
+import com.hengyi.japp.crm.domain.CrmField;
+import com.hengyi.japp.crm.domain.IndicatorValue;
 
 @NodeEntity
 public class StorageIndicatorDurationYears extends StorageIndicator {
-	private static final long serialVersionUID = 2420361128761811827L;
-	private static Logger log = LoggerFactory
-			.getLogger(StorageIndicatorDurationYears.class);
-	@NotBlank
-	private String field;
+	private static final long serialVersionUID = 5437801085834499213L;
+	@NotNull
+	private CrmField crmField;
 
 	public StorageIndicatorDurationYears() {
 		super("已经营年限", 0.04);
 		setIndicatorType(IndicatorType.CALCULATE);
-		setField(Crm.FIELD_DURATIONYEARS);
+		// setCrmField(CrmField.durationYears);
+	}
+
+	@Override
+	public List<IndicatorValue> getIndicatorValues(Crm crm) {
+		int i = crmField.getValue(crm);
+		return Lists.newArrayList(new IndicatorValue(String.valueOf(i)));
 	}
 
 	@Override
 	public double calculateScore(Crm crm) {
-		int durationYears;
-		try {
-			durationYears = (int) PropertyUtils.getProperty(crm, getField());
-		} catch (Exception e) {
-			log.error(crm + "", e);
-			return 0;
-		}
+		int durationYears = crmField.getValue(crm);
 		if (durationYears >= 10)
 			return 10;
 		else if (durationYears >= 5)
@@ -45,12 +45,11 @@ public class StorageIndicatorDurationYears extends StorageIndicator {
 			return 6;
 	}
 
-	public String getField() {
-		return field;
+	public CrmField getCrmField() {
+		return crmField;
 	}
 
-	public void setField(String field) {
-		// TODO 把中间的空格也去掉
-		this.field = StringUtils.trim(field);
+	public void setCrmField(CrmField crmField) {
+		this.crmField = crmField;
 	}
 }

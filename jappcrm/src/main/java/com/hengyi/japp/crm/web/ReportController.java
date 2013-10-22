@@ -5,9 +5,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import com.google.common.collect.Lists;
-import com.hengyi.japp.crm.data.CrmField;
+import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.Indicator;
-import com.hengyi.japp.crm.domain.Report;
+import com.hengyi.japp.crm.domain.report.Report;
 import com.hengyi.japp.crm.service.ReportService;
 
 public abstract class ReportController<T extends Report> extends
@@ -16,6 +16,7 @@ public abstract class ReportController<T extends Report> extends
 	private Long nodeId;
 	private T report;
 	private List<Indicator> indicators;
+	private List<CrmField> crmFields;
 	private Indicator indicator;
 	private CrmField crmField;
 
@@ -46,12 +47,18 @@ public abstract class ReportController<T extends Report> extends
 	}
 
 	public void addCrmFiled() {
-		if (!report.getCrmFields().contains(getCrmField()))
-			report.getCrmFields().add(crmField);
+		if (!getCrmFields().contains(getCrmField()))
+			crmFields.add(crmField);
 	}
 
 	public void removeCrmFiled() {
-		report.getCrmFields().remove(getIndicator());
+		getCrmFields().remove(getCrmField());
+	}
+
+	public List<CrmField> getCrmFields() {
+		if (crmFields == null)
+			crmFields = Lists.newArrayList(getReport().getCrmFields());
+		return crmFields;
 	}
 
 	public T getReport() {
@@ -100,5 +107,9 @@ public abstract class ReportController<T extends Report> extends
 
 	public void setCrmField(CrmField crmField) {
 		this.crmField = crmField;
+	}
+
+	public void setCrmFields(List<CrmField> crmFields) {
+		this.crmFields = crmFields;
 	}
 }

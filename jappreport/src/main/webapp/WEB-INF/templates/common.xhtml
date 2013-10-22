@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<title><h:outputText value="#{msg['project.title']}" /></title>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+	</f:facet>
+	<f:facet name="last">
+		<h:outputStylesheet library="css" name="bootstrap.css" />
+		<h:outputStylesheet library="css" name="bootstrap-responsive.min.css" />
+		<h:outputScript library="js" name="bootstrap.min.js" />
+		<h:outputStylesheet library="css" name="all.css" />
+		<h:outputScript library="javax.faces" name="jsf.js" />
+		<h:outputScript library="js" name="PrimeFacesLocales.js" />
+	</f:facet>
+	<ui:insert name="head" />
+</h:head>
+<h:body>
+	<ui:insert name="body" />
+</h:body>
+</html>

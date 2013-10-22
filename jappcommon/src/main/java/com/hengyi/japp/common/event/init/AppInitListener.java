@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -11,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.ImmutableMap;
@@ -37,9 +38,10 @@ import com.hengyi.japp.common.event.corporation.CorporationEvent;
 import com.hengyi.japp.common.service.CorporationService;
 import com.hengyi.japp.common.service.UserService;
 
-@SuppressWarnings("unused")
+@Named
 @Transactional
-@Component
+@Singleton
+@SuppressWarnings("unused")
 public class AppInitListener implements ApplicationListener<AppInitEvent> {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Resource
@@ -61,7 +63,7 @@ public class AppInitListener implements ApplicationListener<AppInitEvent> {
 	@Resource
 	private BindCorporationRepository bindCorporationRepository;
 	@Resource
-	private SyncEventPublisher publisher;
+	private SyncEventPublisher syncEventPublisher;
 
 	@Override
 	public void onApplicationEvent(AppInitEvent event) {
@@ -72,7 +74,7 @@ public class AppInitListener implements ApplicationListener<AppInitEvent> {
 			Map<String, Corporation> corporationMap = importHrCorporation();
 			importOaCorporation(BindCorporationType.OA1, oa1JdbcTemplate);
 			importOaCorporation(BindCorporationType.OA2, oa2JdbcTemplate);
-			publisher.publish(new CorporationEvent(this,
+			syncEventPublisher.publish(new CorporationEvent(this,
 					CorporationEvent.Type.OA_CORPORATION_IMPORTED));
 
 			Map<String, User> userMap = importHrUser();

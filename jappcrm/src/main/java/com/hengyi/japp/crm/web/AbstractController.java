@@ -17,10 +17,12 @@ import org.springframework.data.neo4j.template.Neo4jOperations;
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.Constant;
 import com.hengyi.japp.crm.MessageUtil;
-import com.hengyi.japp.crm.data.CrmField;
+import com.hengyi.japp.crm.data.CrmFieldType;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Operator;
+import com.hengyi.japp.crm.event.EventPublisher;
+import com.hengyi.japp.crm.event.SyncEventPublisher;
 import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CertificateService;
 import com.hengyi.japp.crm.service.CommunicateeService;
@@ -36,6 +38,10 @@ public abstract class AbstractController {
 	protected Mapper dozer;
 	@Inject
 	protected CacheService cacheService;
+	@Inject
+	protected EventPublisher eventPublisher;
+	@Inject
+	protected SyncEventPublisher syncEventPublisher;
 	@Inject
 	protected OperatorService operatorService;
 	@Inject
@@ -55,8 +61,8 @@ public abstract class AbstractController {
 		return Lists.newArrayList(certificateService.findAll());
 	}
 
-	public List<CrmField> getAllCrmFields() {
-		return Lists.newArrayList(CrmField.values());
+	public List<CrmFieldType> getAllCrmFields() {
+		return Lists.newArrayList(CrmFieldType.values());
 	}
 
 	public int getPageSize() {

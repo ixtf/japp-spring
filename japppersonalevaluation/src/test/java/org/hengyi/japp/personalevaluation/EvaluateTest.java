@@ -23,7 +23,7 @@ public class EvaluateTest {
 
 	@Test
 	public void test() throws Exception {
-		Operator operator = operatorService.findByEmpsn("1200077");
-		System.out.print(operator);
+		//Operator operator = operatorService.findByEmpsn("1200077");
+		//System.out.print(operator);
 	}
 }

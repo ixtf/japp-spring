@@ -1,11 +1,8 @@
 package com.hengyi.japp.foreign.service;
 
+import com.hengyi.japp.common.service.CommonCacheService;
 import com.hengyi.japp.foreign.domain.Operator;
 
-public interface CacheService {
-	<T> T getSession(Object key, Class<T> value) throws Exception;
-
-	void setSession(Object key, Object value) throws Exception;
-
+public interface CacheService extends CommonCacheService {
 	Operator getCurrentOperator() throws Exception;
 }

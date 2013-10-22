@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+<beans default-lazy-init="true"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:task="http://www.springframework.org/schema/task" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	   		http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -9,7 +10,19 @@
 	   		http://www.springframework.org/schema/task 
 	   		http://www.springframework.org/schema/task/spring-task.xsd">
 
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="view">
+					<bean class="com.hengyi.japp.common.web.spring.ViewScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
 	<bean id="dozer" class="org.dozer.spring.DozerBeanMapperFactoryBean" />
+	<!-- <bean id="eventBus" class="com.google.common.eventbus.EventBus" scope="singleton" 
+		/> -->
 
 	<context:component-scan base-package="com.hengyi.japp.foreign">
 		<context:exclude-filter type="annotation"

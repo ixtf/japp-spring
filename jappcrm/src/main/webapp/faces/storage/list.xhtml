@@ -17,14 +17,8 @@
 			</h:panelGrid>
 
 			<p:contextMenu for="tableStorages">
-				<p:submenu label="#{msg['report']}" icon="ui-icon-document">
-					<!-- <p:menuitem value="#{msg['basicInfoReport']}"
-						action="#{storagesController.basicInfoReport}" />
-					<p:menuitem value="#{msg['creditRiskReport']}"
-						action="#{storagesController.creditRiskReport}" />
-					<p:menuitem value="#{msg['fiCreditRiskReport']}"
-						action="#{storagesController.fiCreditRiskReport}" /> -->
-				</p:submenu>
+				<p:submenu label="#{msg['report']}" icon="ui-icon-document"
+					binding="#{storagesController.reportSubmenu}" />
 				<p:separator />
 				<p:menuitem value="#{msg['edit']}"
 					action="#{storagesController.edit}" icon="ui-icon-pencil" />
@@ -39,10 +33,9 @@
 			</p:confirmDialog>
 			<p:dataTable id="tableStorages" var="_storage"
 				value="#{storagesController.crms}"
-				selection="#{storagesController.crm}"
-				rowKey="#{_storage.nodeId}" selectionMode="single"
-				rows="#{storagesController.pageSize}" paginator="true"
-				stickyHeader="true" lazy="true">
+				selection="#{storagesController.crm}" rowKey="#{_storage.nodeId}"
+				selectionMode="single" rows="#{storagesController.pageSize}"
+				paginator="true" stickyHeader="true" lazy="true">
 				<f:facet name="header">
 					<h:outputText value="#{msg['storage']}" />
 				</f:facet>

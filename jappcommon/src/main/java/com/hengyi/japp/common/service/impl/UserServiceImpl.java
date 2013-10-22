@@ -1,10 +1,11 @@
 package com.hengyi.japp.common.service.impl;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
 
 import com.hengyi.japp.common.CommonConstant;
 import com.hengyi.japp.common.Constant;
@@ -24,7 +25,7 @@ import com.hengyi.japp.common.event.EventPublisher;
 import com.hengyi.japp.common.service.CorporationService;
 import com.hengyi.japp.common.service.UserService;
 
-@Service
+@Named
 public class UserServiceImpl implements UserService {
 	@Resource
 	private Neo4jOperations template;
@@ -44,8 +45,8 @@ public class UserServiceImpl implements UserService {
 	private JdbcTemplate oa1JdbcTemplate;
 	@Resource(name = "oa2JdbcTemplate")
 	private JdbcTemplate oa2JdbcTemplate;
-	@Resource
-	private EventPublisher publisher;
+	@Inject
+	private EventPublisher eventPublisher;
 
 	@Override
 	public User save(User user) {
@@ -121,14 +122,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Iterable<User> queryAll(UserSearchCommand command) {
+	public Iterable<User> findAllByQuery(UserSearchCommand command) {
 		return userRepository.findAllByQuery(User.nameSearch, "name",
 				command.getName());
 	}
 
 	@Override
-	public Iterable<BindUser> queryAllBindUser(String query) {
+	public Iterable<BindUser> findAllBindUserByQuery(String nameSearch) {
 		return bindUserRepository.findAllByQuery(BindUser.nameSearch, "name",
-				query);
+				nameSearch);
 	}
 }

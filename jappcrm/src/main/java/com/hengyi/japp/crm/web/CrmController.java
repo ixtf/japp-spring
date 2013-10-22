@@ -25,7 +25,8 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
 	private Long nodeId;
 	private T crm;
 	@NotNull
-	private CrmType crmType;
+	@Size(min = 1)
+	private List<CrmType> crmTypes;
 	@NotNull
 	@Size(min = 1)
 	private List<Certificate> certificates;
@@ -70,7 +71,7 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
 	public void save() {
 		try {
 			getCrm().setOperator(cacheService.getCurrentOperator());
-			crmService.save(crm, getIndicatorMap(), getCrmType(),
+			crmService.save(crm, getIndicatorMap(), getCrmTypes(),
 					getCertificates(), getCommunicatee(), getCommunicatees(),
 					getAssociates());
 			operationSuccessMessage();
@@ -101,10 +102,10 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
 		return crm;
 	}
 
-	public CrmType getCrmType() {
-		if (crmType == null)
-			crmType = getCrm().getCrmType();
-		return crmType;
+	public List<CrmType> getCrmTypes() {
+		if (crmTypes == null)
+			crmTypes = Lists.newArrayList(getCrm().getCrmTypes());
+		return crmTypes;
 	}
 
 	public List<Certificate> getCertificates() {
@@ -216,8 +217,8 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
 		this.nodeId = nodeId;
 	}
 
-	public void setCrmType(CrmType crmType) {
-		this.crmType = crmType;
+	public void setCrmTypes(List<CrmType> crmTypes) {
+		this.crmTypes = crmTypes;
 	}
 
 	public void setCertificates(List<Certificate> certificates) {

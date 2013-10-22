@@ -36,6 +36,13 @@
 					navigator="true" pattern="yyyy-MM-dd" />
 				<p:message for="registerDate" />
 
+				<h:outputLabel for="registerInvalidDate"
+					value="#{msg['registerInvalidDate']}" />
+				<p:calendar id="registerInvalidDate"
+					value="#{customerController.crm.registerInvalidDate}"
+					locale="zh_CN" navigator="true" pattern="yyyy-MM-dd" />
+				<p:message for="registerInvalidDate" />
+
 				<h:outputLabel for="registerCapital"
 					value="#{storInd['registerCapital']}" />
 				<pe:inputNumber id="registerCapital"
@@ -64,12 +71,13 @@
 					maxValue="99999999999999999999" />
 				<p:message for="saleIncome" />
 
-				<h:outputLabel for="crmType" value="#{msg['crmType']}" />
-				<p:selectOneMenu id="crmType" value="#{storageController.crmType}"
-					converter="crmType">
+				<h:outputLabel for="crmTypes" value="#{msg['crmType']}" />
+				<p:selectManyMenu id="crmTypes"
+					value="#{storageController.crmTypes}" converter="crmType"
+					showCheckbox="true" style="width:230px;height:100px">
 					<f:selectItems value="#{storageController.allCrmTypes}" />
-				</p:selectOneMenu>
-				<p:message for="crmType" />
+				</p:selectManyMenu>
+				<p:message for="crmTypes" />
 
 				<h:outputLabel for="certificates" value="#{msg['certificate']}" />
 				<p:selectManyMenu id="certificates"

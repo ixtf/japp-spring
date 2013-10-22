@@ -24,16 +24,11 @@
 		p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-		p:dataSource-ref="appDataSource" p:persistenceUnitName="${app.persistenceUnitName}">
+		p:persistenceUnitName="${app.persistenceUnitName}">
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
 	</bean>
-	<bean id="appDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close" p:driverClass="${app.jdbc.driverClassName}"
-		p:jdbcUrl="${app.jdbc.url}" p:user="${app.jdbc.username}" p:password="${app.jdbc.password}"
-		p:acquireIncrement="5" p:idleConnectionTestPeriod="60" p:maxPoolSize="100"
-		p:maxStatements="50" p:minPoolSize="10" />
 	<context:property-placeholder
 		properties-ref="deployProperties" />
 </beans>

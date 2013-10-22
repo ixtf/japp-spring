@@ -2,6 +2,7 @@ package com.hengyi.japp.foreign.service.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -11,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.hengyi.japp.common.sap.dto.SapVbapDTO;
 import com.hengyi.japp.common.sap.dto.VbapPK;
-import com.hengyi.japp.foreign.application.event.EventPublisher;
-import com.hengyi.japp.foreign.application.event.SyncEventPublisher;
 import com.hengyi.japp.foreign.domain.Vbak;
 import com.hengyi.japp.foreign.domain.Vbap;
 import com.hengyi.japp.foreign.domain.repository.CreditPostRepository;
@@ -24,6 +23,8 @@ import com.hengyi.japp.foreign.dto.VbakDTO;
 import com.hengyi.japp.foreign.dto.VbakVbapDTO;
 import com.hengyi.japp.foreign.dto.VbaksVbapsDTO;
 import com.hengyi.japp.foreign.dto.VbapDTO;
+import com.hengyi.japp.foreign.event.EventPublisher;
+import com.hengyi.japp.foreign.event.SyncEventPublisher;
 import com.hengyi.japp.foreign.service.CacheService;
 import com.hengyi.japp.foreign.service.SapServiceFacade;
 import com.hengyi.japp.foreign.service.VbakService;
@@ -35,19 +36,19 @@ public class VbakServiceImpl implements VbakService {
 	private CacheService cacheService;
 	@Inject
 	private SapServiceFacade sapServiceFacade;
-	@Inject
+	@Resource
 	private VbakRepository vbakRepository;
-	@Inject
+	@Resource
 	private VbapRepository vbapRepository;
-	@Inject
+	@Resource
 	private CreditPostRepository creditPostRepository;
-	@Inject
+	@Resource
 	private StockPrepareRepository stockPrepareRepository;
 	@Inject
 	protected EventPublisher eventPublisher;
 	@Inject
 	protected SyncEventPublisher syncEventPublisher;
-	@Inject
+	@Resource
 	private Mapper dozer;
 
 	@Override

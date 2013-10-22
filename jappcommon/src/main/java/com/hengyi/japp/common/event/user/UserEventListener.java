@@ -1,11 +1,12 @@
 package com.hengyi.japp.common.event.user;
 
 import javax.annotation.Resource;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hengyi.japp.common.data.PrincipalType;
@@ -15,8 +16,9 @@ import com.hengyi.japp.common.domain.node.bind.user.HrUser;
 import com.hengyi.japp.common.service.CorporationService;
 import com.hengyi.japp.common.service.UserService;
 
+@Named
 @Transactional
-@Component
+@Singleton
 public class UserEventListener implements ApplicationListener<UserEvent> {
 	@Resource
 	private UserService userService;

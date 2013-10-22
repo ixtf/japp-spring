@@ -13,9 +13,11 @@ import com.hengyi.japp.common.domain.node.bind.user.InnerUser;
 public interface UserService {
 	User save(User user);
 
-	BindUser save(BindUser user);
-
 	User findOne(String uuid);
+
+	Iterable<User> findAllByQuery(UserSearchCommand command);
+
+	BindUser save(BindUser user);
 
 	<T extends BindUser> T findOneBindUser(PrincipalType principalType,
 			String principal);
@@ -26,9 +28,7 @@ public interface UserService {
 
 	BindUser unBindUser(UserBindCommand command) throws Exception;
 
-	Iterable<User> queryAll(UserSearchCommand command);
-
 	void changePassword(String uuid, String password);
 
-	Iterable<BindUser> queryAllBindUser(String string);
+	Iterable<BindUser> findAllBindUserByQuery(String nameSearch);
 }

@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 
 public abstract class Modifiable extends AbstractNeo4j {
+	private static final long serialVersionUID = -7106631570438054132L;
 	@RelatedTo(type = "CREATOR")
 	@Fetch
 	private Operator creator;

@@ -1,10 +1,10 @@
 package com.hengyi.japp.crm.domain;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
@@ -15,20 +15,21 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.crm.data.IndicatorType;
 
 @NodeEntity
-public abstract class Indicator extends Modifiable implements Serializable {
+public abstract class Indicator extends Modifiable {
 	private static final long serialVersionUID = 3991202655674862197L;
 	@NotBlank
 	@Indexed(unique = true, level = Level.INSTANCE)
 	protected String name;
 	@Min(0)
 	protected double percent;
-	@Min(0)
+	@NotNull
 	protected IndicatorType indicatorType = IndicatorType.SIMPLE;
 	@RelatedToVia(type = IndicatorValueScore.RELATIONSHIP, elementClass = IndicatorValueScore.class)
 	@Fetch
@@ -51,19 +52,29 @@ public abstract class Indicator extends Modifiable implements Serializable {
 		return result;
 	}
 
+	public List<IndicatorValue> getIndicatorValues(Crm crm) {
+		if (IndicatorType.CALCULATE.equals(this.getIndicatorType()))
+			// return Lists.newArrayList(new IndicatorValue(String
+			// .valueOf(getValue(crm))));
+			return ImmutableList.of();
+		List<IndicatorValue> result = Lists.newArrayList();
+		Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
+				.getIndicatorValues());
+		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores()) {
+			IndicatorValue indicatorValue = indicatorValueScore.getEnd();
+			if (indicatorValues.contains(indicatorValue))
+				result.add(indicatorValue);
+		}
+		return result;
+	}
+
 	public List<IndicatorValueScore> getIndicatorValueScoresAsList() {
 		return Lists.newArrayList(getIndicatorValueScores());
 	}
 
-	public List<IndicatorValueScore> getIndicatorValueScores(Crm crm,
+	public List<IndicatorValue> getIndicatorValues(Crm crm,
 			Neo4jOperations template) {
-		List<IndicatorValueScore> result = Lists.newArrayList();
-		Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
-				.getIndicatorValues(template));
-		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores(template))
-			if (indicatorValues.contains(indicatorValueScore.getEnd()))
-				result.add(indicatorValueScore);
-		return result;
+		return template.fetch(getIndicatorValues(crm));
 	}
 
 	public Indicator() {

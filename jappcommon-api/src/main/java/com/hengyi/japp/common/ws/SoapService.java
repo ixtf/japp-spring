@@ -1,7 +1,7 @@
 package com.hengyi.japp.common.ws;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 import javax.jws.WebService;
 
@@ -20,14 +20,18 @@ public interface SoapService extends Serializable {
 	UserDTO findOneUser(final PrincipalType principalType,
 			final String principal) throws Exception;
 
-	Collection<BindUserDTO> findBindUser(final String uuid) throws Exception;
+	List<UserDTO> findAllUserByQuery(String nameSearch) throws Exception;
 
-	Collection<CorporationDTO> findAllCorporation(final String uuid)
+	List<UserDTO> findAllUserByQuery_Size(String nameSearch, int size)
 			throws Exception;
 
-	Collection<HrOrganizationDTO> findAllHrOrganization() throws Exception;
+	List<BindUserDTO> findAllBindUser(final String uuid) throws Exception;
+
+	List<CorporationDTO> findAllCorporation(final String uuid) throws Exception;
+
+	List<HrOrganizationDTO> findAllHrOrganization() throws Exception;
 
 	Double calString(final String cal) throws Exception;
 
-	Collection<BindUserDTO> findHrUsersByHrOrganization(String orgId);
+	List<BindUserDTO> findHrUsersByHrOrganization(String orgId);
 }

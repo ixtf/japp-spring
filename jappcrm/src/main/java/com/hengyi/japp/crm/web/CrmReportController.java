@@ -5,8 +5,10 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.data.CrmReport;
+import com.hengyi.japp.crm.domain.Crm;
+import com.hengyi.japp.crm.domain.report.Report;
 import com.hengyi.japp.crm.service.CrmReportService;
+import com.hengyi.japp.crm.web.model.CrmReportModel;
 
 @Named
 @Scope("view")
@@ -15,12 +17,20 @@ public class CrmReportController extends AbstractController {
 	private CrmReportService crmReportService;
 	private Long crmNodeId;
 	private Long reportNodeId;
-	private CrmReport crmReport;
+	private CrmReportModel crmReport;
 
-	public CrmReport getCrmReport() {
+	public CrmReportModel getCrmReport() {
 		if (crmReport == null)
-			crmReport = crmReportService.findOne(crmNodeId, reportNodeId);
+			crmReportService.findOne(getCrmNodeId(), getReportNodeId());
 		return crmReport;
+	}
+
+	public Crm getCrm() {
+		return getCrmReport().getCrm();
+	}
+
+	public Report getReport() {
+		return getCrmReport().getReport();
 	}
 
 	public Long getCrmNodeId() {

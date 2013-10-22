@@ -1,5 +1,8 @@
 package com.hengyi.japp.common;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.hengyi.japp.common.data.Theme;
@@ -14,6 +17,8 @@ public class CommonConstant {
 	public static final String SESSION_USER = "__SESSION_USER__";
 	public static final String SESSION_OPERATOR = "__SESSION_OPERATOR__";
 	public static final String DATEFORMAT_P = "yyyy-MM-dd";
+	public static final DateFormat DATEFORMAT = new SimpleDateFormat(
+			DATEFORMAT_P);
 	public static final int PAGE_SIZE = 10;
 
 	public static final Theme DEFAULT_THEME = new Theme("bootstrap",

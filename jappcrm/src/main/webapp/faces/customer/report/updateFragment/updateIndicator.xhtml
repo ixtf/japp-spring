@@ -12,7 +12,7 @@
 
 		<p:column headerText="#{msg['operation']}" style="width:4%">
 			<p:commandLink process="@this"
-				update=":form:tableIndicators,:form:message"
+				update=":form:tabView:tableIndicators,:form:message"
 				action="#{customerReportController.removeIndicator}"
 				icon="ui-icon-minus">
 				<h:outputText value="#{msg['delete']}" />
@@ -34,11 +34,11 @@
 	</p:dataTable>
 
 	<p:panel header="#{msg['select']}#{msg['indicator']}" toggleable="true">
-		<p:dataTable id="tableCustomerIndicators" var="_indicator"
+		<p:dataTable var="_indicator"
 			value="#{customerIndicatorsController.indicators}">
 			<p:column headerText="#{msg['operation']}" style="width:4%">
 				<p:commandLink process="@this"
-					update=":form:tableIndicators,:form:message"
+					update=":form:tabView:tableIndicators,:form:message"
 					action="#{customerReportController.addIndicator}"
 					icon="ui-icon-plus">
 					<h:outputText value="#{msg['add']}" />

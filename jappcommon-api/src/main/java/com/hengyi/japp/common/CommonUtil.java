@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
 
 import com.google.common.collect.Maps;
 
@@ -22,15 +21,40 @@ public class CommonUtil {
 	}
 
 	public static final ResourceBundle resourceBundle(String baseName) {
-		Locale locale = LocaleContextHolder.getLocale();
-		return ResourceBundle.getBundle(baseName, locale);
+		return ResourceBundle.getBundle(baseName, Locale.CHINA);
+	}
+
+	public static final ResourceBundle resourceBundle(String baseName,
+			Locale locale) {
+		try {
+			return ResourceBundle.getBundle(baseName, locale);
+		} catch (Exception e) {
+			// TODO resource 需要改进
+			return ResourceBundle.getBundle(baseName, Locale.CHINA);
+		}
 	}
 
 	public static ResourceBundle errorResourceBundle() {
 		return resourceBundle("errors");
 	}
 
+	public static ResourceBundle errorResourceBundle(Locale locale) {
+		return resourceBundle("errors", locale);
+	}
+
 	public static ResourceBundle messageResourceBundle() {
 		return resourceBundle("messages");
+	}
+
+	public static ResourceBundle messageResourceBundle(Locale locale) {
+		return resourceBundle("messages", locale);
+	}
+
+	public static String get(String key) {
+		return messageResourceBundle().getString(key);
+	}
+
+	public static String get(String key, Locale locale) {
+		return messageResourceBundle(locale).getString(key);
 	}
 }

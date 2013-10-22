@@ -12,6 +12,7 @@ import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 
 @RelationshipEntity(type = Associate.RELATIONSHIP)
 public class Associate extends AbstractNeo4j {
+	private static final long serialVersionUID = 2933461909284825116L;
 	public static final String RELATIONSHIP = "ASSOCIATE";
 	@StartNode
 	@Fetch
@@ -97,6 +98,6 @@ public class Associate extends AbstractNeo4j {
 
 	@Override
 	public String toString() {
-		return getStart() + "-" + getEnd();
+		return getStart() + "-" + getNote() + "-" + getEnd();
 	}
 }

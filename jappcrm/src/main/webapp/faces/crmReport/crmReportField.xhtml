@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:commandButton value="#{msg['print']}" type="button"
+		icon="ui-icon-print">
+		<p:printer target="crmReportField" />
+	</p:commandButton>
+	<p:dataTable id="crmReportField" var="_crmReportField"
+		value="#{crmReportController.crmReport.crmReportFields}"
+		style="margin-left:auto;margin-right:auto;width:210mm;">
+		<f:facet name="header">
+			<h:outputText value="#{crmReportController.crmReport.report}"
+				style="font-size:1.6em" />
+		</f:facet>
+
+		<p:column>
+			<h:outputText value="#{msg[_crmReportField.crmField.displayName]}" />
+		</p:column>
+		<p:column>
+			<h:outputText value="#{_crmReportField.value}" />
+		</p:column>
+		<p:columnGroup type="footer">
+			<p:row>
+				<p:column footerText="#{msg['businessMan']}" />
+				<p:column />
+			</p:row>
+			<p:row>
+				<p:column footerText="#{msg['reportInputDate']}" />
+				<p:column />
+			</p:row>
+			<p:row>
+				<p:column footerText="#{msg['businessManager']}" />
+				<p:column />
+			</p:row>
+		</p:columnGroup>
+	</p:dataTable>
+</ui:composition>

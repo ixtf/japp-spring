@@ -8,7 +8,7 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.crm.domain.Communicatee;
-import com.hengyi.japp.crm.web.data.LazyCommunicateeModel;
+import com.hengyi.japp.crm.web.model.LazyCommunicateeModel;
 
 @Named
 @Scope("view")

@@ -2,42 +2,38 @@ package com.hengyi.japp.crm.domain.storage;
 
 import java.math.BigDecimal;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.NotBlank;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.hengyi.japp.crm.data.IndicatorType;
 import com.hengyi.japp.crm.domain.Crm;
+import com.hengyi.japp.crm.domain.CrmField;
 
 @NodeEntity
 public class StorageIndicatorCapcital extends StorageIndicator {
-	private static final long serialVersionUID = 2420361128761811827L;
-	private static Logger log = LoggerFactory
-			.getLogger(StorageIndicatorCapcital.class);
-	@NotBlank
-	private String field;
+	private static final long serialVersionUID = 6158224090934716798L;
+	@NotNull
+	@RelatedTo
+	@Fetch
+	private CrmField crmField;
 
 	public StorageIndicatorCapcital() {
 		super("仓储容量", 0.08);
 		setIndicatorType(IndicatorType.CALCULATE);
-		setField(Storage.FIELD_CAPACITY);
+		// setCrmField(CrmFieldType.capacity);
+	}
+
+	private BigDecimal getValue(Crm crm) {
+		return getCrmField().getValue(crm);
 	}
 
 	@Override
 	public double calculateScore(Crm crm) {
 		// 单位：万吨
-		double capital;
-		try {
-			BigDecimal b = (BigDecimal) PropertyUtils.getProperty(crm,
-					getField());
-			capital = b.doubleValue() / 10000;
-		} catch (Exception e) {
-			log.error(crm + "", e);
-			return 0;
-		}
+		double capital = getValue(crm).doubleValue() / 10000;
 		if (capital >= 100)
 			return 10;
 		else if (capital >= 70)
@@ -54,12 +50,11 @@ public class StorageIndicatorCapcital extends StorageIndicator {
 			return 4;
 	}
 
-	public String getField() {
-		return field;
+	public CrmField getCrmField() {
+		return crmField;
 	}
 
-	public void setField(String field) {
-		// TODO 把中间的空格也去掉
-		this.field = StringUtils.trim(field);
+	public void setCrmField(CrmField crmField) {
+		this.crmField = crmField;
 	}
 }

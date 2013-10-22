@@ -1,19 +1,12 @@
 package com.hengyi.japp.crm.service;
 
-import java.util.List;
-
-import com.hengyi.japp.common.service.CommonUrlService;
+import com.hengyi.japp.common.service.CommonCrudNeo4jService;
 import com.hengyi.japp.crm.domain.Indicator;
-import com.hengyi.japp.crm.domain.Report;
+import com.hengyi.japp.crm.domain.report.Report;
 
-public interface ReportService<T extends Report> extends CommonUrlService<Long> {
+public interface ReportService<T extends Report> extends
+		CommonCrudNeo4jService<T> {
 	T newReport();
 
-	T findOne(Long nodeId);
-
-	void save(T report, Iterable<Indicator> indicators);
-
-	void delete(T report);
-
-	List<T> findAll();
+	void save(T report, Iterable<Indicator> indicators) throws Exception;
 }

@@ -18,6 +18,8 @@ public class Communicatee extends Modifiable implements Serializable {
 	@Email
 	private String email;
 	private String fax;
+	@Indexed
+	private String note;
 
 	public String getName() {
 		return name;
@@ -51,8 +53,16 @@ public class Communicatee extends Modifiable implements Serializable {
 		this.fax = StringUtils.trim(fax);
 	}
 
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 	@Override
 	public String toString() {
-		return getName();
+		return getName() + " | " + getPhone();
 	}
 }

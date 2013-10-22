@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
@@ -17,6 +18,7 @@ import com.hengyi.japp.crm.service.storage.StorageService;
 
 @Named("storageIndicatorService")
 @Transactional
+@SuppressWarnings("unchecked")
 public class StorageIndicatorServiceImpl extends
 		IndicatorServiceImpl<StorageIndicator> implements
 		StorageIndicatorService {
@@ -44,5 +46,10 @@ public class StorageIndicatorServiceImpl extends
 	@Override
 	protected CrmService<?> getCrmService() {
 		return storageService;
+	}
+
+	@Override
+	public <R extends Repository<StorageIndicator, Long>> R getRepository() {
+		return (R) storageIndicatorRepository;
 	}
 }

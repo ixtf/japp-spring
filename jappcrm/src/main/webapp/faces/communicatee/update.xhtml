@@ -35,6 +35,11 @@
 				<h:inputText id="fax"
 					value="#{communicateeController.communicatee.fax}" />
 				<p:message for="fax" />
+
+				<h:outputLabel for="note" value="#{msg['note']}" />
+				<p:inputTextarea id="note"
+					value="#{communicateeController.communicatee.note}" />
+				<p:message for="note" />
 			</h:panelGrid>
 			<p:commandButton id="buttonSave"
 				action="#{communicateeController.save}" update=":form"

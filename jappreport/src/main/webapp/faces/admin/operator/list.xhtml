@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/admin.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputLabel for="nameSearch" value="#{msg['name']}" />
+				<h:inputText id="nameSearch"
+					value="#{operatorsController.nameSearch}" />
+				<p:commandButton value="#{msg['search']}" update=":form"
+					action="#{operatorsController.search}" icon="ui-icon-search" />
+			</h:panelGrid>
+
+			<p:contextMenu for="tableOperators">
+				<p:menuitem value="#{msg['edit']}"
+					action="#{operatorsController.edit}" icon="ui-icon-pencil" />
+			</p:contextMenu>
+			<p:dataTable id="tableOperators" var="_operator"
+				value="#{operatorsController.operators}"
+				selection="#{operatorsController.operator}" rowKey="#{_operator.nodeId}"
+				selectionMode="single" rows="#{operatorsController.pageSize}"
+				paginator="true" lazy="true" stickyHeader="true">
+				<p:column headerText="UUID">
+					<h:outputText value="#{_operator.uuid}" />
+				</p:column>
+
+				<p:column headerText="#{msg['name']}">
+					<h:outputText value="#{_operator.name}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

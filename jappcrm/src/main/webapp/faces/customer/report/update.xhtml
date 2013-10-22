@@ -21,9 +21,14 @@
 					value="#{customerReportController.report.name}" />
 				<p:message for="name" />
 			</h:panelGrid>
-			<p:selectOneMenu id="bug" rendered="false" />
-			<ui:include src="updateFragment/updateIndicator.xhtml" />
-			<ui:include src="updateFragment/updateCrmField.xhtml" />
+			<p:tabView id="tabView" dynamic="true">
+				<p:tab title="#{msg['indicator']}">
+					<ui:include src="updateFragment/updateIndicator.xhtml" />
+				</p:tab>
+				<p:tab title="#{msg['crmField']}">
+					<ui:include src="updateFragment/updateCrmField.xhtml" />
+				</p:tab>
+			</p:tabView>
 			<p:commandButton action="#{customerReportController.save}"
 				update=":form" value="#{msg['operation.submit']}" ajax="false"
 				styleClass="ui-priority-primary" />

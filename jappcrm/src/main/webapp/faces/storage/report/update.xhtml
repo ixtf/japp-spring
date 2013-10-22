@@ -21,63 +21,14 @@
 					value="#{storageReportController.report.name}" />
 				<p:message for="name" />
 			</h:panelGrid>
-			<p:selectOneMenu id="bug" rendered="false" />
-			<p:dataTable id="tableIndicators" var="_indicator"
-				value="#{storageReportController.indicators}">
-				<f:facet name="header">
-					<h:outputText value="#{msg['indicator']}" />
-				</f:facet>
-
-				<p:column headerText="#{msg['operation']}" style="width:4%">
-					<p:commandLink process="@this"
-						update=":form:tableIndicators,:form:message"
-						action="#{storageReportController.removeIndicator}"
-						icon="ui-icon-minus">
-						<h:outputText value="#{msg['delete']}" />
-						<f:setPropertyActionListener value="#{_indicator}"
-							target="#{storageReportController.indicator}" />
-					</p:commandLink>
-				</p:column>
-
-				<p:column headerText="#{msg['name']}" sortBy="#{_indicator.name}">
-					<h:outputText value="#{_indicator.name}" />
-				</p:column>
-
-				<p:column headerText="#{msg['indicatorPercent']}"
-					sortBy="#{_indicator.percent}">
-					<h:outputText value="#{_indicator.percent}">
-						<f:convertNumber type="percent" />
-					</h:outputText>
-				</p:column>
-			</p:dataTable>
-
-			<p:panel header="#{msg['select']}#{msg['indicator']}"
-				toggleable="true">
-				<p:dataTable id="tableStorageIndicators" var="_indicator"
-					value="#{storageIndicatorsController.indicators}">
-					<p:column headerText="#{msg['operation']}" style="width:4%">
-						<p:commandLink process="@this"
-							update=":form:tableIndicators,:form:message"
-							action="#{storageReportController.addIndicator}"
-							icon="ui-icon-plus">
-							<h:outputText value="#{msg['add']}" />
-							<f:setPropertyActionListener value="#{_indicator}"
-								target="#{storageReportController.indicator}" />
-						</p:commandLink>
-					</p:column>
-
-					<p:column headerText="#{msg['name']}" sortBy="#{_indicator.name}">
-						<h:outputText value="#{_indicator.name}" />
-					</p:column>
-
-					<p:column headerText="#{msg['indicatorPercent']}"
-						sortBy="#{_indicator.percent}">
-						<h:outputText value="#{_indicator.percent}">
-							<f:convertNumber type="percent" />
-						</h:outputText>
-					</p:column>
-				</p:dataTable>
-			</p:panel>
+			<p:tabView id="tabView" dynamic="true">
+				<p:tab title="#{msg['indicator']}">
+					<ui:include src="updateFragment/updateIndicator.xhtml" />
+				</p:tab>
+				<p:tab title="#{msg['crmField']}">
+					<ui:include src="updateFragment/updateCrmField.xhtml" />
+				</p:tab>
+			</p:tabView>
 			<p:commandButton action="#{storageReportController.save}"
 				update=":form" value="#{msg['operation.submit']}" ajax="false"
 				styleClass="ui-priority-primary" />

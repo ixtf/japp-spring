@@ -2,6 +2,7 @@ package com.hengyi.japp.foreign.web;
 
 import java.io.Serializable;
 
+import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -10,11 +11,11 @@ import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hengyi.japp.foreign.application.event.EventPublisher;
-import com.hengyi.japp.foreign.application.event.SyncEventPublisher;
 import com.hengyi.japp.foreign.domain.repository.CreditPostRepository;
 import com.hengyi.japp.foreign.domain.repository.InvoiceRepository;
 import com.hengyi.japp.foreign.domain.repository.StockPrepareRepository;
+import com.hengyi.japp.foreign.event.EventPublisher;
+import com.hengyi.japp.foreign.event.SyncEventPublisher;
 import com.hengyi.japp.foreign.service.CacheService;
 import com.hengyi.japp.foreign.service.CreditPostService;
 import com.hengyi.japp.foreign.service.InvoiceService;
@@ -25,6 +26,8 @@ import com.hengyi.japp.foreign.service.VbakService;
 public abstract class AbstractController implements Serializable {
 	private static final long serialVersionUID = 4439434353140699253L;
 	protected final Logger log = LoggerFactory.getLogger(getClass());
+	@Resource
+	protected Mapper dozer;
 	@Inject
 	protected CacheService cacheService;
 	@Inject
@@ -41,14 +44,12 @@ public abstract class AbstractController implements Serializable {
 	protected InvoiceService invoiceService;
 	@Inject
 	protected LikpService likpService;
-	@Inject
+	@Resource
 	protected CreditPostRepository creditPostRepository;
-	@Inject
+	@Resource
 	protected StockPrepareRepository stockPrepareRepository;
-	@Inject
+	@Resource
 	protected InvoiceRepository invoiceRepository;
-	@Inject
-	protected Mapper dozer;
 
 	protected void addInfoMessage(String s) {
 		FacesContext.getCurrentInstance().addMessage(null,

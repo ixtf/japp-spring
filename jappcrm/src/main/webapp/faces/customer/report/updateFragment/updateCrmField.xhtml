@@ -4,58 +4,46 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-	<p:dataTable id="tableIndicators" var="_indicator"
-		value="#{customerReportController.indicators}">
+	<p:dataTable id="tableCrmFields" var="_crmField"
+		value="#{customerReportController.report.crmFields}">
 		<f:facet name="header">
-			<h:outputText value="#{msg['indicator']}" />
+			<h:outputText value="#{msg['crmField']}" />
 		</f:facet>
 
 		<p:column headerText="#{msg['operation']}" style="width:4%">
 			<p:commandLink process="@this"
-				update=":form:tableIndicators,:form:message"
-				action="#{customerReportController.removeIndicator}"
+				update=":form:tabView:tableCrmFields,:form:message"
+				action="#{customerReportController.removeCrmFiled}"
 				icon="ui-icon-minus">
 				<h:outputText value="#{msg['delete']}" />
-				<f:setPropertyActionListener value="#{_indicator}"
-					target="#{customerReportController.indicator}" />
+				<f:setPropertyActionListener value="#{_crmField}"
+					target="#{customerReportController.crmField}" />
 			</p:commandLink>
 		</p:column>
 
-		<p:column headerText="#{msg['name']}" sortBy="#{_indicator.name}">
-			<h:outputText value="#{_indicator.name}" />
-		</p:column>
-
-		<p:column headerText="#{msg['indicatorPercent']}"
-			sortBy="#{_indicator.percent}">
-			<h:outputText value="#{_indicator.percent}">
-				<f:convertNumber type="percent" />
-			</h:outputText>
+		<p:column headerText="#{msg['name']}"
+			sortBy="#{msg[_crmField.displayName]}">
+			<h:outputText value="#{msg[_crmField.displayName]}" />
 		</p:column>
 	</p:dataTable>
 
-	<p:panel header="#{msg['select']}#{msg['indicator']}" toggleable="true">
-		<p:dataTable id="tableCustomerIndicators" var="_indicator"
-			value="#{customerIndicatorsController.indicators}">
+	<p:panel header="#{msg['select']}#{msg['crmField']}" toggleable="true">
+		<p:dataTable var="_crmField"
+			value="#{customerReportController.allCrmFields}">
 			<p:column headerText="#{msg['operation']}" style="width:4%">
 				<p:commandLink process="@this"
-					update=":form:tableIndicators,:form:message"
-					action="#{customerReportController.addIndicator}"
+					update=":form:tabView:tableCrmFields,:form:message"
+					action="#{customerReportController.addCrmFiled}"
 					icon="ui-icon-plus">
 					<h:outputText value="#{msg['add']}" />
-					<f:setPropertyActionListener value="#{_indicator}"
-						target="#{customerReportController.indicator}" />
+					<f:setPropertyActionListener value="#{_crmField}"
+						target="#{customerReportController.crmField}" />
 				</p:commandLink>
 			</p:column>
 
-			<p:column headerText="#{msg['name']}" sortBy="#{_indicator.name}">
-				<h:outputText value="#{_indicator.name}" />
-			</p:column>
-
-			<p:column headerText="#{msg['indicatorPercent']}"
-				sortBy="#{_indicator.percent}">
-				<h:outputText value="#{_indicator.percent}">
-					<f:convertNumber type="percent" />
-				</h:outputText>
+			<p:column headerText="#{msg['name']}"
+				sortBy="#{msg[_crmField.displayName]}">
+				<h:outputText value="#{msg[_crmField.displayName]}" />
 			</p:column>
 		</p:dataTable>
 	</p:panel>

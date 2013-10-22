@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/common.xhtml">
+	<ui:define name="head">
+		<style type="text/css">
+body {
+	padding-top: 30px;
+}
+</style>
+	</ui:define>
+	<ui:define name="body">
+		<h:form>
+			<div class="navbar-fixed-top">
+				<p:menubar id="menuBar" model="#{homeController.menuBar}"
+					autoDisplay="false">
+					<!-- <f:facet name="options">
+						<p:inputText style="margin-right:10px" />
+						<p:commandButton type="button" value="Logout"
+							icon="ui-icon-extlink" />
+					</f:facet> -->
+				</p:menubar>
+			</div>
+		</h:form>
+		<ui:insert name="content" />
+		<div class="container-fluid"></div>
+	</ui:define>
+</ui:composition>
