@@ -3,49 +3,46 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions"
-	template="/WEB-INF/templates/default.xhtml">
+	xmlns:pe="http://primefaces.org/ui/extensions">
 	<ui:define name="content">
 		<h:form id="form">
-			<p:growl id="messages" showDetail="true" autoUpdate="true" />
+			<p:growl id="messages" showDetail="true" />
 			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
 				<h:outputText value="#{msg['name']}" />
-				<h:inputText id="customer-name"
-					value="#{customersController.nameSearch}" />
+				<h:inputText id="customer-name" value="#{crmsController.nameSearch}" />
 				<p:commandButton value="#{msg['search']}" update=":form"
-					action="#{customersController.search}" icon="ui-icon-search" />
+					action="#{crmsController.search}" icon="ui-icon-search" />
 			</h:panelGrid>
 
-			<p:contextMenu for="tableCustomers">
+			<p:contextMenu for="tableCrms">
 				<p:submenu label="#{msg['report']}" icon="ui-icon-document"
-					binding="#{customersController.reportSubmenu}" />
+					binding="#{crmsController.reportSubmenu}" />
 				<p:separator />
-				<p:menuitem value="#{msg['edit']}"
-					action="#{customersController.edit}" icon="ui-icon-pencil" />
+				<p:menuitem value="#{msg['edit']}" action="#{crmsController.edit}"
+					icon="ui-icon-pencil" />
 				<p:menuitem value="#{msg['delete']}" type="button"
 					onclick="confirmDialogDeleteCustomer.show()" icon="ui-icon-close" />
 			</p:contextMenu>
 			<p:confirmDialog message="#{msg['operation.confirm']}?"
 				severity="alert" widgetVar="confirmDialogDeleteCustomer">
 				<p:commandButton value="#{msg['operation.submit']}" update=":form"
-					action="#{customersController.delete}"
+					action="#{crmsController.delete}"
 					oncomplete="confirmDialogDeleteCustomer.hide()" />
 			</p:confirmDialog>
-			<p:dataTable id="tableCustomers" var="_customer"
-				value="#{customersController.crms}"
-				selection="#{customersController.crm}" rowKey="#{_customer.nodeId}"
-				selectionMode="single" rows="#{customersController.pageSize}"
+			<p:dataTable id="tableCrms" var="_crm" value="#{crmsController.crms}"
+				selection="#{crmsController.crm}" rowKey="#{_crm.nodeId}"
+				selectionMode="single" rows="#{crmsController.pageSize}"
 				paginator="true" stickyHeader="true" lazy="true">
 				<f:facet name="header">
 					<h:outputText value="#{msg['customer']}" />
 				</f:facet>
 
 				<p:column headerText="#{msg['name']}">
-					<h:outputText value="#{_customer.name}" />
+					<h:outputText value="#{_crm.name}" />
 				</p:column>
 
 				<p:column headerText="#{msg['associate']}#{msg['customer']}">
-					<p:dataList var="_associate" value="#{_customer.associatesAsList}">
+					<p:dataList var="_associate" value="#{_crm.associatesAsList}">
 						<h:outputLink
 							value="#{request.contextPath}/customers/#{_associate.end.nodeId}">
 							<h:outputText value="#{_associate.end}（#{_associate.note}）" />

@@ -8,85 +8,14 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<p:growl id="message" showDetail="true" sticky="true" />
-			<h1 class="title ui-widget-header ui-corner-all">
-				<h:outputText value="#{msg['new']}"
-					rendered="#{empty customerController.crm.nodeId}" />
-				<h:outputText value="#{msg['edit']}"
-					rendered="#{not empty customerController.crm.nodeId}" />
-				<h:outputText value="-#{msg['customer']}" />
-			</h1>
+			<ui:include src="/faces/updateTitle">
+				<ui:param name="controller" value="#{customerController}" />
+				<ui:param name="title" value="#{msg['customer']}" />
+			</ui:include>
 			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
-				<h:outputLabel for="name" value="#{msg['name']}" />
-				<h:inputText id="name" value="#{customerController.crm.name}" />
-				<p:message for="name" />
-
-				<h:outputLabel for="registerNumber" value="#{msg['registerNumber']}" />
-				<h:inputText id="registerNumber"
-					value="#{customerController.crm.registerNumber}" />
-				<p:message for="registerNumber" />
-
-				<h:outputLabel for="registerPlace" value="#{msg['registerPlace']}" />
-				<h:inputText id="registerPlace"
-					value="#{customerController.crm.registerPlace}" />
-				<p:message for="registerPlace" />
-
-				<h:outputLabel for="registerDate" value="#{msg['registerDate']}" />
-				<p:calendar id="registerDate"
-					value="#{customerController.crm.registerDate}" locale="zh_CN"
-					navigator="true" pattern="yyyy-MM-dd" />
-				<p:message for="registerDate" />
-
-				<h:outputLabel for="registerInvalidDate"
-					value="#{msg['registerInvalidDate']}" />
-				<p:calendar id="registerInvalidDate"
-					value="#{customerController.crm.registerInvalidDate}"
-					locale="zh_CN" navigator="true" pattern="yyyy-MM-dd" />
-				<p:message for="registerInvalidDate" />
-
-				<h:outputLabel for="registerCapital"
-					value="#{custInd['registerCapital']}" />
-				<pe:inputNumber id="registerCapital"
-					value="#{customerController.crm.registerCapital}"
-					maxValue="99999999999999999999" />
-				<p:message for="registerCapital" />
-
-				<h:outputLabel for="represent" value="#{msg['represent']}" />
-				<h:inputText id="represent"
-					value="#{customerController.crm.represent}" />
-				<p:message for="represent" />
-
-				<h:outputLabel for="addressName" value="#{msg['address']}" />
-				<h:inputText id="addressName"
-					value="#{customerController.crm.addressName}" />
-				<p:message for="addressName" />
-
-				<h:outputLabel for="zipCode" value="#{msg['zipCode']}" />
-				<p:inputMask id="zipCode" value="#{customerController.crm.zipCode}"
-					mask="999999" />
-				<p:message for="zipCode" />
-
-				<h:outputLabel for="saleIncome" value="#{custInd['saleIncome']}" />
-				<pe:inputNumber id="saleIncome"
-					value="#{customerController.crm.saleIncome}"
-					maxValue="99999999999999999999" />
-				<p:message for="saleIncome" />
-
-				<h:outputLabel for="crmTypes" value="#{msg['crmType']}" />
-				<p:selectManyMenu id="crmTypes"
-					value="#{customerController.crmTypes}" converter="crmType"
-					showCheckbox="true" style="width:230px;height:100px">
-					<f:selectItems value="#{customerController.allCrmTypes}" />
-				</p:selectManyMenu>
-				<p:message for="crmTypes" />
-
-				<h:outputLabel for="certificates" value="#{msg['certificate']}" />
-				<p:selectManyMenu id="certificates"
-					value="#{customerController.certificates}" converter="certificate"
-					showCheckbox="true" style="width:230px;height:100px">
-					<f:selectItems value="#{customerController.allCertificates}" />
-				</p:selectManyMenu>
-				<p:message for="certificates" />
-
+				<ui:include src="/faces/crm/update.xhtml">
+					<ui:param name="crmController" value="#{customerController}" />
+				</ui:include>
 				<h:outputLabel for="mainBusiness" value="#{msg['mainBusiness']}" />
 				<h:inputText id="mainBusiness"
 					value="#{customerController.crm.mainBusiness}" />
@@ -99,13 +28,20 @@
 			</h:panelGrid>
 			<p:tabView id="tabView" dynamic="true">
 				<p:tab title="#{msg['customer']}#{msg['indicator']}">
-					<ui:include src="updateFragment/updateIndicator.xhtml" />
+					<ui:include src="/faces/crm/updateIndicator.xhtml">
+						<ui:param name="crmController" value="#{customerController}" />
+					</ui:include>
 				</p:tab>
 				<p:tab title="#{msg['associate']}#{msg['customer']}">
-					<ui:include src="updateFragment/updateAssociate.xhtml" />
+					<ui:include src="/faces/crm/updateAssociate.xhtml">
+						<ui:param name="crmsController" value="#{customersController}" />
+						<ui:param name="crmName" value="#{msg['customer']}" />
+					</ui:include>
 				</p:tab>
 				<p:tab title="#{msg['communicatee']}">
-					<ui:include src="updateFragment/updateCommunicatee.xhtml" />
+					<ui:include src="/faces/crm/updateCommunicatee.xhtml">
+						<ui:param name="crmController" value="#{customerController}" />
+					</ui:include>
 				</p:tab>
 			</p:tabView>
 			<p:commandButton action="#{customerController.save}" update=":form"

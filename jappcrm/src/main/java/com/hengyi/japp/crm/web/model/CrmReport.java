@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.CrmField;
-import com.hengyi.japp.crm.domain.report.Report;
+import com.hengyi.japp.crm.domain.Report;
 
 public interface CrmReport {
 	Crm getCrm();

@@ -1,4 +1,4 @@
-package com.hengyi.japp.crm.domain.report;
+package com.hengyi.japp.crm.domain;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -11,9 +11,6 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import com.google.common.collect.Sets;
-import com.hengyi.japp.crm.domain.CrmField;
-import com.hengyi.japp.crm.domain.Indicator;
-import com.hengyi.japp.crm.domain.Modifiable;
 
 @NodeEntity
 public class Report extends Modifiable implements Serializable {

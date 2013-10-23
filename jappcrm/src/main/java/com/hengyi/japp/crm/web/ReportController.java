@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.Indicator;
-import com.hengyi.japp.crm.domain.report.Report;
+import com.hengyi.japp.crm.domain.Report;
 import com.hengyi.japp.crm.service.ReportService;
 
 public abstract class ReportController<T extends Report> extends

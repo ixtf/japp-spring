@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:column headerText="#{msg['name']}">
+		<h:outputText value="#{_communicatee.name}" />
+	</p:column>
+	<p:column headerText="#{msg['phone']}">
+		<h:outputText value="#{_communicatee.phone}" />
+	</p:column>
+	<p:column headerText="Email">
+		<h:outputText value="#{_communicatee.email}" />
+	</p:column>
+	<p:column headerText="#{msg['fax']}">
+		<h:outputText value="#{_communicatee.fax}" />
+	</p:column>
+	<p:column headerText="#{msg['note']}">
+		<h:outputText value="#{_communicatee.note}" />
+	</p:column>
+</ui:composition>

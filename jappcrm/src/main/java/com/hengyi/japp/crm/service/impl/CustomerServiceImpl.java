@@ -32,70 +32,70 @@ import com.hengyi.japp.crm.service.customer.CustomerService;
 @Transactional
 @SuppressWarnings("unchecked")
 public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
-		CustomerService {
-	@Resource
-	private CustomerRepository customerRepository;
-	@Resource
-	private CustomerIndicatorRepository customerIndicatorRepository;
+	CustomerService {
+    @Resource
+    private CustomerRepository customerRepository;
+    @Resource
+    private CustomerIndicatorRepository customerIndicatorRepository;
 
-	@Override
-	public List<Customer> findAllByQuery(String nameSearch) throws Exception {
-		MyUtil.checkSearch(nameSearch);
-		return Lists.newArrayList(customerRepository.findAllByQuery("name",
-				nameSearch));
-	}
+    @Override
+    public List<Customer> findAllByQuery(String nameSearch) throws Exception {
+	MyUtil.checkSearch(nameSearch);
+	return Lists.newArrayList(customerRepository.findAllByQuery("name",
+		nameSearch));
+    }
 
-	@Override
-	public void save(Customer crm,
-			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
-			Communicatee communicatee, Iterable<Communicatee> communicatees,
-			Iterable<Associate> associates) throws Exception {
-		super.save(crm, indicatorMap, crmTypes, certificates, communicatee,
-				communicatees, associates);
+    @Override
+    public void save(Customer crm,
+	    Map<Indicator, List<IndicatorValueScore>> indicatorMap,
+	    Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
+	    Communicatee communicatee, Iterable<Communicatee> communicatees,
+	    Iterable<Associate> associates) throws Exception {
+	super.save(crm, indicatorMap, crmTypes, certificates, communicatee,
+		communicatees, associates);
 
-		final CustomerUpdateEvent event = new CustomerUpdateEvent(
-				crm.getNodeId());
-		if (TransactionSynchronizationManager.isActualTransactionActive())
-			TransactionSynchronizationManager
-					.registerSynchronization(new TransactionSynchronizationAdapter() {
-						@Override
-						public void afterCommit() {
-							eventPublisher.publish(event);
-						}
-					});
-		else
-			eventPublisher.publish(event);
-	}
+	final CustomerUpdateEvent event = new CustomerUpdateEvent(
+		crm.getNodeId());
+	if (TransactionSynchronizationManager.isActualTransactionActive())
+	    TransactionSynchronizationManager
+		    .registerSynchronization(new TransactionSynchronizationAdapter() {
+			@Override
+			public void afterCommit() {
+			    eventPublisher.publish(event);
+			}
+		    });
+	else
+	    eventPublisher.publish(event);
+    }
 
-	@Override
-	public List<Indicator> findAllIndicator() {
-		List<Indicator> result = Lists.newArrayList();
-		for (CustomerIndicator indicator : customerIndicatorRepository
-				.findAll())
-			result.add(indicator);
-		return result;
-	}
+    @Override
+    public List<Indicator> findAllIndicator() {
+	List<Indicator> result = Lists.newArrayList();
+	for (CustomerIndicator indicator : customerIndicatorRepository
+		.findAll())
+	    result.add(indicator);
+	return result;
+    }
 
-	@Override
-	public List<CrmField> findAllCrmField() {
-		List<CrmField> result = findAllCrmField(CrmFieldType.CRM);
-		result.addAll(findAllCrmField(CrmFieldType.CUSTOMER));
-		return result;
-	}
+    @Override
+    public List<CrmField> findAllCrmField() {
+	List<CrmField> result = findAllCrmField(CrmFieldType.CRM);
+	result.addAll(findAllCrmField(CrmFieldType.CUSTOMER));
+	return result;
+    }
 
-	@Override
-	public Customer newCrm() {
-		return new Customer();
-	}
+    @Override
+    public Customer newCrm() {
+	return new Customer();
+    }
 
-	@Override
-	public String getNewPath() {
-		return "/customer";
-	}
+    @Override
+    public String getNewPath() {
+	return "/customer";
+    }
 
-	@Override
-	public <R extends Repository<Customer, Long>> R getRepository() {
-		return (R) customerRepository;
-	}
+    @Override
+    public <R extends Repository<Customer, Long>> R getRepository() {
+	return (R) customerRepository;
+    }
 }

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.Indicator;
-import com.hengyi.japp.crm.domain.report.Report;
+import com.hengyi.japp.crm.domain.Report;
 import com.hengyi.japp.crm.domain.repository.CrmRepository;
 import com.hengyi.japp.crm.domain.repository.ReportRepository;
 import com.hengyi.japp.crm.service.CrmReportService;

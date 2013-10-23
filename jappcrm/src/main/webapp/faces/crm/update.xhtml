@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:outputLabel for="name" value="#{msg['name']}" />
+	<h:inputText id="name" value="#{crmController.crm.name}" />
+	<p:message for="name" />
+
+	<h:outputLabel for="registerNumber" value="#{msg['registerNumber']}" />
+	<h:inputText id="registerNumber"
+		value="#{crmController.crm.registerNumber}" />
+	<p:message for="registerNumber" />
+
+	<h:outputLabel for="registerPlace" value="#{msg['registerPlace']}" />
+	<h:inputText id="registerPlace"
+		value="#{crmController.crm.registerPlace}" />
+	<p:message for="registerPlace" />
+
+	<h:outputLabel for="registerDate" value="#{msg['registerDate']}" />
+	<p:calendar id="registerDate" value="#{crmController.crm.registerDate}"
+		locale="zh_CN" navigator="true" pattern="yyyy-MM-dd" />
+	<p:message for="registerDate" />
+
+	<h:outputLabel for="registerInvalidDate"
+		value="#{msg['registerInvalidDate']}" />
+	<p:calendar id="registerInvalidDate"
+		value="#{crmController.crm.registerInvalidDate}" locale="zh_CN"
+		navigator="true" pattern="yyyy-MM-dd" />
+	<p:message for="registerInvalidDate" />
+
+	<h:outputLabel for="registerCapital"
+		value="#{custInd['registerCapital']}" />
+	<pe:inputNumber id="registerCapital"
+		value="#{crmController.crm.registerCapital}"
+		maxValue="99999999999999999999" />
+	<p:message for="registerCapital" />
+
+	<h:outputLabel for="represent" value="#{msg['represent']}" />
+	<h:inputText id="represent" value="#{crmController.crm.represent}" />
+	<p:message for="represent" />
+
+	<h:outputLabel for="addressName" value="#{msg['address']}" />
+	<h:inputText id="addressName" value="#{crmController.crm.addressName}" />
+	<p:message for="addressName" />
+
+	<h:outputLabel for="zipCode" value="#{msg['zipCode']}" />
+	<p:inputMask id="zipCode" value="#{crmController.crm.zipCode}"
+		mask="999999" />
+	<p:message for="zipCode" />
+
+	<h:outputLabel for="saleIncome" value="#{custInd['saleIncome']}" />
+	<pe:inputNumber id="saleIncome" value="#{crmController.crm.saleIncome}"
+		maxValue="99999999999999999999" />
+	<p:message for="saleIncome" />
+
+	<h:outputLabel for="crmTypes" value="#{msg['crmType']}" />
+	<p:selectManyMenu id="crmTypes" value="#{crmController.crmTypes}"
+		converter="crmType" showCheckbox="true"
+		style="width:230px;height:100px">
+		<f:selectItems value="#{crmController.allCrmTypes}" />
+	</p:selectManyMenu>
+	<p:message for="crmTypes" />
+
+	<h:outputLabel for="certificates" value="#{msg['certificate']}" />
+	<p:selectManyMenu id="certificates"
+		value="#{crmController.certificates}" converter="certificate"
+		showCheckbox="true" style="width:230px;height:100px">
+		<f:selectItems value="#{crmController.allCertificates}" />
+	</p:selectManyMenu>
+	<p:message for="certificates" />
+</ui:composition>

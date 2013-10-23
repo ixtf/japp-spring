@@ -260,6 +260,16 @@
 				<artifactId>rewrite-config-prettyfaces</artifactId>
 				<version>${rewrite.version}</version>
 			</dependency>
+			<!-- <dependency>
+				<groupId>org.ocpsoft.rewrite</groupId>
+				<artifactId>rewrite-annotations-api</artifactId>
+				<version>${rewrite.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ocpsoft.rewrite</groupId>
+				<artifactId>rewrite-annotations-impl</artifactId>
+				<version>${rewrite.version}</version>
+			</dependency> -->
 			<dependency>
 				<groupId>com.ocpsoft</groupId>
 				<artifactId>prettyfaces-jsf2</artifactId>

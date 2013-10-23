@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import com.hengyi.japp.common.service.AbstractCommonCrudNeo4jService;
 import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.Indicator;
-import com.hengyi.japp.crm.domain.report.Report;
+import com.hengyi.japp.crm.domain.Report;
 import com.hengyi.japp.crm.domain.repository.ReportRepository;
 import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.ReportService;

@@ -15,22 +15,22 @@ import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 
 public interface CrmService<CRM extends Crm> extends
-		CommonCrudNeo4jService<CRM> {
-	CRM newCrm();
+	CommonCrudNeo4jService<CRM> {
+    CRM newCrm();
 
-	void save(CRM crm, Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
-			Communicatee communicatee, Iterable<Communicatee> communicatees,
-			Iterable<Associate> associates) throws Exception;
+    void save(CRM crm, Map<Indicator, List<IndicatorValueScore>> indicatorMap,
+	    Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
+	    Communicatee communicatee, Iterable<Communicatee> communicatees,
+	    Iterable<Associate> associates) throws Exception;
 
-	List<CRM> findAllByQuery(String nameSearch) throws Exception;
+    List<CRM> findAllByQuery(String nameSearch) throws Exception;
 
-	List<Indicator> findAllIndicator();
+    List<Indicator> findAllIndicator();
 
-	Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(CRM crm,
-			Iterable<Indicator> indicators);
+    Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(CRM crm,
+	    Iterable<Indicator> indicators);
 
-	List<CrmField> findAllCrmField();
+    List<CrmField> findAllCrmField();
 
-	List<CrmField> findAllCrmField(CrmFieldType crmFieldType);
+    List<CrmField> findAllCrmField(CrmFieldType crmFieldType);
 }

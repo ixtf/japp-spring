@@ -6,7 +6,7 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.crm.domain.Crm;
-import com.hengyi.japp.crm.domain.report.Report;
+import com.hengyi.japp.crm.domain.Report;
 import com.hengyi.japp.crm.service.CrmReportService;
 import com.hengyi.japp.crm.web.model.CrmReportModel;
 

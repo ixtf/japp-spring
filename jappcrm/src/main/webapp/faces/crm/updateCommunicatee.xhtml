@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:dataTable id="tableChiefCommunicatee" var="_communicatee"
+		value="#{crmController.communicatee}">
+		<f:facet name="header">
+			<h:outputText value="#{msg['chiefCommunicatee']}" />
+		</f:facet>
+		<ui:include src="/faces/communicatee/columns.xhtml">
+			<ui:param name="_communicatee" value="#{_communicatee}" />
+		</ui:include>
+	</p:dataTable>
+
+	<p:dataTable id="tableCommunicatees" var="_communicatee"
+		value="#{crmController.communicatees}">
+		<f:facet name="header">
+			<h:outputText value="#{msg['communicatee']}" />
+		</f:facet>
+
+		<p:column headerText="#{msg['operation']}" style="width:4%">
+			<p:commandLink process="@this"
+				update=":form:tabView:tableCommunicatees,:form:message"
+				action="#{crmController.removeCommunicatee}" icon="ui-icon-minus">
+				<h:outputText value="#{msg['delete']}" />
+				<f:setPropertyActionListener value="#{_communicatee}"
+					target="#{crmController.selectedCommunicatee}" />
+			</p:commandLink>
+		</p:column>
+		<ui:include src="/faces/communicatee/columns.xhtml">
+			<ui:param name="_communicatee" value="#{_communicatee}" />
+		</ui:include>
+	</p:dataTable>
+
+	<p:panel header="#{msg['select']}#{msg['communicatee']}"
+		toggleable="true">
+		<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+			<h:outputLabel for="chiefCommunicatee-nameSearch"
+				value="#{msg['name']}" />
+			<h:inputText id="chiefCommunicatee-nameSearch"
+				value="#{communicateesController.nameSearch}" />
+			<p:commandButton value="#{msg['search']}" process="@this,@parent"
+				update="tableSelectedCommunicatees"
+				action="#{communicateesController.search}" icon="ui-icon-search" />
+		</h:panelGrid>
+
+		<p:dataTable id="tableSelectedCommunicatees" var="_communicatee"
+			value="#{communicateesController.communicatees}" lazy="true"
+			rows="#{customersController.pageSize}" paginator="true"
+			stickyHeader="true">
+			<p:column headerText="#{msg['operation']}" style="width:4%">
+				<p:commandLink process="@this"
+					update=":form:tabView:tableCommunicatees,:form:tabView:tableChiefCommunicatee"
+					action="#{crmController.addCommunicatee}" icon="ui-icon-plus">
+					<h:outputText value="#{msg['add']}#{msg['communicatee']}" />
+					<f:setPropertyActionListener value="#{_communicatee}"
+						target="#{crmController.selectedCommunicatee}" />
+				</p:commandLink>
+			</p:column>
+			<p:column headerText="#{msg['operation']}" style="width:4%">
+				<p:commandLink process="@this"
+					update=":form:tabView:tableCommunicatees,:form:tabView:tableChiefCommunicatee"
+					action="#{crmController.chiefCommunicatee}" icon="ui-icon-star">
+					<h:outputText value="#{msg['chiefCommunicatee']}" />
+					<f:setPropertyActionListener value="#{_communicatee}"
+						target="#{crmController.selectedCommunicatee}" />
+				</p:commandLink>
+			</p:column>
+			<ui:include src="/faces/communicatee/columns.xhtml">
+				<ui:param name="_communicatee" value="#{_communicatee}" />
+			</ui:include>
+		</p:dataTable>
+	</p:panel>
+</ui:composition>

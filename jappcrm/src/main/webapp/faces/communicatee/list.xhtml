@@ -30,30 +30,14 @@
 					oncomplete="confirmDialogDeleteCommunicatee.hide()" />
 			</p:confirmDialog>
 			<p:dataTable id="tableCommunicatees" var="_communicatee"
-				value="#{communicateesController.lazyCommunicateeModel}"
+				value="#{communicateesController.communicatees}"
 				selection="#{communicateesController.communicatee}"
 				rowKey="#{_communicatee.nodeId}" selectionMode="single"
 				rows="#{communicateesController.pageSize}" paginator="true"
 				lazy="true" stickyHeader="true">
-				<p:column headerText="#{msg['name']}">
-					<h:outputText value="#{_communicatee.name}" />
-				</p:column>
-
-				<p:column headerText="#{msg['phone']}">
-					<h:outputText value="#{_communicatee.phone}" />
-				</p:column>
-
-				<p:column headerText="Email">
-					<h:outputText value="#{_communicatee.email}" />
-				</p:column>
-
-				<p:column headerText="#{msg['fax']}">
-					<h:outputText value="#{_communicatee.fax}" />
-				</p:column>
-
-				<p:column headerText="#{msg['note']}">
-					<h:outputText value="#{_communicatee.note}" />
-				</p:column>
+				<ui:include src="columns.xhtml">
+					<ui:param name="_communicatee" value="#{_communicatee}" />
+				</ui:include>
 			</p:dataTable>
 		</h:form>
 	</ui:define>

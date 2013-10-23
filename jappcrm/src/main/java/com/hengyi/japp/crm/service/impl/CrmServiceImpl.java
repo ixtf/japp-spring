@@ -33,90 +33,90 @@ import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CrmService;
 
 public abstract class CrmServiceImpl<CRM extends Crm> extends
-		AbstractCommonCrudNeo4jService<CRM> implements CrmService<CRM> {
-	@Resource
-	private Neo4jOperations template;
-	@Resource
-	private CrmRepository crmRepository;
+	AbstractCommonCrudNeo4jService<CRM> implements CrmService<CRM> {
+    @Resource
+    private Neo4jOperations template;
+    @Resource
+    private CrmRepository crmRepository;
 
-	@Resource
-	protected CrmFieldRepository crmFieldRepository;
-	@Inject
-	protected EventPublisher eventPublisher;
-	@Inject
-	protected SyncEventPublisher syncEventPublisher;
-	@Inject
-	protected CacheService cacheServiceFacade;
+    @Resource
+    protected CrmFieldRepository crmFieldRepository;
+    @Inject
+    protected EventPublisher eventPublisher;
+    @Inject
+    protected SyncEventPublisher syncEventPublisher;
+    @Inject
+    protected CacheService cacheServiceFacade;
 
-	// @Inject
-	// private EventBus eventBus;
+    // @Inject
+    // private EventBus eventBus;
 
-	public void save(CRM crm,
-			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
-			Communicatee communicatee, Iterable<Communicatee> communicatees,
-			Iterable<Associate> associates) throws Exception {
-		checkSave(crm, indicatorMap, crmTypes, certificates, communicatee,
-				communicatees, associates);
-		crm.setCrmTypes(crmTypes);
-		crm.setCertificates(certificates);
-		crm.setCommunicatee(communicatee);
-		crm.setCommunicatees(communicatees);
-		crm.setAssociates(associates);
-		Set<IndicatorValue> indicatorValues = Sets.newHashSet();
-		for (Entry<Indicator, List<IndicatorValueScore>> entry : indicatorMap
-				.entrySet())
-			for (IndicatorValueScore indicatorValueScore : entry.getValue())
-				indicatorValues.add(indicatorValueScore.getEnd());
-		crm.setIndicatorValues(indicatorValues);
-		crmRepository.save(crm);
-		for (Associate associate : associates)
-			template.save(associate);
-	}
+    public void save(CRM crm,
+	    Map<Indicator, List<IndicatorValueScore>> indicatorMap,
+	    Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
+	    Communicatee communicatee, Iterable<Communicatee> communicatees,
+	    Iterable<Associate> associates) throws Exception {
+	checkSave(crm, indicatorMap, crmTypes, certificates, communicatee,
+		communicatees, associates);
+	crm.setCrmTypes(crmTypes);
+	crm.setCertificates(certificates);
+	crm.setCommunicatee(communicatee);
+	crm.setCommunicatees(communicatees);
+	crm.setAssociates(associates);
+	Set<IndicatorValue> indicatorValues = Sets.newHashSet();
+	for (Entry<Indicator, List<IndicatorValueScore>> entry : indicatorMap
+		.entrySet())
+	    for (IndicatorValueScore indicatorValueScore : entry.getValue())
+		indicatorValues.add(indicatorValueScore.getEnd());
+	crm.setIndicatorValues(indicatorValues);
+	crmRepository.save(crm);
+	for (Associate associate : associates)
+	    template.save(associate);
+    }
 
-	private void checkSave(CRM crm,
-			Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-			Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
-			Communicatee communicatee, Iterable<Communicatee> communicatees,
-			Iterable<Associate> associates) throws Exception {
-		// if (communicatee == null)
-		// throw new NoChiefCommunicateeException();
+    private void checkSave(CRM crm,
+	    Map<Indicator, List<IndicatorValueScore>> indicatorMap,
+	    Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
+	    Communicatee communicatee, Iterable<Communicatee> communicatees,
+	    Iterable<Associate> associates) throws Exception {
+	// if (communicatee == null)
+	// throw new NoChiefCommunicateeException();
 
-		// List<Indicator> noValueIndicators = Lists.newArrayList();
-		// for (Entry<Indicator, List<IndicatorValueScore>> entry : indicatorMap
-		// .entrySet())
-		// if (entry.getValue().isEmpty())
-		// noValueIndicators.add(entry.getKey());
-		// if (!noValueIndicators.isEmpty())
-		// throw new NoIndicatorValueException(noValueIndicators);
-	}
+	// List<Indicator> noValueIndicators = Lists.newArrayList();
+	// for (Entry<Indicator, List<IndicatorValueScore>> entry : indicatorMap
+	// .entrySet())
+	// if (entry.getValue().isEmpty())
+	// noValueIndicators.add(entry.getKey());
+	// if (!noValueIndicators.isEmpty())
+	// throw new NoIndicatorValueException(noValueIndicators);
+    }
 
-	// 取Crm已经选中的indicatorValue，在和indicator关联的indicatorValue中选
-	public Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(CRM crm,
-			Iterable<Indicator> indicators) {
-		ImmutableMap.Builder<Indicator, List<IndicatorValueScore>> builder = ImmutableMap
-				.builder();
-		Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
-				.getIndicatorValues(template));
-		for (Indicator indicator : indicators)
-			builder.put(indicator,
-					getIndicatorValueScores(indicator, indicatorValues));
-		return builder.build();
-	}
+    // 取Crm已经选中的indicatorValue，在和indicator关联的indicatorValue中选
+    public Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(CRM crm,
+	    Iterable<Indicator> indicators) {
+	ImmutableMap.Builder<Indicator, List<IndicatorValueScore>> builder = ImmutableMap
+		.builder();
+	Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
+		.getIndicatorValues(template));
+	for (Indicator indicator : indicators)
+	    builder.put(indicator,
+		    getIndicatorValueScores(indicator, indicatorValues));
+	return builder.build();
+    }
 
-	private List<IndicatorValueScore> getIndicatorValueScores(
-			Indicator indicator, Set<IndicatorValue> indicatorValues) {
-		List<IndicatorValueScore> result = Lists.newArrayList();
-		for (IndicatorValueScore indicatorValueScore : indicator
-				.getIndicatorValueScores(template))
-			if (indicatorValues.contains(indicatorValueScore.getEnd()))
-				result.add(indicatorValueScore);
-		return result;
-	}
+    private List<IndicatorValueScore> getIndicatorValueScores(
+	    Indicator indicator, Set<IndicatorValue> indicatorValues) {
+	List<IndicatorValueScore> result = Lists.newArrayList();
+	for (IndicatorValueScore indicatorValueScore : indicator
+		.getIndicatorValueScores())
+	    if (indicatorValues.contains(indicatorValueScore.getEnd()))
+		result.add(indicatorValueScore);
+	return result;
+    }
 
-	@Override
-	public List<CrmField> findAllCrmField(CrmFieldType crmFieldType) {
-		return Lists.newArrayList(crmFieldRepository.findAllByPropertyValue(
-				"crmFieldType", crmFieldType));
-	}
+    @Override
+    public List<CrmField> findAllCrmField(CrmFieldType crmFieldType) {
+	return Lists.newArrayList(crmFieldRepository.findAllByPropertyValue(
+		"crmFieldType", crmFieldType));
+    }
 }

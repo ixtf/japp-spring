@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
@@ -12,130 +11,107 @@ import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.Indexed.Level;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
-import org.springframework.data.neo4j.template.Neo4jOperations;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.hengyi.japp.crm.data.IndicatorType;
 
 @NodeEntity
 public abstract class Indicator extends Modifiable {
-	private static final long serialVersionUID = 3991202655674862197L;
-	@NotBlank
-	@Indexed(unique = true, level = Level.INSTANCE)
-	protected String name;
-	@Min(0)
-	protected double percent;
-	@NotNull
-	protected IndicatorType indicatorType = IndicatorType.SIMPLE;
-	@RelatedToVia(type = IndicatorValueScore.RELATIONSHIP, elementClass = IndicatorValueScore.class)
-	@Fetch
-	protected Set<IndicatorValueScore> indicatorValueScores;
+    private static final long serialVersionUID = 6081489024094336426L;
+    public static final String INDICATOR_CRMFIELD = "INDICATOR_CRMFIELD";
+    @NotBlank
+    @Indexed(unique = true, level = Level.INSTANCE)
+    protected String name;
+    @Min(0)
+    protected double percent;
+    @RelatedTo(type = INDICATOR_CRMFIELD)
+    @Fetch
+    protected CrmField crmField;
+    @RelatedToVia(type = IndicatorValueScore.RELATIONSHIP, elementClass = IndicatorValueScore.class)
+    @Fetch
+    protected Set<IndicatorValueScore> indicatorValueScores;
 
-	public final double calculateScorePercent(Crm crm) {
-		return calculateScore(crm) * getPercent();
-	}
+    public String getName() {
+	return name;
+    }
 
-	public double calculateScore(Crm crm) {
-		double result = 0;
-		Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
-				.getIndicatorValues());
-		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores()) {
-			if (!indicatorValues.contains(indicatorValueScore.getEnd()))
-				continue;
-			double score = indicatorValueScore.getScore();
-			result = result < score ? score : result;
-		}
-		return result;
-	}
+    public double getPercent() {
+	return percent;
+    }
 
-	public List<IndicatorValue> getIndicatorValues(Crm crm) {
-		if (IndicatorType.CALCULATE.equals(this.getIndicatorType()))
-			// return Lists.newArrayList(new IndicatorValue(String
-			// .valueOf(getValue(crm))));
-			return ImmutableList.of();
-		List<IndicatorValue> result = Lists.newArrayList();
-		Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
-				.getIndicatorValues());
-		for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores()) {
-			IndicatorValue indicatorValue = indicatorValueScore.getEnd();
-			if (indicatorValues.contains(indicatorValue))
-				result.add(indicatorValue);
-		}
-		return result;
-	}
+    public List<IndicatorValueScore> getIndicatorValueScores() {
+	if (indicatorValueScores == null)
+	    indicatorValueScores = Sets.newHashSet();
+	return Lists.newArrayList(indicatorValueScores);
+    }
 
-	public List<IndicatorValueScore> getIndicatorValueScoresAsList() {
-		return Lists.newArrayList(getIndicatorValueScores());
-	}
+    public List<IndicatorValue> getIndicatorValues() {
+	List<IndicatorValue> result = Lists.newArrayList();
+	for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores())
+	    result.add(indicatorValueScore.getEnd());
+	return result;
+    }
 
-	public List<IndicatorValue> getIndicatorValues(Crm crm,
-			Neo4jOperations template) {
-		return template.fetch(getIndicatorValues(crm));
-	}
+    public final double calculateScorePercent(Crm crm) {
+	return calculateScore(crm) * getPercent();
+    }
 
-	public Indicator() {
-		super();
+    public double calculateScore(Crm crm) {
+	double result = 0;
+	Set<IndicatorValue> indicatorValues = Sets.newHashSet(crm
+		.getIndicatorValues());
+	for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores()) {
+	    if (!indicatorValues.contains(indicatorValueScore.getEnd()))
+		continue;
+	    double score = indicatorValueScore.getScore();
+	    result = result < score ? score : result;
 	}
+	return result;
+    }
 
-	public Indicator(String name, double percent) {
-		super();
-		this.name = name;
-		this.percent = percent;
-	}
+    public void setName(String name) {
+	this.name = StringUtils.trim(name);
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setPercent(double percent) {
+	this.percent = percent;
+    }
 
-	public void setName(String name) {
-		this.name = StringUtils.trim(name);
-	}
+    public void setIndicatorValueScores(
+	    Iterable<IndicatorValueScore> indicatorValueScores) {
+	this.indicatorValueScores = indicatorValueScores == null ? null : Sets
+		.newHashSet(indicatorValueScores);
+    }
 
-	public double getPercent() {
-		return percent;
-	}
+    public CrmField getCrmField() {
+	return crmField;
+    }
 
-	public Iterable<IndicatorValueScore> getIndicatorValueScores() {
-		if (IndicatorType.CALCULATE.equals(indicatorType)
-				|| indicatorValueScores == null)
-			indicatorValueScores = Sets.newTreeSet();
-		return indicatorValueScores;
-	}
+    public void setCrmField(CrmField crmField) {
+	this.crmField = crmField;
+    }
 
-	public Iterable<IndicatorValueScore> getIndicatorValueScores(
-			Neo4jOperations template) {
-		return template.fetch(getIndicatorValueScores());
-	}
+    @Override
+    public String toString() {
+	return this.getName();
+    }
 
-	public List<IndicatorValueScore> getIndicatorValueScoresAsList(
-			Neo4jOperations template) {
-		return Lists.newArrayList(getIndicatorValueScores(template));
-	}
-
-	public void setPercent(double percent) {
-		this.percent = percent;
-	}
-
-	public void setIndicatorValueScores(
-			Iterable<IndicatorValueScore> indicatorValueScores) {
-		this.indicatorValueScores = indicatorValueScores == null ? null : Sets
-				.newHashSet(indicatorValueScores);
-	}
-
-	public IndicatorType getIndicatorType() {
-		return indicatorType;
-	}
-
-	public void setIndicatorType(IndicatorType indicatorType) {
-		this.indicatorType = indicatorType;
-	}
-
-	@Override
-	public String toString() {
-		return this.getName();
-	}
+    // public List<IndicatorValue> getIndicatorValues(Crm crm) {
+    // if (IndicatorType.CALCULATE.equals(this.getIndicatorType()))
+    // return Lists.newArrayList(new IndicatorValue(String
+    // .valueOf(getValue(crm))));
+    // return ImmutableList.of();
+    // List<IndicatorValue> result = Lists.newArrayList();
+    // Set<IndicatorValue> indicatorValues = ImmutableSet.copyOf(crm
+    // .getIndicatorValues());
+    // for (IndicatorValueScore indicatorValueScore : getIndicatorValueScores())
+    // {
+    // IndicatorValue indicatorValue = indicatorValueScore.getEnd();
+    // if (indicatorValues.contains(indicatorValue))
+    // result.add(indicatorValue);
+    // }
+    // return result;
+    // }
 }

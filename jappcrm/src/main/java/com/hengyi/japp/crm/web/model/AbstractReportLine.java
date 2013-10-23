@@ -1,7 +1,7 @@
 package com.hengyi.japp.crm.web.model;
 
 import com.hengyi.japp.crm.domain.Crm;
-import com.hengyi.japp.crm.domain.report.Report;
+import com.hengyi.japp.crm.domain.Report;
 
 public abstract class AbstractReportLine<T> {
 	private final CrmReportModel crmReport;
