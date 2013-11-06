@@ -8,7 +8,7 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<p:growl id="message" showDetail="true" sticky="true" />
-			<ui:include src="/faces/updateTitle">
+			<ui:include src="/faces/updateTitle.xhtml">
 				<ui:param name="controller" value="#{customerController}" />
 				<ui:param name="title" value="#{msg['customer']}" />
 			</ui:include>

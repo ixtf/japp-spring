@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.shiro.SecurityUtils;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
 import org.primefaces.model.DefaultMenuModel;
@@ -25,10 +26,10 @@ import com.google.common.collect.Lists;
 import com.google.common.eventbus.EventBus;
 import com.hengyi.japp.common.service.AbstractCommonCacheService;
 import com.hengyi.japp.common.web.FacesAccessor;
+import com.hengyi.japp.report.MyUtil;
 import com.hengyi.japp.report.domain.Menu;
 import com.hengyi.japp.report.domain.Operator;
 import com.hengyi.japp.report.domain.Report;
-import com.hengyi.japp.report.domain.repository.ReportRepository;
 import com.hengyi.japp.report.service.CacheService;
 import com.hengyi.japp.report.service.MenuService;
 import com.hengyi.japp.report.service.OperatorService;
@@ -42,8 +43,6 @@ public class CacheServiceImpl extends AbstractCommonCacheService implements
 	private Neo4jOperations template;
 	@Resource
 	private EventBus eventBus;
-	@Resource
-	private ReportRepository reportRepository;
 	@Inject
 	private MenuService menuService;
 	@Inject
@@ -56,20 +55,15 @@ public class CacheServiceImpl extends AbstractCommonCacheService implements
 
 	@Override
 	public MenuModel getMenuBar(Operator operator) {
+		// TODO 暂时解决当点登入
+		if (!SecurityUtils.getSubject().hasRole("superUser"))
+			return null;
 		MenuModel menuBar = new DefaultMenuModel();
-		menuBar.addMenuItem(getHomeMenuItem());
-		for (Menu menu : menuService.findAll())
-			if (menu.getParent() == null)
-				menuBar.addSubmenu(getSubmenu(menu));
+		menuBar.addMenuItem(MyUtil.getHomeMenuItem());
+		for (Menu menu : menuService.findAllTopMenu())
+			menuBar.addSubmenu(getSubmenu(menu));
+		menuBar.addMenuItem(MyUtil.getLogoutMenuItem());
 		return menuBar;
-	}
-
-	private MenuItem getHomeMenuItem() {
-		MenuItem homeMenuItem = new MenuItem();
-		homeMenuItem.setValue("首页");
-		homeMenuItem.setIcon("ui-icon-home");
-		homeMenuItem.setUrl("/");
-		return homeMenuItem;
 	}
 
 	private Submenu getSubmenu(Menu menu) {
@@ -78,7 +72,7 @@ public class CacheServiceImpl extends AbstractCommonCacheService implements
 		for (Menu sub : menu.getSubs(template))
 			submenu.getChildren().add(getSubmenu(sub));
 		submenu.getChildren().addAll(
-				getMenuItems(reportRepository.findAllByMenu(menu)));
+				getMenuItems(menuService.findAllReport(menu)));
 		return submenu;
 	}
 

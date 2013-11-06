@@ -22,6 +22,26 @@
 				<h:inputText id="name" value="#{operatorController.operator.name}" />
 				<p:message for="name" />
 			</h:panelGrid>
+
+			<p:tabView id="tabView" dynamic="true">
+				<p:tab title="#{msg['role']}">
+					<ui:include src="/faces/admin/updateFragment/updateRoles.xhtml">
+						<ui:param name="controller" value="#{operatorController}" />
+					</ui:include>
+				</p:tab>
+				<p:tab title="#{msg['menu']}">
+					<ui:include src="/faces/admin/updateFragment/updateMenus.xhtml">
+						<ui:param name="controller" value="#{operatorController}" />
+					</ui:include>
+				</p:tab>
+				<p:tab title="Fine Report">
+					<ui:include src="/faces/admin/updateFragment/updateReports.xhtml">
+						<ui:param name="controller" value="#{operatorController}" />
+						<ui:param name="reportsController"
+							value="#{fineReportsController}" />
+					</ui:include>
+				</p:tab>
+			</p:tabView>
 			<p:commandButton action="#{operatorController.save}" update=":form"
 				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
 		</h:form>

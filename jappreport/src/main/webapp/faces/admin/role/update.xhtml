@@ -25,6 +25,21 @@
 				<p:inputTextarea id="note" value="#{roleController.role.note}" />
 				<p:message for="note" />
 			</h:panelGrid>
+
+			<p:tabView id="tabView" dynamic="true">
+				<p:tab title="#{msg['menu']}">
+					<ui:include src="/faces/admin/updateFragment/updateMenus.xhtml">
+						<ui:param name="controller" value="#{roleController}" />
+					</ui:include>
+				</p:tab>
+				<p:tab title="Fine Report">
+					<ui:include src="/faces/admin/updateFragment/updateReports.xhtml">
+						<ui:param name="controller" value="#{roleController}" />
+						<ui:param name="reportsController"
+							value="#{fineReportsController}" />
+					</ui:include>
+				</p:tab>
+			</p:tabView>
 			<p:commandButton action="#{roleController.save}" update=":form"
 				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
 		</h:form>

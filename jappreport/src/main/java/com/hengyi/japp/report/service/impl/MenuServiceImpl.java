@@ -40,13 +40,22 @@ public class MenuServiceImpl extends AbstractCommonCrudNeo4jService<Menu>
 	}
 
 	@Override
-	public String getNewPath() {
-		return "/admin/menu";
+	public List<Menu> findAllTopMenu() {
+		List<Menu> result = Lists.newArrayList();
+		for (Menu menu : findAll())
+			if (menu.getParent() == null)
+				result.add(menu);
+		return result;
 	}
 
 	@Override
-	public <R extends Repository<Menu, Long>> R getRepository() {
-		return (R) menuRepository;
+	public List<Report> findAllReport(Menu menu) {
+		return Lists.newArrayList(reportRepository.findAllByMenu(menu));
+	}
+
+	@Override
+	public List<Report> findAllReport(Iterable<Menu> menus) {
+		return Lists.newArrayList(reportRepository.findAllByMenu(menus));
 	}
 
 	@Override
@@ -57,7 +66,12 @@ public class MenuServiceImpl extends AbstractCommonCrudNeo4jService<Menu>
 	}
 
 	@Override
-	public List<Report> findAllReport(Menu menu) {
-		return Lists.newArrayList(reportRepository.findAllByMenu(menu));
+	public String getNewPath() {
+		return "/admin/menu";
+	}
+
+	@Override
+	public <R extends Repository<Menu, Long>> R getRepository() {
+		return (R) menuRepository;
 	}
 }

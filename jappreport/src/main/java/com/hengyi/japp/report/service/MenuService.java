@@ -9,7 +9,11 @@ import com.hengyi.japp.report.domain.Report;
 public interface MenuService extends CommonCrudNeo4jService<Menu> {
 	void save(Menu menu, Menu parent) throws Exception;
 
+	List<Menu> findAllTopMenu();
+
 	List<Menu> findAllByQuery(String nameSearch) throws Exception;
 
 	List<Report> findAllReport(Menu menu);
+
+	List<Report> findAllReport(Iterable<Menu> menus);
 }

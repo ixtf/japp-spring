@@ -6,7 +6,8 @@
 	template="/WEB-INF/templates/admin.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
-			<p:growl id="message" showDetail="true" sticky="true" />
+			<p:growl id="message" showDetail="true" sticky="true"
+				autoUpdate="true" />
 
 			<h1 class="title ui-widget-header ui-corner-all">
 				<h:outputText value="#{msg['new']}-"
@@ -18,7 +19,7 @@
 
 			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
 				<ui:include src="/faces/admin/report/update.xhtml">
-					<ui:param name="reportController" value="#{fineReportController}" />
+					<ui:param name="controller" value="#{fineReportController}" />
 				</ui:include>
 				<h:outputLabel for="cpt" value="#{msg['cpt']}" />
 				<h:inputText id="cpt" value="#{fineReportController.report.cpt}" />
@@ -34,19 +35,19 @@
 				<h:outputLabel for="bypagesize" value="__bypagesize__" />
 				<p:selectBooleanButton id="bypagesize"
 					value="#{fineReportController.report.bypagesize}" onLabel="Yes"
-					offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+					offLabel="No" />
 				<p:message for="bypagesize" />
 
 				<h:outputLabel for="pi" value="__pi__" />
 				<p:selectBooleanButton id="pi"
 					value="#{fineReportController.report.pi}" onLabel="Yes"
-					offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+					offLabel="No" />
 				<p:message for="pi" />
 
 				<h:outputLabel for="showtoolbar" value="__showtoolbar__" />
 				<p:selectBooleanButton id="showtoolbar"
 					value="#{fineReportController.report.showtoolbar}" onLabel="Yes"
-					offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+					offLabel="No" />
 				<p:message for="showtoolbar" />
 			</h:panelGrid>
 			<p:commandButton action="#{fineReportController.save}" update=":form"

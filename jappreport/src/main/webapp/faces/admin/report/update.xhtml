@@ -5,17 +5,16 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	<h:outputLabel for="menu" value="#{msg['menu']}" />
-	<p:selectOneMenu id="menu" value="#{reportController.menu}"
-		converter="menu">
+	<p:selectOneMenu id="menu" value="#{controller.menu}" converter="menu">
 		<f:selectItems value="#{menuController.allMenus}" />
 	</p:selectOneMenu>
 	<p:message for="menu" />
 
 	<h:outputLabel for="name" value="#{msg['name']}" />
-	<h:inputText id="name" value="#{reportController.report.name}" />
+	<h:inputText id="name" value="#{controller.report.name}" />
 	<p:message for="name" />
 
 	<h:outputLabel for="note" value="#{msg['note']}" />
-	<p:inputTextarea id="note" value="#{reportController.report.note}" />
+	<p:inputTextarea id="note" value="#{controller.report.note}" />
 	<p:message for="note" />
 </ui:composition>

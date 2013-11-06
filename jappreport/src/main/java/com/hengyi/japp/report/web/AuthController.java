@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.common.data.PrincipalType;
+import com.hengyi.japp.report.event.operator.LogoutEvent;
 
 @Named
 @Scope("request")
@@ -42,11 +43,14 @@ public class AuthController extends AbstractController implements Serializable {
 		try {
 			if (PrincipalType.SSO.equals(cacheService.getPrincipalType()))
 				url = deployProperties.getProperty("casLogoutUrl");
+			LogoutEvent event = new LogoutEvent(
+					cacheService.getCurrentOperator());
+			SecurityUtils.getSubject().logout();
+			eventBus.post(event);
+			redirect(url);
 		} catch (Exception e) {
 			log.error("", e);
 		}
-		SecurityUtils.getSubject().logout();
-		redirect(url);
 	}
 
 	public String getUsername() {

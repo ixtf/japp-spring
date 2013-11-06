@@ -17,11 +17,11 @@ import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 public abstract class Report extends AbstractNeo4j implements Serializable {
 	private static final long serialVersionUID = -115312013197219536L;
 	@Indexed(level = Level.INSTANCE)
-	private String name;
+	protected String name;
 	@RelatedTo(type = Menu.MENU_REPORT, direction = Direction.INCOMING)
 	@Fetch
-	private Menu menu;
-	private String note;
+	protected Menu menu;
+	protected String note;
 
 	@NotBlank
 	public String getName() {

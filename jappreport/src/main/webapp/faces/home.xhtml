@@ -5,18 +5,18 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<p:watermark for="autoCompleteReport" value="#{msg['search']}" />
-		<p:autoComplete id="autoCompleteReport"
-			completeMethod="#{homeController.completeReport}" converter="report"
-			var="_report" itemLabel="#{_report.name}" itemValue="#{_report}"
-			forceSelection="true">
-			<p:ajax event="itemSelect"
-				listener="#{reportDisplayController.selectReport}" />
-		</p:autoComplete>
-		<p:dataTable var="_report" value="#{homeController.reports}">
-			<p:column headerText="#{msg['name']}">
-				<h:outputText value="#{_report.name}" />
-			</p:column>
-		</p:dataTable>
+		<p:accordionPanel var="_favorite" value="#{homeController.favorites}"
+			multiple="true">
+			<p:tab title="#{_favorite.menu.name}">
+				<p:dataGrid var="_report" value="#{_favorite.reports}" columns="3"
+					rows="0">
+					<h:outputLink
+						value="#{request.contextPath}/reports/#{_report.nodeId}/display">
+						<!-- <i class="icon-file" /> -->
+						<h:outputText value="#{_report.name}" />
+					</h:outputLink>
+				</p:dataGrid>
+			</p:tab>
+		</p:accordionPanel>
 	</ui:define>
 </ui:composition>

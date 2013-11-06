@@ -8,16 +8,9 @@
 		<h:form id="form">
 			<p:growl id="message" />
 			<h:panelGrid columns="2" cellpadding="5" styleClass="form-inline">
-				<p:themeSwitcher value="#{themeController.theme}" var="t"
-					style="width:165px" effect="fade">
+				<p:themeSwitcher value="#{themeController.theme}">
 					<f:selectItems value="#{cacheService.themes}" var="theme"
 						itemLabel="#{theme.name}" itemValue="#{theme.name}" />
-					<p:column>
-						<p:graphicImage library="img/themes" name="#{t.image}" />
-					</p:column>
-					<p:column>
-						<h:outputText value="#{t.name}" />
-					</p:column>
 				</p:themeSwitcher>
 				<p:commandButton value="#{msg['operation.submit']}" update="message"
 					actionListener="#{themeController.changeTheme}"

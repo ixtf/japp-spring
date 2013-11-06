@@ -8,29 +8,18 @@
 		<h:form id="form">
 			<p:growl id="message" showDetail="true" sticky="true"
 				autoUpdate="true" />
-			<p:outputPanel id="collectContextMenuPanel">
-				<p:contextMenu for="tabView">
-					<p:submenu label="#{msg['collect']}"
-						binding="#{reportDisplayController.collectSubmenu}"
-						icon="ui-icon-star" />
-				</p:contextMenu>
-			</p:outputPanel>
-			<p:tabView id="tabView" var="_reportModel"
-				value="#{reportDisplayController.reportModels}"
-				activeIndex="#{reportDisplayController.activeIndex}">
-
-				<p:ajax event="tabClose"
-					update=":form:collectContextMenuPanel,:form:message"
-					listener="#{reportDisplayController.onTabClose}" />
-				<p:ajax event="tabChange"
-					update=":form:collectContextMenuPanel,:form:message"
-					listener="#{reportDisplayController.onTabChange}" />
-
-				<p:tab id="tab" title="#{_reportModel.report}" closable="true">
-					<iframe src="#{_reportModel.url}" width="100%" />
-					<script type="text/javascript">$("iframe").attr("scrolling","no").height("1000px");</script>
-				</p:tab>
-			</p:tabView>
+			<h1 class="title ui-widget-header ui-corner-all">
+				<h:outputText
+					value="#{reportDisplayController.reportModel.report.name}" />
+				<p:commandButton value="#{msg['collect']}"
+					action="#{homeController.favorite}" icon="ui-icon-star"
+					styleClass="pull-right">
+					<f:setPropertyActionListener target="#{homeController.favorite}"
+						value="#{reportDisplayController.reportModel.report}" />
+				</p:commandButton>
+			</h1>
+			<iframe src="#{reportDisplayController.reportModel.url}" width="100%" />
+			<script type="text/javascript">$("iframe").attr("scrolling","no").attr("frameborder","0").height("2000px");</script>
 		</h:form>
 	</ui:define>
 </ui:composition>

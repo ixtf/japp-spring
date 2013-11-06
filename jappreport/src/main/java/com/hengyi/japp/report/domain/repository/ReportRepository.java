@@ -22,5 +22,9 @@ public interface ReportRepository extends GraphRepository<Report>,
 
 	@Query(value = "START n=node({0}) MATCH n-[:" + Role.ROLE_REPORT
 			+ "]->report RETURN report")
+	EndResult<Report> findAllByRole(Role role);
+
+	@Query(value = "START n=node({0}) MATCH n-[:" + Role.ROLE_REPORT
+			+ "]->report RETURN report")
 	EndResult<Report> findAllByRole(Iterable<Role> roles);
 }

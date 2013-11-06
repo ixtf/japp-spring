@@ -37,13 +37,13 @@ public class Menu extends AbstractNeo4j implements Serializable {
 		return parent;
 	}
 
-	public Set<Menu> getSubs() {
+	public Iterable<Menu> getSubs() {
 		if (subs == null)
 			subs = Sets.newHashSet();
 		return subs;
 	}
 
-	public Set<Menu> getSubs(Neo4jOperations template) {
+	public Iterable<Menu> getSubs(Neo4jOperations template) {
 		return template.fetch(getSubs());
 	}
 

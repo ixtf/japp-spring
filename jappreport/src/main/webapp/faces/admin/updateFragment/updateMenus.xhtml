@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:dataTable id="tableMenus" var="_menu" value="#{controller.menus}">
+		<p:column headerText="#{msg['operation']}" style="width:4%">
+			<p:commandLink process="@this" update=":form:tabView:tableMenus"
+				action="#{controller.removeMenu}" icon="ui-icon-minus">
+				<h:outputText value="#{msg['delete']}" />
+				<f:setPropertyActionListener value="#{_menu}"
+					target="#{controller.menu}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="#{msg['name']}">
+			<h:outputText value="#{_menu.name}" />
+		</p:column>
+	</p:dataTable>
+
+	<p:panel header="#{msg['select']}#{msg['menu']}" toggleable="true">
+		<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+			<h:outputLabel for="selectMenu-nameSearch" value="#{msg['name']}" />
+			<h:inputText id="selectMenu-nameSearch"
+				value="#{menusController.nameSearch}" />
+			<p:commandButton value="#{msg['search']}" process="@this,@parent"
+				update="tableSelectedMenus" action="#{menusController.search}"
+				icon="ui-icon-search" />
+		</h:panelGrid>
+
+		<p:dataTable id="tableSelectedMenus" var="_menu"
+			value="#{menusController.menus}" lazy="true"
+			rows="#{menusController.pageSize}" paginator="true"
+			stickyHeader="true">
+			<p:column headerText="#{msg['operation']}" style="width:4%">
+				<p:commandLink process="@this" update=":form:tabView:tableMenus"
+					action="#{controller.addMenu}" icon="ui-icon-plus">
+					<h:outputText value="#{msg['add']}" />
+					<f:setPropertyActionListener value="#{_menu}"
+						target="#{controller.menu}" />
+				</p:commandLink>
+			</p:column>
+
+			<p:column headerText="#{msg['name']}">
+				<h:outputText value="#{_menu.name}" />
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+</ui:composition>

@@ -25,8 +25,9 @@ public class CrmReportLineIndicatorModel extends AbstractReportLine<Indicator>
 
 	@Override
 	public Object getValue() {
-		if (value == null)
-			value = getData().getIndicatorValues(getCrm());
+		// TODO 修复错误
+		// if (value == null)
+		// value = getData().getIndicatorValues(getCrm());
 		return value;
 	}
 

@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 import com.hengyi.japp.report.MyUtil;
 import com.hengyi.japp.report.domain.Menu;
 import com.hengyi.japp.report.domain.finereport.FineReport;
+import com.hengyi.japp.report.domain.finereport.OpType;
 import com.hengyi.japp.report.domain.repository.FineReportRepository;
 import com.hengyi.japp.report.service.finereport.FineReportService;
 
@@ -47,8 +48,24 @@ public class FineReportServiceImpl extends ReportServiceImpl<FineReport>
 
 	@Override
 	public String getUrl(FineReport report) {
-		return deployProperties.getProperty("fineReportlet")
-				+ report.getParms();
+		StringBuilder sb = new StringBuilder(
+				deployProperties.getProperty("fineReportlet")).append("?");
+		if (report.getCpt().endsWith(".cpt"))
+			sb.append("reportlet=");
+		else if (report.getCpt().endsWith(".frm"))
+			sb.append("formlet=");
+		sb.append(report.getCpt());
+		if (!report.getBypagesize())
+			sb.append("&__bypagesize__=").append(report.getBypagesize());
+		if (!OpType.DEFAULT.equals(report.getOpType()))
+			sb.append("&op=").append(report.getOpType().getValue());
+		if (!report.getPi())
+			sb.append("&__pi__=").append(report.getPi());
+		if (!report.getShowtoolbar())
+			sb.append("&__showtoolbar__=").append(report.getShowtoolbar());
+		if (report.getCutpage() != null)
+			sb.append("&__cutpage__=").append("v");
+		return sb.toString();
 	}
 
 	@Override

@@ -10,8 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.google.common.eventbus.EventBus;
 import com.hengyi.japp.common.event.EventPublisher;
 import com.hengyi.japp.report.event.init.AppInitEvent;
+import com.hengyi.japp.report.event.operator.LogoutEvent;
+import com.hengyi.japp.report.service.CacheService;
 
 public class Listener implements ServletContextListener, HttpSessionListener {
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -38,5 +41,15 @@ public class Listener implements ServletContextListener, HttpSessionListener {
 	}
 
 	public void sessionDestroyed(HttpSessionEvent event) {
+		WebApplicationContext context = WebApplicationContextUtils
+				.getWebApplicationContext(event.getSession()
+						.getServletContext());
+		CacheService cacheService = context.getBean(CacheService.class);
+		EventBus eventBus = context.getBean(EventBus.class);
+		try {
+			eventBus.post(new LogoutEvent(cacheService.getCurrentOperator()));
+		} catch (Exception e) {
+			log.error("sessionDestroyed error:", e);
+		}
 	}
 }

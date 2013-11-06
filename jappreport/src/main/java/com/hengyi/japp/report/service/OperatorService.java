@@ -8,9 +8,11 @@ import com.hengyi.japp.report.domain.Menu;
 import com.hengyi.japp.report.domain.Operator;
 import com.hengyi.japp.report.domain.Report;
 import com.hengyi.japp.report.domain.Role;
+import com.hengyi.japp.report.web.model.FavoriteReportModel;
+import com.hengyi.japp.report.web.model.TopMenuModel;
 
 public interface OperatorService extends CommonCrudNeo4jService<Operator> {
-	Operator findOne(String uuid) throws Exception;
+	Operator findOne(String uuid);
 
 	Operator findOne(UserDTO user) throws Exception;
 
@@ -21,5 +23,13 @@ public interface OperatorService extends CommonCrudNeo4jService<Operator> {
 
 	List<Operator> findAllByQuery(String nameSearch) throws Exception;
 
-	void collect(Operator operator, Report report) throws Exception;
+	void favorite(Operator operator, Report report) throws Exception;
+
+	void unFavorite(Operator operator, Report report) throws Exception;
+
+	List<TopMenuModel> findTopMenu(Operator operator);
+
+	List<FavoriteReportModel> findAllFavorites(Operator operator);
+
+	// List<Report> findAllReport(Operator operator);
 }

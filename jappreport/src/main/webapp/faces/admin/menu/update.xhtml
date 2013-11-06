@@ -29,15 +29,6 @@
 				<h:inputText id="name" value="#{menuController.menu.name}" />
 				<p:message for="name" />
 			</h:panelGrid>
-
-			<!-- <p:tabView id="tabView" dynamic="true">
-				<p:tab title="#{msg['subMenu']}">
-					<ui:include src="updateFragment/updateSubMenu.xhtml" />
-				</p:tab>
-				<p:tab title="#{msg['associate']}#{msg['report']}">
-					<ui:include src="updateFragment/updateReport.xhtml" />
-				</p:tab>
-			</p:tabView> -->
 			<p:commandButton action="#{menuController.save}" update=":form"
 				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
 		</h:form>

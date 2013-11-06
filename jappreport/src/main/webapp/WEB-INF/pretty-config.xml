@@ -9,8 +9,11 @@
 		<action>#{authController.logout}</action>
 	</url-mapping>
 
+	<!-- <url-mapping id="reportDisplay"> <pattern value="/display" /> <view-id 
+		value="/faces/report/display.jsf" /> </url-mapping> -->
+
 	<url-mapping id="reportDisplay">
-		<pattern value="/display" />
+		<pattern value="/reports/#{reportDisplayController.nodeId}/display" />
 		<view-id value="/faces/report/display.jsf" />
 	</url-mapping>
 

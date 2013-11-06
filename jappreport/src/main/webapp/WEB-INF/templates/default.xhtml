@@ -4,27 +4,90 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/common.xhtml">
-	<ui:define name="head">
-		<style type="text/css">
-body {
-	padding-top: 30px;
-}
-</style>
-	</ui:define>
 	<ui:define name="body">
-		<h:form>
-			<div class="navbar-fixed-top">
-				<p:menubar id="menuBar" model="#{homeController.menuBar}"
-					autoDisplay="false">
-					<!-- <f:facet name="options">
-						<p:inputText style="margin-right:10px" />
-						<p:commandButton type="button" value="Logout"
-							icon="ui-icon-extlink" />
-					</f:facet> -->
-				</p:menubar>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse"
+						data-target=".navbar-responsive-collapse">
+						<span class="icon-bar" /> <span class="icon-bar" /> <span
+							class="icon-bar" />
+					</button>
+					<h:outputLink value="#{request.contextPath}" class="brand">
+						<h:outputText value="#{msg['home.title']}" />
+					</h:outputLink>
+					<div class="nav-collapse collapse navbar-responsive-collapse">
+						<ul class="nav">
+							<ui:repeat var="_topMenu" value="#{homeController.topMenus}">
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown"><h:outputText
+											value="#{_topMenu.menu.name}" /> <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<ui:repeat var="_report" value="#{_topMenu.reports}">
+											<li><h:outputLink
+													value="#{request.contextPath}/reports/#{_report.nodeId}/display">
+													<!-- <i class="icon-file icon-white" /> -->
+													<h:outputText value="#{_report.name}" />
+												</h:outputLink></li>
+										</ui:repeat>
+									</ul></li>
+							</ui:repeat>
+						</ul>
+						<div class="btn-group pull-right">
+							<a href="javascript:void(0)"
+								class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+								icon="ui-icon-arrowrefresh-1-w"> <i
+								class="icon-user icon-white"></i> <h:outputText
+									value="#{cacheService.currentOperator.name}"
+									rendered="#{cacheService.authenticated}" /> <span
+								class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="javascript:void(0)"> <h:outputText
+											value="#{cacheService.principalType}(#{cacheService.principal})" />
+								</a></li>
+								<li><h:outputLink
+										value="#{request.contextPath}#{cacheService.themePath}"
+										rendered="#{cacheService.authenticated}">
+										<h:outputText value="#{msg['theme.title']}" />
+									</h:outputLink></li>
+								<li class="divider"></li>
+								<li><h:outputLink
+										value="#{request.contextPath}#{cacheService.logoutPath}"
+										rendered="#{cacheService.authenticated}">
+										<h:outputText value="#{msg['logout.title']}" />
+									</h:outputLink></li>
+							</ul>
+						</div>
+						<h:form class="navbar-form pull-right">
+							<p:autoComplete id="autoCompleteReport"
+								completeMethod="#{homeController.completeReport}"
+								converter="report" var="_report" itemLabel="#{_report.name}"
+								itemValue="#{_report}" forceSelection="true">
+								<p:ajax event="itemSelect"
+									listener="#{reportDisplayController.selectReport}" />
+							</p:autoComplete>
+							<p:watermark for="autoCompleteReport"
+								value="#{msg['report']}#{msg['search']}" />
+						</h:form>
+					</div>
+				</div>
 			</div>
-		</h:form>
-		<ui:insert name="content" />
-		<div class="container-fluid"></div>
+		</div>
+		<div class="container-fluid ui-widget">
+			<ui:insert name="content" />
+		</div>
+		<ui:insert name="status">
+			<p:ajaxStatus
+				style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
+				<f:facet name="start">
+					<!-- <p:graphicImage library="img" value="ajax-loader.gif" /> -->
+				</f:facet>
+
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
+		</ui:insert>
 	</ui:define>
 </ui:composition>
