@@ -12,12 +12,13 @@ import com.google.common.eventbus.EventBus;
 @Named
 @Singleton
 @Transactional
-public class CollectEventListener implements ApplicationListener<CollectEvent> {
+public class UnFavoriteEventListener implements
+		ApplicationListener<FavoriteEvent> {
 	@Resource
 	private EventBus eventBus;
 
 	@Override
-	public void onApplicationEvent(CollectEvent event) {
+	public void onApplicationEvent(FavoriteEvent event) {
 		eventBus.post(event);
 	}
 }

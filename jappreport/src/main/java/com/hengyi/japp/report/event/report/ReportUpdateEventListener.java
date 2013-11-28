@@ -19,6 +19,6 @@ public class ReportUpdateEventListener implements
 
 	@Override
 	public void onApplicationEvent(ReportUpdateEvent event) {
-		eventBus.post(event);
+//		eventBus.post(event);
 	}
 }

@@ -15,6 +15,7 @@
 	<url-mapping id="reportDisplay">
 		<pattern value="/reports/#{reportDisplayController.nodeId}/display" />
 		<view-id value="/faces/report/display.jsf" />
+		<action>#{reportDisplayController.checkAuthorization}</action>
 	</url-mapping>
 
 	<url-mapping id="roleUpdate">
@@ -35,5 +36,10 @@
 	<url-mapping id="fineReportUpdate">
 		<pattern value="/admin/fineReports/#{fineReportController.nodeId}" />
 		<view-id value="/faces/admin/fineReport/update.jsf" />
+	</url-mapping>
+
+	<url-mapping id="fineReportParamUpdate">
+		<pattern value="/admin/fineReports/#{fineReportController.nodeId}/param" />
+		<view-id value="/faces/admin/fineReport/paramUpdate.jsf" />
 	</url-mapping>
 </pretty-config>

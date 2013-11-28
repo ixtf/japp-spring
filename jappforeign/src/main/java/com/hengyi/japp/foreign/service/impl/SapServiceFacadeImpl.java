@@ -15,7 +15,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.hengyi.japp.common.sap.CommonSapUtil;
-import com.hengyi.japp.common.sap.annotation.SapHandler;
+import com.hengyi.japp.common.sap.annotation.FunctionHandler;
 import com.hengyi.japp.common.sap.dto.SapKna1DTO;
 import com.hengyi.japp.common.sap.dto.SapLikpDTO;
 import com.hengyi.japp.common.sap.dto.SapLipsDTO;
@@ -180,8 +180,8 @@ public class SapServiceFacadeImpl extends CommonSapServiceImpl implements
 		Map<String, JCoServerFunctionHandler> map = Maps.newHashMap();
 		for (JCoServerFunctionHandler handler : context.getBeansOfType(
 				JCoServerFunctionHandler.class).values()) {
-			SapHandler anno = handler.getClass()
-					.getAnnotation(SapHandler.class);
+			FunctionHandler anno = handler.getClass()
+					.getAnnotation(FunctionHandler.class);
 			if (anno != null)
 				map.put(anno.functionName(), handler);
 		}

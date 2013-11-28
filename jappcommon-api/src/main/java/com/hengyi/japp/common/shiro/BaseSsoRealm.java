@@ -13,7 +13,7 @@ import com.hengyi.japp.common.data.PrincipalType;
 
 public class BaseSsoRealm extends CasRealm {
 	@Resource(name = "jappCommonSoapClient")
-	private com.hengyi.japp.common.ws.SoapService jappCommonSoapClient;
+	protected com.hengyi.japp.common.ws.SoapService jappCommonSoapClient;
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(

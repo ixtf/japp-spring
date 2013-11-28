@@ -3,6 +3,8 @@ package com.hengyi.japp.report.service.impl;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,6 +17,8 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import com.hengyi.japp.common.dto.UserDTO;
 import com.hengyi.japp.common.event.EventPublisher;
 import com.hengyi.japp.common.service.AbstractCommonCrudNeo4jService;
@@ -22,10 +26,14 @@ import com.hengyi.japp.report.MyUtil;
 import com.hengyi.japp.report.domain.Menu;
 import com.hengyi.japp.report.domain.Operator;
 import com.hengyi.japp.report.domain.Report;
+import com.hengyi.japp.report.domain.ReportAccess;
 import com.hengyi.japp.report.domain.Role;
 import com.hengyi.japp.report.domain.repository.OperatorRepository;
 import com.hengyi.japp.report.domain.repository.ReportRepository;
 import com.hengyi.japp.report.domain.repository.RoleRepository;
+import com.hengyi.japp.report.event.operator.FavoriteEvent;
+import com.hengyi.japp.report.event.operator.UnFavoriteEvent;
+import com.hengyi.japp.report.event.report.ReportAccessEvent;
 import com.hengyi.japp.report.service.MenuService;
 import com.hengyi.japp.report.service.OperatorService;
 import com.hengyi.japp.report.web.model.FavoriteReportModel;
@@ -38,6 +46,8 @@ public class OperatorServiceImpl extends
 		AbstractCommonCrudNeo4jService<Operator> implements OperatorService {
 	@Resource
 	protected Neo4jOperations template;
+	@Resource
+	protected EventBus eventBus;
 	@Resource
 	private OperatorRepository operatorRepository;
 	@Resource
@@ -56,7 +66,7 @@ public class OperatorServiceImpl extends
 		operator.setRoles(roles);
 		operator.setMenus(menus);
 		operator.setReports(reports);
-		save(operator);
+		operatorRepository.save(operator);
 	}
 
 	@Override
@@ -104,7 +114,7 @@ public class OperatorServiceImpl extends
 		if (!reports.add(report))
 			return;
 		operator.setFavoriteReports(reports);
-		save(operator);
+		operatorRepository.save(operator);
 	}
 
 	@Override
@@ -114,7 +124,46 @@ public class OperatorServiceImpl extends
 		if (!reports.remove(report))
 			return;
 		operator.setFavoriteReports(reports);
-		save(operator);
+		operatorRepository.save(operator);
+	}
+
+	@Subscribe
+	public void favorite(FavoriteEvent event) {
+		Operator operator = findOne(event.getOperator().getNodeId());
+		Set<Report> reports = Sets.newHashSet(operator.getFavoriteReports());
+		if (!reports.add(event.getReport()))
+			return;
+		operator.setFavoriteReports(reports);
+		try {
+			operatorRepository.save(operator);
+		} catch (Exception e) {
+			// TODO log
+			e.printStackTrace();
+		}
+	}
+
+	@Subscribe
+	public void unFavorite(UnFavoriteEvent event) {
+		Operator operator = findOne(event.getOperator().getNodeId());
+		Set<Report> reports = Sets.newHashSet(operator.getFavoriteReports());
+		if (!reports.remove(event.getReport()))
+			return;
+		operator.setFavoriteReports(reports);
+		try {
+			operatorRepository.save(operator);
+		} catch (Exception e) {
+			// TODO log
+			e.printStackTrace();
+		}
+	}
+
+	@Subscribe
+	public void reportAccessEvent(ReportAccessEvent event) {
+		ReportAccess reportAccess = template.createRelationshipBetween(
+				event.getOperator(), event.getReport(), ReportAccess.class,
+				ReportAccess.RELATIONSHIP, false);
+		reportAccess.addAccessCount();
+		template.save(reportAccess);
 	}
 
 	@Override
@@ -128,7 +177,7 @@ public class OperatorServiceImpl extends
 		Operator operator = findOne(user.getUuid());
 		if (operator == null) {
 			operator = new Operator(user.getUuid(), user.getName());
-			save(operator);
+			operatorRepository.save(operator);
 		}
 		return operator;
 	}
@@ -137,7 +186,7 @@ public class OperatorServiceImpl extends
 	public void updateTheme(String uuid, String theme) throws Exception {
 		Operator operator = findOne(uuid);
 		operator.setTheme(theme);
-		save(operator);
+		operatorRepository.save(operator);
 	}
 
 	@Override
@@ -160,5 +209,15 @@ public class OperatorServiceImpl extends
 	@Override
 	public <R extends Repository<Operator, Long>> R getRepository() {
 		return (R) operatorRepository;
+	}
+
+	@PostConstruct
+	protected void init() {
+		eventBus.register(this);
+	}
+
+	@PreDestroy
+	protected void destroy() {
+		eventBus.unregister(this);
 	}
 }

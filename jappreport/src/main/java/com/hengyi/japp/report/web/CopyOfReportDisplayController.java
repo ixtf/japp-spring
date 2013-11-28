@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.faces.event.ActionEvent;
 
 import org.apache.shiro.SecurityUtils;
-import org.primefaces.component.submenu.Submenu;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.TabCloseEvent;
@@ -28,8 +27,9 @@ public class CopyOfReportDisplayController extends AbstractController implements
 	// 当前所有浏览的报表
 	private List<ReportModel> reportModels = Lists.newArrayList(reportModelMap
 			.values());
+
 	// 收藏菜单
-	private Submenu collectSubmenu;
+	// private Submenu collectSubmenu;
 
 	// 菜单栏点选报表
 	public void menuAction(ActionEvent event) {
@@ -48,9 +48,8 @@ public class CopyOfReportDisplayController extends AbstractController implements
 	}
 
 	private void addReport(Report report) {
-		String url = reportFactory.reportService(report).getUrl(report);
 		if (!reportModelMap.containsKey(report)) {
-			reportModel = new ReportModel(report, url);
+			reportModel = new ReportModel(report, reportFactory);
 			reportModelMap.put(report, reportModel);
 			setChange();
 		}
@@ -78,16 +77,16 @@ public class CopyOfReportDisplayController extends AbstractController implements
 	public void setChange() {
 		reportModels = Lists.newArrayList(reportModelMap.values());
 		// 收藏菜单
-		collectSubmenu = cacheService.getCollectSubmenu(reportModelMap);
+		// collectSubmenu = cacheService.getCollectSubmenu(reportModelMap);
 	}
 
 	public List<ReportModel> getReportModels() {
 		return reportModels;
 	}
 
-	public Submenu getCollectSubmenu() {
-		return collectSubmenu;
-	}
+	// public Submenu getCollectSubmenu() {
+	// return collectSubmenu;
+	// }
 
 	public ReportModel getReportModel() {
 		return reportModel;
@@ -99,9 +98,9 @@ public class CopyOfReportDisplayController extends AbstractController implements
 		return 0;
 	}
 
-	public void setCollectSubmenu(Submenu collectSubmenu) {
-		this.collectSubmenu = collectSubmenu;
-	}
+	// public void setCollectSubmenu(Submenu collectSubmenu) {
+	// this.collectSubmenu = collectSubmenu;
+	// }
 
 	public void setActiveIndex(int activeIndex) {
 		// System.out.println(activeIndex);

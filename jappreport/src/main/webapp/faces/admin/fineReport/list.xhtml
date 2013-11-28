@@ -30,8 +30,7 @@
 			</p:confirmDialog>
 			<p:dataTable id="tableReports" var="_report"
 				value="#{fineReportsController.reports}"
-				selection="#{fineReportsController.report}"
-				rowKey="#{_report.nodeId}" selectionMode="single"
+				selection="#{fineReportsController.report}" selectionMode="single"
 				rows="#{fineReportsController.pageSize}" paginator="true"
 				lazy="true" stickyHeader="true">
 				<p:column headerText="#{msg['menu']}">
@@ -42,28 +41,12 @@
 					<h:outputText value="#{_report.name}" />
 				</p:column>
 
-				<p:column headerText="#{msg['cpt']}">
-					<h:outputText value="#{_report.cpt}" />
-				</p:column>
-
-				<p:column headerText="op">
-					<h:outputText value="#{_report.opType}" />
-				</p:column>
-
-				<p:column headerText="__bypagesize__">
-					<h:outputText value="#{_report.bypagesize}" />
-				</p:column>
-
-				<p:column headerText="__pi__">
-					<h:outputText value="#{_report.pi}" />
-				</p:column>
-
-				<p:column headerText="__showtoolbar__">
-					<h:outputText value="#{_report.showtoolbar}" />
-				</p:column>
-
 				<p:column headerText="#{msg['note']}">
 					<h:outputText value="#{_report.note}" />
+				</p:column>
+
+				<p:column headerText="#{msg['sortBy']}">
+					<h:outputText value="#{_report.sortBy}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>

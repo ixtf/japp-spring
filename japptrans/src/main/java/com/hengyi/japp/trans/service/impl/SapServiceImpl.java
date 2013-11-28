@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 import com.google.common.collect.Lists;
 import com.hengyi.japp.common.sap.Constant;
 import com.hengyi.japp.common.sap.destination.DestinationType;
-import com.hengyi.japp.common.service.impl.CommonSapServiceImpl;
+import com.hengyi.japp.common.service.AbstractCommonSapService;
 import com.hengyi.japp.trans.domain.PackType;
 import com.hengyi.japp.trans.domain.TransType;
 import com.hengyi.japp.trans.domain.ys.YsPackType;
@@ -19,16 +19,21 @@ import com.sap.conn.jco.JCoTable;
 
 @Named
 @Singleton
-public class SapServiceImpl extends CommonSapServiceImpl implements SapService {
+public class SapServiceImpl extends AbstractCommonSapService implements
+		SapService {
+	public SapServiceImpl() throws Exception {
+		super();
+	}
+
 	private static final String DOMNAME_PACKTYPE = "ZYS_PACK_TYPE";
 	private static final String DOMNAME_TRANSTYPE = "ZYS_TRANS_TYPE";
 
 	@Override
 	public JCoTable findAllDomvalue(String I_DOMNAME) throws Exception {
-		JCoFunction function = getFunction(DestinationType.DEV,
-				Constant.FunctionName.ZFINDALL_DD_DOMVALUE);
+		JCoFunction function = getFunction(
+				Constant.FunctionName.ZFINDALL_DD_DOMVALUE, DestinationType.DEV);
 		function.getImportParameterList().setValue("I_DOMNAME", I_DOMNAME);
-		execute(DestinationType.DEV, function);
+		execute(function, DestinationType.DEV);
 		return function.getTableParameterList().getTable("ET_DD07V");
 	}
 

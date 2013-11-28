@@ -6,7 +6,7 @@
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<p:accordionPanel var="_favorite" value="#{homeController.favorites}"
-			multiple="true">
+			multiple="true" activeIndex="0,1,2,3">
 			<p:tab title="#{_favorite.menu.name}">
 				<p:dataGrid var="_report" value="#{_favorite.reports}" columns="3"
 					rows="0">

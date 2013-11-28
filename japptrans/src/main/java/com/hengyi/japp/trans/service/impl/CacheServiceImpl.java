@@ -11,7 +11,7 @@ import javax.inject.Singleton;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hengyi.japp.common.service.impl.CommonCacheServiceImpl;
+import com.hengyi.japp.common.service.AbstractCommonCacheService;
 import com.hengyi.japp.trans.domain.Operator;
 import com.hengyi.japp.trans.domain.repository.PackTypeRepository;
 import com.hengyi.japp.trans.domain.repository.TransTypeRepository;
@@ -21,7 +21,7 @@ import com.hengyi.japp.trans.service.SapService;
 
 @Named("cacheService")
 @Singleton
-public class CacheServiceImpl extends CommonCacheServiceImpl implements
+public class CacheServiceImpl extends AbstractCommonCacheService implements
 		CacheService {
 	@Inject
 	private OperatorService operatorService;

@@ -8,11 +8,11 @@ import com.hengyi.japp.common.web.model.LazyNeo4jModel;
 import com.hengyi.japp.report.domain.Report;
 import com.hengyi.japp.report.service.ReportService;
 
+@SuppressWarnings("unchecked")
 public abstract class ReportsController<T extends Report> extends
 		AbstractController {
-	private LazyDataModel<T> reports;
+	private LazyNeo4jModel<T> reports;
 	private String nameSearch;
-	private List<T> searchResult;
 	private T report;
 
 	protected abstract ReportService<T> getReportService();
@@ -24,8 +24,11 @@ public abstract class ReportsController<T extends Report> extends
 	public void delete() {
 		try {
 			getReportService().delete(getReport());
-			if (searchResult != null)
-				searchResult.remove(getReport());
+			List<T> list = (List<T>) reports.getWrappedData();
+			if (list != null) {
+				list.remove(getReport());
+				reports = new LazyNeo4jModel<>(list);
+			}
 			operationSuccessMessage();
 		} catch (Exception e) {
 			errorMessage(e);
@@ -34,8 +37,8 @@ public abstract class ReportsController<T extends Report> extends
 
 	public void search() {
 		try {
-			searchResult = getReportService().findAllByQuery(nameSearch);
-			reports = new LazyNeo4jModel<>(searchResult);
+			reports = new LazyNeo4jModel<>(getReportService().findAllByQuery(
+					nameSearch));
 		} catch (Exception e) {
 			errorMessage(e);
 		}
@@ -51,24 +54,16 @@ public abstract class ReportsController<T extends Report> extends
 		return nameSearch;
 	}
 
-	public List<T> getSearchResult() {
-		return searchResult;
-	}
-
 	public T getReport() {
 		return report;
 	}
 
-	public void setReports(LazyDataModel<T> reports) {
+	public void setReports(LazyNeo4jModel<T> reports) {
 		this.reports = reports;
 	}
 
 	public void setNameSearch(String nameSearch) {
 		this.nameSearch = nameSearch;
-	}
-
-	public void setSearchResult(List<T> searchResult) {
-		this.searchResult = searchResult;
 	}
 
 	public void setReport(T report) {

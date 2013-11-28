@@ -19,6 +19,6 @@ public class MenuUpdateEventListener implements
 
 	@Override
 	public void onApplicationEvent(MenuUpdateEvent event) {
-		eventBus.post(event);
+//		eventBus.post(event);
 	}
 }

@@ -9,7 +9,7 @@ import javax.inject.Named;
 import org.springframework.context.ApplicationContext;
 
 import com.google.common.collect.Maps;
-import com.hengyi.japp.common.sap.annotation.SapHandler;
+import com.hengyi.japp.common.sap.annotation.FunctionHandler;
 import com.hengyi.japp.common.service.impl.CommonSapServiceImpl;
 import com.hengyi.japp.personalevaluation.service.SapServiceFacade;
 import com.sap.conn.jco.server.JCoServerFunctionHandler;
@@ -26,8 +26,8 @@ public class SapServiceFacadeImpl extends CommonSapServiceImpl implements
 		for (Entry<String, JCoServerFunctionHandler> entry : context
 				.getBeansOfType(JCoServerFunctionHandler.class).entrySet()) {
 			JCoServerFunctionHandler handler = entry.getValue();
-			SapHandler annotation = handler.getClass().getAnnotation(
-					SapHandler.class);
+			FunctionHandler annotation = handler.getClass().getAnnotation(
+					FunctionHandler.class);
 			if (annotation != null)
 				map.put(annotation.functionName(), handler);
 		}

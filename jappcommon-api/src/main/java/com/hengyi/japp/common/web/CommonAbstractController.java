@@ -60,7 +60,12 @@ public class CommonAbstractController {
 	}
 
 	protected void errorMessage(Exception e) {
-		log.error("", e);
+		errorMessage(e, true);
+	}
+
+	protected void errorMessage(Exception e, Boolean toLog) {
+		if (toLog)
+			log.error("", e);
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, CommonMessageUtil

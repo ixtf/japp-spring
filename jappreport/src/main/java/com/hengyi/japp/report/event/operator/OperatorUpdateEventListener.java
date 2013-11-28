@@ -19,6 +19,6 @@ public class OperatorUpdateEventListener implements
 
 	@Override
 	public void onApplicationEvent(OperatorUpdateEvent event) {
-		eventBus.post(event);
+//		eventBus.post(event);
 	}
 }

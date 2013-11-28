@@ -16,4 +16,6 @@ public interface MenuService extends CommonCrudNeo4jService<Menu> {
 	List<Report> findAllReport(Menu menu);
 
 	List<Report> findAllReport(Iterable<Menu> menus);
+
+	void delete(Menu menu) throws Exception;
 }

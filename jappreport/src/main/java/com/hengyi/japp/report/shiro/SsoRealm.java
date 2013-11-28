@@ -1,8 +1,5 @@
 package com.hengyi.japp.report.shiro;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
-
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.jasig.cas.client.validation.AbstractUrlBasedTicketValidator;
@@ -11,14 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.hengyi.japp.common.shiro.BaseSsoRealm;
-import com.hengyi.japp.report.service.CacheService;
+import com.hengyi.japp.report.MyUtil;
 
 public class SsoRealm extends BaseSsoRealm {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	@Resource(name = "jappCommonSoapClient")
-	private com.hengyi.japp.common.ws.SoapService jappCommonSoapClient;
-	@Inject
-	private CacheService cacheService;
 
 	@Override
 	protected TicketValidator ensureTicketValidator() {
@@ -32,9 +25,9 @@ public class SsoRealm extends BaseSsoRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
 		try {
-			return new MyAuthorizationInfo();
+			return MyUtil.doGetAuthorizationInfo(principals);
 		} catch (Exception e) {
-			log.error(principals + "获取权限出错！", e);
+			log.error(principals + " 获取权限出错！", e);
 			return super.doGetAuthorizationInfo(principals);
 		}
 	}

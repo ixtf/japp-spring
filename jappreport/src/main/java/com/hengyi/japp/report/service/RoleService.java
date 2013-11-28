@@ -15,4 +15,6 @@ public interface RoleService extends CommonCrudNeo4jService<Role> {
 	List<Role> findAllByQuery(String nameSearch) throws Exception;
 
 	List<Operator> findAllOperator(Role role);
+
+	void delete(Role role) throws Exception;
 }

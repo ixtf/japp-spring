@@ -21,9 +21,10 @@
 			</p:contextMenu>
 			<p:dataTable id="tableOperators" var="_operator"
 				value="#{operatorsController.operators}"
-				selection="#{operatorsController.operator}" rowKey="#{_operator.nodeId}"
-				selectionMode="single" rows="#{operatorsController.pageSize}"
-				paginator="true" lazy="true" stickyHeader="true">
+				selection="#{operatorsController.operator}"
+				rowKey="#{_operator.nodeId}" selectionMode="single"
+				rows="#{operatorsController.pageSize}" paginator="true" lazy="true"
+				stickyHeader="true">
 				<p:column headerText="UUID">
 					<h:outputText value="#{_operator.uuid}" />
 				</p:column>

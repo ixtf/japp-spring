@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+
+Application-Name: YS Pound Applet
+Permissions: sandbox
+Codebase: https://japp.hengyi.com

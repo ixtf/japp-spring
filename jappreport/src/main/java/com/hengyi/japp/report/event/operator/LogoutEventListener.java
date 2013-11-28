@@ -18,6 +18,6 @@ public class LogoutEventListener implements ApplicationListener<LogoutEvent> {
 
 	@Override
 	public void onApplicationEvent(LogoutEvent event) {
-		eventBus.post(event);
+//		eventBus.post(event);
 	}
 }

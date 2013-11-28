@@ -19,7 +19,11 @@
 				</p:commandButton>
 			</h1>
 			<iframe src="#{reportDisplayController.reportModel.url}" width="100%" />
-			<script type="text/javascript">$("iframe").attr("scrolling","no").attr("frameborder","0").height("2000px");</script>
+			<script type="text/javascript">
+			$(function(){
+				$("iframe").attr("frameborder","0")
+					.height($(document).height()-110);
+			})</script>
 		</h:form>
 	</ui:define>
 </ui:composition>

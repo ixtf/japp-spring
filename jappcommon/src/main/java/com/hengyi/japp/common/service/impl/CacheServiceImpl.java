@@ -14,12 +14,13 @@ import com.hengyi.japp.common.data.PrincipalType;
 import com.hengyi.japp.common.domain.node.User;
 import com.hengyi.japp.common.domain.node.bind.BindUser;
 import com.hengyi.japp.common.domain.repository.UserRepository;
+import com.hengyi.japp.common.service.AbstractCommonCacheService;
 import com.hengyi.japp.common.service.CacheService;
 import com.hengyi.japp.common.service.UserService;
 
 @Named
 @Singleton
-public class CacheServiceImpl extends CommonCacheServiceImpl implements
+public class CacheServiceImpl extends AbstractCommonCacheService implements
 		CacheService {
 	@Resource
 	private UserRepository userRepository;

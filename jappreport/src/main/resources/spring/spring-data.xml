@@ -17,7 +17,13 @@
 			http://www.springframework.org/schema/tx 
 			http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<neo4j:config storeDirectory="${neo4j.storeDirectory}" />
+	<!-- <neo4j:config storeDirectory="${neo4j.storeDirectory}" /> -->
+	<neo4j:config graphDatabaseService="graphDatabaseService" />
+	<bean id="graphDatabaseService"
+		class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
+		<constructor-arg index="0"
+			value="http://localhost:7474/db/data/" />
+	</bean>
 	<neo4j:repositories base-package="com.hengyi.japp.report" />
 	<tx:annotation-driven mode="proxy" />
 

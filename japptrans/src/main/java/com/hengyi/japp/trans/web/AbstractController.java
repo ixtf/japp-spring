@@ -2,6 +2,7 @@ package com.hengyi.japp.trans.web;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -13,8 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.hengyi.japp.trans.Constant;
-import com.hengyi.japp.trans.MessageUtil;
+import com.hengyi.japp.common.web.CommonAbstractController;
 import com.hengyi.japp.trans.domain.Operator;
 import com.hengyi.japp.trans.domain.PackType;
 import com.hengyi.japp.trans.domain.TransType;
@@ -24,7 +24,7 @@ import com.hengyi.japp.trans.service.CacheService;
 import com.hengyi.japp.trans.service.OperatorService;
 import com.hengyi.japp.trans.service.YSDeliveryService;
 
-public abstract class AbstractController {
+public abstract class AbstractController extends CommonAbstractController {
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 	@Inject
 	protected CacheService cacheService;
@@ -32,9 +32,9 @@ public abstract class AbstractController {
 	protected OperatorService operatorService;
 	@Inject
 	protected YSDeliveryService ysDeliveryService;
-	@Inject
+	@Resource
 	protected PackTypeRepository packTypeRepository;
-	@Inject
+	@Resource
 	protected TransTypeRepository transTypeRepository;
 
 	public List<PackType> getAllPackTypes() {
@@ -54,26 +54,6 @@ public abstract class AbstractController {
 		return cacheService.getCurrentOperator();
 	}
 
-	public int getPageSize() {
-		return Constant.PAGE_SIZE;
-	}
-
-	protected void redirect(String url) {
-		String prefix = "/crm";
-		try {
-			if (url.indexOf("http") >= 0)
-				FacesContext.getCurrentInstance().getExternalContext()
-						.redirect(url);
-
-			if (!url.substring(0, 1).equals("/"))
-				prefix = prefix + "/";
-			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect(prefix + url);
-		} catch (Exception e) {
-			errorMessage(e);
-		}
-	}
-
 	protected void push(String s) {
 		PushContext pushContext = PushContextFactory.getDefault()
 				.getPushContext();
@@ -91,26 +71,5 @@ public abstract class AbstractController {
 		PushContext pushContext = PushContextFactory.getDefault()
 				.getPushContext();
 		pushContext.push("/" + getCurrentOperator().getUuid(), facesMessage);
-	}
-
-	protected void operationSuccessMessage() {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, MessageUtil
-						.operationSuccess(), null));
-	}
-
-	protected void infoMessage(String s) {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						MessageUtil.info(), s));
-	}
-
-	protected void errorMessage(Exception e) {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, MessageUtil
-						.operationFailure(), e.getLocalizedMessage()));
 	}
 }

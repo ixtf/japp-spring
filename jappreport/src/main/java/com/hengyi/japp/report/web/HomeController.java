@@ -1,17 +1,19 @@
 package com.hengyi.japp.report.web;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.inject.Named;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.context.annotation.Scope;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.hengyi.japp.common.sap.Constant;
 import com.hengyi.japp.report.domain.Operator;
 import com.hengyi.japp.report.domain.Report;
 import com.hengyi.japp.report.service.ReportService;
@@ -31,19 +33,16 @@ public class HomeController extends AbstractController implements Serializable {
 
 	@PostConstruct
 	private void init() {
-		eventBus.register(this);
+		if (SecurityUtils.getSubject().hasRole(Constant.ADMIN_PRINCIPAL))
+			return;
 		try {
 			operator = getCurrentOperator();
 			topMenus = operatorService.findTopMenu(operator);
+			Collections.sort(topMenus);
 			favorites = operatorService.findAllFavorites(operator);
 		} catch (Exception e) {
 			errorMessage(e);
 		}
-	}
-
-	@PreDestroy
-	public void destroy() {
-		eventBus.unregister(this);
 	}
 
 	public List<Report> completeReport(String query) throws Exception {

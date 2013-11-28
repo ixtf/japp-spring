@@ -8,8 +8,6 @@ import com.sap.conn.jco.JCoTable;
 import com.sap.conn.jco.server.JCoServer;
 
 public interface CommonSapService {
-	JCoServer getServer() throws Exception;
-
 	JCoDestination getDestination() throws Exception;
 
 	JCoDestination getDestination(DestinationType type) throws Exception;
@@ -20,14 +18,18 @@ public interface CommonSapService {
 
 	JCoFunction getFunction(String fName) throws Exception;
 
-	JCoFunction getFunction(DestinationType type, String fName)
+	JCoFunction getFunction(String fName, DestinationType type)
 			throws Exception;
 
 	void execute(JCoFunction function) throws Exception;
 
-	void execute(DestinationType type, JCoFunction function) throws Exception;
+	void execute(JCoFunction function, DestinationType type) throws Exception;
 
-	void execute(JCoDestination dest, JCoFunction function) throws Exception;
+	void execute(JCoFunction function, JCoDestination dest) throws Exception;
 
 	JCoTable findAllDomvalue(String ysPackTypeDomvalue) throws Exception;
+
+	JCoServer getServer() throws Exception;
+
+	JCoServer getServer(DestinationType type) throws Exception;
 }

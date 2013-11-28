@@ -1,0 +1,4 @@
+Application-Name: YS Pound Applet
+Permissions: sandbox
+Codebase: https://japp.hengyi.com
+Name: com/hengyi/japp/trans/web/applet/PoundApplet.class

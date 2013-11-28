@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.hengyi.japp</groupId>
+		<artifactId>japp</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>jappreport</artifactId>
+	<packaging>war</packaging>
+	<name>jappreport</name>
+	<dependencies>
+		<dependency>
+			<groupId>com.hengyi.japp</groupId>
+			<artifactId>jappcommon-api</artifactId>
+		</dependency>
+
+		<!-- jsf -->
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>primefaces-extensions</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>resources-ckeditor</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.atmosphere</groupId>
+			<artifactId>atmosphere-runtime</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>all-themes</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces-mobile</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-integration-faces</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-integration-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-security-integration-shiro</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-config-prettyfaces</artifactId>
+		</dependency>
+		<!-- <dependency> <groupId>commons-fileupload</groupId> <artifactId>commons-fileupload</artifactId> 
+			</dependency> <dependency> <groupId>commons-io</groupId> <artifactId>commons-io</artifactId> 
+			</dependency> <dependency> <groupId>com.lowagie</groupId> <artifactId>itext</artifactId> 
+			</dependency> <dependency> <groupId>org.apache.poi</groupId> <artifactId>poi</artifactId> 
+			</dependency> <dependency> <groupId>org.apache.poi</groupId> <artifactId>poi-ooxml</artifactId> 
+			</dependency> -->
+	</dependencies>
+	<build>
+		<finalName>report</finalName>
+	</build>
+</project>

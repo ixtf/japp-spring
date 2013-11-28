@@ -63,7 +63,8 @@
 							<p:autoComplete id="autoCompleteReport"
 								completeMethod="#{homeController.completeReport}"
 								converter="report" var="_report" itemLabel="#{_report.name}"
-								itemValue="#{_report}" forceSelection="true">
+								itemValue="#{_report}" forceSelection="true"
+								styleClass="navbar-form pull-right">
 								<p:ajax event="itemSelect"
 									listener="#{reportDisplayController.selectReport}" />
 							</p:autoComplete>
@@ -77,17 +78,14 @@
 		<div class="container-fluid ui-widget">
 			<ui:insert name="content" />
 		</div>
-		<ui:insert name="status">
-			<p:ajaxStatus
-				style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
-				<f:facet name="start">
-					<!-- <p:graphicImage library="img" value="ajax-loader.gif" /> -->
-				</f:facet>
-
-				<f:facet name="complete">
-					<h:outputText value="" />
-				</f:facet>
-			</p:ajaxStatus>
-		</ui:insert>
+		<p:ajaxStatus
+			style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
+			<f:facet name="start">
+				<p:graphicImage value="/resources/img/ajax-loader.gif" />
+			</f:facet>
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
 	</ui:define>
 </ui:composition>

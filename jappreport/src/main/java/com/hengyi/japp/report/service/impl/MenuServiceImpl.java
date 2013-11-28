@@ -36,7 +36,7 @@ public class MenuServiceImpl extends AbstractCommonCrudNeo4jService<Menu>
 		if (menu.equals(parent))
 			throw new ParentMenuIsSelfException();
 		menu.setParent(parent);
-		save(menu);
+		menuRepository.save(menu);
 	}
 
 	@Override
@@ -73,5 +73,10 @@ public class MenuServiceImpl extends AbstractCommonCrudNeo4jService<Menu>
 	@Override
 	public <R extends Repository<Menu, Long>> R getRepository() {
 		return (R) menuRepository;
+	}
+
+	@Override
+	public void delete(Menu menu) throws Exception {
+		menuRepository.delete(menu);
 	}
 }

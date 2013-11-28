@@ -34,7 +34,7 @@ public class RoleServiceImpl extends AbstractCommonCrudNeo4jService<Role>
 			throws Exception {
 		role.setMenus(menus);
 		role.setReports(reports);
-		super.save(role);
+		roleRepository.save(role);
 	}
 
 	@Override
@@ -57,5 +57,10 @@ public class RoleServiceImpl extends AbstractCommonCrudNeo4jService<Role>
 	@Override
 	public <R extends Repository<Role, Long>> R getRepository() {
 		return (R) roleRepository;
+	}
+
+	@Override
+	public void delete(Role role) throws Exception {
+		roleRepository.delete(role);
 	}
 }

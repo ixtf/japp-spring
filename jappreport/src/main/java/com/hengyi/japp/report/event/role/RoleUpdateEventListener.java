@@ -19,6 +19,6 @@ public class RoleUpdateEventListener implements
 
 	@Override
 	public void onApplicationEvent(RoleUpdateEvent event) {
-		eventBus.post(event);
+//		eventBus.post(event);
 	}
 }

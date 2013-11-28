@@ -28,6 +28,10 @@
 				<h:outputLabel for="name" value="#{msg['name']}" />
 				<h:inputText id="name" value="#{menuController.menu.name}" />
 				<p:message for="name" />
+
+				<h:outputLabel for="sortBy" value="#{msg['sortBy']}" />
+				<h:inputText id="sortBy" value="#{menuController.menu.sortBy}" />
+				<p:message for="sortBy" />
 			</h:panelGrid>
 			<p:commandButton action="#{menuController.save}" update=":form"
 				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />

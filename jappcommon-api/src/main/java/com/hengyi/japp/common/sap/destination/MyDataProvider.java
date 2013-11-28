@@ -13,12 +13,15 @@ import com.google.common.collect.ImmutableMap;
 import com.sap.conn.jco.ext.DataProviderException;
 import com.sap.conn.jco.ext.DestinationDataEventListener;
 import com.sap.conn.jco.ext.DestinationDataProvider;
+import com.sap.conn.jco.ext.ServerDataEventListener;
+import com.sap.conn.jco.ext.ServerDataProvider;
 
-public class MyDestinationDataProvider implements DestinationDataProvider {
+public class MyDataProvider implements DestinationDataProvider,
+		ServerDataProvider {
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 	private final Map<String, Properties> secureDBStorage;
 
-	public MyDestinationDataProvider() {
+	public MyDataProvider() {
 		ImmutableMap.Builder<String, Properties> builder = ImmutableMap
 				.builder();
 		for (DestinationType type : DestinationType.values())
@@ -28,8 +31,7 @@ public class MyDestinationDataProvider implements DestinationDataProvider {
 
 	private Properties getProperties(String path) {
 		try {
-			InputStream in = MyDestinationDataProvider.class
-					.getResourceAsStream(path);
+			InputStream in = MyDataProvider.class.getResourceAsStream(path);
 			Properties p = new Properties();
 			p.load(in);
 			return p;
@@ -46,18 +48,15 @@ public class MyDestinationDataProvider implements DestinationDataProvider {
 	public Properties getDestinationProperties(String destinationName) {
 		try {
 			Properties p = secureDBStorage.get(destinationName);
-			if (p != null) {
-				if (p.isEmpty())
-					throw new DataProviderException(
-							DataProviderException.Reason.INVALID_CONFIGURATION,
-							"destination configuration is incorrect", null);
-				return p;
-			}
+			if (p == null || p.isEmpty())
+				throw new DataProviderException(
+						DataProviderException.Reason.INVALID_CONFIGURATION,
+						"destination configuration is incorrect", null);
+			return p;
 		} catch (RuntimeException re) {
 			throw new DataProviderException(
 					DataProviderException.Reason.INTERNAL_ERROR, re);
 		}
-		return null;
 	}
 
 	@Override
@@ -67,6 +66,15 @@ public class MyDestinationDataProvider implements DestinationDataProvider {
 	@Override
 	public boolean supportsEvents() {
 		return false;
+	}
+
+	@Override
+	public Properties getServerProperties(String serverName) {
+		return getDestinationProperties(serverName);
+	}
+
+	@Override
+	public void setServerDataEventListener(ServerDataEventListener eL) {
 	}
 
 }

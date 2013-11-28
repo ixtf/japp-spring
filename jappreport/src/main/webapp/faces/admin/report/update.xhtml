@@ -4,17 +4,85 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-	<h:outputLabel for="menu" value="#{msg['menu']}" />
-	<p:selectOneMenu id="menu" value="#{controller.menu}" converter="menu">
-		<f:selectItems value="#{menuController.allMenus}" />
-	</p:selectOneMenu>
-	<p:message for="menu" />
+	<h:form id="form">
+		<p:growl id="message" showDetail="true" sticky="true"
+			autoUpdate="true" />
+		<ui:include src="/faces/updateTitle.xhtml">
+			<ui:param name="controller" value="#{controller}" />
+			<ui:param name="title" value="#{title}" />
+		</ui:include>
 
-	<h:outputLabel for="name" value="#{msg['name']}" />
-	<h:inputText id="name" value="#{controller.report.name}" />
-	<p:message for="name" />
+		<h:panelGrid id="panelGridUpdateReport" columns="3" cellpadding="5"
+			styleClass="form-inline">
+			<h:outputLabel for="menu" value="#{msg['menu']}" />
+			<p:selectOneMenu id="menu" value="#{controller.menu}"
+				converter="menu">
+				<f:selectItems value="#{menuController.allMenus}" />
+			</p:selectOneMenu>
+			<p:message for="menu" />
 
-	<h:outputLabel for="note" value="#{msg['note']}" />
-	<p:inputTextarea id="note" value="#{controller.report.note}" />
-	<p:message for="note" />
+			<h:outputLabel for="name" value="#{msg['name']}" />
+			<h:inputText id="name" value="#{controller.report.name}" />
+			<p:message for="name" />
+
+			<h:outputLabel for="note" value="#{msg['note']}" />
+			<p:inputTextarea id="note" value="#{controller.report.note}" />
+			<p:message for="note" />
+
+			<h:outputLabel for="sortBy" value="#{msg['sortBy']}" />
+			<h:inputText id="sortBy" value="#{controller.report.sortBy}" />
+			<p:message for="sortBy" />
+		</h:panelGrid>
+
+		<p:commandButton value="#{msg['add']}" process="@this"
+			update=":formUpdateParam:panelGridUpdateParam"
+			action="#{controller.newParam}" oncomplete="dialogUpdateParam.show()"
+			icon="ui-icon-plus" />
+		<p:dataTable id="tableParams" var="_param"
+			value="#{controller.params}" selection="#{controller.param}"
+			rowKey="#{_param.key}" selectionMode="single">
+			<p:column headerText="KEY">
+				<h:outputText value="#{_param.key}" />
+			</p:column>
+
+			<p:column headerText="VALUE">
+				<h:outputText value="#{_param.value}" />
+			</p:column>
+		</p:dataTable>
+		<p:commandButton value="#{msg['operation.submit']}" update=":form"
+			action="#{controller.save}" styleClass="ui-priority-primary" />
+
+		<p:contextMenu for="tableParams">
+			<p:menuitem value="#{msg['edit']}" process="tableParams"
+				update=":formUpdateParam:panelGridUpdateParam"
+				oncomplete="dialogUpdateParam.show()" icon="ui-icon-plus" />
+			<p:menuitem value="#{msg['delete']}" type="button"
+				onclick="confirmDialogDeleteParam.show()" icon="ui-icon-close" />
+		</p:contextMenu>
+		<p:confirmDialog message="#{msg['operation.confirm']}?"
+			severity="alert" widgetVar="confirmDialogDeleteParam">
+			<p:commandButton value="#{msg['operation.submit']}"
+				update="tableParams,message" action="#{controller.deleteParam}"
+				oncomplete="confirmDialogDeleteParam.hide()" />
+		</p:confirmDialog>
+	</h:form>
+	<p:dialog modal="true" widgetVar="dialogUpdateParam">
+		<h:form id="formUpdateParam">
+			<h:panelGrid id="panelGridUpdateParam" columns="3"
+				styleClass="form-inline">
+				<h:outputLabel for="paramKey" value="KEY" />
+				<h:inputText id="paramKey" value="#{controller.param.key}" />
+				<p:message for="paramKey" />
+
+				<h:outputLabel for="paramValue" value="VALUE" />
+				<h:inputText id="paramValue" value="#{controller.param.value}" />
+				<p:message for="paramValue" />
+
+				<p:commandButton value="#{msg['operation.submit']}"
+					action="#{controller.addParam}" process="@parent"
+					update=":form:tableParams,:form:message"
+					onsuccess="dialogUpdateParam.hide()" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
 </ui:composition>

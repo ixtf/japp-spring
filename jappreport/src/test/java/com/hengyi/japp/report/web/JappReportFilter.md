@@ -1,0 +1,12 @@
+ <filter>
+  <filter-name>JappReportFilter</filter-name>
+  <filter-class>com.hengyi.japp.report.web.JappReportFilter</filter-class>
+  <init-param>
+   <param-name>JappReportServer</param-name>
+   <param-value>http://192.168.0.13:8080/report</param-value>
+  </init-param>
+  <init-param>
+   <param-name>allowDomains</param-name>
+   <param-value>192.168.17.117,192.168.17.51;192.168.0.125</param-value>
+  </init-param>
+ </filter>

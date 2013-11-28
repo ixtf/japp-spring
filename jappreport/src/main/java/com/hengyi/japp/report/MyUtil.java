@@ -6,9 +6,12 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.authz.permission.AllPermission;
 import org.apache.shiro.authz.permission.WildcardPermission;
-import org.primefaces.component.menuitem.MenuItem;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
 import com.google.common.collect.Lists;
@@ -20,6 +23,7 @@ import com.hengyi.japp.report.domain.Report;
 import com.hengyi.japp.report.domain.Role;
 import com.hengyi.japp.report.exception.SearchException;
 import com.hengyi.japp.report.service.MenuService;
+import com.hengyi.japp.report.shiro.MyAuthorizationInfo;
 
 public class MyUtil extends CommonUtil {
 	public static void checkSearch(String s) throws Exception {
@@ -54,28 +58,21 @@ public class MyUtil extends CommonUtil {
 		return result;
 	}
 
-	public static MenuItem getHomeMenuItem() {
-		MenuItem menuItem = new MenuItem();
-		menuItem.setValue("首页");
-		menuItem.setIcon("ui-icon-home");
-		menuItem.setUrl("/");
-		return menuItem;
-	}
-
-	public static MenuItem getLogoutMenuItem() {
-		MenuItem menuItem = new MenuItem();
-		menuItem.setValue("退出");
-		menuItem.setIcon("ui-icon-extlink");
-		menuItem.setUrl("/logout");
-		menuItem.setStyle("margin-right:10px");
-		return menuItem;
-	}
-
 	public static boolean isSuperUser() {
 		return SecurityUtils.getSubject().hasRole(Constant.ROLE_SUPERUSER);
 	}
 
 	private static final String REPORT_PERMISSION_PREFIX = "report:view:";
+
+	public static AuthorizationInfo doGetAuthorizationInfo(
+			PrincipalCollection principals) throws Exception {
+		if (principals.getPrimaryPrincipal().equals(Constant.ADMIN_PRINCIPAL)) {
+			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+			info.addObjectPermission(new AllPermission());
+			return info;
+		}
+		return new MyAuthorizationInfo();
+	}
 
 	public static void checkAuthorization(Report report) {
 		SecurityUtils.getSubject().checkPermission(
@@ -106,4 +103,21 @@ public class MyUtil extends CommonUtil {
 		reports.addAll(menuService.findAllReport(menus));
 		return reports;
 	}
+
+	// public static MenuItem getHomeMenuItem() {
+	// MenuItem menuItem = new MenuItem();
+	// menuItem.setValue("首页");
+	// menuItem.setIcon("ui-icon-home");
+	// menuItem.setUrl("/");
+	// return menuItem;
+	// }
+	//
+	// public static MenuItem getLogoutMenuItem() {
+	// MenuItem menuItem = new MenuItem();
+	// menuItem.setValue("退出");
+	// menuItem.setIcon("ui-icon-extlink");
+	// menuItem.setUrl("/logout");
+	// menuItem.setStyle("margin-right:10px");
+	// return menuItem;
+	// }
 }

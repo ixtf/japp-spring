@@ -8,31 +8,53 @@ import org.primefaces.model.SortOrder;
 import org.springframework.data.domain.PageRequest;
 
 import com.google.common.collect.Lists;
+import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 import com.hengyi.japp.common.service.CommonCrudNeo4jService;
 
-public class LazyNeo4jModel<T> extends LazyDataModel<T> {
+@SuppressWarnings("unchecked")
+public class LazyNeo4jModel<T extends AbstractNeo4j> extends LazyDataModel<T> {
 	private static final long serialVersionUID = -2178617792174240026L;
-	private CommonCrudNeo4jService<T> servcie;
+	private CommonCrudNeo4jService<T> service;
 	private List<T> datasource;
 
-	public LazyNeo4jModel(CommonCrudNeo4jService<T> servcie) {
+	public LazyNeo4jModel(CommonCrudNeo4jService<T> service) {
 		super();
-		this.servcie = servcie;
-		this.setRowCount((int) servcie.count());
+		this.service = service;
+		setRowCount((int) service.count());
 	}
 
-	public LazyNeo4jModel(List<T> datasource) {
-		this.datasource = datasource;
-		this.setRowCount(datasource.size());
-		this.setPageSize(datasource.size());
+	public LazyNeo4jModel(Iterable<T> i) {
+		super();
+		this.datasource = Lists.newArrayList(i);
+		setWrappedData(datasource);
+		setRowCount(datasource.size());
+	}
+
+	@Override
+	public T getRowData(String rowKey) {
+		try {
+			Long nodeId = Long.valueOf(rowKey);
+			List<T> datasource = (List<T>) getWrappedData();
+			for (T t : datasource)
+				if (t.getNodeId() == nodeId)
+					return t;
+			return service.findOne(nodeId);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Object getRowKey(T object) {
+		return object == null ? null : object.getNodeId();
 	}
 
 	public List<T> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters) {
-		if (datasource == null)
-			return fromDb(first, pageSize, sortField, sortOrder, filters);
-		else
+		if (service == null)
 			return fromResult(first, pageSize, sortField, sortOrder, filters);
+		else
+			return fromDb(first, pageSize, sortField, sortOrder, filters);
 	}
 
 	private List<T> fromResult(int first, int pageSize, String sortField,
@@ -53,7 +75,7 @@ public class LazyNeo4jModel<T> extends LazyDataModel<T> {
 			SortOrder sortOrder, Map<String, String> filters) {
 		List<T> data = Lists.newArrayList();
 		PageRequest pageRequest = new PageRequest(first / pageSize, pageSize);
-		data = servcie.findAll(pageRequest);
+		data = service.findAll(pageRequest);
 		return data;
 	}
 }

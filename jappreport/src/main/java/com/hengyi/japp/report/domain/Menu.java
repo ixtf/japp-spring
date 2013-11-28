@@ -16,7 +16,8 @@ import com.google.common.collect.Sets;
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
 
 @NodeEntity
-public class Menu extends AbstractNeo4j implements Serializable {
+public class Menu extends AbstractNeo4j implements Serializable,
+		Comparable<Menu> {
 	private static final long serialVersionUID = 2553875982016927076L;
 	public static final String SUBMENU = "SUBMENU";
 	public static final String MENU_REPORT = "MENU_REPORT";
@@ -28,6 +29,7 @@ public class Menu extends AbstractNeo4j implements Serializable {
 	private Menu parent;
 	@RelatedTo(type = SUBMENU, elementClass = Menu.class)
 	private Set<Menu> subs;
+	private double sortBy;
 
 	public String getName() {
 		return name;
@@ -59,8 +61,21 @@ public class Menu extends AbstractNeo4j implements Serializable {
 		this.subs = Sets.newHashSet(subs);
 	}
 
+	public double getSortBy() {
+		return sortBy;
+	}
+
+	public void setSortBy(double sortBy) {
+		this.sortBy = sortBy;
+	}
+
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	@Override
+	public int compareTo(Menu o) {
+		return Double.compare(getSortBy(), o.getSortBy());
 	}
 }

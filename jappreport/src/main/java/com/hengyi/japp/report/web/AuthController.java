@@ -34,7 +34,7 @@ public class AuthController extends AbstractController implements Serializable {
 			subject.login(token);
 			redirect(cacheService.getHomePath());
 		} catch (Exception e) {
-			errorMessage(e);
+			errorMessage(e, false);
 		}
 	}
 
@@ -46,10 +46,10 @@ public class AuthController extends AbstractController implements Serializable {
 			LogoutEvent event = new LogoutEvent(
 					cacheService.getCurrentOperator());
 			SecurityUtils.getSubject().logout();
-			eventBus.post(event);
+			eventPublisher.publish(event);
 			redirect(url);
 		} catch (Exception e) {
-			log.error("", e);
+			errorMessage(e);
 		}
 	}
 
