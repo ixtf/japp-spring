@@ -28,4 +28,19 @@ public class CrmTypeServiceImpl extends AbstractCommonCrudNeo4jService<CrmType>
 	public <RP extends Repository<CrmType, Long>> RP getRepository() {
 		return (RP) crmTypeRepository;
 	}
+
+	@Override
+	public void save(Iterable<CrmType> crmTypes) {
+		crmTypeRepository.save(crmTypes);
+	}
+
+	@Override
+	public void save(CrmType crmType) {
+		crmTypeRepository.save(crmType);
+	}
+
+	@Override
+	public void delete(CrmType crmType) {
+		crmTypeRepository.delete(crmType);
+	}
 }

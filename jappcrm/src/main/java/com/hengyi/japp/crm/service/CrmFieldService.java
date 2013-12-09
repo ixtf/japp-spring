@@ -6,4 +6,6 @@ import com.hengyi.japp.crm.domain.Indicator;
 
 public interface CrmFieldService extends CommonCrudNeo4jService<CrmField> {
 	void save(CrmField report, Iterable<Indicator> indicators);
+
+	void save(Iterable<CrmField> crmFileds);
 }

@@ -22,7 +22,7 @@
 	<bean id="graphDatabaseService"
 		class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
 		<constructor-arg index="0"
-			value="http://localhost:7474/db/data/" />
+			value="http://192.168.0.13:7474/db/data/" />
 	</bean>
 	<neo4j:repositories base-package="com.hengyi.japp.report" />
 	<tx:annotation-driven mode="proxy" />

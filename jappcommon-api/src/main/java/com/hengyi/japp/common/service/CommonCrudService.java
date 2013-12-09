@@ -9,13 +9,13 @@ import org.springframework.data.repository.Repository;
 public interface CommonCrudService<T, ID extends Serializable> {
 	T findOne(ID id);
 
-	// void save(T t) throws Exception;
-	//
-	// void save(Iterable<T> ts) throws Exception;
-	//
-	// void delete(ID id) throws Exception;
-	//
-	// void delete(T t) throws Exception;
+	void save(T t) throws Exception;
+
+	void save(Iterable<T> ts) throws Exception;
+
+	void delete(ID id) throws Exception;
+
+	void delete(T t) throws Exception;
 
 	List<T> findAll();
 

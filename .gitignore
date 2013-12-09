@@ -3,6 +3,7 @@
 
 # 忽略 target/ 目录下的所有文件
 target/
+.settings/
 
 # 忽略 target/ 目录下的所有文件
 errorlog/
@@ -10,7 +11,7 @@ errorlog/
 # eclipse 产生文件
 .project
 .settings/
-.classpath
+.metadata/
 
 # Sap RFC
 *.trc

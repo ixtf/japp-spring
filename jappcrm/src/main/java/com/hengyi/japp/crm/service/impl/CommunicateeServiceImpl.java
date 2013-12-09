@@ -41,4 +41,14 @@ public class CommunicateeServiceImpl extends
 	public <R extends Repository<Communicatee, Long>> R getRepository() {
 		return (R) communicateeRepository;
 	}
+
+	@Override
+	public void save(Communicatee communicatee) throws Exception {
+		communicateeRepository.save(communicatee);
+	}
+
+	@Override
+	public void delete(Communicatee communicatee) {
+		communicateeRepository.delete(communicatee);
+	}
 }

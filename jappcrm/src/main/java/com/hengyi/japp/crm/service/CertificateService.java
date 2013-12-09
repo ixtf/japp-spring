@@ -13,4 +13,6 @@ public interface CertificateService extends CommonCrudNeo4jService<Certificate> 
 	void delete(Certificate certificate) throws Exception;
 
 	List<Certificate> findAll();
+
+	void save(Iterable<Certificate> certificates);
 }

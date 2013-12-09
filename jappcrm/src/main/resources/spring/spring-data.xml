@@ -21,6 +21,13 @@
 	<neo4j:repositories base-package="com.hengyi.japp.crm" />
 	<tx:annotation-driven mode="proxy" />
 
+	<!-- <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager" 
+		/> <bean class="org.springframework.data.neo4j.config.Neo4jConfiguration" 
+		/> <bean class="org.springframework.context.annotation.ConfigurationClassPostProcessor" 
+		/> <bean id="graphDatabaseService" class="org.neo4j.kernel.EmbeddedGraphDatabase" 
+		destroy-method="shutdown" scope="singleton"> <constructor-arg index="0" value="${neo4j.storeDirectory}" 
+		/> </bean> -->
+
 	<context:property-placeholder
 		properties-ref="deployProperties" />
 </beans>

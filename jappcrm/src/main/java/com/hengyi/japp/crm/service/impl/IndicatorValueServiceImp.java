@@ -40,4 +40,9 @@ public class IndicatorValueServiceImp extends
 	public <R extends Repository<IndicatorValue, Long>> R getRepository() {
 		return (R) indicatorValueRepository;
 	}
+
+	// @Override
+	// public void save(IndicatorValue indicatorValue) {
+	// indicatorValueRepository.save(indicatorValue);
+	// }
 }

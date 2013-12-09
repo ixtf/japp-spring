@@ -10,4 +10,6 @@ public interface CommunicateeService extends
 	void save(Communicatee communicatee) throws Exception;
 
 	List<Communicatee> findAllByQuery(String nameSearch) throws Exception;
+
+	void delete(Communicatee communicatee);
 }

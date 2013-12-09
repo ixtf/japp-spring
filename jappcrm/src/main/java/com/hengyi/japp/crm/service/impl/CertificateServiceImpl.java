@@ -29,4 +29,19 @@ public class CertificateServiceImpl extends
 	public <RP extends Repository<Certificate, Long>> RP getRepository() {
 		return (RP) certificateRepository;
 	}
+
+	@Override
+	public void save(Certificate certificate) throws Exception {
+		certificateRepository.save(certificate);
+	}
+
+	@Override
+	public void delete(Certificate certificate) throws Exception {
+		certificateRepository.delete(certificate);
+	}
+
+	@Override
+	public void save(Iterable<Certificate> certificates) {
+		certificateRepository.save(certificates);
+	}
 }

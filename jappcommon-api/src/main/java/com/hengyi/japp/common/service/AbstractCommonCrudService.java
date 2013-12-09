@@ -40,21 +40,21 @@ public abstract class AbstractCommonCrudService<T, ID extends Serializable> {
 		return id == null ? null : _crudRepository().findOne(id);
 	}
 
-	// public void save(T t) throws Exception {
-	// _crudRepository().save(t);
-	// }
-	//
-	// public void save(Iterable<T> ts) throws Exception {
-	// _crudRepository().save(ts);
-	// }
-	//
-	// public void delete(ID id) throws Exception {
-	// _crudRepository().delete(id);
-	// }
-	//
-	// public void delete(T t) throws Exception {
-	// _crudRepository().delete(t);
-	// }
+	public void save(T t) throws Exception {
+		_crudRepository().save(t);
+	}
+
+	public void save(Iterable<T> ts) throws Exception {
+		_crudRepository().save(ts);
+	}
+
+	public void delete(ID id) throws Exception {
+		_crudRepository().delete(id);
+	}
+
+	public void delete(T t) throws Exception {
+		_crudRepository().delete(t);
+	}
 
 	public List<T> findAll() {
 		return Lists.newArrayList(_crudRepository().findAll());

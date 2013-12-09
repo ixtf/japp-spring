@@ -35,4 +35,9 @@ public class CrmFieldServiceImpl extends
 	public String getNewPath() {
 		return "/admin/crmField";
 	}
+
+	@Override
+	public void save(Iterable<CrmField> crmFileds) {
+		crmFieldRepository.save(crmFileds);
+	}
 }
