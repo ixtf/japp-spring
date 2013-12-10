@@ -1,8 +1,26 @@
 package com.hengyi.japp.crm;
 
+import javax.servlet.ServletContext;
+
+import org.ocpsoft.rewrite.config.ConfigurationBuilder;
+import org.ocpsoft.rewrite.servlet.config.rule.Join;
+
 import com.hengyi.japp.common.CommonUrlConfigurationProvider;
 
 public class UrlConfigurationProvider extends CommonUrlConfigurationProvider {
+
+	@Override
+	protected ConfigurationBuilder getConfigurationBuilder(
+			ServletContext context) {
+		ConfigurationBuilder builder = super.getConfigurationBuilder(context);
+		builder.addRule(
+				Join.path("/corporationType").to(
+						"/faces/corporationType/update.jsf")).addRule(
+				Join.path("/corporationTypes").to(
+						"/faces/corporationType/list.jsf"));
+		return builder;
+	}
+
 	// @Override
 	// protected ConfigurationBuilder getConfigurationBuilder(
 	// ServletContext context) {

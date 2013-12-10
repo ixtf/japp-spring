@@ -18,7 +18,7 @@ import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.CrmField;
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.CorporationType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.customer.Customer;
@@ -48,7 +48,7 @@ public class CustomerServiceImpl extends CrmServiceImpl<Customer> implements
     @Override
     public void save(Customer crm,
 	    Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-	    Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
+	    Iterable<CorporationType> crmTypes, Iterable<Certificate> certificates,
 	    Communicatee communicatee, Iterable<Communicatee> communicatees,
 	    Iterable<Associate> associates) throws Exception {
 	super.save(crm, indicatorMap, crmTypes, certificates, communicatee,

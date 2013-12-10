@@ -1,11 +1,10 @@
-package com.hengyi.japp.crm.event.init;
+package com.hengyi.japp.crm.application;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -24,51 +23,49 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.hengyi.japp.crm.data.CrmFieldType;
 import com.hengyi.japp.crm.domain.Certificate;
+import com.hengyi.japp.crm.domain.CorporationType;
 import com.hengyi.japp.crm.domain.CrmField;
-import com.hengyi.japp.crm.domain.CrmType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.customer.CustomerIndicator;
+import com.hengyi.japp.crm.domain.repository.CertificateRepository;
+import com.hengyi.japp.crm.domain.repository.CorporationTypeRepository;
+import com.hengyi.japp.crm.domain.repository.CrmFieldRepository;
+import com.hengyi.japp.crm.domain.repository.CrmRepository;
 import com.hengyi.japp.crm.domain.repository.IndicatorRepository;
+import com.hengyi.japp.crm.domain.repository.IndicatorValueRepository;
 import com.hengyi.japp.crm.domain.storage.StorageIndicator;
-import com.hengyi.japp.crm.service.CertificateService;
-import com.hengyi.japp.crm.service.CrmFieldService;
-import com.hengyi.japp.crm.service.CrmTypeService;
-import com.hengyi.japp.crm.service.IndicatorValueService;
-import com.hengyi.japp.crm.service.customer.CustomerIndicatorService;
-import com.hengyi.japp.crm.service.storage.StorageIndicatorService;
+import com.hengyi.japp.crm.event.AppInitEvent;
 
 @Named
 @Singleton
 @Transactional
-public class AppInitListener implements ApplicationListener<AppInitEvent> {
+public class AppInitEventListener implements ApplicationListener<AppInitEvent> {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	@Resource
+	@Inject
 	private IndicatorRepository indicatorRepository;
 	@Inject
-	private CustomerIndicatorService customerIndicatorService;
+	private CrmRepository crmRepository;
 	@Inject
-	private StorageIndicatorService storageIndicatorService;
+	private IndicatorValueRepository indicatorValueRepository;
 	@Inject
-	private IndicatorValueService indicatorValueService;
+	private CorporationTypeRepository corporationTypeRepository;
 	@Inject
-	private CrmTypeService crmTypeService;
+	private CertificateRepository certificateRepository;
 	@Inject
-	private CertificateService certificateService;
-	@Inject
-	private CrmFieldService crmFieldService;
+	private CrmFieldRepository crmFieldRepository;
 
 	@Override
 	public void onApplicationEvent(AppInitEvent event) {
 		if (indicatorRepository.count() > 0)
 			return;
 		try {
-			log.info("=============开始初始化=============");
+			System.out.println("=============初始化开始=============");
 			initIndicator();
 			initCrmType();
 			initCertificate();
-			log.info("=============开始完成=============");
+			System.out.println("=============初始化完成=============");
 		} catch (Exception e) {
 			log.error("=============初始化失败=============", e);
 		}
@@ -106,7 +103,7 @@ public class AppInitListener implements ApplicationListener<AppInitEvent> {
 		crmFileds.add(new CrmField("crmType"));
 		crmFileds.add(new CrmField(CrmFieldType.CUSTOMER, "mainBusiness"));
 		crmFileds.add(new CrmField(CrmFieldType.CUSTOMER, "coBusiness"));
-		crmFieldService.save(crmFileds);
+		crmFieldRepository.save(crmFileds);
 		indicatorRepository.save(indicators);
 	}
 
@@ -135,7 +132,7 @@ public class AppInitListener implements ApplicationListener<AppInitEvent> {
 			IndicatorValue indicatorValue = new IndicatorValue();
 			indicatorValue.setName(indicatorValueName);
 			indicatorValue.setNote(indicatorValueNote);
-			indicatorValueService.save(indicatorValue);
+			indicatorValueRepository.save(indicatorValue);
 
 			IndicatorValueScore indicatorValueScore = new IndicatorValueScore();
 			indicatorValueScore.setEnd(indicatorValue);
@@ -152,25 +149,21 @@ public class AppInitListener implements ApplicationListener<AppInitEvent> {
 				indicatorValueScore.setStart(indicator);
 				indicatorValueScores.add(indicatorValueScore);
 			}
-			if (indicator instanceof CustomerIndicator)
-				customerIndicatorService.save((CustomerIndicator) indicator,
-						indicatorValueScores);
-			else
-				storageIndicatorService.save((StorageIndicator) indicator,
-						indicatorValueScores);
+			indicator.setIndicatorValueScores(indicatorValueScores);
+			indicatorRepository.save(indicator);
 		}
 	}
 
 	private void initCrmType() throws Exception {
-		List<CrmType> list = Lists.newArrayList();
-		list.add(new CrmType("国有企业"));
-		list.add(new CrmType("集体企业"));
-		list.add(new CrmType("有限责任公司"));
-		list.add(new CrmType("股份有限公司"));
-		list.add(new CrmType("私营企业"));
-		list.add(new CrmType("中外合资企业"));
-		list.add(new CrmType("外商投资企业"));
-		crmTypeService.save(list);
+		List<CorporationType> list = Lists.newArrayList();
+		list.add(new CorporationType("国有企业"));
+		list.add(new CorporationType("集体企业"));
+		list.add(new CorporationType("有限责任公司"));
+		list.add(new CorporationType("股份有限公司"));
+		list.add(new CorporationType("私营企业"));
+		list.add(new CorporationType("中外合资企业"));
+		list.add(new CorporationType("外商投资企业"));
+		corporationTypeRepository.save(list);
 	}
 
 	private void initCertificate() throws Exception {
@@ -181,6 +174,6 @@ public class AppInitListener implements ApplicationListener<AppInitEvent> {
 		list.add(new Certificate("一般纳税人资格证"));
 		list.add(new Certificate("商业登记证"));
 		list.add(new Certificate("离岸账户证明"));
-		certificateService.save(list);
+		certificateRepository.save(list);
 	}
 }

@@ -9,25 +9,25 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import com.google.common.collect.Lists;
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.CorporationType;
 
 @Named
 @Scope("request")
 public class CrmTypesController extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
-	private List<CrmType> crmTypes;
-	private CrmType crmType;
+	private List<CorporationType> crmTypes;
+	private CorporationType crmType;
 
-	public List<CrmType> getCrmTypes() {
+	public List<CorporationType> getCrmTypes() {
 		return crmTypes;
 	}
 
-	public CrmType getCrmType() {
+	public CorporationType getCrmType() {
 		return crmType;
 	}
 
-	public void setCrmType(CrmType crmType) {
+	public void setCrmType(CorporationType crmType) {
 		this.crmType = crmType;
 	}
 

@@ -19,16 +19,17 @@ import com.hengyi.japp.crm.Constant;
 import com.hengyi.japp.crm.MessageUtil;
 import com.hengyi.japp.crm.data.CrmFieldType;
 import com.hengyi.japp.crm.domain.Certificate;
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.CorporationType;
 import com.hengyi.japp.crm.domain.Operator;
-import com.hengyi.japp.crm.event.EventPublisher;
-import com.hengyi.japp.crm.event.SyncEventPublisher;
+import com.hengyi.japp.crm.event.publisher.EventPublisher;
+import com.hengyi.japp.crm.event.publisher.SyncEventPublisher;
 import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CertificateService;
 import com.hengyi.japp.crm.service.CommunicateeService;
 import com.hengyi.japp.crm.service.CrmTypeService;
 import com.hengyi.japp.crm.service.IndicatorValueService;
 import com.hengyi.japp.crm.service.OperatorService;
+import com.hengyi.japp.crm.service.QueryService;
 
 public abstract class AbstractController {
 	protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -38,6 +39,8 @@ public abstract class AbstractController {
 	protected Mapper dozer;
 	@Inject
 	protected CacheService cacheService;
+	@Inject
+	protected QueryService queryService;
 	@Inject
 	protected EventPublisher eventPublisher;
 	@Inject
@@ -53,7 +56,7 @@ public abstract class AbstractController {
 	@Inject
 	protected IndicatorValueService indicatorValueService;
 
-	public List<CrmType> getAllCrmTypes() {
+	public List<CorporationType> getAllCrmTypes() {
 		return Lists.newArrayList(crmTypeService.findAll());
 	}
 
@@ -123,6 +126,10 @@ public abstract class AbstractController {
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, MessageUtil
 						.operationFailure(), e.getLocalizedMessage()));
+	}
+
+	public Long getCurrentOperatorNodeId() throws Exception {
+		return cacheService.getCurrentOperator().getNodeId();
 	}
 
 	public Operator getCurrentOperator() throws Exception {

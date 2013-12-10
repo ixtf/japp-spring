@@ -15,7 +15,7 @@ import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.Crm;
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.CorporationType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.service.CrmService;
@@ -26,7 +26,7 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
     private T crm;
     @NotNull
     @Size(min = 1)
-    private List<CrmType> crmTypes;
+    private List<CorporationType> crmTypes;
     @NotNull
     @Size(min = 1)
     private List<Certificate> certificates;
@@ -102,7 +102,7 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
 	return crm;
     }
 
-    public List<CrmType> getCrmTypes() {
+    public List<CorporationType> getCrmTypes() {
 	if (crmTypes == null)
 	    crmTypes = Lists.newArrayList(getCrm().getCrmTypes());
 	return crmTypes;
@@ -217,7 +217,7 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
 	this.nodeId = nodeId;
     }
 
-    public void setCrmTypes(List<CrmType> crmTypes) {
+    public void setCrmTypes(List<CorporationType> crmTypes) {
 	this.crmTypes = crmTypes;
     }
 

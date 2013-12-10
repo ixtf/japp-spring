@@ -10,7 +10,7 @@ import com.hengyi.japp.crm.domain.Communicatee;
 
 @Named
 @Scope("request")
-public class CommunicateeController extends AbstractController implements
+public class CommunicateeManager extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
 	private Long nodeId;

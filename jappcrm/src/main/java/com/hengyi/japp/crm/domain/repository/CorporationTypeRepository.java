@@ -4,9 +4,9 @@ import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.neo4j.repository.NamedIndexRepository;
 import org.springframework.data.neo4j.repository.RelationshipOperationsRepository;
 
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.CorporationType;
 
-public interface CrmTypeRepository extends GraphRepository<CrmType>,
-		NamedIndexRepository<CrmType>,
-		RelationshipOperationsRepository<CrmType> {
+public interface CorporationTypeRepository extends GraphRepository<CorporationType>,
+		NamedIndexRepository<CorporationType>,
+		RelationshipOperationsRepository<CorporationType> {
 }

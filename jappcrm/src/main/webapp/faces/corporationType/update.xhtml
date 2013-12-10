@@ -10,17 +10,17 @@
 			<p:growl id="message" showDetail="true" sticky="true" />
 			<h1 class="title ui-widget-header ui-corner-all">
 				<h:outputText value="#{msg['new']}-"
-					rendered="#{empty crmTypeController.crmType.nodeId}" />
+					rendered="#{empty corpTypeManager.crmType.nodeId}" />
 				<h:outputText value="#{msg['edit']}-"
-					rendered="#{not empty crmTypeController.crmType.nodeId}" />
+					rendered="#{not empty corpTypeManager.crmType.nodeId}" />
 				<h:outputText value="#{msg['crmType']}" />
 			</h1>
 			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
 				<h:outputLabel for="name" value="#{msg['name']}" />
-				<h:inputText id="name" value="#{crmTypeController.crmType.name}" />
+				<h:inputText id="name" value="#{corpTypeManager.crmType.name}" />
 				<p:message for="name" />
 			</h:panelGrid>
-			<p:commandButton action="#{crmTypeController.save}" update=":form"
+			<p:commandButton action="#{corpTypeManager.save}" update=":form"
 				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
 		</h:form>
 	</ui:define>

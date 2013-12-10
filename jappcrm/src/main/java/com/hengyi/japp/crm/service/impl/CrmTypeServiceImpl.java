@@ -7,17 +7,17 @@ import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hengyi.japp.common.service.AbstractCommonCrudNeo4jService;
-import com.hengyi.japp.crm.domain.CrmType;
-import com.hengyi.japp.crm.domain.repository.CrmTypeRepository;
+import com.hengyi.japp.crm.domain.CorporationType;
+import com.hengyi.japp.crm.domain.repository.CorporationTypeRepository;
 import com.hengyi.japp.crm.service.CrmTypeService;
 
 @Named("crmTypeService")
 @Transactional
 @SuppressWarnings("unchecked")
-public class CrmTypeServiceImpl extends AbstractCommonCrudNeo4jService<CrmType>
+public class CrmTypeServiceImpl extends AbstractCommonCrudNeo4jService<CorporationType>
 		implements CrmTypeService {
 	@Resource
-	private CrmTypeRepository crmTypeRepository;
+	private CorporationTypeRepository crmTypeRepository;
 
 	@Override
 	public String getNewPath() {
@@ -25,22 +25,22 @@ public class CrmTypeServiceImpl extends AbstractCommonCrudNeo4jService<CrmType>
 	}
 
 	@Override
-	public <RP extends Repository<CrmType, Long>> RP getRepository() {
+	public <RP extends Repository<CorporationType, Long>> RP getRepository() {
 		return (RP) crmTypeRepository;
 	}
 
 	@Override
-	public void save(Iterable<CrmType> crmTypes) {
+	public void save(Iterable<CorporationType> crmTypes) {
 		crmTypeRepository.save(crmTypes);
 	}
 
 	@Override
-	public void save(CrmType crmType) {
+	public void save(CorporationType crmType) {
 		crmTypeRepository.save(crmType);
 	}
 
 	@Override
-	public void delete(CrmType crmType) {
+	public void delete(CorporationType crmType) {
 		crmTypeRepository.delete(crmType);
 	}
 }

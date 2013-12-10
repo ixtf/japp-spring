@@ -6,8 +6,8 @@ import javax.inject.Named;
 import org.springframework.context.ApplicationListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hengyi.japp.crm.event.SyncEventPublisher;
 import com.hengyi.japp.crm.event.indicator.IndicatorUpdateEvent;
+import com.hengyi.japp.crm.event.publisher.SyncEventPublisher;
 
 @Named
 @Transactional

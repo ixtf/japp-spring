@@ -21,14 +21,14 @@ import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.CrmField;
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.CorporationType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.repository.CrmFieldRepository;
 import com.hengyi.japp.crm.domain.repository.CrmRepository;
-import com.hengyi.japp.crm.event.EventPublisher;
-import com.hengyi.japp.crm.event.SyncEventPublisher;
+import com.hengyi.japp.crm.event.publisher.EventPublisher;
+import com.hengyi.japp.crm.event.publisher.SyncEventPublisher;
 import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CrmService;
 
@@ -53,7 +53,7 @@ public abstract class CrmServiceImpl<CRM extends Crm> extends
 
     public void save(CRM crm,
 	    Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-	    Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
+	    Iterable<CorporationType> crmTypes, Iterable<Certificate> certificates,
 	    Communicatee communicatee, Iterable<Communicatee> communicatees,
 	    Iterable<Associate> associates) throws Exception {
 	checkSave(crm, indicatorMap, crmTypes, certificates, communicatee,
@@ -76,7 +76,7 @@ public abstract class CrmServiceImpl<CRM extends Crm> extends
 
     private void checkSave(CRM crm,
 	    Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-	    Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
+	    Iterable<CorporationType> crmTypes, Iterable<Certificate> certificates,
 	    Communicatee communicatee, Iterable<Communicatee> communicatees,
 	    Iterable<Associate> associates) throws Exception {
 	// if (communicatee == null)

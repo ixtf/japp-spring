@@ -10,7 +10,7 @@ import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.CrmField;
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.CorporationType;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 
@@ -19,7 +19,7 @@ public interface CrmService<CRM extends Crm> extends
     CRM newCrm();
 
     void save(CRM crm, Map<Indicator, List<IndicatorValueScore>> indicatorMap,
-	    Iterable<CrmType> crmTypes, Iterable<Certificate> certificates,
+	    Iterable<CorporationType> crmTypes, Iterable<Certificate> certificates,
 	    Communicatee communicatee, Iterable<Communicatee> communicatees,
 	    Iterable<Associate> associates) throws Exception;
 

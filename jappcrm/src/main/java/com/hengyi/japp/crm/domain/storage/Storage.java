@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
+import com.hengyi.japp.crm.data.CrmType;
 import com.hengyi.japp.crm.domain.Crm;
 
 @NodeEntity
@@ -16,6 +17,11 @@ public class Storage extends Crm {
 	@NotNull
 	@Min(0)
 	private BigDecimal capacity;
+
+	@Override
+	public CrmType getCrmType() {
+		return CrmType.STORAGE;
+	}
 
 	public BigDecimal getCapacity() {
 		return capacity;

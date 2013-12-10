@@ -9,7 +9,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.jsf.FacesContextUtils;
 
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.CorporationType;
 
 public class CrmTypeConverter implements Converter {
 
@@ -19,7 +19,7 @@ public class CrmTypeConverter implements Converter {
 		WebApplicationContext webContext = FacesContextUtils
 				.getWebApplicationContext(facesContext);
 		Neo4jOperations template = webContext.getBean(Neo4jOperations.class);
-		return template.findOne(Long.valueOf(value), CrmType.class);
+		return template.findOne(Long.valueOf(value), CorporationType.class);
 	}
 
 	@Override

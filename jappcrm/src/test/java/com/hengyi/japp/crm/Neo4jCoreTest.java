@@ -1,5 +1,6 @@
-package com.hengyi.japp.service;
+package com.hengyi.japp.crm;
 
+import org.junit.Test;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
@@ -19,5 +20,10 @@ public class Neo4jCoreTest {
 		log.debug("{}", index.query("name", "国*").getSingle());
 		log.debug("{}", gds.index().existsForNodes("CustomerReport"));
 		// index = gds.index().forNodes("Report");
+	}
+
+	@Test
+	public void test() {
+
 	}
 }

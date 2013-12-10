@@ -6,7 +6,7 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.CorporationType;
 
 @Named
 @Scope("request")
@@ -14,7 +14,7 @@ public class CrmFieldController extends AbstractController implements
 	Serializable {
     private static final long serialVersionUID = -8123684444056593587L;
     private Long nodeId;
-    private CrmType crmType;
+    private CorporationType crmType;
 
     public void save() {
 	try {
@@ -26,11 +26,11 @@ public class CrmFieldController extends AbstractController implements
 	}
     }
 
-    public CrmType getCrmType() {
+    public CorporationType getCrmType() {
 	if (crmType != null)
 	    return crmType;
 	if (nodeId == null)
-	    crmType = new CrmType();
+	    crmType = new CorporationType();
 	else
 	    crmType = crmTypeService.findOne(nodeId);
 	return crmType;
@@ -44,7 +44,7 @@ public class CrmFieldController extends AbstractController implements
 	this.nodeId = nodeId;
     }
 
-    public void setCrmType(CrmType crmType) {
+    public void setCrmType(CorporationType crmType) {
 	this.crmType = crmType;
     }
 }

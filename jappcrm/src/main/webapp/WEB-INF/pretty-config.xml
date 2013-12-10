@@ -9,6 +9,11 @@
 		<action>#{authController.logout}</action>
 	</url-mapping>
 
+	<url-mapping>
+		<pattern value="/corporationTypes/#{corporationTypeManager.nodeId}/" />
+		<view-id value="/faces/corporationType/update.jsf" />
+	</url-mapping>
+
 	<url-mapping id="crmReport">
 		<pattern
 			value="/crms/#{crmReportController.crmNodeId}/reports/#{crmReportController.reportNodeId}" />

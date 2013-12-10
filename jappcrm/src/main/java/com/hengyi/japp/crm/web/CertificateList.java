@@ -13,7 +13,7 @@ import com.hengyi.japp.crm.domain.Certificate;
 
 @Named
 @Scope("request")
-public class CertificatesController extends AbstractController implements
+public class CertificateList extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
 	private List<Certificate> certificates;

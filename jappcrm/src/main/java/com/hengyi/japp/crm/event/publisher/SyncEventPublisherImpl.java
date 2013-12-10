@@ -1,11 +1,11 @@
-package com.hengyi.japp.crm.event;
+package com.hengyi.japp.crm.event.publisher;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EventPublisherImpl implements EventPublisher {
+public class SyncEventPublisherImpl implements SyncEventPublisher {
 	private ApplicationContext publisher;
 
 	@Override

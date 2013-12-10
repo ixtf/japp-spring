@@ -1,4 +1,4 @@
-package com.hengyi.japp.crm.event.init;
+package com.hengyi.japp.crm.event;
 
 import org.springframework.context.ApplicationEvent;
 
