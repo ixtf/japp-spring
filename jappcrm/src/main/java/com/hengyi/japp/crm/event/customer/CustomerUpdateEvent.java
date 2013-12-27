@@ -8,10 +8,10 @@ public class CustomerUpdateEvent extends ApplicationEvent {
 	private static final long serialVersionUID = -3942193835269289143L;
 
 	public CustomerUpdateEvent(CustomerDTO customer) {
-		super(customer.getNodeId());
+		super(customer);
 	}
 
-	public CustomerUpdateEvent(Long nodeId) {
-		super(nodeId);
+	public CustomerDTO getCustomer() {
+		return (CustomerDTO) getSource();
 	}
 }
