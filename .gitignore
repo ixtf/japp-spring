@@ -1,5 +1,6 @@
 *~
 *.log
+*.db
 
 # 忽略 target/ 目录下的所有文件
 target/
@@ -10,8 +11,12 @@ errorlog/
 
 # eclipse 产生文件
 .project
+.classpath
 .settings/
 .metadata/
+.*
+.*/
 
 # Sap RFC
 *.trc
+
