@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class CorporationTypeDTO extends AbstractDTO {
+	private static final long serialVersionUID = 1L;
 	@NotBlank
 	private String name;
 

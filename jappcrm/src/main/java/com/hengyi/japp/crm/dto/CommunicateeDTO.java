@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class CommunicateeDTO extends AbstractDTO {
+	private static final long serialVersionUID = 1L;
 	@NotBlank
 	private String name;
 	private String phone;

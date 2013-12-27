@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.hengyi.japp.crm.data.CrmType;
 
 public class CustomerDTO extends CrmDTO {
+	private static final long serialVersionUID = 1L;
 	@NotBlank
 	private String mainBusiness;
 	@NotBlank

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.google.common.base.Objects;
 
 public class AbstractDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
 	protected Long nodeId;
 
 	public Long getNodeId() {

@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.hengyi.japp.crm.data.CrmType;
 
 public abstract class CrmDTO extends AbstractDTO {
+	private static final long serialVersionUID = 1L;
 	@NotBlank
 	protected String name;
 	@NotBlank
@@ -34,8 +35,8 @@ public abstract class CrmDTO extends AbstractDTO {
 	@NotBlank
 	protected String addressName;
 	protected String zipCode;
-//	protected CommunicateeDTO communicatee;
-//	protected List<CommunicateeDTO> communicatees;
+	// protected CommunicateeDTO communicatee;
+	// protected List<CommunicateeDTO> communicatees;
 	@NotNull
 	@Min(0)
 	protected BigDecimal saleIncome;

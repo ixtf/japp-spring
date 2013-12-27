@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.hengyi.japp.common.CommonConstant;
 
 public class OperatorDTO extends AbstractDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@NotBlank
 	private String uuid;
 	@NotBlank
