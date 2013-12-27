@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:form id="form">
+		<p:growl id="message" showDetail="true" sticky="true" />
+		<ui:include src="/faces/updateTitle.xhtml">
+			<ui:param name="controller" value="#{reportController}" />
+			<ui:param name="title" value="#{crmName}#{msg['report']}" />
+		</ui:include>
+		<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+			<h:outputLabel for="name" value="#{msg['name']}" />
+			<h:inputText id="name" value="#{reportController.report.name}" />
+			<p:message for="name" />
+		</h:panelGrid>
+		<p:tabView id="tabView" dynamic="true">
+			<p:tab title="#{msg['indicator']}">
+				<ui:include src="updateIndicator.xhtml" />
+			</p:tab>
+			<p:tab title="#{msg['crmField']}">
+				<ui:include src="updateCrmField.xhtml" />
+			</p:tab>
+		</p:tabView>
+		<p:commandButton action="#{reportController.save}" update=":form"
+			value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
+	</h:form>
+</ui:composition>

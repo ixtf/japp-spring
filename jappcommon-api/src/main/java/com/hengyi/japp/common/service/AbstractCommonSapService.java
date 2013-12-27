@@ -34,15 +34,15 @@ public abstract class AbstractCommonSapService implements CommonSapService {
 			System.out.println("========注册SAP DESTINATION========");
 			Environment.registerDestinationDataProvider(dataProvider);
 
-			System.out.println("========注册SAP SERVER========");
-			Environment.registerServerDataProvider(dataProvider);
-
-			System.out.println("========启动SAP SERVER========");
-			for (DestinationType type : DestinationType.values()) {
-				JCoServer server = getServer(type);
-				server.setCallHandlerFactory(new FunctionHandlerFactory());
-				server.start();
-			}
+			// System.out.println("========注册SAP SERVER========");
+			// Environment.registerServerDataProvider(dataProvider);
+			//
+			// System.out.println("========启动SAP SERVER========");
+			// for (DestinationType type : DestinationType.values()) {
+			// JCoServer server = getServer(type);
+			// server.setCallHandlerFactory(new FunctionHandlerFactory());
+			// server.start();
+			// }
 		} else {
 			System.out.println(this.getClass().getName());
 			System.out.println("========已经注册SAP DATAPROVIDER========");

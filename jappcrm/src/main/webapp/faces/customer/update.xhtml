@@ -6,16 +6,11 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<h:form id="form">
-			<p:growl id="message" showDetail="true" sticky="true" />
-			<ui:include src="/faces/updateTitle.xhtml">
-				<ui:param name="controller" value="#{customerController}" />
-				<ui:param name="title" value="#{msg['customer']}" />
-			</ui:include>
-			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
-				<ui:include src="/faces/crm/update.xhtml">
-					<ui:param name="crmController" value="#{customerController}" />
-				</ui:include>
+		<ui:decorate template="/faces/crm/update.xhtml">
+			<ui:param name="crmController" value="#{customerController}" />
+			<ui:param name="crmsController" value="#{customersController}" />
+			<ui:param name="crmName" value="#{msg['customer']}" />
+			<ui:define name="extraProperties">
 				<h:outputLabel for="mainBusiness" value="#{msg['mainBusiness']}" />
 				<h:inputText id="mainBusiness"
 					value="#{customerController.crm.mainBusiness}" />
@@ -25,27 +20,7 @@
 				<h:inputText id="coBusiness"
 					value="#{customerController.crm.coBusiness}" />
 				<p:message for="coBusiness" />
-			</h:panelGrid>
-			<p:tabView id="tabView" dynamic="true">
-				<p:tab title="#{msg['customer']}#{msg['indicator']}">
-					<ui:include src="/faces/crm/updateIndicator.xhtml">
-						<ui:param name="crmController" value="#{customerController}" />
-					</ui:include>
-				</p:tab>
-				<p:tab title="#{msg['associate']}#{msg['customer']}">
-					<ui:include src="/faces/crm/updateAssociate.xhtml">
-						<ui:param name="crmsController" value="#{customersController}" />
-						<ui:param name="crmName" value="#{msg['customer']}" />
-					</ui:include>
-				</p:tab>
-				<p:tab title="#{msg['communicatee']}">
-					<ui:include src="/faces/crm/updateCommunicatee.xhtml">
-						<ui:param name="crmController" value="#{customerController}" />
-					</ui:include>
-				</p:tab>
-			</p:tabView>
-			<p:commandButton action="#{customerController.save}" update=":form"
-				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
-		</h:form>
+			</ui:define>
+		</ui:decorate>
 	</ui:define>
 </ui:composition>

@@ -8,12 +8,10 @@
 		<h:form id="form">
 			<p:growl id="message" showDetail="true" sticky="true" />
 			<p:tabView id="tabView" dynamic="true" orientation="bottom">
-				<p:tab title="#{msg['indicator']}"
-					rendered="#{not empty crmReportController.crmReport.crmReportIndicators}">
+				<p:tab title="#{msg['indicator']}">
 					<ui:include src="crmReportIndicator.xhtml" />
 				</p:tab>
-				<p:tab title="#{msg['crmField']}"
-					rendered="#{not empty crmReportController.crmReport.crmReportFields}">
+				<p:tab title="#{msg['crmField']}">
 					<ui:include src="crmReportField.xhtml" />
 				</p:tab>
 			</p:tabView>

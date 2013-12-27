@@ -39,18 +39,30 @@ public class SapVbapDTO implements ValueObject<SapVbapDTO> {
 	private String lgort;
 	private String vstel;
 
+	public String getVbeln() {
+		return pk == null ? null : pk.getVbeln();
+	}
+
+	public void setVbeln(String vbeln) {
+		pk = pk == null ? new VbapPK() : pk;
+		pk.setVbeln(vbeln);
+	}
+
+	public String getPosnr() {
+		return pk == null ? null : pk.getPosnr();
+	}
+
+	public void setPosnr(String posnr) {
+		pk = pk == null ? new VbapPK() : pk;
+		pk.setPosnr(posnr);
+	}
+
 	public VbapPK getPk() {
 		return pk;
 	}
 
 	public void setPk(VbapPK pk) {
 		this.pk = pk;
-	}
-
-	public String getPosnr() {
-		if (getPk() != null)
-			return getPk().getPosnr();
-		return null;
 	}
 
 	public String getMatnr() {

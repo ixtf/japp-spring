@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
+			<ui:include src="/faces/updateTitle.xhtml">
+				<ui:param name="controller" value="#{indicatorController}" />
+				<ui:param name="title" value="#{crmName}#{msg['indicator']}" />
+			</ui:include>
+			<h:panelGrid columns="3" cellpadding="5">
+				<h:outputLabel for="name" value="#{msg['name']}" />
+				<h:inputText id="name"
+					readonly="#{not indicatorController.hasIndicatorValues}"
+					value="#{indicatorController.indicator.name}" />
+				<p:message for="name" />
+
+				<h:outputLabel for="percent" value="#{msg['indicatorPercent']}" />
+				<pe:inputNumber id="percent"
+					value="#{indicatorController.indicator.percent}" maxValue="1" />
+				<p:message for="percent" />
+			</h:panelGrid>
+			<h:panelGrid columns="3" cellpadding="5"
+				rendered="#{cacheService.admin and (not indicatorController.hasIndicatorValues)}">
+				<h:outputLabel for="crmField" value="#{msg['crmField']}" />
+				<p:selectOneMenu id="crmField"
+					value="#{indicatorController.indicator.crmField}">
+					<f:selectItems var="_crmField"
+						value="#{crmController.allCrmFields}"
+						itemLabel="#{msg[_crmField.displayName]}" />
+				</p:selectOneMenu>
+				<p:message for="crmField" />
+			</h:panelGrid>
+			<p:selectOneMenu id="bug" rendered="false" />
+			<p:dataTable id="tableIndicatorValueScores"
+				rendered="#{indicatorController.hasIndicatorValues}"
+				var="_indicatorValueScore"
+				value="#{indicatorController.indicatorValueScores}" editable="true"
+				editMode="cell">
+				<p:ajax event="cellEdit" update=":form:message" />
+				<f:facet name="header">
+					<h:outputText value="#{msg['indicatorValue']}" />
+				</f:facet>
+
+				<p:column headerText="#{msg['operation']}" style="width:4%">
+					<p:commandLink process="@this"
+						update=":form:tableIndicatorValueScores,:form:message"
+						action="#{indicatorController.removeIndicatorValueScore}"
+						icon="ui-icon-minus">
+						<h:outputText value="#{msg['delete']}" />
+						<f:setPropertyActionListener value="#{_indicatorValueScore}"
+							target="#{indicatorController.selectedIndicatorValueScore}" />
+					</p:commandLink>
+				</p:column>
+
+				<p:column headerText="#{msg['name']}"
+					sortBy="#{_indicatorValueScore.end.name}">
+					<h:outputText value="#{_indicatorValueScore.end.name}" />
+				</p:column>
+
+				<p:column headerText="#{msg['note']}">
+					<h:outputText value="#{_indicatorValueScore.end.note}" />
+				</p:column>
+
+				<p:column headerText="#{msg['indicatorScore']}"
+					sortBy="#{_indicatorValueScore.score}">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{_indicatorValueScore.score}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{_indicatorValueScore.score}"
+								label="#{msg['indicatorScore']}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+			</p:dataTable>
+
+			<p:panel rendered="#{indicatorController.hasIndicatorValues}"
+				header="#{msg['select']}#{msg['indicatorValue']}" toggleable="true">
+				<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+					<h:outputLabel for="indicatorValue-nameSearch"
+						value="#{msg['name']}" />
+					<h:inputText id="indicatorValue-nameSearch"
+						value="#{indicatorValuesController.nameSearch}" />
+					<p:commandButton value="#{msg['search']}" process="@this,@parent"
+						update="tableSelectedIndicatorValues"
+						action="#{indicatorValuesController.search}" icon="ui-icon-search" />
+				</h:panelGrid>
+
+				<p:dataTable id="tableSelectedIndicatorValues" var="_indicatorValue"
+					value="#{indicatorValuesController.indicatorValues}" rows="5"
+					paginator="true">
+					<p:column headerText="#{msg['operation']}" style="width:4%">
+						<p:commandLink process="@this"
+							update=":form:tableIndicatorValueScores"
+							action="#{indicatorController.addIndicatorValueScore}"
+							icon="ui-icon-plus">
+							<h:outputText value="#{msg['add']}" />
+							<f:setPropertyActionListener value="#{_indicatorValue}"
+								target="#{indicatorController.selectedIndicatorValueScore.end}" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="#{msg['name']}">
+						<h:outputText value="#{_indicatorValue.name}" />
+					</p:column>
+
+					<p:column headerText="#{msg['note']}">
+						<h:outputText value="#{_indicatorValue.note}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			<p:commandButton action="#{indicatorController.save}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

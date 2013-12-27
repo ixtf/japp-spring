@@ -6,32 +6,12 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<h:form id="form">
-			<p:growl id="message" showDetail="true" sticky="true" />
-			<h1 class="title ui-widget-header ui-corner-all">
-				<h:outputText value="#{msg['new']}-"
-					rendered="#{empty customerReportController.report.nodeId}" />
-				<h:outputText value="#{msg['edit']}-"
-					rendered="#{not empty customerReportController.report.nodeId}" />
-				<h:outputText value="#{msg['customer']}#{msg['report']}" />
-			</h1>
-			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
-				<h:outputLabel for="name" value="#{msg['name']}" />
-				<h:inputText id="name"
-					value="#{customerReportController.report.name}" />
-				<p:message for="name" />
-			</h:panelGrid>
-			<p:tabView id="tabView" dynamic="true">
-				<p:tab title="#{msg['indicator']}">
-					<ui:include src="updateFragment/updateIndicator.xhtml" />
-				</p:tab>
-				<p:tab title="#{msg['crmField']}">
-					<ui:include src="updateFragment/updateCrmField.xhtml" />
-				</p:tab>
-			</p:tabView>
-			<p:commandButton action="#{customerReportController.save}"
-				update=":form" value="#{msg['operation.submit']}" ajax="false"
-				styleClass="ui-priority-primary" />
-		</h:form>
+		<ui:decorate template="/faces/crm/report/update.xhtml">
+			<!-- <ui:param name="crmController" value="#{customerController}" /> -->
+			<ui:param name="indicatorsController"
+				value="#{customerIndicatorsController}" />
+			<ui:param name="reportController" value="#{customerReportController}" />
+			<ui:param name="crmName" value="#{msg['customer']}" />
+		</ui:decorate>
 	</ui:define>
 </ui:composition>

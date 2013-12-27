@@ -32,6 +32,11 @@
 			<h:outputLabel for="sortBy" value="#{msg['sortBy']}" />
 			<h:inputText id="sortBy" value="#{controller.report.sortBy}" />
 			<p:message for="sortBy" />
+
+			<h:outputLabel for="newWindow" value="#{msg['newWindow']}" />
+			<p:selectBooleanCheckbox id="newWindow"
+				value="#{controller.report.newWindow}" />
+			<p:message for="newWindow" />
 		</h:panelGrid>
 
 		<p:commandButton value="#{msg['add']}" process="@this"

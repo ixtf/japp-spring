@@ -18,79 +18,92 @@ import com.hengyi.japp.crm.data.CrmFieldType;
 @NodeEntity
 @SuppressWarnings("unchecked")
 public class CrmField extends AbstractNeo4j {
-    private static final long serialVersionUID = 5805479477891553551L;
-    private static Logger log = LoggerFactory.getLogger(CrmField.class);
-    @NotNull
-    @Indexed
-    private CrmFieldType crmFieldType;
-    @NotBlank
-    @Indexed(unique = true)
-    private String fieldName;
-    @NotBlank
-    private String displayName;
+	private static final long serialVersionUID = 5805479477891553551L;
+	private static Logger log = LoggerFactory.getLogger(CrmField.class);
+	@NotNull
+	@Indexed
+	private CrmFieldType crmFieldType;
+	@NotBlank
+	@Indexed(unique = true)
+	private String fieldName;
+	@NotBlank
+	private String displayName;
 
-    public CrmField() {
-	super();
-    }
-
-    public CrmField(CrmFieldType crmFieldType, String fieldName,
-	    String displayName) {
-	super();
-	this.crmFieldType = crmFieldType;
-	this.fieldName = fieldName;
-	this.displayName = displayName;
-    }
-
-    public CrmField(String fieldName, String displayName) {
-	this(CrmFieldType.CRM, fieldName, displayName);
-    }
-
-    public CrmField(String fieldName) {
-	this(fieldName, fieldName);
-    }
-
-    public CrmField(CrmFieldType crmFieldType, String fieldName) {
-	this(crmFieldType, fieldName, fieldName);
-    }
-
-    public String getName() {
-	return getName(Locale.CHINA);
-    }
-
-    public String getName(Locale locale) {
-	return MessageUtil.get(getDisplayName(), locale);
-    }
-
-    public <T> T getValue(Crm crm) {
-	try {
-	    return (T) PropertyUtils.getProperty(crm, getFieldName());
-	} catch (Exception e) {
-	    log.error(crm + "-" + getFieldName(), e);
-	    return null;
+	public CrmField() {
+		super();
 	}
-    }
 
-    public CrmFieldType getCrmFieldType() {
-	return crmFieldType;
-    }
+	public CrmField(CrmFieldType crmFieldType, String fieldName,
+			String displayName) {
+		super();
+		this.crmFieldType = crmFieldType;
+		this.fieldName = fieldName;
+		this.displayName = displayName;
+	}
 
-    public void setCrmFieldType(CrmFieldType crmFieldType) {
-	this.crmFieldType = crmFieldType;
-    }
+	public CrmField(String fieldName, String displayName) {
+		this(CrmFieldType.CRM, fieldName, displayName);
+	}
 
-    public String getFieldName() {
-	return fieldName;
-    }
+	public CrmField(String fieldName) {
+		this(fieldName, fieldName);
+	}
 
-    public String getDisplayName() {
-	return displayName;
-    }
+	public CrmField(CrmFieldType crmFieldType, String fieldName) {
+		this(crmFieldType, fieldName, fieldName);
+	}
 
-    public void setFieldName(String fieldName) {
-	this.fieldName = fieldName;
-    }
+	public String getName() {
+		return getName(Locale.CHINA);
+	}
 
-    public void setDisplayName(String displayName) {
-	this.displayName = displayName;
-    }
+	public String getName(Locale locale) {
+		return MessageUtil.get(getDisplayName(), locale);
+	}
+
+	public <T> T getValue(Crm crm) {
+		String[] s = getFieldName().split("\\.");
+		int length = s.length;
+		try {
+			if (length == 1)
+				return (T) PropertyUtils.getProperty(crm, getFieldName());
+			else if (length > 1) {
+				Object result = crm;
+				for (int i = 0; i < length; i++) {
+					result = PropertyUtils.getProperty(result, s[i]);
+					if (result == null)
+						return null;
+				}
+				return (T) result;
+			}
+			return null;
+		} catch (Exception e) {
+			log.error(crm + "-" + getFieldName(), e);
+			return null;
+		}
+	}
+
+	public CrmFieldType getCrmFieldType() {
+		return crmFieldType;
+	}
+
+	public void setCrmFieldType(CrmFieldType crmFieldType) {
+		this.crmFieldType = crmFieldType;
+	}
+
+	public String getFieldName() {
+		return fieldName;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
 }

@@ -1,16 +1,23 @@
 package com.hengyi.japp.crm.web.model;
 
-import java.util.Locale;
-
 import com.hengyi.japp.crm.domain.Indicator;
+import com.hengyi.japp.crm.domain.IndicatorScore;
 
-public class CrmReportLineIndicatorModel extends AbstractReportLine<Indicator>
-		implements CrmReportLineIndicator {
-	private Object value;
-	private Double score;
+public class CrmReportLineIndicatorModel implements CrmReportLineIndicator {
+	private final Indicator indicator;
+	private final IndicatorScore indicatorScore;
+	// 没有计算权重的分数
+	private final Double score;
+	private final Object value;
 
-	public CrmReportLineIndicatorModel(CrmReportModel crmReport, Indicator data) {
-		super(crmReport, data);
+	public CrmReportLineIndicatorModel(CrmReport crmReport,
+			Indicator indicator, IndicatorScore indicatorScore) {
+		super();
+		this.indicator = indicator;
+		this.indicatorScore = indicatorScore;
+		score = indicator.calculateScore(crmReport.getCrm());
+		// TODO 修复错误
+		value = crmReport.getCrm().getIndicatorValues();
 	}
 
 	@Override
@@ -19,32 +26,23 @@ public class CrmReportLineIndicatorModel extends AbstractReportLine<Indicator>
 	}
 
 	@Override
-	public String getName(Locale locale) {
-		return getName();
-	}
-
-	@Override
 	public Object getValue() {
-		// TODO 修复错误
-		// if (value == null)
-		// value = getData().getIndicatorValues(getCrm());
 		return value;
 	}
 
 	@Override
-	public double getPercent() {
-		return getData().getPercent();
+	public Indicator getData() {
+		return indicator;
 	}
 
 	@Override
-	public double getScore() {
-		if (score == null)
-			score = getData().calculateScore(getCrm());
+	public Double getScore() {
 		return score;
 	}
 
 	@Override
-	public double getScorePercent() {
-		return getData().calculateScorePercent(getCrm());
+	public Double getScorePercent() {
+		return indicatorScore.getScore();
 	}
+
 }

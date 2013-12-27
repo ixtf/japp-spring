@@ -1,12 +1,15 @@
 package com.hengyi.japp.common;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.hengyi.japp.common.service.AbstractUrlService;
 
 @SuppressWarnings("unchecked")
 public class CommonUtil {
@@ -16,6 +19,22 @@ public class CommonUtil {
 		for (V v : vs) {
 			K k = (K) PropertyUtils.getSimpleProperty(v, id);
 			result.put(k, v);
+		}
+		return result;
+	}
+
+	public static <K, V> Map<K, List<V>> listMap(Iterable<V> vs, String id)
+			throws Exception {
+		Map<K, List<V>> result = Maps.newHashMap();
+		for (V v : vs) {
+			K k = (K) PropertyUtils.getSimpleProperty(v, id);
+			List<V> list = result.get(k);
+			if (list == null) {
+				list = Lists.newArrayList();
+				list.add(v);
+				result.put(k, list);
+			} else
+				list.add(v);
 		}
 		return result;
 	}
@@ -56,5 +75,16 @@ public class CommonUtil {
 
 	public static String get(String key, Locale locale) {
 		return messageResourceBundle(locale).getString(key);
+	}
+
+	public static AbstractUrlService urlService(final String newPath) {
+		return new AbstractUrlService() {
+
+			@Override
+			public String getNewPath() {
+				return newPath;
+			}
+
+		};
 	}
 }

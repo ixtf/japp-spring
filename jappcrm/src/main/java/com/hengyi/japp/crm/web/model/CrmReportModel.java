@@ -13,6 +13,7 @@ public class CrmReportModel implements CrmReport {
 	private List<CrmReportLine<?>> lines;
 	private List<CrmReportLine<CrmField>> crmFieldLines;
 	private List<CrmReportLineIndicator> indicatorLines;
+	private Double totalIndicatorScore;
 
 	public CrmReportModel(Crm crm, Report report) {
 		super();
@@ -46,15 +47,12 @@ public class CrmReportModel implements CrmReport {
 		return indicatorLines;
 	}
 
-	public void setLines(List<CrmReportLine<?>> lines) {
-		this.lines = lines;
-	}
-
-	public void setCrmFieldLines(List<CrmReportLine<CrmField>> crmFieldLines) {
-		this.crmFieldLines = crmFieldLines;
-	}
-
-	public void setIndicatorLines(List<CrmReportLineIndicator> indicatorLines) {
-		this.indicatorLines = indicatorLines;
+	public Double getTotalIndicatorScore() {
+		if (totalIndicatorScore == null) {
+			totalIndicatorScore = new Double(0);
+			for (CrmReportLineIndicator i : getIndicatorLines())
+				totalIndicatorScore += i.getScorePercent();
+		}
+		return totalIndicatorScore;
 	}
 }

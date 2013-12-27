@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/admin.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:contextMenu for="tableCrmFields">
+				<p:menuitem value="#{msg['edit']}"
+					action="#{crmFieldsController.edit}" icon="ui-icon-pencil" />
+				<p:menuitem value="#{msg['delete']}" type="button"
+					onclick="confirmDialogDeleteCrmField.show()"
+					disabled="#{not cacheService.admin}" icon="ui-icon-close" />
+			</p:contextMenu>
+			<p:confirmDialog message="#{msg['operation.confirm']}?"
+				severity="alert" widgetVar="confirmDialogDeleteCrmField">
+				<p:commandButton value="#{msg['operation.submit']}" update=":form"
+					action="#{crmFieldsController.delete}"
+					oncomplete="confirmDialogDeleteCrmField.hide()" />
+			</p:confirmDialog>
+			<p:dataTable id="tableCrmFields" var="_crmField"
+				value="#{crmFieldsController.crmFields}"
+				selection="#{crmFieldsController.crmField}"
+				rowKey="#{_crmField.nodeId}" selectionMode="single">
+				<f:facet name="header">
+					<h:outputText value="#{msg['crmField']}" />
+				</f:facet>
+
+				<p:column headerText="#{msg['crmFieldType']}">
+					<h:outputText value="#{_crmField.crmFieldType}" />
+				</p:column>
+
+				<p:column headerText="#{msg['fieldName']}">
+					<h:outputText value="#{_crmField.fieldName}" />
+				</p:column>
+
+				<p:column headerText="#{msg['displayName']}">
+					<h:outputText value="#{msg[_crmField.displayName]}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

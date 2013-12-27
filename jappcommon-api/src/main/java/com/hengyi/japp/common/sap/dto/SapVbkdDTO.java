@@ -16,7 +16,28 @@ public class SapVbkdDTO implements ValueObject<SapVbkdDTO> {
 	private static final long serialVersionUID = 6493016891294566911L;
 	private VbkdPK pk;
 	private String inco1;
+	private String inco2;
 	private String zterm;
+	private String bstkd;
+	private String bstdk;
+
+	public String getVbeln() {
+		return pk == null ? null : pk.getVbeln();
+	}
+
+	public void setVbeln(String vbeln) {
+		pk = pk == null ? new VbkdPK() : pk;
+		pk.setVbeln(vbeln);
+	}
+
+	public String getPosnr() {
+		return pk == null ? null : pk.getPosnr();
+	}
+
+	public void setPosnr(String posnr) {
+		pk = pk == null ? new VbkdPK() : pk;
+		pk.setPosnr(posnr);
+	}
 
 	public VbkdPK getPk() {
 		return pk;
@@ -40,6 +61,30 @@ public class SapVbkdDTO implements ValueObject<SapVbkdDTO> {
 
 	public void setInco1(String inco1) {
 		this.inco1 = inco1;
+	}
+
+	public String getInco2() {
+		return inco2;
+	}
+
+	public void setInco2(String inco2) {
+		this.inco2 = inco2;
+	}
+
+	public String getBstkd() {
+		return bstkd;
+	}
+
+	public void setBstkd(String bstkd) {
+		this.bstkd = bstkd;
+	}
+
+	public String getBstdk() {
+		return bstdk;
+	}
+
+	public void setBstdk(String bstdk) {
+		this.bstdk = bstdk;
 	}
 
 	@Override

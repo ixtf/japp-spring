@@ -1,4 +1,4 @@
-package com.hengyi.japp.service;
+package com.hengyi.japp.crm;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
@@ -7,6 +7,7 @@ import org.neo4j.graphdb.index.Index;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+//@RunWith(SpringJUnit4ClassRunner.class)
 public class Neo4jCoreTest {
 	private static final Logger log = LoggerFactory
 			.getLogger(Neo4jCoreTest.class);

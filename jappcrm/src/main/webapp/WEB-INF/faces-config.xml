@@ -3,8 +3,8 @@
  xmlns:xi="http://www.w3.org/2001/XInclude"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="         http://java.sun.com/xml/ns/javaee         http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
  <converter>
-  <converter-id>crmType</converter-id>
-  <converter-class>com.hengyi.japp.crm.CrmTypeConverter</converter-class>
+ 	<converter-id>corporationType</converter-id>
+  <converter-class>com.hengyi.japp.crm.CorporationTypeConverter</converter-class>
  </converter>
  <converter>
   <converter-id>indicatorValue</converter-id>

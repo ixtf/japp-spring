@@ -8,8 +8,8 @@
 		icon="ui-icon-print">
 		<p:printer target="crmReportField" />
 	</p:commandButton>
-	<p:dataTable id="crmReportField" var="_crmReportField"
-		value="#{crmReportController.crmReport.crmReportFields}"
+	<p:dataTable id="crmReportField" var="_line"
+		value="#{crmReportController.crmReport.crmFieldLines}"
 		style="margin-left:auto;margin-right:auto;width:210mm;">
 		<f:facet name="header">
 			<h:outputText value="#{crmReportController.crmReport.report}"
@@ -17,10 +17,10 @@
 		</f:facet>
 
 		<p:column>
-			<h:outputText value="#{msg[_crmReportField.crmField.displayName]}" />
+			<h:outputText value="#{msg[_line.data.displayName]}" />
 		</p:column>
 		<p:column>
-			<h:outputText value="#{_crmReportField.value}" />
+			<h:outputText value="#{_line.value}" />
 		</p:column>
 		<p:columnGroup type="footer">
 			<p:row>

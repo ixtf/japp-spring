@@ -3,8 +3,15 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/templates/admin.xhtml">
 	<ui:define name="content">
-		admin
+		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
+			<p:fileUpload update="message"
+				fileUploadListener="#{homeController.handleFileUpload}"
+				mode="advanced" dragDropSupport="true" multiple="true"
+				label="#{msg['choose']}" uploadLabel="#{msg['upload']}"
+				cancelLabel="#{msg['cancel']}" styleClass="form-inline" />
+		</h:form>
 	</ui:define>
 </ui:composition>

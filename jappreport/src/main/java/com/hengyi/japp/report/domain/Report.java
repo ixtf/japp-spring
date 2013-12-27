@@ -23,6 +23,7 @@ public abstract class Report extends AbstractNeo4j implements Serializable,
 	@Indexed(level = Level.INSTANCE)
 	@NotBlank
 	protected String name;
+	protected boolean newWindow;
 	protected String note;
 	protected double sortBy;
 	@RelatedTo(type = Menu.MENU_REPORT, direction = Direction.INCOMING)
@@ -74,6 +75,16 @@ public abstract class Report extends AbstractNeo4j implements Serializable,
 
 	public void setSortBy(double sortBy) {
 		this.sortBy = sortBy;
+	}
+
+	public boolean isNewWindow() {
+//		if (newWindow == null)
+//			newWindow = false;
+		return newWindow;
+	}
+
+	public void setNewWindow(boolean newWindow) {
+		this.newWindow = newWindow;
 	}
 
 	@Override

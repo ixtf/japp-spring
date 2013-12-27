@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/admin.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="message" showDetail="true" sticky="true" />
+			<ui:include src="/faces/updateTitle.xhtml">
+				<ui:param name="controller" value="#{crmFieldController}" />
+				<ui:param name="title" value="#{msg['crmField']}" />
+			</ui:include>
+			<h:panelGrid columns="3" cellpadding="5" styleClass="form-inline">
+				<h:outputLabel for="crmFieldType" value="#{msg['crmFieldType']}" />
+				<p:selectOneMenu id="crmFieldType"
+					value="#{crmFieldController.crmField.crmFieldType}">
+					<f:selectItems value="#{crmFieldController.allCrmFieldTypes}" />
+				</p:selectOneMenu>
+				<p:message for="crmFieldType" />
+
+				<h:outputLabel for="fieldName" value="#{msg['fieldName']}" />
+				<h:inputText id="fieldName"
+					value="#{crmFieldController.crmField.fieldName}" />
+				<p:message for="fieldName" />
+
+				<h:outputLabel for="displayName" value="#{msg['displayName']}" />
+				<h:inputText id="displayName"
+					value="#{crmFieldController.crmField.displayName}" />
+				<p:message for="displayName" />
+			</h:panelGrid>
+			<p:commandButton action="#{crmFieldController.save}" update=":form"
+				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
+		</h:form>
+	</ui:define>
+</ui:composition>

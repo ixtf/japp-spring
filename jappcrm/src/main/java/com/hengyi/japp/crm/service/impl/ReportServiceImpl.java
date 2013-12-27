@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import com.hengyi.japp.common.service.AbstractCommonCrudNeo4jService;
 import com.hengyi.japp.crm.domain.Crm;
+import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.Report;
 import com.hengyi.japp.crm.domain.repository.ReportRepository;
@@ -16,8 +17,10 @@ public abstract class ReportServiceImpl<T extends Report> extends
 	protected ReportRepository reportRepository;
 
 	@Override
-	public void save(T report, Iterable<Indicator> indicators) {
+	public void save(T report, Iterable<Indicator> indicators,
+			Iterable<CrmField> crmFields) {
 		report.setIndicators(indicators);
+		report.setCrmFields(crmFields);
 		reportRepository.save(report);
 	}
 

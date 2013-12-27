@@ -5,9 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
+import com.google.common.base.Objects;
 import com.hengyi.japp.common.sap.Constant;
 
 @Embeddable
@@ -49,12 +47,11 @@ public class SapKna1DTO implements Serializable {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		final SapKna1DTO other = (SapKna1DTO) o;
-		return new EqualsBuilder().append(getKunnr(), other.getKunnr())
-				.isEquals();
+		return Objects.equal(getKunnr(), other.getKunnr());
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getKunnr()).hashCode();
+		return Objects.hashCode(getKunnr());
 	}
 }

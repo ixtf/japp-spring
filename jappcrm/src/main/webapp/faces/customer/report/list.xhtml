@@ -6,33 +6,10 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<h:form id="form">
-			<p:growl id="messages" showDetail="true" />
-			<p:contextMenu for="tableReports">
-				<p:menuitem value="#{msg['edit']}"
-					action="#{customerReportsController.edit}" icon="ui-icon-pencil" />
-				<p:menuitem value="#{msg['delete']}" type="button"
-					onclick="confirmDialogDeleteCrmType.show()" icon="ui-icon-close"
-					disabled="true" />
-			</p:contextMenu>
-			<p:confirmDialog message="#{msg['operation.confirm']}?"
-				severity="alert" widgetVar="confirmDialogDeleteCrmType">
-				<p:commandButton value="#{msg['operation.submit']}" update=":form"
-					action="#{customerReportsController.delete}"
-					oncomplete="confirmDialogDeleteCrmType.hide()" />
-			</p:confirmDialog>
-			<p:dataTable id="tableReports" var="_report"
-				value="#{customerReportsController.reports}"
-				selection="#{customerReportsController.report}"
-				rowKey="#{_report.nodeId}" selectionMode="single">
-				<f:facet name="header">
-					<h:outputText value="#{msg['customer']}#{msg['report']}" />
-				</f:facet>
-
-				<p:column headerText="#{msg['name']}">
-					<h:outputText value="#{_report.name}" />
-				</p:column>
-			</p:dataTable>
-		</h:form>
+		<ui:decorate template="/faces/crm/report/list.xhtml">
+			<ui:param name="reportsController"
+				value="#{customerReportsController}" />
+			<ui:param name="crmName" value="#{msg['customer']}" />
+		</ui:decorate>
 	</ui:define>
 </ui:composition>

@@ -27,10 +27,12 @@ public abstract class ReportController<T extends Report> extends
 
 	protected abstract ReportService<T> getReportService();
 
+	public abstract List<CrmField> getAllCrmFields();
+
 	public void save() {
 		try {
 			getReport().setOperator(getCurrentOperator());
-			reportService.save(report, getIndicators());
+			reportService.save(report, getIndicators(), getCrmFields());
 			operationSuccessMessage();
 		} catch (Exception e) {
 			errorMessage(e);

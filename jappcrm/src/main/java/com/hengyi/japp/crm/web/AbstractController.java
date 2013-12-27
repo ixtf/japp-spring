@@ -12,28 +12,29 @@ import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.neo4j.template.Neo4jOperations;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 
 import com.google.common.collect.Lists;
 import com.hengyi.japp.crm.Constant;
 import com.hengyi.japp.crm.MessageUtil;
 import com.hengyi.japp.crm.data.CrmFieldType;
 import com.hengyi.japp.crm.domain.Certificate;
-import com.hengyi.japp.crm.domain.CrmType;
+import com.hengyi.japp.crm.domain.CorporationType;
 import com.hengyi.japp.crm.domain.Operator;
-import com.hengyi.japp.crm.event.EventPublisher;
-import com.hengyi.japp.crm.event.SyncEventPublisher;
+import com.hengyi.japp.crm.event.publisher.EventPublisher;
+import com.hengyi.japp.crm.event.publisher.SyncEventPublisher;
 import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CertificateService;
 import com.hengyi.japp.crm.service.CommunicateeService;
-import com.hengyi.japp.crm.service.CrmTypeService;
+import com.hengyi.japp.crm.service.CorporationTypeService;
+import com.hengyi.japp.crm.service.CrmFieldService;
 import com.hengyi.japp.crm.service.IndicatorValueService;
 import com.hengyi.japp.crm.service.OperatorService;
 
 public abstract class AbstractController {
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 	@Resource
-	protected Neo4jOperations template;
+	protected Neo4jTemplate template;
 	@Resource
 	protected Mapper dozer;
 	@Inject
@@ -45,23 +46,25 @@ public abstract class AbstractController {
 	@Inject
 	protected OperatorService operatorService;
 	@Inject
-	protected CrmTypeService crmTypeService;
+	protected CorporationTypeService corporationTypeService;
 	@Inject
 	protected CertificateService certificateService;
 	@Inject
 	protected CommunicateeService communicateeService;
 	@Inject
 	protected IndicatorValueService indicatorValueService;
+	@Inject
+	protected CrmFieldService crmFieldService;
 
-	public List<CrmType> getAllCrmTypes() {
-		return Lists.newArrayList(crmTypeService.findAll());
+	public List<CorporationType> getAllCorporationTypes() {
+		return Lists.newArrayList(corporationTypeService.findAll());
 	}
 
 	public List<Certificate> getAllCertificates() {
 		return Lists.newArrayList(certificateService.findAll());
 	}
 
-	public List<CrmFieldType> getAllCrmFields() {
+	public List<CrmFieldType> getAllCrmFieldTypes() {
 		return Lists.newArrayList(CrmFieldType.values());
 	}
 
@@ -119,6 +122,7 @@ public abstract class AbstractController {
 	}
 
 	protected void errorMessage(Exception e) {
+		log.error("", e);
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, MessageUtil

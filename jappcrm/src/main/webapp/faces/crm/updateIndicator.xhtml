@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	<p:tabView id="tabViewIndicator" var="_indicator"
-		value="#{crmController.indicators}" dynamic="true">
+		value="#{crmController.indicators}">
 		<p:tab title="#{_indicator.name}">
 			<p:dataTable id="tableIndicatorValue" var="_indicatorValueScore"
 				value="#{crmController.indicatorMap[_indicator]}">

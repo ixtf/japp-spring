@@ -8,8 +8,8 @@
 		icon="ui-icon-print">
 		<p:printer target="crmReportIndicator" />
 	</p:commandButton>
-	<p:dataTable id="crmReportIndicator" var="_crmReportIndicator"
-		value="#{crmReportController.crmReport.crmReportIndicators}"
+	<p:dataTable id="crmReportIndicator" var="_line"
+		value="#{crmReportController.crmReport.indicatorLines}"
 		style="margin-left:auto;margin-right:auto;width:210mm;">
 		<f:facet name="header">
 			<h:outputText value="#{crmReportController.crmReport.report}"
@@ -32,21 +32,20 @@
 		</p:columnGroup>
 
 		<p:column>
-			<h:outputText value="#{_crmReportIndicator.indicatorScore.end}" />
+			<h:outputText value="#{_line.data}" />
 		</p:column>
 		<p:column style="text-align:right">
-			<h:outputText value="#{_crmReportIndicator.score}">
+			<h:outputText value="#{_line.score}">
 				<f:convertNumber pattern="#0.00" />
 			</h:outputText>
 		</p:column>
 		<p:column style="text-align:right">
-			<h:outputText
-				value="#{_crmReportIndicator.indicatorScore.end.percent}">
+			<h:outputText value="#{_line.data.percent}">
 				<f:convertNumber type="percent" />
 			</h:outputText>
 		</p:column>
 		<p:column style="text-align:right">
-			<h:outputText value="#{_crmReportIndicator.indicatorScore.score}">
+			<h:outputText value="#{_line.scorePercent}">
 				<f:convertNumber pattern="#0.00" />
 			</h:outputText>
 		</p:column>

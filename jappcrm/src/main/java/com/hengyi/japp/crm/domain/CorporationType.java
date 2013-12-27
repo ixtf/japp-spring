@@ -11,17 +11,17 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
  * 公司类型
  * */
 @NodeEntity
-public class CrmType extends Modifiable implements Serializable {
+public class CorporationType extends Modifiable implements Serializable {
 	private static final long serialVersionUID = 6364232419728827165L;
 	@NotBlank
 	@Indexed(unique = true)
 	private String name;
 
-	public CrmType() {
+	public CorporationType() {
 		super();
 	}
 
-	public CrmType(String name) {
+	public CorporationType(String name) {
 		super();
 		this.name = name;
 	}

@@ -1,5 +1,6 @@
 package com.hengyi.japp.common.web;
 
+import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.MethodExpression;
 import javax.faces.FacesException;
@@ -41,4 +42,32 @@ public class FacesAccessor {
 
 		return actionListener;
 	}
+
+	public static Object getManagedBean(final String beanName) {
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		Object bean;
+		try {
+			ELContext elContext = fc.getELContext();
+			bean = elContext.getELResolver()
+					.getValue(elContext, null, beanName);
+		} catch (RuntimeException e) {
+			throw new FacesException(e.getMessage(), e);
+		}
+
+		if (bean == null) {
+			throw new FacesException(
+					"Managed bean with name '"
+							+ beanName
+							+ "' was not found. Check your faces-config.xml or @ManagedBean annotation.");
+		}
+
+		return bean;
+	}
+
+	public static String getRequestParameter(String name) {
+		return FacesContext.getCurrentInstance().getExternalContext()
+				.getRequestParameterMap().get(name);
+	}
+
 }

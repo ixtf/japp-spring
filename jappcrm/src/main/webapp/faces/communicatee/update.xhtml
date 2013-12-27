@@ -44,7 +44,6 @@
 			<p:commandButton id="buttonSave"
 				action="#{communicateeController.save}" update=":form"
 				value="#{msg['operation.submit']}" styleClass="ui-priority-primary" />
-			<p:blockUI block=":form" trigger="buttonSave" />
 		</h:form>
 	</ui:define>
 </ui:composition>

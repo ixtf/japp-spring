@@ -1,14 +1,20 @@
 package com.hengyi.japp.crm.web.model;
 
-import java.util.Locale;
-
 import com.hengyi.japp.crm.domain.CrmField;
 
-public class CrmReportLineCrmFieldModel extends AbstractReportLine<CrmField>
-		implements CrmReportLine<CrmField> {
+public class CrmReportLineCrmFieldModel implements CrmReportLine<CrmField> {
+	private final CrmField crmField;
+	private final Object value;
 
-	public CrmReportLineCrmFieldModel(CrmReportModel crmReport, CrmField data) {
-		super(crmReport, data);
+	public CrmReportLineCrmFieldModel(CrmReport crmReport, CrmField crmField) {
+		super();
+		this.crmField = crmField;
+		value = crmField.getValue(crmReport.getCrm());
+	}
+
+	@Override
+	public CrmField getData() {
+		return crmField;
 	}
 
 	@Override
@@ -17,12 +23,7 @@ public class CrmReportLineCrmFieldModel extends AbstractReportLine<CrmField>
 	}
 
 	@Override
-	public String getName(Locale locale) {
-		return getData().getName(locale);
-	}
-
-	@Override
 	public Object getValue() {
-		return getData().getValue(getCrm());
+		return value;
 	}
 }

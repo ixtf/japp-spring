@@ -25,7 +25,13 @@
 									<ul class="dropdown-menu">
 										<ui:repeat var="_report" value="#{_topMenu.reports}">
 											<li><h:outputLink
-													value="#{request.contextPath}/reports/#{_report.nodeId}/display">
+													value="#{request.contextPath}/reports/#{_report.nodeId}/display"
+													target="_blank" rendered="#{_report.newWindow}">
+													<!-- <i class="icon-file icon-white" /> -->
+													<h:outputText value="#{_report.name}" />
+												</h:outputLink> <h:outputLink
+													value="#{request.contextPath}/reports/#{_report.nodeId}/display"
+													rendered="#{not _report.newWindow}">
 													<!-- <i class="icon-file icon-white" /> -->
 													<h:outputText value="#{_report.name}" />
 												</h:outputLink></li>

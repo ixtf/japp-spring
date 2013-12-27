@@ -8,6 +8,7 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.crm.domain.customer.Customer;
+import com.hengyi.japp.crm.event.CustomerUpdateEvent;
 import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.customer.CustomerService;
 import com.hengyi.japp.crm.web.CrmController;
@@ -19,6 +20,12 @@ public class CustomerController extends CrmController<Customer> implements
 	private static final long serialVersionUID = 3708518912737819900L;
 	@Inject
 	private CustomerService customerService;
+
+	@Override
+	public void save() {
+		super.save();
+		eventPublisher.publish(new CustomerUpdateEvent(getCrm().getNodeId()));
+	}
 
 	@Override
 	protected CrmService<Customer> getCrmService() {

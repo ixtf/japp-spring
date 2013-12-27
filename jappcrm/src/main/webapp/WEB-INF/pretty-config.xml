@@ -15,14 +15,19 @@
 		<view-id value="/faces/crmReport/crmReport.jsf" />
 	</url-mapping>
 
+	<url-mapping id="crmField">
+		<pattern value="/admin/crmFields/#{crmFieldController.nodeId}" />
+		<view-id value="/faces/admin/crmField/update.jsf" />
+	</url-mapping>
+
 	<url-mapping id="communicateeUpdate">
 		<pattern value="/communicatees/#{communicateeController.nodeId}" />
 		<view-id value="/faces/communicatee/update.jsf" />
 	</url-mapping>
 
-	<url-mapping id="crmTypeUpdate">
-		<pattern value="/crmTypes/#{crmTypeController.nodeId}" />
-		<view-id value="/faces/crmType/update.jsf" />
+	<url-mapping id="corporationTypeUpdate">
+		<pattern value="/corporationTypes/#{corporationTypeController.nodeId}" />
+		<view-id value="/faces/corporationType/update.jsf" />
 	</url-mapping>
 
 	<url-mapping id="certificateUpdate">
@@ -48,12 +53,6 @@
 	<url-mapping id="customerReportUpdate">
 		<pattern value="/customer/reports/#{customerReportController.nodeId}" />
 		<view-id value="/faces/customer/report/update.jsf" />
-	</url-mapping>
-
-	<url-mapping id="customerBasicInfoReport">
-		<pattern
-			value="/customers/#{customerReportController.nodeId}/report/basicInfo" />
-		<view-id value="/faces/customer/report/basicInfo.jsf" />
 	</url-mapping>
 
 	<url-mapping id="storageUpdate">

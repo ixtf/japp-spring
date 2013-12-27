@@ -16,4 +16,6 @@ public interface CrmReport {
 	List<CrmReportLine<CrmField>> getCrmFieldLines();
 
 	List<CrmReportLineIndicator> getIndicatorLines();
+
+	Double getTotalIndicatorScore();
 }

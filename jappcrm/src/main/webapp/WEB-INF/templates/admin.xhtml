@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:decorate template="/WEB-INF/templates/default.xhtml">
+		<ui:define name="newMenu">
+			<li><h:outputLink
+					value="#{request.contextPath}#{crmFieldService.newPath}">
+					<h:outputText value="#{msg['crmField']}" />
+				</h:outputLink></li>
+		</ui:define>
+		<ui:define name="menu">
+			<li><h:outputLink
+					value="#{request.contextPath}#{crmFieldService.managePath}">
+					<h:outputText value="#{msg['crmField']}#{msg['manage']}" />
+				</h:outputLink></li>
+			<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown"><h:outputText
+						value="#{msg['crmField']}#{msg['manage']}" /> <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					<li><h:outputLink
+							value="#{request.contextPath}#{customerReportService.managePath}">
+							<h:outputText value="#{msg['customer']}#{msg['crmField']}" />
+						</h:outputLink></li>
+					<li><h:outputLink
+							value="#{request.contextPath}#{storageReportService.managePath}">
+							<h:outputText value="#{msg['storage']}#{msg['crmField']}" />
+						</h:outputLink></li>
+				</ul></li> -->
+		</ui:define>
+	</ui:decorate>
+</ui:composition>

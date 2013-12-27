@@ -1,200 +1,176 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:c="http://java.sun.com/jstl/core"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
-<h:head>
-	<title><h:outputText value="#{msg['project.title']}" /></title>
-	<f:facet name="first">
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<meta http-equiv="pragma" content="no-cache" />
-		<meta http-equiv="cache-control" content="no-cache" />
-		<meta http-equiv="expires" content="0" />
-	</f:facet>
-	<f:facet name="last">
-		<h:outputStylesheet library="css" name="bootstrap.css" />
-		<h:outputStylesheet library="css" name="bootstrap-responsive.min.css" />
-		<h:outputStylesheet library="css" name="all.css" />
-		<h:outputScript library="js" name="PrimeFacesLocales.js" />
-		<h:outputScript library="js" name="bootstrap.min.js" />
-		<h:outputScript library="javax.faces" name="jsf.js" />
-	</f:facet>
-	<ui:insert name="head" />
-</h:head>
-<h:body>
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<button type="button" class="btn btn-navbar" data-toggle="collapse"
-					data-target=".navbar-responsive-collapse">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<h:outputLink value="#{request.contextPath}" class="brand">
-					<h:outputText value="#{msg['home.title']}" />
-				</h:outputLink>
-				<div class="nav-collapse collapse navbar-responsive-collapse">
-					<ul class="nav">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"><h:outputText value="#{msg['new']}" />
-								<b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><h:outputLink
-										value="#{request.contextPath}#{customerService.newPath}">
-										<h:outputText value="#{msg['customer']}" />
-									</h:outputLink></li>
-								<li><h:outputLink
-										value="#{request.contextPath}#{storageService.newPath}">
-										<h:outputText value="#{msg['storage']}" />
-									</h:outputLink></li>
-								<li class="divider"></li>
-								<!-- <li class="nav-header">Nav header</li> -->
-								<li><h:outputLink
-										value="#{request.contextPath}#{crmTypeService.newPath}">
-										<h:outputText value="#{msg['crmType']}" />
-									</h:outputLink></li>
-								<li><h:outputLink
-										value="#{request.contextPath}#{certificateService.newPath}">
-										<h:outputText value="#{msg['certificate']}" />
-									</h:outputLink></li>
-								<li><h:outputLink
-										value="#{request.contextPath}#{communicateeService.newPath}">
-										<h:outputText value="#{msg['communicatee']}" />
-									</h:outputLink></li>
-								<li class="divider"></li>
-								<li><h:outputLink
-										value="#{request.contextPath}#{customerIndicatorService.newPath}">
-										<h:outputText value="#{msg['customer']}#{msg['indicator']}" />
-									</h:outputLink></li>
-								<li><h:outputLink
-										value="#{request.contextPath}#{storageIndicatorService.newPath}">
-										<h:outputText value="#{msg['storage']}#{msg['indicator']}" />
-									</h:outputLink></li>
-								<li><h:outputLink
-										value="#{request.contextPath}#{customerReportService.newPath}">
-										<h:outputText value="#{msg['customer']}#{msg['report']}" />
-									</h:outputLink></li>
-								<li><h:outputLink
-										value="#{request.contextPath}#{storageReportService.newPath}">
-										<h:outputText value="#{msg['storage']}#{msg['report']}" />
-									</h:outputLink></li>
-								<li><h:outputLink
+	template="/WEB-INF/templates/common.xhtml">
+	<ui:define name="body">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse"
+						data-target=".navbar-responsive-collapse">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<h:outputLink value="#{request.contextPath}" class="brand">
+						<h:outputText value="#{msg['home.title']}" />
+					</h:outputLink>
+					<div class="nav-collapse collapse navbar-responsive-collapse">
+						<ul class="nav">
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown"><h:outputText value="#{msg['new']}" />
+									<b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><h:outputLink
+											value="#{request.contextPath}#{customerService.newPath}">
+											<h:outputText value="#{msg['customer']}" />
+										</h:outputLink></li>
+									<li><h:outputLink
+											value="#{request.contextPath}#{storageService.newPath}">
+											<h:outputText value="#{msg['storage']}" />
+										</h:outputLink></li>
+									<li class="divider"></li>
+									<!-- <li class="nav-header">Nav header</li> -->
+									<li><h:outputLink
+											value="#{request.contextPath}#{corporationTypeService.newPath}">
+											<h:outputText value="#{msg['corporationType']}" />
+										</h:outputLink></li>
+									<li><h:outputLink
+											value="#{request.contextPath}#{certificateService.newPath}">
+											<h:outputText value="#{msg['certificate']}" />
+										</h:outputLink></li>
+									<li><h:outputLink
+											value="#{request.contextPath}#{communicateeService.newPath}">
+											<h:outputText value="#{msg['communicatee']}" />
+										</h:outputLink></li>
+									<li class="divider"></li>
+									<li><h:outputLink
+											value="#{request.contextPath}#{customerIndicatorService.newPath}">
+											<h:outputText value="#{msg['customer']}#{msg['indicator']}" />
+										</h:outputLink></li>
+									<li><h:outputLink
+											value="#{request.contextPath}#{storageIndicatorService.newPath}">
+											<h:outputText value="#{msg['storage']}#{msg['indicator']}" />
+										</h:outputLink></li>
+									<li><h:outputLink
+											value="#{request.contextPath}#{customerReportService.newPath}">
+											<h:outputText value="#{msg['customer']}#{msg['report']}" />
+										</h:outputLink></li>
+									<li><h:outputLink
+											value="#{request.contextPath}#{storageReportService.newPath}">
+											<h:outputText value="#{msg['storage']}#{msg['report']}" />
+										</h:outputLink></li>
+									<ui:insert name="newMenu" />
+									<!-- <li><h:outputLink
 										value="#{request.contextPath}#{indicatorValueService.newPath}">
 										<h:outputText value="#{msg['indicatorValue']}" />
-									</h:outputLink></li>
-							</ul></li>
-						<li><h:outputLink
-								value="#{request.contextPath}#{customerService.managePath}">
-								<h:outputText value="#{msg['customer']}#{msg['manage']}" />
-							</h:outputLink></li>
-						<li><h:outputLink
-								value="#{request.contextPath}#{storageService.managePath}">
-								<h:outputText value="#{msg['storage']}#{msg['manage']}" />
-							</h:outputLink></li>
-						<li><h:outputLink
-								value="#{request.contextPath}#{crmTypeService.managePath}">
-								<h:outputText value="#{msg['crmType']}#{msg['manage']}" />
-							</h:outputLink></li>
-						<li><h:outputLink
-								value="#{request.contextPath}#{certificateService.managePath}">
-								<h:outputText value="#{msg['certificate']}#{msg['manage']}" />
-							</h:outputLink></li>
-						<li><h:outputLink
-								value="#{request.contextPath}#{communicateeService.managePath}">
-								<h:outputText value="#{msg['communicatee']}#{msg['manage']}" />
-							</h:outputLink></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"><h:outputText
-									value="#{msg['indicator']}#{msg['manage']}" /> <b
-								class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><h:outputLink
-										value="#{request.contextPath}#{customerIndicatorService.managePath}">
-										<h:outputText value="#{msg['customer']}#{msg['indicator']}" />
-									</h:outputLink></li>
-								<li><h:outputLink
-										value="#{request.contextPath}#{storageIndicatorService.managePath}">
-										<h:outputText value="#{msg['storage']}#{msg['indicator']}" />
-									</h:outputLink></li>
-							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"><h:outputText
-									value="#{msg['report']}#{msg['manage']}" /> <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><h:outputLink
-										value="#{request.contextPath}#{customerReportService.managePath}">
-										<h:outputText value="#{msg['customer']}#{msg['report']}" />
-									</h:outputLink></li>
-								<li><h:outputLink
-										value="#{request.contextPath}#{storageReportService.managePath}">
-										<h:outputText value="#{msg['storage']}#{msg['report']}" />
-									</h:outputLink></li>
-							</ul></li>
-						<!-- <li><h:outputLink
+									</h:outputLink></li> -->
+								</ul></li>
+							<li><h:outputLink
+									value="#{request.contextPath}#{customerService.managePath}">
+									<h:outputText value="#{msg['customer']}#{msg['manage']}" />
+								</h:outputLink></li>
+							<li><h:outputLink
+									value="#{request.contextPath}#{storageService.managePath}">
+									<h:outputText value="#{msg['storage']}#{msg['manage']}" />
+								</h:outputLink></li>
+							<li><h:outputLink
+									value="#{request.contextPath}#{corporationTypeService.managePath}">
+									<h:outputText value="#{msg['corporationType']}#{msg['manage']}" />
+								</h:outputLink></li>
+							<li><h:outputLink
+									value="#{request.contextPath}#{certificateService.managePath}">
+									<h:outputText value="#{msg['certificate']}#{msg['manage']}" />
+								</h:outputLink></li>
+							<li><h:outputLink
+									value="#{request.contextPath}#{communicateeService.managePath}">
+									<h:outputText value="#{msg['communicatee']}#{msg['manage']}" />
+								</h:outputLink></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown"><h:outputText
+										value="#{msg['indicator']}#{msg['manage']}" /> <b
+									class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><h:outputLink
+											value="#{request.contextPath}#{customerIndicatorService.managePath}">
+											<h:outputText value="#{msg['customer']}#{msg['indicator']}" />
+										</h:outputLink></li>
+									<li><h:outputLink
+											value="#{request.contextPath}#{storageIndicatorService.managePath}">
+											<h:outputText value="#{msg['storage']}#{msg['indicator']}" />
+										</h:outputLink></li>
+								</ul></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown"><h:outputText
+										value="#{msg['report']}#{msg['manage']}" /> <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><h:outputLink
+											value="#{request.contextPath}#{customerReportService.managePath}">
+											<h:outputText value="#{msg['customer']}#{msg['report']}" />
+										</h:outputLink></li>
+									<li><h:outputLink
+											value="#{request.contextPath}#{storageReportService.managePath}">
+											<h:outputText value="#{msg['storage']}#{msg['report']}" />
+										</h:outputLink></li>
+								</ul></li>
+							<ui:insert name="menu" />
+							<!-- <li><h:outputLink
 								value="#{request.contextPath}#{indicatorValueService.managePath}">
 								<h:outputText value="#{msg['indicatorValue']}#{msg['manage']}" />
 							</h:outputLink></li> -->
-					</ul>
-					<div class="btn-group pull-right">
-						<a href="javascript:void(0)"
-							class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-							icon="ui-icon-arrowrefresh-1-w"> <i
-							class="icon-user icon-white"></i> <h:outputText
-								value="#{cacheService.currentOperator.name}"
-								rendered="#{cacheService.authenticated}" /> <span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu">
-							<li><a href="javascript:void(0)"> <h:outputText
-										value="#{cacheService.principalType}(#{cacheService.principal})" />
-							</a></li>
-							<li><h:outputLink
-									value="#{request.contextPath}#{cacheService.themePath}"
-									rendered="#{cacheService.authenticated}">
-									<h:outputText value="#{msg['theme.title']}" />
-								</h:outputLink></li>
-							<li class="divider"></li>
-							<!-- <li><h:outputLink value="#{cacheService.bugNewPath}"
+						</ul>
+						<div class="btn-group pull-right">
+							<a href="javascript:void(0)"
+								class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+								icon="ui-icon-arrowrefresh-1-w"> <i
+								class="icon-user icon-white"></i> <h:outputText
+									value="#{cacheService.currentOperator.name}"
+									rendered="#{cacheService.authenticated}" /> <span
+								class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="javascript:void(0)"> <h:outputText
+											value="#{cacheService.principalType}(#{cacheService.principal})" />
+								</a></li>
+								<li><h:outputLink
+										value="#{request.contextPath}#{cacheService.themePath}"
+										rendered="#{cacheService.authenticated}">
+										<h:outputText value="#{msg['theme.title']}" />
+									</h:outputLink></li>
+								<li class="divider"></li>
+								<!-- <li><h:outputLink value="#{cacheService.bugNewPath}"
 									rendered="#{cacheService.authenticated}">
 									<h:outputText value="#{msg['bug']}" />
 								</h:outputLink></li> 
 							<li class="divider"></li>-->
-							<li><h:outputLink
-									value="#{request.contextPath}#{cacheService.logoutPath}"
-									rendered="#{cacheService.authenticated}">
-									<h:outputText value="#{msg['logout.title']}" />
-								</h:outputLink></li>
-						</ul>
+								<li><h:outputLink
+										value="#{request.contextPath}#{cacheService.logoutPath}"
+										rendered="#{cacheService.authenticated}">
+										<h:outputText value="#{msg['logout.title']}" />
+									</h:outputLink></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="container-fluid ui-widget">
-		<ui:insert name="content" />
-	</div>
-	<ui:insert name="status">
-		<p:ajaxStatus
-			style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
-			<f:facet name="start">
-				<!-- <p:graphicImage library="img" value="ajax-loader.gif" /> -->
-			</f:facet>
-
-			<f:facet name="complete">
-				<h:outputText value="" />
-			</f:facet>
-		</p:ajaxStatus>
-	</ui:insert>
-	<!-- transport="long-polling" -->
-	<!-- <p:growl showDetail="true" sticky="true" widgetVar="pushMessage" />
+		<div class="container-fluid ui-widget">
+			<ui:insert name="content" />
+		</div>
+		<p:ajaxStatus onstart="statusDialog.show();"
+			onsuccess="statusDialog.hide();" />
+		<p:dialog modal="true" widgetVar="statusDialog" draggable="false"
+			closable="false">
+			<p:graphicImage value="/resources/img/ajax-loader.gif" />
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+<!-- transport="long-polling" -->
+<!-- <p:growl showDetail="true" sticky="true" widgetVar="pushMessage" />
 	<p:socket onMessage="handleMessage"
 		channel="/#{cacheService.currentOperator.uuid}"
 		rendered="#{cacheService.authenticated}" />
 	<script type="text/javascript">
 	function handleMessage(facesmessage){pushMessage.show([facesmessage]);}
 	</script> -->
-</h:body>
-</html>

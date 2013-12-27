@@ -3,6 +3,7 @@ package com.hengyi.japp.common.sap.dto;
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.common.base.Objects;
 import com.hengyi.japp.common.domain.shared.ValueObject;
 
 @Embeddable
@@ -21,7 +22,7 @@ public class Kna1PK implements ValueObject<Kna1PK> {
 
 	@Override
 	public boolean sameValueAs(Kna1PK other) {
-		return other != null && getKunnr().equals(other.getKunnr());
+		return other != null && Objects.equal(getKunnr(), other.getKunnr());
 	}
 
 	@Override
@@ -36,6 +37,6 @@ public class Kna1PK implements ValueObject<Kna1PK> {
 
 	@Override
 	public int hashCode() {
-		return getKunnr().hashCode();
+		return Objects.hashCode(getKunnr());
 	}
 }

@@ -63,6 +63,6 @@ public class Communicatee extends Modifiable implements Serializable {
 
 	@Override
 	public String toString() {
-		return getName() + " | " + getPhone();
+		return getName();
 	}
 }

@@ -8,6 +8,7 @@ import javax.inject.Named;
 import org.springframework.context.annotation.Scope;
 
 import com.hengyi.japp.crm.domain.storage.Storage;
+import com.hengyi.japp.crm.event.StorageUpdateEvent;
 import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.storage.StorageService;
 import com.hengyi.japp.crm.web.CrmController;
@@ -19,6 +20,12 @@ public class StorageController extends CrmController<Storage> implements
 	private static final long serialVersionUID = -4189240961754260470L;
 	@Inject
 	private StorageService storageService;
+
+	@Override
+	public void save() {
+		super.save();
+		eventPublisher.publish(new StorageUpdateEvent(getCrm().getNodeId()));
+	}
 
 	@Override
 	protected CrmService<Storage> getCrmService() {
