@@ -1,4 +1,4 @@
-package com.hengyi.japp.crm;
+package com.hengyi.japp.crm.web.converter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -9,9 +9,9 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.jsf.FacesContextUtils;
 
 import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
-import com.hengyi.japp.crm.domain.Certificate;
+import com.hengyi.japp.crm.domain.CorporationType;
 
-public class CertificateConverter implements Converter {
+public class CorporationTypeConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext facesContext, UIComponent component,
@@ -19,7 +19,7 @@ public class CertificateConverter implements Converter {
 		WebApplicationContext webContext = FacesContextUtils
 				.getWebApplicationContext(facesContext);
 		Neo4jOperations template = webContext.getBean(Neo4jOperations.class);
-		return template.findOne(Long.valueOf(value), Certificate.class);
+		return template.findOne(Long.valueOf(value), CorporationType.class);
 	}
 
 	@Override
