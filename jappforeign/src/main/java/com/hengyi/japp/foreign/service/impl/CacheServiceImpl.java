@@ -5,7 +5,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.hengyi.japp.common.dto.UserDTO;
-import com.hengyi.japp.common.service.impl.CommonCacheServiceImpl;
+import com.hengyi.japp.common.service.AbstractCommonCacheService;
 import com.hengyi.japp.foreign.Constant;
 import com.hengyi.japp.foreign.domain.Operator;
 import com.hengyi.japp.foreign.domain.repository.OperatorRepository;
@@ -13,7 +13,7 @@ import com.hengyi.japp.foreign.service.CacheService;
 
 @Named("cacheService")
 @Singleton
-public class CacheServiceImpl extends CommonCacheServiceImpl implements
+public class CacheServiceImpl extends AbstractCommonCacheService implements
 		CacheService {
 	@Resource
 	private OperatorRepository operatorRepository;

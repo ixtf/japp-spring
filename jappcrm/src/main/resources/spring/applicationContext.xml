@@ -21,8 +21,10 @@
 	</bean>
 
 	<bean id="dozer" class="org.dozer.spring.DozerBeanMapperFactoryBean" />
-	<!-- <bean id="eventBus" class="com.google.common.eventbus.EventBus" scope="singleton" 
-		/> -->
+	<bean class="com.hengyi.japp.common.event.EventPublisherImpl" />
+	<bean class="com.hengyi.japp.common.event.SyncEventPublisherImpl" />
+	<bean id="eventBus" class="com.google.common.eventbus.EventBus"
+		scope="singleton" />
 
 	<context:component-scan base-package="com.hengyi.japp.crm">
 		<context:exclude-filter type="annotation"

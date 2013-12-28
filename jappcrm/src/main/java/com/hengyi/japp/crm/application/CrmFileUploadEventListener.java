@@ -17,8 +17,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.eventbus.EventBus;
 import com.hengyi.japp.crm.domain.Crm;
-import com.hengyi.japp.crm.domain.UploadFile;
+import com.hengyi.japp.crm.domain.CrmFile;
+import com.hengyi.japp.crm.domain.repository.CrmRepository;
+import com.hengyi.japp.crm.domain.repository.OperatorRepository;
 import com.hengyi.japp.crm.domain.repository.UploadFileRepository;
 import com.hengyi.japp.crm.event.CrmFileUploadEvent;
 
@@ -32,6 +35,12 @@ public class CrmFileUploadEventListener implements
 	@Resource(name = "deployProperties")
 	private Properties deployProperties;
 	@Inject
+	private OperatorRepository operatorRepository;
+	@Inject
+	private EventBus eventBus;
+	@Inject
+	private CrmRepository crmRepository;
+	@Inject
 	private UploadFileRepository uploadFileRepository;
 
 	@PostConstruct
@@ -42,14 +51,15 @@ public class CrmFileUploadEventListener implements
 	@Override
 	public void onApplicationEvent(CrmFileUploadEvent event) {
 		UploadedFile uploadedFile = event.getUploadedFile();
-		Crm crm = event.getCrm();
+		Crm crm = crmRepository.findOne(event.getCrmNodeId());
 		File file = getFile(crm, uploadedFile);
 		if (file.exists()) {
 			log.error("{} 文件已经存在！", file.getAbsolutePath());
-			throw new RuntimeException();
+			throw new RuntimeException(uploadedFile.getFileName() + " 文件已经存在！");
 		}
-		createFile(file, uploadedFile.getContents());
-		createUploadFile(crm, uploadedFile);
+		saveUploadedFile(file, uploadedFile.getContents());
+		createCrmFile(event, crm, uploadedFile);
+		eventBus.post(event);
 	}
 
 	private File getFile(Crm crm, UploadedFile uploadedFile) {
@@ -59,7 +69,7 @@ public class CrmFileUploadEventListener implements
 		return new File(crmDir, uploadedFile.getFileName());
 	}
 
-	private void createFile(File file, byte[] contents) {
+	private void saveUploadedFile(File file, byte[] contents) {
 		OutputStream os = null;
 		try {
 			file.createNewFile();
@@ -79,12 +89,15 @@ public class CrmFileUploadEventListener implements
 		}
 	}
 
-	private void createUploadFile(Crm crm, UploadedFile uploadedFile) {
-		UploadFile uploadFile = new UploadFile();
-		uploadFile.setCrm(crm);
-		uploadFile.setFileName(uploadedFile.getFileName());
-		uploadFile.setContentType(uploadedFile.getContentType());
-		uploadFile.setSize(uploadedFile.getSize());
-		uploadFileRepository.save(uploadFile);
+	private void createCrmFile(CrmFileUploadEvent event, Crm crm,
+			UploadedFile uploadedFile) {
+		CrmFile crmFile = new CrmFile();
+		crmFile.setCrm(crm);
+		crmFile.setFileName(uploadedFile.getFileName());
+		crmFile.setContentType(uploadedFile.getContentType());
+		crmFile.setSize(uploadedFile.getSize());
+		crmFile.setOperator(operatorRepository.findOne(event
+				.getOperatorNodeId()));
+		uploadFileRepository.save(crmFile);
 	}
 }

@@ -8,46 +8,48 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.google.common.collect.Lists;
-import com.hengyi.japp.crm.domain.CorporationType;
+import com.hengyi.japp.crm.Constant.Url;
+import com.hengyi.japp.crm.dto.CorporationTypeDTO;
+import com.hengyi.japp.crm.event.CorporationTypeDeleteEvent;
 
 @Named
-@Scope("request")
+@Scope("view")
 public class CorporationTypesController extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
-	private List<CorporationType> corporationTypes;
-	private CorporationType corporationType;
+	private List<CorporationTypeDTO> corporationTypes;
+	private CorporationTypeDTO corporationType;
 
-	public List<CorporationType> getCorporationTypes() {
-		return corporationTypes;
-	}
-
-	public CorporationType getCorporationType() {
-		return corporationType;
-	}
-
-	public void setCorporationType(CorporationType corporationType) {
-		this.corporationType = corporationType;
+	@PostConstruct
+	public void init() {
+		corporationTypes = queryService.findAllCorporationType();
 	}
 
 	public void edit() {
-		redirect(corporationTypeService.getUpdatePath(getCorporationType()
+		redirect(Url.corporationType.getUpdatePath(getCorporationType()
 				.getNodeId()));
 	}
 
 	public void delete() {
 		try {
-			corporationTypeService.delete(corporationType);
-			corporationTypes.remove(corporationType);
+			eventPublisher.publish(new CorporationTypeDeleteEvent(
+					getCurrentOperator().getNodeId(), getCorporationType()
+							.getNodeId()));
 			operationSuccessMessage();
 		} catch (Exception e) {
 			errorMessage(e);
 		}
 	}
 
-	@PostConstruct
-	public void init() {
-		corporationTypes = Lists.newArrayList(corporationTypeService.findAll());
+	public List<CorporationTypeDTO> getCorporationTypes() {
+		return corporationTypes;
+	}
+
+	public CorporationTypeDTO getCorporationType() {
+		return corporationType;
+	}
+
+	public void setCorporationType(CorporationTypeDTO corporationType) {
+		this.corporationType = corporationType;
 	}
 }

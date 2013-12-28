@@ -2,6 +2,8 @@ package com.hengyi.japp.crm.dto;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.hengyi.japp.crm.data.CrmType;
+
 public class CustomerDTO extends CrmDTO {
 	private static final long serialVersionUID = 1L;
 	@NotBlank
@@ -23,5 +25,10 @@ public class CustomerDTO extends CrmDTO {
 
 	public void setCoBusiness(String coBusiness) {
 		this.coBusiness = coBusiness;
+	}
+
+	@Override
+	public CrmType getCrmType() {
+		return CrmType.CUSTOMER;
 	}
 }

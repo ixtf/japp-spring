@@ -8,36 +8,39 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.google.common.collect.Lists;
-import com.hengyi.japp.crm.domain.Certificate;
+import com.hengyi.japp.crm.Constant.Url;
+import com.hengyi.japp.crm.dto.CertificateDTO;
+import com.hengyi.japp.crm.event.CertificateDeleteEvent;
 
 @Named
-@Scope("request")
+@Scope("view")
 public class CertificatesController extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
-	private List<Certificate> certificates;
-	private Certificate certificate;
+	private List<CertificateDTO> certificates;
+	private CertificateDTO certificate;
 
-	public List<Certificate> getCertificates() {
+	public List<CertificateDTO> getCertificates() {
 		return certificates;
 	}
 
-	public Certificate getCertificate() {
+	public CertificateDTO getCertificate() {
 		return certificate;
 	}
 
-	public void setCertificate(Certificate certificate) {
+	public void setCertificate(CertificateDTO certificate) {
 		this.certificate = certificate;
 	}
 
 	public void edit() {
-		redirect(certificateService.getUpdatePath(getCertificate().getNodeId()));
+		redirect(Url.certificate.getUpdatePath(getCertificate().getNodeId()));
 	}
 
 	public void delete() {
 		try {
-			certificateService.delete(certificate);
+			eventPublisher.publish(new CertificateDeleteEvent(
+					getCurrentOperator().getNodeId(), getCertificate()
+							.getNodeId()));
 			certificates.remove(certificate);
 			operationSuccessMessage();
 		} catch (Exception e) {
@@ -47,6 +50,6 @@ public class CertificatesController extends AbstractController implements
 
 	@PostConstruct
 	public void init() {
-		certificates = Lists.newArrayList(certificateService.findAll());
+		certificates = queryService.findAllCertificate();
 	}
 }

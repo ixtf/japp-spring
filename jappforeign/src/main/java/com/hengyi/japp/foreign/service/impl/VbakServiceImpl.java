@@ -25,17 +25,14 @@ import com.hengyi.japp.foreign.dto.VbaksVbapsDTO;
 import com.hengyi.japp.foreign.dto.VbapDTO;
 import com.hengyi.japp.foreign.event.EventPublisher;
 import com.hengyi.japp.foreign.event.SyncEventPublisher;
-import com.hengyi.japp.foreign.service.CacheService;
-import com.hengyi.japp.foreign.service.SapServiceFacade;
+import com.hengyi.japp.foreign.service.SapService;
 import com.hengyi.japp.foreign.service.VbakService;
 
 @Named
 @Transactional
 public class VbakServiceImpl implements VbakService {
 	@Inject
-	private CacheService cacheService;
-	@Inject
-	private SapServiceFacade sapServiceFacade;
+	private SapService sapService;
 	@Resource
 	private VbakRepository vbakRepository;
 	@Resource
@@ -53,13 +50,13 @@ public class VbakServiceImpl implements VbakService {
 
 	@Override
 	public Vbak findOne(String vbeln) throws Exception {
-		vbeln = sapServiceFacade.convertVbeln(vbeln);
+		vbeln = sapService.convertVbeln(vbeln);
 		Vbak vbak = vbakRepository.findOne(vbeln);
 		return vbak != null ? vbak : findOneFromSap(vbeln);
 	}
 
 	private Vbak findOneFromSap(String vbeln) throws Exception {
-		ForeignSapVbakDTO foreignSapVbak = sapServiceFacade.findVbak(vbeln);
+		ForeignSapVbakDTO foreignSapVbak = sapService.findVbak(vbeln);
 		Vbak vbak = new Vbak(foreignSapVbak.getSapVbak().getVbeln());
 		for (SapVbapDTO sapVbap : foreignSapVbak.getSapVbaps()) {
 			new Vbap(sapVbap.getPk(), vbak);

@@ -9,8 +9,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hengyi.japp.foreign.domain.Vbak;
-import com.hengyi.japp.foreign.service.SapServiceFacade;
-import com.hengyi.japp.foreign.service.VbakService;
+import com.hengyi.japp.foreign.service.SapService;
 
 @Transactional
 @Named
@@ -18,9 +17,7 @@ public class CreditPostWriteToSapListener implements
 		ApplicationListener<CreditPostWriteToSapEvent> {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Inject
-	private SapServiceFacade sapServiceFacade;
-	@Inject
-	private VbakService vbakService;
+	private SapService sapService;
 
 	@Override
 	public void onApplicationEvent(CreditPostWriteToSapEvent event) {
@@ -34,7 +31,7 @@ public class CreditPostWriteToSapListener implements
 
 	private void writeToSap(String vbeln) {
 		try {
-			sapServiceFacade.writeCreditPost(vbeln);
+			sapService.writeCreditPost(vbeln);
 		} catch (Exception e) {
 			log.error("销售单：{},信用证数据写回SAP失败！", vbeln);
 		}

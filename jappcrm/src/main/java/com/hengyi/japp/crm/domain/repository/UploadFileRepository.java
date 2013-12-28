@@ -7,12 +7,12 @@ import org.springframework.data.neo4j.repository.NamedIndexRepository;
 import org.springframework.data.neo4j.repository.RelationshipOperationsRepository;
 
 import com.hengyi.japp.crm.domain.Crm;
-import com.hengyi.japp.crm.domain.UploadFile;
+import com.hengyi.japp.crm.domain.CrmFile;
 
-public interface UploadFileRepository extends GraphRepository<UploadFile>,
-		NamedIndexRepository<UploadFile>,
-		RelationshipOperationsRepository<UploadFile> {
-	@Query("start crm=node({0}) match crm-[r:" + Crm.UPLOADFILE
+public interface UploadFileRepository extends GraphRepository<CrmFile>,
+		NamedIndexRepository<CrmFile>,
+		RelationshipOperationsRepository<CrmFile> {
+	@Query("start crm=node({0}) match crm-[r:" + Crm.CRMFILE
 			+ "]->file  return file")
-	EndResult<UploadFile> findAllByCrm(Crm crm);
+	EndResult<CrmFile> findAllByCrm(Crm crm);
 }

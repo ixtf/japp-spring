@@ -6,9 +6,11 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
+import com.hengyi.japp.common.event.ThemeUpdateEvent;
+
 @Named
 @Scope("request")
-public class ThemeController extends AbstractController implements Serializable{
+public class ThemeController extends AbstractController implements Serializable {
 	private static final long serialVersionUID = 6248447393153537183L;
 	private String theme;
 
@@ -24,8 +26,8 @@ public class ThemeController extends AbstractController implements Serializable{
 
 	public void changeTheme() {
 		try {
-			operatorService.updateTheme(getCurrentOperator().getUuid(),
-					getTheme());
+			eventPublisher.publish(new ThemeUpdateEvent(theme,
+					getCurrentOperator().getUuid()));
 			cacheService.getCurrentOperator().setTheme(getTheme());
 			infoMessage("皮肤设定成功！");
 		} catch (Exception e) {

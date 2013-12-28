@@ -9,7 +9,6 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
@@ -39,7 +38,7 @@ public abstract class Crm extends Modifiable {
 	public static final String COMMUNICATEE = "CHIEF_COMMUNICATEE";
 	public static final String COMMUNICATEES = "COMMUNICATEE";
 	public static final String INDICATORVALUE = "INDICATOR_VALUE";
-	public static final String UPLOADFILE = "UPLOADFILE";
+	public static final String CRMFILE = "CRMFILE";
 	@NotBlank
 	@Indexed(level = Level.INSTANCE)
 	protected String name;
@@ -63,13 +62,8 @@ public abstract class Crm extends Modifiable {
 	protected String addressName;
 	protected String lifnr;
 	protected String kunnr;
-	@Pattern(regexp = "^[1-9][0-9]{5}$")
+	// @Pattern(regexp = "^[1-9][0-9]{5}$")
 	protected String zipCode;
-	@RelatedTo(type = COMMUNICATEE)
-	@Fetch
-	protected Communicatee communicatee;
-	@RelatedTo(type = COMMUNICATEES, elementClass = Communicatee.class)
-	protected Set<Communicatee> communicatees;
 	@NotNull
 	@Min(0)
 	protected BigDecimal saleIncome;
@@ -79,6 +73,11 @@ public abstract class Crm extends Modifiable {
 	@RelatedTo(type = CERTIFICATE, elementClass = Certificate.class)
 	@Fetch
 	protected Set<Certificate> certificates;
+	@RelatedTo(type = COMMUNICATEE)
+	@Fetch
+	protected Communicatee communicatee;
+	@RelatedTo(type = COMMUNICATEES, elementClass = Communicatee.class)
+	protected Set<Communicatee> communicatees;
 	@RelatedToVia(type = Associate.RELATIONSHIP, elementClass = Associate.class, direction = Direction.BOTH)
 	@Fetch
 	protected Set<Associate> associates;

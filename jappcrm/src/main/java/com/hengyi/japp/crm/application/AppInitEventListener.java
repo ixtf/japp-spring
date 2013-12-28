@@ -72,42 +72,14 @@ public class AppInitEventListener implements ApplicationListener<AppInitEvent> {
 			return;
 		try {
 			System.out.println("=============初始化开始=============");
-			initIndicator();
-			initCrmType();
+			initCorporationType();
 			initCertificate();
+			initIndicator();
 			initCrm();
 			System.out.println("=============初始化完成=============");
 		} catch (Exception e) {
 			log.error("=============初始化失败=============", e);
 		}
-	}
-
-	private void initCrm() throws Exception {
-		List<Crm> crms = Lists.newArrayList();
-		JCoFunction f = sapService.getFunction(INIT_KNA1);
-		sapService.execute(f);
-		JCoTable table = f.getTableParameterList().getTable("ET_KNA1");
-		if (!table.isEmpty())
-			do {
-				Crm crm = new Customer();
-				crm.setName(table.getString("NAME1"));
-				crm.setKunnr(table.getString("KUNNR"));
-				crm.setRegisterNumber("K" + crm.getKunnr());
-				crms.add(crm);
-			} while (table.nextRow());
-
-		f = sapService.getFunction(INIT_LFA1);
-		sapService.execute(f);
-		table = f.getTableParameterList().getTable("ET_LFA1");
-		if (!table.isEmpty())
-			do {
-				Crm crm = new Customer();
-				crm.setName(table.getString("NAME1"));
-				crm.setLifnr(table.getString("LIFNR"));
-				crm.setRegisterNumber("L" + crm.getLifnr());
-				crms.add(crm);
-			} while (table.nextRow());
-		crmRepository.save(crms);
 	}
 
 	private void initIndicator() throws Exception {
@@ -135,6 +107,9 @@ public class AppInitEventListener implements ApplicationListener<AppInitEvent> {
 		crmFileds.add(new CrmField("represent"));
 		crmFileds.add(new CrmField("addressName", "address"));
 		crmFileds.add(new CrmField("communicatee", "chiefCommunicatee"));
+		crmFileds.add(new CrmField("communicatee.phone", "phone"));
+		crmFileds.add(new CrmField("communicatee.email", "email"));
+		crmFileds.add(new CrmField("communicatee.fax", "fax"));
 		crmFileds.add(new CrmField("communicatees", "communicatee"));
 		crmFileds.add(new CrmField("associates", "associate"));
 		crmFileds.add(new CrmField("certificates", "certificate"));
@@ -193,7 +168,7 @@ public class AppInitEventListener implements ApplicationListener<AppInitEvent> {
 		}
 	}
 
-	private void initCrmType() throws Exception {
+	private void initCorporationType() throws Exception {
 		List<CorporationType> list = Lists.newArrayList();
 		list.add(new CorporationType("国有企业"));
 		list.add(new CorporationType("集体企业"));
@@ -214,5 +189,33 @@ public class AppInitEventListener implements ApplicationListener<AppInitEvent> {
 		list.add(new Certificate("商业登记证"));
 		list.add(new Certificate("离岸账户证明"));
 		certificateRepository.save(list);
+	}
+
+	private void initCrm() throws Exception {
+		List<Crm> crms = Lists.newArrayList();
+		JCoFunction f = sapService.getFunction(INIT_KNA1);
+		sapService.execute(f);
+		JCoTable table = f.getTableParameterList().getTable("ET_KNA1");
+		if (!table.isEmpty())
+			do {
+				Crm crm = new Customer();
+				crm.setName(table.getString("NAME1"));
+				crm.setKunnr(table.getString("KUNNR"));
+				crm.setRegisterNumber("K" + crm.getKunnr());
+				crms.add(crm);
+			} while (table.nextRow());
+
+		f = sapService.getFunction(INIT_LFA1);
+		sapService.execute(f);
+		table = f.getTableParameterList().getTable("ET_LFA1");
+		if (!table.isEmpty())
+			do {
+				Crm crm = new Customer();
+				crm.setName(table.getString("NAME1"));
+				crm.setLifnr(table.getString("LIFNR"));
+				crm.setRegisterNumber("L" + crm.getLifnr());
+				crms.add(crm);
+			} while (table.nextRow());
+		crmRepository.save(crms);
 	}
 }

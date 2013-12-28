@@ -13,7 +13,7 @@ import com.hengyi.japp.crm.domain.Crm;
 import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
-import com.hengyi.japp.crm.domain.UploadFile;
+import com.hengyi.japp.crm.domain.CrmFile;
 
 public interface CrmService<CRM extends Crm> extends
 		CommonCrudNeo4jService<CRM> {
@@ -29,9 +29,9 @@ public interface CrmService<CRM extends Crm> extends
 
 	List<Indicator> findAllIndicator();
 
-	List<UploadFile> findAllUploadFile(Crm crm);
+	List<CrmFile> findAllUploadFile(Crm crm);
 
-	void removeUploadFile(UploadFile uploadFile);
+	void removeUploadFile(CrmFile uploadFile);
 
 	Map<Indicator, List<IndicatorValueScore>> getIndicatorMap(CRM crm,
 			Iterable<Indicator> indicators);

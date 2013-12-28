@@ -11,8 +11,9 @@ import javax.inject.Named;
 import org.springframework.context.ApplicationListener;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.eventbus.EventBus;
 import com.hengyi.japp.crm.domain.Crm;
-import com.hengyi.japp.crm.domain.UploadFile;
+import com.hengyi.japp.crm.domain.CrmFile;
 import com.hengyi.japp.crm.domain.repository.UploadFileRepository;
 import com.hengyi.japp.crm.event.CrmFileRemoveEvent;
 
@@ -25,6 +26,8 @@ public class CrmFileRemoveEventListener implements
 	@Resource(name = "deployProperties")
 	private Properties deployProperties;
 	@Inject
+	private EventBus eventBus;
+	@Inject
 	private UploadFileRepository uploadFileRepository;
 
 	@PostConstruct
@@ -34,12 +37,13 @@ public class CrmFileRemoveEventListener implements
 
 	@Override
 	public void onApplicationEvent(CrmFileRemoveEvent event) {
-		UploadFile uploadFile = uploadFileRepository.findOne(event
+		CrmFile crmFile = uploadFileRepository.findOne(event
 				.getUploadFileNodeId());
-		File file = getFile(uploadFile.getCrm(), uploadFile.getFileName());
+		File file = getFile(crmFile.getCrm(), crmFile.getFileName());
 		if (file.exists())
 			file.delete();
-		uploadFileRepository.delete(uploadFile);
+		uploadFileRepository.delete(crmFile);
+		eventBus.post(event);
 	}
 
 	private File getFile(Crm crm, String fileName) {

@@ -3,6 +3,7 @@ package com.hengyi.japp.crm.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
@@ -11,9 +12,9 @@ import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
+import com.hengyi.japp.crm.data.CrmType;
 
-public abstract class CrmDTO extends AbstractNeo4j implements Serializable {
+public abstract class CrmDTO extends ModifiableDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@NotBlank
 	protected String name;
@@ -41,6 +42,12 @@ public abstract class CrmDTO extends AbstractNeo4j implements Serializable {
 	@NotNull
 	@Min(0)
 	protected BigDecimal saleIncome;
+	protected List<CorporationTypeDTO> corporationTypes;
+	protected List<CertificateDTO> certificates;
+	protected CommunicateeDTO communicatee;
+	protected List<CommunicateeDTO> communicatees;
+
+	public abstract CrmType getCrmType();
 
 	public String getName() {
 		return name;
@@ -138,7 +145,8 @@ public abstract class CrmDTO extends AbstractNeo4j implements Serializable {
 		this.saleIncome = saleIncome;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	@Override
+	public String toString() {
+		return getName();
 	}
 }

@@ -71,7 +71,7 @@
 				value="#{crmController.corporationTypes}"
 				converter="corporationType" showCheckbox="true"
 				style="width:230px;height:100px">
-				<f:selectItems value="#{crmController.allCorporationTypes}" />
+				<f:selectItems value="#{cacheService.allCorporationTypes}" />
 			</p:selectManyMenu>
 			<p:message for="corporationTypes" />
 
@@ -79,7 +79,7 @@
 			<p:selectManyMenu id="certificates"
 				value="#{crmController.certificates}" converter="certificate"
 				showCheckbox="true" style="width:230px;height:100px">
-				<f:selectItems value="#{crmController.allCertificates}" />
+				<f:selectItems value="#{cacheService.allCertificates}" />
 			</p:selectManyMenu>
 			<p:message for="certificates" />
 
@@ -112,7 +112,7 @@
 			</p:tab>
 			<p:tab title="#{msg['uploadFile']}"
 				rendered="#{not empty crmController.crm.nodeId}">
-				<ui:include src="/faces/crm/updateUploadFile.xhtml">
+				<ui:include src="/faces/crm/updateCrmFile.xhtml">
 					<ui:param name="crmController" value="#{crmController}" />
 				</ui:include>
 			</p:tab>

@@ -13,14 +13,15 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.google.common.eventbus.Subscribe;
 import com.hengyi.japp.crm.domain.Associate;
 import com.hengyi.japp.crm.domain.Certificate;
 import com.hengyi.japp.crm.domain.Communicatee;
 import com.hengyi.japp.crm.domain.CorporationType;
 import com.hengyi.japp.crm.domain.Crm;
+import com.hengyi.japp.crm.domain.CrmFile;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
-import com.hengyi.japp.crm.domain.UploadFile;
 import com.hengyi.japp.crm.event.CrmFileRemoveEvent;
 import com.hengyi.japp.crm.event.CrmFileUploadEvent;
 import com.hengyi.japp.crm.service.CrmService;
@@ -59,11 +60,12 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
 	 * 前台选中的指标值，可以是已选的，也可以是未选的
 	 */
 	private IndicatorValueScore selectedIndicatorValueScore;
-	private List<UploadFile> uploadFiles;
-	private UploadFile selectedUploadFile;
+	private List<CrmFile> crmFiles;
+	private CrmFile selectedCrmFile;
 
 	@PostConstruct
 	protected void init() {
+		eventBus.register(this);
 		crmService = getCrmService();
 
 		ImmutableList.Builder<Indicator> builder = ImmutableList.builder();
@@ -99,20 +101,24 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
 				selectedIndicatorValueScore);
 	}
 
-	public void handleFileUpload(FileUploadEvent event) {
-		if (getCrm().getNodeId() == null)
-			return;
-		eventPublisher
-				.publish(new CrmFileUploadEvent(event.getFile(), getCrm()));
-	}
-
-	public void removeUploadFile() {
+	public void addCrmFile(FileUploadEvent event) {
 		if (getCrm().getNodeId() == null)
 			return;
 		try {
-			eventPublisher.publish(new CrmFileRemoveEvent(
-					getSelectedUploadFile().getNodeId()));
-			getUploadFiles().remove(getSelectedUploadFile());
+			syncEventPublisher.publish(new CrmFileUploadEvent(
+					getCurrentOperator().getNodeId(), getCrm().getNodeId(),
+					event.getFile()));
+		} catch (Exception e) {
+			errorMessage(e);
+		}
+	}
+
+	public void removeCrmFile() {
+		if (getCrm().getNodeId() == null)
+			return;
+		try {
+			syncEventPublisher.publish(new CrmFileRemoveEvent(
+					getSelectedCrmFile().getNodeId()));
 		} catch (Exception e) {
 			errorMessage(e);
 		}
@@ -188,13 +194,13 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
 		return indicatorMap;
 	}
 
-	public List<UploadFile> getUploadFiles() {
-		if (uploadFiles == null)
+	public List<CrmFile> getCrmFiles() {
+		if (crmFiles == null)
 			if (getCrm().getNodeId() == null)
-				uploadFiles = Lists.newArrayList();
+				crmFiles = Lists.newArrayList();
 			else
-				uploadFiles = crmService.findAllUploadFile(getCrm());
-		return uploadFiles;
+				crmFiles = crmService.findAllUploadFile(getCrm());
+		return crmFiles;
 	}
 
 	public Communicatee getSelectedCommunicatee() {
@@ -270,15 +276,25 @@ public abstract class CrmController<T extends Crm> extends AbstractController {
 		this.selectedIndicatorValueScore = selectedIndicatorValueScore;
 	}
 
-	public void setUploadFiles(List<UploadFile> uploadFiles) {
-		this.uploadFiles = uploadFiles;
+	public void setCrmFiles(List<CrmFile> crmFiles) {
+		this.crmFiles = crmFiles;
 	}
 
-	public UploadFile getSelectedUploadFile() {
-		return selectedUploadFile;
+	public CrmFile getSelectedCrmFile() {
+		return selectedCrmFile;
 	}
 
-	public void setSelectedUploadFile(UploadFile selectedUploadFile) {
-		this.selectedUploadFile = selectedUploadFile;
+	public void setSelectedCrmFile(CrmFile selectedCrmFile) {
+		this.selectedCrmFile = selectedCrmFile;
+	}
+
+	@Subscribe
+	public void CrmFileRemoveEvent(CrmFileRemoveEvent event) {
+		crmFiles = crmService.findAllUploadFile(getCrm());
+	}
+
+	@Subscribe
+	public void CrmFileUploadEvent(CrmFileUploadEvent event) {
+		crmFiles = crmService.findAllUploadFile(getCrm());
 	}
 }

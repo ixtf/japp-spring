@@ -6,33 +6,32 @@ import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
 
-import com.hengyi.japp.crm.domain.CorporationType;
+import com.hengyi.japp.crm.dto.CorporationTypeDTO;
+import com.hengyi.japp.crm.event.CorporationTypeUpdateEvent;
 
 @Named
-@Scope("request")
+@Scope("view")
 public class CorporationTypeController extends AbstractController implements
 		Serializable {
 	private static final long serialVersionUID = -6359781138513690580L;
 	private Long nodeId;
-	private CorporationType corporationType;
+	private CorporationTypeDTO corporationType;
 
 	public void save() {
 		try {
-			getCorporationType().setOperator(getCurrentOperator());
-			corporationTypeService.save(getCorporationType());
+			syncEventPublisher.publish(new CorporationTypeUpdateEvent(
+					getCurrentOperator().getNodeId(), getCorporationType()));
 			operationSuccessMessage();
 		} catch (Exception e) {
 			errorMessage(e);
 		}
 	}
 
-	public CorporationType getCorporationType() {
+	public CorporationTypeDTO getCorporationType() {
 		if (corporationType != null)
 			return corporationType;
-		if (nodeId == null)
-			corporationType = new CorporationType();
-		else
-			corporationType = corporationTypeService.findOne(nodeId);
+		corporationType = nodeId == null ? new CorporationTypeDTO()
+				: queryService.findOneCorporationType(nodeId);
 		return corporationType;
 	}
 
@@ -44,7 +43,7 @@ public class CorporationTypeController extends AbstractController implements
 		this.nodeId = nodeId;
 	}
 
-	public void setCorporationType(CorporationType corporationType) {
+	public void setCorporationType(CorporationTypeDTO corporationType) {
 		this.corporationType = corporationType;
 	}
 }

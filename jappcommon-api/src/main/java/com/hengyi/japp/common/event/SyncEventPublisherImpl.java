@@ -1,4 +1,4 @@
-package com.hengyi.japp.crm.event.publisher;
+package com.hengyi.japp.common.event;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;

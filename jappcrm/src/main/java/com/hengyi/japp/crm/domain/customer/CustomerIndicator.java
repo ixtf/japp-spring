@@ -16,7 +16,7 @@ public class CustomerIndicator extends Indicator {
 			return super.calculateScore(crm);
 		if ("durationYears".equals(crmField.getFieldName()))
 			return durationYears(crm);
-		else if ("registerCapcital".equals(crmField.getFieldName()))
+		else if ("registerCapital".equals(crmField.getFieldName()))
 			return registerCapcital(crm);
 		else if ("saleIncome".equals(crmField.getFieldName()))
 			return saleIncome(crm);

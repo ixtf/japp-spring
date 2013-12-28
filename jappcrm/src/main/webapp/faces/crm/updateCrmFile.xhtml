@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<p:dataTable id="tableCrmFile" var="_crmFile"
+		value="#{crmController.crmFiles}">
+		<f:facet name="header">
+			<h:outputText value="#{msg['file']}" />
+		</f:facet>
+
+		<p:column headerText="#{msg['operation']}" style="width:4%">
+			<p:commandLink process="@this"
+				update=":form:tabView:tableCrmFile,:form:message"
+				action="#{crmController.removeCrmFile}" icon="ui-icon-minus">
+				<h:outputText value="#{msg['delete']}" />
+				<f:setPropertyActionListener value="#{_crmFile}"
+					target="#{crmController.selectedCrmFile}" />
+			</p:commandLink>
+		</p:column>
+
+		<p:column headerText="#{msg['name']}">
+			<h:outputText value="#{_crmFile.name}" />
+		</p:column>
+
+		<p:column headerText="#{msg['size']}">
+			<h:outputText value="#{_crmFile.size}" />
+		</p:column>
+	</p:dataTable>
+	<p:fileUpload fileUploadListener="#{crmController.addCrmFile}"
+		update=":form:tabView:tableCrmFile,:form:message" mode="advanced"
+		dragDropSupport="true" multiple="true" label="#{msg['choose']}"
+		uploadLabel="#{msg['upload']}" cancelLabel="#{msg['cancel']}"
+		styleClass="form-inline" />
+</ui:composition>

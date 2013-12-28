@@ -3,7 +3,6 @@ package com.hengyi.japp.crm.service.impl;
 import java.util.Set;
 
 import javax.annotation.Resource;
-import javax.inject.Inject;
 
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
@@ -13,8 +12,6 @@ import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
 import com.hengyi.japp.crm.domain.repository.IndicatorRepository;
-import com.hengyi.japp.crm.event.publisher.EventPublisher;
-import com.hengyi.japp.crm.event.publisher.SyncEventPublisher;
 import com.hengyi.japp.crm.exception.ReUseIndicatorValueException;
 import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.IndicatorService;
@@ -25,11 +22,6 @@ public abstract class IndicatorServiceImpl<T extends Indicator> extends
 	protected Neo4jOperations template;
 	@Resource
 	protected IndicatorRepository indicatorRepository;
-
-	@Inject
-	protected EventPublisher eventPublisher;
-	@Inject
-	protected SyncEventPublisher syncEventPublisher;
 
 	@Override
 	public void save(T indicator,

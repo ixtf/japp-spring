@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/common.xhtml">
+	<ui:define name="body">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse"
+						data-target=".navbar-responsive-collapse">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<h:outputLink value="#{request.contextPath}" class="brand">
+						<h:outputText value="#{msg['home.title']}" />
+					</h:outputLink>
+					<div class="nav-collapse collapse navbar-responsive-collapse">
+						<ul class="nav">
+							<ui:insert name="nav" />
+						</ul>
+						<div class="btn-group pull-right">
+							<a href="javascript:void(0)"
+								class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+								icon="ui-icon-arrowrefresh-1-w"> <i
+								class="icon-user icon-white"></i> <h:outputText
+									value="#{cacheService.currentOperator.name}"
+									rendered="#{cacheService.authenticated}" /> <span
+								class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="javascript:void(0)"> <h:outputText
+											value="#{cacheService.principalType}(#{cacheService.principal})" />
+								</a></li>
+								<li><h:outputLink
+										value="#{request.contextPath}#{cacheService.themePath}"
+										rendered="#{cacheService.authenticated}">
+										<h:outputText value="#{msg['theme.title']}" />
+									</h:outputLink></li>
+								<li class="divider"></li>
+								<!-- <li><h:outputLink value="#{cacheService.bugNewPath}"
+									rendered="#{cacheService.authenticated}">
+									<h:outputText value="#{msg['bug']}" />
+								</h:outputLink></li> 
+							<li class="divider"></li>-->
+								<li><h:outputLink
+										value="#{request.contextPath}#{cacheService.logoutPath}"
+										rendered="#{cacheService.authenticated}">
+										<h:outputText value="#{msg['logout.title']}" />
+									</h:outputLink></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid ui-widget">
+			<ui:insert name="content" />
+		</div>
+		<p:ajaxStatus onstart="statusDialog.show();"
+			onsuccess="statusDialog.hide();" />
+		<p:dialog modal="true" widgetVar="statusDialog" draggable="false"
+			closable="false">
+			<p:graphicImage value="/resources/img/ajax-loader.gif" />
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+<!-- transport="long-polling" -->
+<!-- <p:growl showDetail="true" sticky="true" widgetVar="pushMessage" />
+	<p:socket onMessage="handleMessage"
+		channel="/#{cacheService.currentOperator.uuid}"
+		rendered="#{cacheService.authenticated}" />
+	<script type="text/javascript">
+	function handleMessage(facesmessage){pushMessage.show([facesmessage]);}
+	</script> -->

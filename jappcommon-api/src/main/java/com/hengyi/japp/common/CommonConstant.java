@@ -25,6 +25,8 @@ public class CommonConstant {
 			"bootstrap");
 	public static final ObjectMapper JSON = new ObjectMapper();
 
+	public static final String ERROR_BASENAME = "errors";
+
 	public static class ErrorCode {
 		public static final String BASENAME = "errors";
 		public static final String SYSTEM = "error.system";

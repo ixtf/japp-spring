@@ -7,10 +7,8 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 
-import com.hengyi.japp.common.domain.shared.AbstractNeo4j;
-
 @NodeEntity
-public class UploadFile extends AbstractNeo4j {
+public class CrmFile extends Modifiable {
 	private static final long serialVersionUID = 4280588161632544621L;
 	@NotBlank
 	@Indexed
@@ -21,7 +19,7 @@ public class UploadFile extends AbstractNeo4j {
 	@NotBlank
 	@Indexed
 	private String name;
-	@RelatedTo(type = Crm.UPLOADFILE, direction = Direction.INCOMING)
+	@RelatedTo(type = Crm.CRMFILE, direction = Direction.INCOMING)
 	private Crm crm;
 
 	public String getName() {

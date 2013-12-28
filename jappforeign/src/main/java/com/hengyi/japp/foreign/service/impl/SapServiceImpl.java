@@ -1,21 +1,16 @@
 package com.hengyi.japp.foreign.service.impl;
 
 import java.util.List;
-import java.util.Map;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.ApplicationContext;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Maps;
 import com.hengyi.japp.common.sap.CommonSapUtil;
-import com.hengyi.japp.common.sap.annotation.FunctionHandler;
 import com.hengyi.japp.common.sap.dto.SapKna1DTO;
 import com.hengyi.japp.common.sap.dto.SapLikpDTO;
 import com.hengyi.japp.common.sap.dto.SapLipsDTO;
@@ -25,27 +20,28 @@ import com.hengyi.japp.common.sap.dto.SapVbapDTO;
 import com.hengyi.japp.common.sap.dto.SapVbkdDTO;
 import com.hengyi.japp.common.sap.dto.SapVbkdvbDTO;
 import com.hengyi.japp.common.sap.dto.VbapPK;
-import com.hengyi.japp.common.service.impl.CommonSapServiceImpl;
+import com.hengyi.japp.common.service.AbstractCommonSapService;
 import com.hengyi.japp.foreign.Constant;
 import com.hengyi.japp.foreign.dto.ForeignSapLikpDTO;
 import com.hengyi.japp.foreign.dto.ForeignSapVbakDTO;
-import com.hengyi.japp.foreign.service.SapServiceFacade;
+import com.hengyi.japp.foreign.service.SapService;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoParameterList;
 import com.sap.conn.jco.JCoTable;
-import com.sap.conn.jco.server.JCoServerFunctionHandler;
 
 @Named
 @Singleton
-public class SapServiceFacadeImpl extends CommonSapServiceImpl implements
-		SapServiceFacade {
+public class SapServiceImpl extends AbstractCommonSapService implements
+		SapService {
+
 	private Cache<String, ForeignSapVbakDTO> vbakCache = CacheBuilder
 			.newBuilder().maximumSize(100).build();
 	private Cache<String, ForeignSapLikpDTO> likpCache = CacheBuilder
 			.newBuilder().maximumSize(100).build();
 
-	@Inject
-	private ApplicationContext context;
+	public SapServiceImpl() throws Exception {
+		super();
+	}
 
 	@Override
 	public ForeignSapVbakDTO findVbak(String vbeln) throws Exception {
@@ -70,14 +66,14 @@ public class SapServiceFacadeImpl extends CommonSapServiceImpl implements
 		list = function.getExportParameterList();
 		SapVbakDTO sapVbak = CommonSapUtil.convert(list.getStructure("E_VBAK"),
 				SapVbakDTO.class);
-		SapVbkdvbDTO sapVbkdvb = CommonSapUtil.convert(list.getStructure("E_VBKD"),
-				SapVbkdvbDTO.class);
+		SapVbkdvbDTO sapVbkdvb = CommonSapUtil.convert(
+				list.getStructure("E_VBKD"), SapVbkdvbDTO.class);
 		SapKna1DTO sapKna1 = CommonSapUtil.convert(list.getStructure("E_KNA1"),
 				SapKna1DTO.class);
-		SapTvzbtDTO sapTvzbt = CommonSapUtil.convert(list.getStructure("E_TVZBT"),
-				SapTvzbtDTO.class);
-		List<SapVbapDTO> sapVbaps = CommonSapUtil.convert(list.getTable("EST_VBAP"),
-				SapVbapDTO.class);
+		SapTvzbtDTO sapTvzbt = CommonSapUtil.convert(
+				list.getStructure("E_TVZBT"), SapTvzbtDTO.class);
+		List<SapVbapDTO> sapVbaps = CommonSapUtil.convert(
+				list.getTable("EST_VBAP"), SapVbapDTO.class);
 		String key1 = StringUtils.trim(list.getString("E_VBELN_1"));
 		String key2 = StringUtils.trim(list.getString("E_VBELN_2"));
 
@@ -99,8 +95,8 @@ public class SapServiceFacadeImpl extends CommonSapServiceImpl implements
 				SapLikpDTO.class);
 		SapKna1DTO sapKna1 = CommonSapUtil.convert(list.getStructure("E_KNA1"),
 				SapKna1DTO.class);
-		List<SapLipsDTO> sapLipss = CommonSapUtil.convert(list.getTable("EST_LIPS"),
-				SapLipsDTO.class);
+		List<SapLipsDTO> sapLipss = CommonSapUtil.convert(
+				list.getTable("EST_LIPS"), SapLipsDTO.class);
 		String key1 = StringUtils.trim(list.getString("E_VBELN_1"));
 		String key2 = StringUtils.trim(list.getString("E_VBELN_2"));
 
@@ -173,19 +169,6 @@ public class SapServiceFacadeImpl extends CommonSapServiceImpl implements
 			builder.add(table.getString("VBELN"));
 		} while (table.nextRow());
 		return builder.build();
-	}
-
-	@Override
-	protected Map<String, JCoServerFunctionHandler> getHandlerMap() {
-		Map<String, JCoServerFunctionHandler> map = Maps.newHashMap();
-		for (JCoServerFunctionHandler handler : context.getBeansOfType(
-				JCoServerFunctionHandler.class).values()) {
-			FunctionHandler anno = handler.getClass()
-					.getAnnotation(FunctionHandler.class);
-			if (anno != null)
-				map.put(anno.functionName(), handler);
-		}
-		return map;
 	}
 
 }

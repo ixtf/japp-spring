@@ -24,12 +24,10 @@ import com.hengyi.japp.crm.domain.CrmField;
 import com.hengyi.japp.crm.domain.Indicator;
 import com.hengyi.japp.crm.domain.IndicatorValue;
 import com.hengyi.japp.crm.domain.IndicatorValueScore;
-import com.hengyi.japp.crm.domain.UploadFile;
+import com.hengyi.japp.crm.domain.CrmFile;
 import com.hengyi.japp.crm.domain.repository.CrmFieldRepository;
 import com.hengyi.japp.crm.domain.repository.CrmRepository;
 import com.hengyi.japp.crm.domain.repository.UploadFileRepository;
-import com.hengyi.japp.crm.event.publisher.EventPublisher;
-import com.hengyi.japp.crm.event.publisher.SyncEventPublisher;
 import com.hengyi.japp.crm.service.CacheService;
 import com.hengyi.japp.crm.service.CrmService;
 import com.hengyi.japp.crm.service.SapService;
@@ -44,10 +42,6 @@ public abstract class CrmServiceImpl<CRM extends Crm> extends
 	protected CrmFieldRepository crmFieldRepository;
 	@Inject
 	protected UploadFileRepository uploadFileRepository;
-	@Inject
-	protected EventPublisher eventPublisher;
-	@Inject
-	protected SyncEventPublisher syncEventPublisher;
 	@Inject
 	protected CacheService cacheService;
 	@Inject
@@ -129,12 +123,12 @@ public abstract class CrmServiceImpl<CRM extends Crm> extends
 	}
 
 	@Override
-	public List<UploadFile> findAllUploadFile(Crm crm) {
+	public List<CrmFile> findAllUploadFile(Crm crm) {
 		return Lists.newArrayList(uploadFileRepository.findAllByCrm(crm));
 	}
 
 	@Override
-	public void removeUploadFile(UploadFile uploadFile) {
+	public void removeUploadFile(CrmFile uploadFile) {
 		uploadFileRepository.delete(uploadFile);
 	}
 

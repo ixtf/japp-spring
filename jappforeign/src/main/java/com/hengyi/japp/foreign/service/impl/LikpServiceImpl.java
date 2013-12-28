@@ -13,33 +13,30 @@ import com.hengyi.japp.common.sap.dto.SapLipsDTO;
 import com.hengyi.japp.foreign.domain.Likp;
 import com.hengyi.japp.foreign.domain.Lips;
 import com.hengyi.japp.foreign.domain.repository.LikpRepository;
-import com.hengyi.japp.foreign.domain.repository.LipsRepository;
 import com.hengyi.japp.foreign.dto.ForeignSapLikpDTO;
 import com.hengyi.japp.foreign.dto.LikpDTO;
 import com.hengyi.japp.foreign.service.LikpService;
-import com.hengyi.japp.foreign.service.SapServiceFacade;
+import com.hengyi.japp.foreign.service.SapService;
 
 @Named
 @Transactional
 public class LikpServiceImpl implements LikpService {
 	@Inject
-	private SapServiceFacade sapServiceFacade;
+	private SapService sapService;
 	@Inject
 	private LikpRepository likpRepository;
-	@Inject
-	private LipsRepository lipsRepository;
 	@Inject
 	private Mapper dozer;
 
 	@Override
 	public Likp findOne(String vbeln) throws Exception {
-		vbeln = sapServiceFacade.convertVbeln(vbeln);
+		vbeln = sapService.convertVbeln(vbeln);
 		Likp likp = likpRepository.findOne(vbeln);
 		return likp != null ? likp : findOneFromSap(vbeln);
 	}
 
 	private Likp findOneFromSap(String vbeln) throws Exception {
-		ForeignSapLikpDTO foreignSapLikp = sapServiceFacade.findLikp(vbeln);
+		ForeignSapLikpDTO foreignSapLikp = sapService.findLikp(vbeln);
 		Likp likp = new Likp(foreignSapLikp.getSapLikp().getVbeln());
 		for (SapLipsDTO sapLips : foreignSapLikp.getSapLipss()) {
 			Lips lips = dozer.map(sapLips, Lips.class);

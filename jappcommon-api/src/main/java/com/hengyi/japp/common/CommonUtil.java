@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.dozer.Mapper;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -36,6 +37,14 @@ public class CommonUtil {
 			} else
 				list.add(v);
 		}
+		return result;
+	}
+
+	public static <T> List<T> convert(Mapper dozer, Iterable<?> vs,
+			Class<T> clazz) {
+		List<T> result = Lists.newArrayList();
+		for (Object o : vs)
+			result.add(dozer.map(o, clazz));
 		return result;
 	}
 

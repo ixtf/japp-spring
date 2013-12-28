@@ -8,7 +8,7 @@ import com.hengyi.japp.common.service.CommonSapService;
 import com.hengyi.japp.foreign.dto.ForeignSapLikpDTO;
 import com.hengyi.japp.foreign.dto.ForeignSapVbakDTO;
 
-public interface SapServiceFacade extends CommonSapService {
+public interface SapService extends CommonSapService {
 	ForeignSapVbakDTO findVbak(String vbeln) throws Exception;
 
 	ForeignSapLikpDTO findLikp(String vbeln) throws Exception;

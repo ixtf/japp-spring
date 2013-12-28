@@ -8,14 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 
 import com.hengyi.japp.foreign.domain.Likp;
-import com.hengyi.japp.foreign.service.SapServiceFacade;
+import com.hengyi.japp.foreign.service.SapService;
 
 @Named
 public class InvoiceWriteToSapListener implements
 		ApplicationListener<InvoiceWriteToSapEvent> {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Inject
-	private SapServiceFacade sapServiceFacade;
+	private SapService sapService;
 
 	@Override
 	public void onApplicationEvent(InvoiceWriteToSapEvent event) {
@@ -23,7 +23,7 @@ public class InvoiceWriteToSapListener implements
 		String vbeln = (object instanceof Likp) ? ((Likp) object).getVbeln()
 				: (String) object;
 		try {
-			sapServiceFacade.writeCreditPost(vbeln);
+			sapService.writeCreditPost(vbeln);
 		} catch (Exception e) {
 			log.error("交货单：{},信用证数据写回SAP失败！", vbeln);
 		}
